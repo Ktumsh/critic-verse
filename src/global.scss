@@ -25,6 +25,8 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -34,4 +36,116 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+/* @import "@ionic/angular/css/palettes/dark.system.css"; */
+
+:root {
+  --ion-background-color: #11061c;
+  --ion-text-color: #fff;
+  --ion-default-font: "DM Sans", sans-serif;
+  --ion-font-family: "DM Sans", sans-serif;
+
+  --font-family-primary: "DM Sans", sans-serif;
+
+  --color-primary-600: #1100ff;
+  --color-primary-500: #532dff;
+  --color-primary-400: #7449ff;
+  --color-primary-300: #8f63ff;
+  --color-primary-200: #a57dff;
+  --color-primary-100: #ba96ff;
+
+  --color-surface-600: #11061c;
+  --color-surface-500: #262031;
+  --color-surface-400: #3e3847;
+  --color-surface-300: #56515f;
+  --color-surface-200: #706b77;
+  --color-surface-100: #8b8791;
+}
+
+.dm-sans {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100 1000;
+  font-style: normal;
+}
+
+body {
+  font-weight: 400;
+}
+
+/* 87% / 60% / 38% --> color opacity */
+
+svg {
+  width: 24px;
+  height: 24px;
+}
+
+.core-icon svg {
+  width: 21px;
+  height: 21px;
+  color: rgba(255 255 255 / 87%);
+}
+
+.game-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.tab-selected {
+  color: white;
+  & svg {
+    color: white;
+  }
+  .wrap-tab .inner-tab {
+    background: var(--color-primary-200);
+    transition: all 500ms ease-in-out;
+    span {
+      width: 40px;
+      opacity: 1;
+      line-height: 28px;
+      font-family: var(--font-family-primary);
+    }
+  }
+}
+
+ion-tab-bar {
+  padding: 0px 16px;
+  * {
+    --padding-start: 0;
+    --padding-end: 0;
+    --ripple-color: var(--color-surface-400);
+  }
+  height: 72px;
+}
+
+.wrap-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  padding: 10px 0;
+
+  .inner-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 14px;
+    gap: 0px 8px;
+    border-radius: 99px;
+    overflow: hidden;
+
+    span {
+      font-size: 11px;
+      width: 0px;
+      text-wrap: nowrap;
+      opacity: 0;
+      transition-property: width, opacity;
+      transition-duration: 300ms;
+      transition-timing-function: ease-in-out;
+    }
+  }
+}
+
+ion-header {
+  box-shadow: none !important;
+}

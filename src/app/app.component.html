@@ -1,3 +1,92 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <!-- Menu -->
+  <ion-menu side="end" menuId="first" contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          {{ pageTitle }}
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button *ngIf="showSettings">
+            <ion-icon name="settings-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle>
+          <ion-item routerLink="/home">Inicio</ion-item>
+          <ion-item routerLink="/game">Juegos</ion-item>
+          <ion-item routerLink="/movie">Películas</ion-item>
+          <ion-item routerLink="/tv">Shows</ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+      <ion-footer>
+        <ion-list>
+          <ion-item>
+            <ion-avatar>
+              <img
+                alt="Silhouette of a person's head"
+                src="https://ionicframework.com/docs/img/demos/avatar.svg"
+              />
+            </ion-avatar>
+          </ion-item>
+        </ion-list>
+      </ion-footer>
+    </ion-content>
+  </ion-menu>
+
+  <!-- Main content -->
+  <ion-router-outlet id="main-content">
+    <ion-tabs (ionTabsDidChange)="tabChanged($event)">
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="home">
+          <div class="wrap-tab">
+            <div class="inner-tab">
+              <app-svg-icons
+                [iconName]="selectedTab === 'home' ? 'fill-home' : 'home'"
+              ></app-svg-icons>
+              <span *ngIf="selectedTab === 'home'">Inicio</span>
+            </div>
+          </div>
+        </ion-tab-button>
+        <ion-tab-button tab="game">
+          <div class="wrap-tab">
+            <div class="inner-tab">
+              <app-svg-icons
+                class="game-icon"
+                [iconName]="
+                  selectedTab === 'game'
+                    ? 'fill-game-controller'
+                    : 'game-controller'
+                "
+              ></app-svg-icons>
+              <span *ngIf="selectedTab === 'game'">Juegos</span>
+            </div>
+          </div>
+        </ion-tab-button>
+        <ion-tab-button tab="movie">
+          <div class="wrap-tab">
+            <div class="inner-tab">
+              <app-svg-icons
+                [iconName]="selectedTab === 'movie' ? 'fill-movie' : 'movie'"
+              ></app-svg-icons>
+              <span *ngIf="selectedTab === 'movie'">Pelis</span>
+            </div>
+          </div>
+        </ion-tab-button>
+        <ion-tab-button tab="tv">
+          <div class="wrap-tab">
+            <div class="inner-tab">
+              <app-svg-icons
+                [iconName]="selectedTab === 'tv' ? 'fill-tv' : 'tv'"
+              ></app-svg-icons>
+              <span *ngIf="selectedTab === 'tv'">Shows</span>
+            </div>
+          </div>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-router-outlet>
 </ion-app>

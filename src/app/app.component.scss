@@ -1,0 +1,35 @@
+ion-menu::part(container) {
+  border-radius: 20px 0 0 20px;
+}
+
+ion-content::part(scroll) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 20px 0 0 20px;
+}
+
+ion-menu.md ion-header {
+  ion-toolbar {
+    --background: var(--color-surface-500) !important;
+  }
+}
+
+ion-menu.md ion-content {
+  --background: var(--color-surface-500) !important;
+}
+
+ion-menu.md ion-list {
+  --ion-background-color: var(--color-surface-500) !important;
+
+  ion-item {
+    --background: var(--color-surface-500) !important;
+    --padding-start: 24px;
+    --padding-end: 24px;
+  }
+}
+
+ion-menu.md ion-footer {
+  box-shadow: none;
+  --background: var(--color-surface-500) !important;
+}
