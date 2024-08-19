@@ -1,0 +1,7 @@
+{
+  "name": "critic-verse",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
