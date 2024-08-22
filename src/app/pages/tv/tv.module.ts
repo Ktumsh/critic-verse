@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -13,8 +13,9 @@ import { TvPage } from './tv.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TvPageRoutingModule
+    TvPageRoutingModule,
+    NgOptimizedImage,
   ],
-  declarations: [TvPage]
+  declarations: [TvPage],
 })
 export class TvPageModule {}

@@ -41,7 +41,7 @@ export class AppComponent {
       case '/movie':
         return 'Películas';
       case '/tv':
-        return 'Shows';
+        return 'Tv';
       default:
         return 'Mi Aplicación';
     }

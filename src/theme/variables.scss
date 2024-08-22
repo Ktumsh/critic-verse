@@ -1,2 +1,47 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+:root {
+  --ion-background-color: var(--surface-primary-600);
+  --ion-text-color: #fff;
+  --ion-default-font: "DM Sans", sans-serif;
+  --ion-font-family: "DM Sans", sans-serif;
+}
+
+.md {
+  box-shadow: none;
+}
+
+.md:focus-visible {
+  outline: none;
+}
+
+ion-menu-button.md {
+  --color: var(--surface-primary-200);
+}
+
+.inner-tab span {
+  color: rgb(255 255 255 / var(--opacity-m));
+}
+
+.tab-selected {
+  svg {
+    color: var(--color-primary-600);
+  }
+  .inner-tab {
+    span {
+      color: var(--color-primary-600);
+    }
+  }
+}
+
+ion-tab-bar {
+  padding: 0px 16px;
+  height: 72px;
+  * {
+    --padding-start: 0;
+    --padding-end: 0;
+    --ripple-color: var(--surface-primary-200);
+    --color-selected: var(--surface-primary-200);
+  }
+}
