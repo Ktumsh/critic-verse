@@ -3,29 +3,38 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'auth',
     loadChildren: () =>
-      import('./pages/home/home.module').then((m) => m.HomePageModule),
+      import('./pages/auth/auth.module').then((m) => m.AuthPageModule),
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'auth',
     pathMatch: 'full',
   },
   {
-    path: 'movie',
+    path: 'login',
     loadChildren: () =>
-      import('./pages/movie/movie.module').then((m) => m.MoviePageModule),
+      import('./pages/auth/login/login.module').then((m) => m.LoginPageModule),
   },
   {
-    path: 'game',
+    path: 'signup',
     loadChildren: () =>
-      import('./pages/game/game.module').then((m) => m.GamePageModule),
+      import('./pages/auth/signup/signup.module').then(
+        (m) => m.SignupPageModule
+      ),
   },
   {
-    path: 'tv',
+    path: 'forgot-password',
     loadChildren: () =>
-      import('./pages/tv/tv.module').then((m) => m.TvPageModule),
+      import('./pages/auth/forgot-password/forgot-password.module').then(
+        (m) => m.ForgotPasswordPageModule
+      ),
+  },
+  {
+    path: 'main',
+    loadChildren: () =>
+      import('./pages/main/main.module').then((m) => m.MainPageModule),
   },
 ];
 

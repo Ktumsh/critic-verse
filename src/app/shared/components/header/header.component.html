@@ -1,0 +1,23 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        *ngIf="backButton"
+        [defaultHref]="backButton"
+      ></ion-back-button>
+    </ion-buttons>
+    <div *ngIf="logo" class="flex items-center h-full pl-4">
+      <img
+        [ngSrc]="'assets/logo/critic-verse-horizontal-logo-350x100.webp'"
+        alt="Critic Verse Logo"
+        width="128"
+        height="37"
+        priority="true"
+        class="w-32"
+      />
+    </div>
+    <ion-title *ngIf="!logo" slot="start" class="translate-x-1/2">{{
+      title
+    }}</ion-title>
+  </ion-toolbar>
+</ion-header>

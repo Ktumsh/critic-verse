@@ -1,0 +1,34 @@
+<ion-item
+  color="transparent"
+  class="mt-6 mb-1 bg-surface-secondary-600/40 text-white-h rounded-2xl"
+>
+  <ion-icon
+    *ngIf="icon"
+    [name]="icon"
+    slot="start"
+    class="text-white-l"
+  ></ion-icon>
+  <ion-input
+    [type]="type"
+    [autocomplete]="autocomplete"
+    [label]="label"
+    [formControl]="control"
+    label-placement="floating"
+    color="primary"
+  ></ion-input>
+
+  <ion-button
+    *ngIf="isPassword"
+    (click)="showOrHide()"
+    slot="end"
+    fill="clear"
+    shape="round"
+    class="size-10 text-white-l"
+  >
+    <ion-icon
+      slot="icon-only"
+      [name]="hide ? 'eye' : 'eye-off'"
+      class="size-6"
+    ></ion-icon>
+  </ion-button>
+</ion-item>

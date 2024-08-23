@@ -1,0 +1,57 @@
+<ion-tabs (ionTabsDidChange)="tabChanged($event)">
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <div class="flex items-center justify-center h-full py-2.5">
+        <div
+          class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
+        >
+          <app-svg-icons
+            [iconName]="selectedTab === 'home' ? 'fill-home' : 'home'"
+          ></app-svg-icons>
+          <span class="text-11 w-10 text-nowrap">Inicio</span>
+        </div>
+      </div>
+    </ion-tab-button>
+    <ion-tab-button tab="game">
+      <div class="flex items-center justify-center h-full py-2.5">
+        <div
+          class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
+        >
+          <app-svg-icons
+            class="game-icon"
+            [iconName]="
+              selectedTab === 'game'
+                ? 'fill-game-controller'
+                : 'game-controller'
+            "
+          ></app-svg-icons>
+          <span class="text-11 w-10 text-nowrap">Juegos</span>
+        </div>
+      </div>
+    </ion-tab-button>
+    <ion-tab-button tab="movie">
+      <div class="flex items-center justify-center h-full py-2.5">
+        <div
+          class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
+        >
+          <app-svg-icons
+            [iconName]="selectedTab === 'movie' ? 'fill-movie' : 'movie'"
+          ></app-svg-icons>
+          <span class="text-11 w-10 text-nowrap">Pelis</span>
+        </div>
+      </div>
+    </ion-tab-button>
+    <ion-tab-button tab="tv">
+      <div class="flex items-center justify-center h-full py-2.5">
+        <div
+          class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
+        >
+          <app-svg-icons
+            [iconName]="selectedTab === 'tv' ? 'fill-tv' : 'tv'"
+          ></app-svg-icons>
+          <span class="text-11 w-10 text-nowrap">Tv</span>
+        </div>
+      </div>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

@@ -1,0 +1,70 @@
+<app-header [logo]="false" backButton="/auth"></app-header>
+
+<ion-content>
+  <div class="flex flex-col items-center h-full px-10 pb-6">
+    <div class="flex w-full mt-20">
+      <div class="flex flex-col space-y-2">
+        <h1 class="text-3xl font-bold">Bienvenido de vuelta!</h1>
+        <p class="text-white-m">Inicia sesión en tu cuenta.</p>
+      </div>
+    </div>
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      (keypressed.enter)="submit()"
+      class="flex flex-col justify-between size-full"
+    >
+      <div class="flex flex-col">
+        <app-custom-input
+          type="email"
+          label="Correo electrónico"
+          autocomplete="email"
+          [control]="form.controls.email"
+        ></app-custom-input>
+
+        <div
+          *ngIf="form.controls.email.errors && form.controls.email.touched"
+          class="flex items-center justify-center text-white-m"
+        >
+          <span
+            *ngIf="form.controls.email.errors?.['required']"
+            class="text-sm"
+          >
+            Por favor, ingresa tu correo electrónico
+          </span>
+          <span *ngIf="form.controls.email.errors?.['email']" class="text-sm">
+            Por favor, ingresa un correo electrónico válido
+          </span>
+        </div>
+
+        <app-custom-input
+          type="password"
+          label="Contraseña"
+          [control]="form.controls.password"
+        ></app-custom-input>
+
+        <div
+          *ngIf="form.controls.password.errors && form.controls.password.touched"
+          class="flex items-center justify-center text-white-m"
+        >
+          <span
+            *ngIf="form.controls.password.errors?.['required']"
+            class="text-sm"
+          >
+            Por favor, ingresa tu contraseña
+          </span>
+        </div>
+      </div>
+
+      <ion-button
+        expand="block"
+        type="submit"
+        [disabled]="form.invalid"
+        [routerLink]="['/main/home']"
+        class="mt-6 rounded-xl over"
+      >
+        Iniciar sesión
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

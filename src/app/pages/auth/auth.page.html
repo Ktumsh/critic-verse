@@ -1,0 +1,47 @@
+<ion-content>
+  <div class="flex flex-col items-center justify-between h-full px-10 py-6">
+    <img
+      [ngSrc]="'/assets/auth-bg.webp'"
+      width="1920"
+      height="1080"
+      alt="Auth Background"
+      aria-hidden="true"
+      class="absolute inset-0 object-cover size-full -z-1 opacity-50"
+    />
+    <div class="flex flex-col items-center w-full mt-20">
+      <app-logo></app-logo>
+      <div class="flex flex-col">
+        <p class="text-lg text-center my-4">
+          ¡Tu próxima recomendación está a un toque de distancia!
+        </p>
+        <p class="text-lg text-center my-4">
+          Descubre, valora y comparte lo mejor del cine, la televisión y los
+          videojuegos.
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-col items-center w-full">
+      <span class="font-semibold">Regístrate o inicia sesión:</span>
+      <ion-button
+        expand="block"
+        [routerLink]="['/login']"
+        class="w-full mt-6 text-black"
+      >
+        <ion-icon
+          slot="start"
+          src="/assets/icon/google.svg"
+          class="size-5"
+        ></ion-icon>
+        Continuar con Google
+      </ion-button>
+      <ion-button
+        expand="block"
+        [routerLink]="['/login']"
+        class="w-full mt-2 text-black"
+      >
+        <ion-icon slot="start" name="mail" class="size-5"></ion-icon>
+        Continuar con tu correo
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
