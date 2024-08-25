@@ -1,0 +1,16 @@
+<ion-button
+  expand="block"
+  [routerLink]="routerLink"
+  [type]="type"
+  [disabled]="disabled"
+  [ngClass]="['font-semibold', buttonClass]"
+>
+  <ion-icon
+    *ngIf="icon || iconSrc"
+    [slot]="iconSlot"
+    [name]="icon"
+    [src]="iconSrc"
+    [ngClass]="[iconClass]"
+  ></ion-icon>
+  {{ label }}
+</ion-button>

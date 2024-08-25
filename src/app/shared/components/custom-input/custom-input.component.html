@@ -1,6 +1,6 @@
 <ion-item
   color="transparent"
-  class="mt-6 mb-1 bg-surface-secondary-600/40 text-white-h rounded-2xl"
+  class="bg-surface-secondary-600/80 text-white-h rounded-2xl"
 >
   <ion-icon
     *ngIf="icon"
@@ -9,11 +9,13 @@
     class="text-white-l"
   ></ion-icon>
   <ion-input
+    #inputElement
     [type]="type"
+    autofocus="true"
     [autocomplete]="autocomplete"
     [label]="label"
+    [placeholder]="placeholder"
     [formControl]="control"
-    label-placement="floating"
     color="primary"
   ></ion-input>
 

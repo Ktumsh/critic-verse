@@ -1,0 +1,67 @@
+<app-header [logo]="false" backButton="/signup"></app-header>
+
+<ion-content>
+  <div class="flex flex-col items-center h-full px-6 pb-6">
+    <div class="w-full mt-20 mb-5">
+      <div class="flex flex-col justify-center w-full space-y-3">
+        <p class="text-xl text-white-h text-center font-semibold">
+          ¿Cómo te llamamos?
+        </p>
+        <p class="text-sm text-white-m text-center leading-tight">
+          Este será el nombre de usuario con el que te verán otras personas en
+          CriticVerse y también tu &#64;. No te preocupes, podrás cambiarlo
+          cuando quieras.
+        </p>
+      </div>
+    </div>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="flex flex-col justify-between size-full"
+    >
+      <div class="flex flex-col mt-6">
+        <app-custom-input
+          type="text"
+          label="@"
+          placeholder="Nombre de usuario"
+          [autofocus]="true"
+          autocomplete="username"
+          [control]="form.controls.username"
+        ></app-custom-input>
+
+        <div
+          *ngIf="canShowError && form.controls.username.errors"
+          class="flex flex-col px-5 mt-1.5"
+        >
+          <span
+            *ngIf="form.controls.username.errors?.['minlength']"
+            class="text-xs text-danger"
+          >
+            El nombre de usuario debe tener al menos 3 caracteres.
+          </span>
+          <span
+            *ngIf="form.controls.username.errors?.['pattern']"
+            class="text-xs text-danger"
+          >
+            Solo se pueden incluir letras, números y guiones.
+          </span>
+          <span
+            *ngIf="form.controls.username.errors?.['usernameTaken']"
+            class="text-xs text-danger"
+          >
+            ¡Este nombre de usuario ya existe!
+          </span>
+        </div>
+      </div>
+
+      <app-custom-button
+        type="submit"
+        [disabled]="!form.controls.username.value"
+        label="Siguiente"
+        buttonClass="size-sm secondary"
+        class="w-full mt-3"
+      ></app-custom-button>
+    </form>
+  </div>
+</ion-content>

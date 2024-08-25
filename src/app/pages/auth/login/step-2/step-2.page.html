@@ -1,0 +1,52 @@
+<app-header [logo]="false" backButton="/login"></app-header>
+
+<ion-content>
+  <div class="flex flex-col items-center h-full px-6 pb-6">
+    <div class="w-full mt-20 mb-5">
+      <div class="flex justify-center w-full">
+        <p class="text-xl text-white-h text-center font-semibold">
+          ¡Descubre, valora y comparte lo mejor del cine, la televisión y los
+          videojuegos!
+        </p>
+      </div>
+    </div>
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="flex flex-col justify-between size-full"
+    >
+      <div class="flex flex-col mt-6">
+        <app-custom-input
+          type="password"
+          placeholder="Contraseña"
+          [autofocus]="true"
+          autocomplete="password"
+          [control]="form.controls.password"
+        />
+
+        <div
+          *ngIf="canShowError && form.controls.password.errors"
+          class="flex px-5 mt-1.5"
+        >
+          <span class="text-xs text-danger">
+            El correo o contraseña son incorrectos. ¡Vuelve a intentarlo!
+          </span>
+        </div>
+
+        <div class="flex justify-center mt-4 px-5">
+          <a
+            [routerLink]="['/forgot-password']"
+            class="text-sm text-white-l no-underline"
+          >
+            ¿Has olvidado la contraseña?
+          </a>
+        </div>
+      </div>
+      <app-custom-button
+        [disabled]="!form.controls.password.value"
+        label="Inicia Sesión"
+        buttonClass="size-sm secondary"
+      />
+    </form>
+  </div>
+</ion-content>

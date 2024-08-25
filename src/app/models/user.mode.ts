@@ -1,0 +1,42 @@
+import { customAlphabet } from 'nanoid';
+
+const nanoid = customAlphabet(
+  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+  10
+);
+
+export interface User {
+  id: string;
+  role: string;
+  email: string;
+  username: string;
+  password: string;
+  birthdate?: Date | string;
+}
+
+export const USER_MODEL: User[] = [
+  {
+    id: nanoid(),
+    role: 'admin',
+    email: 'jo.barra@duocuc.cl',
+    username: 'ktumsh',
+    password: '12345',
+    birthdate: new Date('2002-01-11T12:00:00').toLocaleDateString('es-CL'),
+  },
+  {
+    id: nanoid(),
+    role: 'admin',
+    email: 'ren.rivera@duocuc.cl',
+    username: 'rynat',
+    password: '12345',
+    birthdate: new Date('2005-01-15T12:00:00').toLocaleDateString('es-CL'),
+  },
+  {
+    id: nanoid(),
+    role: 'user',
+    email: 'usuario@duocuc.cl',
+    username: '_username69',
+    password: '12345',
+    birthdate: new Date('2003-01-10T12:00:00').toLocaleDateString('es-CL'),
+  },
+];

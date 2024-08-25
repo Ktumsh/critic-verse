@@ -9,7 +9,7 @@ export class MainPage {
   pages = [
     {
       title: 'Juegos',
-      url: '/main/game',
+      url: '/game',
       icon: 'game-controller',
       fillIcon: 'fill-game-controller',
       items: [
@@ -19,7 +19,7 @@ export class MainPage {
     },
     {
       title: 'Películas',
-      url: '/main/movie',
+      url: '/movie',
       icon: 'movie',
       fillIcon: 'fill-movie',
       items: [
@@ -29,7 +29,7 @@ export class MainPage {
     },
     {
       title: 'TV',
-      url: '/main/tv',
+      url: '/tv',
       icon: 'tv',
       fillIcon: 'fill-tv',
       items: [

@@ -1,0 +1,44 @@
+ion-button {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  font-size: 18px;
+  letter-spacing: 0;
+
+  min-height: 56px;
+}
+
+ion-button.size-lg {
+  min-height: 62px;
+}
+
+ion-button.size-md {
+  min-height: 56px;
+}
+
+ion-button.size-sm {
+  min-height: 48px;
+}
+
+/* Default */
+ion-button::part(native) {
+  --border-radius: 99px;
+  --background: rgb(255 255 255 / 0.9);
+  color: var(--surface-alternative-300);
+}
+
+/* Primary */
+ion-button.primary::part(native) {
+  --border-radius: 99px;
+  --background: var(--color-primary-600);
+  color: #fff;
+}
+
+/* Secondary */
+ion-button.secondary::part(native) {
+  --border-radius: 99px;
+  --background: var(--color-secondary-600);
+  color: var(--surface-alternative-300);
+}

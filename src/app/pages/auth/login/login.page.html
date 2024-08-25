@@ -1,70 +1,50 @@
 <app-header [logo]="false" backButton="/auth"></app-header>
 
 <ion-content>
-  <div class="flex flex-col items-center h-full px-10 pb-6">
-    <div class="flex w-full mt-20">
-      <div class="flex flex-col space-y-2">
-        <h1 class="text-3xl font-bold">Bienvenido de vuelta!</h1>
-        <p class="text-white-m">Inicia sesión en tu cuenta.</p>
+  <div class="flex flex-col items-center h-full px-6 pb-6">
+    <div class="w-full mt-20 mb-5">
+      <div class="flex justify-center w-full">
+        <p class="text-xl text-white-h text-center font-semibold">
+          Introduce tu correo<br />
+          para registrarte o iniciar sesión:
+        </p>
       </div>
     </div>
+
     <form
       [formGroup]="form"
       (ngSubmit)="submit()"
-      (keypressed.enter)="submit()"
+      (keypress.enter)="submit()"
       class="flex flex-col justify-between size-full"
     >
-      <div class="flex flex-col">
+      <div class="flex flex-col mt-6">
         <app-custom-input
           type="email"
-          label="Correo electrónico"
+          placeholder="Correo electrónico"
+          [autofocus]="true"
           autocomplete="email"
           [control]="form.controls.email"
-        ></app-custom-input>
+        />
 
         <div
-          *ngIf="form.controls.email.errors && form.controls.email.touched"
-          class="flex items-center justify-center text-white-m"
+          *ngIf="canShowError && form.controls.email.errors"
+          class="flex px-5 mt-1.5"
         >
           <span
-            *ngIf="form.controls.email.errors?.['required']"
-            class="text-sm"
+            *ngIf="form.controls.email.errors?.['email']"
+            class="text-xs text-danger"
           >
-            Por favor, ingresa tu correo electrónico
-          </span>
-          <span *ngIf="form.controls.email.errors?.['email']" class="text-sm">
-            Por favor, ingresa un correo electrónico válido
-          </span>
-        </div>
-
-        <app-custom-input
-          type="password"
-          label="Contraseña"
-          [control]="form.controls.password"
-        ></app-custom-input>
-
-        <div
-          *ngIf="form.controls.password.errors && form.controls.password.touched"
-          class="flex items-center justify-center text-white-m"
-        >
-          <span
-            *ngIf="form.controls.password.errors?.['required']"
-            class="text-sm"
-          >
-            Por favor, ingresa tu contraseña
+            La dirección de correo electrónico es incorrecta. ¡Vuelve a
+            intentarlo!
           </span>
         </div>
       </div>
 
-      <ion-button
-        expand="block"
-        type="submit"
-        [disabled]="form.invalid"
-        [routerLink]="['/main/home']"
-        class="mt-6 rounded-xl over"
-      >
-        Iniciar sesión
-      </ion-button>
+      <app-custom-button
+        [disabled]="!form.controls.email.value"
+        label="Continuar"
+        buttonClass="size-sm secondary"
+      />
     </form>
   </div>
 </ion-content>

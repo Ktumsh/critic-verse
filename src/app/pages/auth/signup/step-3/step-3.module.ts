@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginPageRoutingModule } from './login-routing.module';
+import { Step3PageRoutingModule } from './step-3-routing.module';
 
-import { LoginPage } from './login.page';
+import { Step3Page } from './step-3.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -14,10 +14,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule,
+    Step3PageRoutingModule,
     SharedModule,
-    NgOptimizedImage,
   ],
-  declarations: [LoginPage],
+  declarations: [Step3Page],
 })
-export class LoginPageModule {}
+export class Step3PageModule {}

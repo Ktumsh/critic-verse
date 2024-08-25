@@ -1,47 +1,41 @@
 <ion-content>
-  <div class="flex flex-col items-center justify-between h-full px-10 py-6">
+  <div class="flex flex-col items-center justify-between h-full px-6 py-6">
     <img
       [ngSrc]="'/assets/auth-bg.webp'"
-      width="1920"
-      height="1080"
+      width="360"
+      height="740"
       alt="Auth Background"
       aria-hidden="true"
-      class="absolute inset-0 object-cover size-full -z-1 opacity-50"
+      class="absolute inset-0 object-cover size-full -z-1 opacity-50 animate-fade-in animate-duration-1000"
     />
     <div class="flex flex-col items-center w-full mt-20">
       <app-logo></app-logo>
-      <div class="flex flex-col">
-        <p class="text-lg text-center my-4">
+      <div class="flex flex-col text-lg font-semibold">
+        <p class="text-center my-4">
           ¡Tu próxima recomendación está a un toque de distancia!
         </p>
-        <p class="text-lg text-center my-4">
+        <p class="text-center my-4">
           Descubre, valora y comparte lo mejor del cine, la televisión y los
           videojuegos.
         </p>
       </div>
     </div>
     <div class="flex flex-col items-center w-full">
-      <span class="font-semibold">Regístrate o inicia sesión:</span>
-      <ion-button
-        expand="block"
+      <span class="text-lg font-semibold">Regístrate o inicia sesión:</span>
+      <app-custom-button
         [routerLink]="['/login']"
-        class="w-full mt-6 text-black"
-      >
-        <ion-icon
-          slot="start"
-          src="/assets/icon/google.svg"
-          class="size-5"
-        ></ion-icon>
-        Continuar con Google
-      </ion-button>
-      <ion-button
-        expand="block"
+        label="Continuar con Google"
+        iconSrc="/assets/icon/google.svg"
+        iconClass="size-5"
+        class="w-full mt-6"
+      />
+      <app-custom-button
         [routerLink]="['/login']"
-        class="w-full mt-2 text-black"
-      >
-        <ion-icon slot="start" name="mail" class="size-5"></ion-icon>
-        Continuar con tu correo
-      </ion-button>
+        label="Continuar con tu correo"
+        iconSrc="/assets/icon/mail.svg"
+        iconClass="size-6 text-black-m"
+        class="w-full mt-3"
+      />
     </div>
   </div>
 </ion-content>

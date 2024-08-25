@@ -2,3 +2,7 @@ ion-input {
   --highlight-color-invalid: inherit;
   --highlight-color: var(--highlight-color--invalid);
 }
+
+ion-item {
+  --min-height: 56px;
+}

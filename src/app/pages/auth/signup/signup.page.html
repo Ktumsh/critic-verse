@@ -1,13 +1,97 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>signup</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [logo]="false" backButton="/login"></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">signup</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="flex flex-col items-center h-full px-6 pb-6">
+    <div class="w-full mt-20">
+      <div class="flex flex-col justify-center w-full space-y-3">
+        <p class="text-xl text-white-h text-center font-semibold">
+          ¿Cuándo es tu cumpleaños?
+        </p>
+        <p class="text-sm text-white-m text-center leading-tight">
+          No compartiremos este dato con nadie. Solo queremos asegurarnos de que
+          tienes la edad suficiente para usar CriticVerse.
+        </p>
+      </div>
+    </div>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="flex flex-col justify-between size-full"
+    >
+      <div class="flex flex-col items-center">
+        <ion-datetime
+          [formControl]="form.controls.birthday"
+          (ionChange)="onDateChange($event)"
+          presentation="date"
+          [preferWheel]="true"
+          class="text-center"
+        ></ion-datetime>
+
+        <div
+          *ngIf="canShowError && form.controls.birthday.errors"
+          class="flex px-5 mt-1.5"
+        >
+          <span
+            *ngIf="form.controls.birthday.errors?.['required']"
+            class="text-xs text-danger"
+          >
+            La fecha de nacimiento es obligatoria.
+          </span>
+          <span
+            *ngIf="form.controls.birthday.errors?.['invalidDate']"
+            class="text-xs text-danger"
+          >
+            La fecha ingresada no es válida. Por favor, revisa e intenta
+            nuevamente.
+          </span>
+          <span
+            *ngIf="form.controls.birthday.errors?.['underage']"
+            class="text-xs text-danger"
+          >
+            Debes tener al menos 13 años para registrarte.
+          </span>
+        </div>
+
+        <div
+          *ngIf="daysUntilBirthday !== null"
+          class="text-sm text-center text-white-m mt-4"
+        >
+          ¡Quedan {{ daysUntilBirthday }} días para tu cumpleaños! 🎉🎂
+        </div>
+      </div>
+
+      <div class="flex flex-col">
+        <div
+          class="flex flex-col items-center justify-center space-y-2 text-white-m"
+        >
+          <span class="text-sm">Al pulsar el botón y seguir adelante:</span>
+          <div class="flex items-center">
+            <ion-icon
+              slot="start"
+              src="assets/icon/checkbox.svg"
+              class="size-11 text-white-l mr-3"
+            ></ion-icon>
+            <p class="text-xs">
+              Aceptas las
+              <strong class="font-semibold text-white-h underline">
+                Condiciones de servicio</strong
+              >
+              de CriticVerse y confirmas que has leído la
+              <strong class="font-semibold text-white-h underline">
+                Política de privacidad</strong
+              >.
+            </p>
+          </div>
+        </div>
+        <app-custom-button
+          type="submit"
+          [disabled]="!form.controls.birthday.value || form.controls.birthday.invalid"
+          label="Siguiente"
+          buttonClass="size-sm secondary"
+          class="w-full mt-3"
+        />
+      </div>
+    </form>
+  </div>
 </ion-content>

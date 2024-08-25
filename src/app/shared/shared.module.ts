@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SvgIconsComponent } from '../icons/svg-icons/svg-icons.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { CustomInputComponent } from './components/custom-input/custom-input.component';
+import { CustomButtonComponent } from './components/custom-button/custom-button.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,7 @@ import { CustomInputComponent } from './components/custom-input/custom-input.com
     LogoComponent,
     TabsComponent,
     CustomInputComponent,
+    CustomButtonComponent,
     SvgIconsComponent,
   ],
   exports: [
@@ -21,6 +24,7 @@ import { CustomInputComponent } from './components/custom-input/custom-input.com
     LogoComponent,
     TabsComponent,
     CustomInputComponent,
+    CustomButtonComponent,
     SvgIconsComponent,
     ReactiveFormsModule,
   ],
@@ -30,6 +34,7 @@ import { CustomInputComponent } from './components/custom-input/custom-input.com
     NgOptimizedImage,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule,
   ],
 })
 export class SharedModule {}
