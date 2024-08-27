@@ -4,19 +4,21 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MoviePageRoutingModule } from './movie-routing.module';
+import { ProfilePageRoutingModule } from './profile-routing.module';
 
-import { MoviePage } from './movie.page';
+import { ProfilePage } from './profile.page';
 import { SharedModule } from 'src/app/components/shared/shared.module';
+import { EditProfileModule } from 'src/app/components/edit-profile/edit-profile.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MoviePageRoutingModule,
+    ProfilePageRoutingModule,
     SharedModule,
+    EditProfileModule,
   ],
-  declarations: [MoviePage],
+  declarations: [ProfilePage],
 })
-export class MoviePageModule {}
+export class ProfilePageModule {}

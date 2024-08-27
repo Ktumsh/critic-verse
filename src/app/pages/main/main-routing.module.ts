@@ -14,6 +14,11 @@ const routes: Routes = [
           import('./home/home.module').then((m) => m.HomePageModule),
       },
       {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
         path: 'game',
         loadChildren: () =>
           import('./game/game.module').then((m) => m.GamePageModule),
@@ -27,6 +32,11 @@ const routes: Routes = [
         path: 'tv',
         loadChildren: () =>
           import('./tv/tv.module').then((m) => m.TvPageModule),
+      },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./profile/profile.module').then((m) => m.ProfilePageModule),
       },
     ],
   },

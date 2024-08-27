@@ -15,4 +15,11 @@ export class CustomButtonComponent {
   @Input() buttonClass: string = '';
   @Input() type: string = 'submit';
   @Input() disabled: boolean = false;
+  @Input() action?: () => void;
+
+  executeAction() {
+    if (this.action) {
+      this.action();
+    }
+  }
 }
