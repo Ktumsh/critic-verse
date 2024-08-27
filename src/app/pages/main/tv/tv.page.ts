@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TV_MODEL } from 'src/app/models/tv.model';
+import { TvShow } from 'src/app/types/tv';
 
 @Component({
   selector: 'app-tv',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tv.page.scss'],
 })
 export class TvPage implements OnInit {
+  tvList: TvShow[] = [];
 
-  constructor() { }
+  loadTvShows(): void {
+    this.tvList = TV_MODEL;
+  }
+  constructor() {}
 
   ngOnInit() {
+    this.loadTvShows();
   }
-
 }
