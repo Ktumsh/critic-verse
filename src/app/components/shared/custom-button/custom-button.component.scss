@@ -22,6 +22,14 @@ ion-button.size-sm {
   min-height: 48px;
 }
 
+ion-button.size-xs {
+  min-height: 40px;
+}
+
+ion-button.size-xxs {
+  min-height: 32px;
+}
+
 /* Default */
 ion-button::part(native) {
   --border-radius: 99px;

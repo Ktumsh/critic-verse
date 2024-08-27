@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { Step3PageRoutingModule } from './step-3-routing.module';
 
 import { Step3Page } from './step-3.page';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from 'src/app/components/shared/shared.module';
 
 @NgModule({
   imports: [

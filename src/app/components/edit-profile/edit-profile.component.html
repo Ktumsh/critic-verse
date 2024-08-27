@@ -1,0 +1,67 @@
+<app-header title="Mi Perfil" [logo]="false">
+  <div custom-slot class="flex justify-end pr-5 mr-0.5">
+    <ion-button fill="clear" shape="round" size="small" (click)="dismiss()">
+      Cerrar
+    </ion-button>
+  </div>
+</app-header>
+
+<ion-content>
+  <div class="flex flex-col items-center size-full py-6 px-6">
+    <div class="flex items-center justify-center mb-5">
+      <div class="ion-activatable ripple-parent">
+        <ion-thumbnail (click)="fileInput.click()" class="cursor-pointer">
+          <img
+            [src]="
+              userCopy.profileImage ||
+              'https://ionicframework.com/docs/img/demos/thumbnail.svg'
+            "
+          />
+          <ion-ripple-effect></ion-ripple-effect>
+        </ion-thumbnail>
+      </div>
+      <!-- Input de archivo oculto -->
+      <input
+        type="file"
+        #fileInput
+        (change)="onFileSelected($event)"
+        accept="image/*"
+        hidden
+      />
+    </div>
+    <!-- Formulario de edición -->
+    <div
+      class="flex flex-col p-5 bg-surface-secondary-600 w-full rounded-xl space-y-4"
+    >
+      <div class="flex flex-col w-full px-2">
+        <ion-label position="stacked">Nombre de Usuario</ion-label>
+        <ion-input
+          required
+          color="primary"
+          clearInput
+          [(ngModel)]="userCopy.username"
+        ></ion-input>
+      </div>
+      <div class="flex flex-col w-full px-2" disabled="true">
+        <ion-label position="stacked">Correo Electrónico</ion-label>
+        <ion-input
+          disabled
+          required
+          color="primary"
+          clearInput
+          [(ngModel)]="userCopy.email"
+        ></ion-input>
+      </div>
+    </div>
+
+    <!-- Botón para guardar cambios -->
+    <div class="flex items-end justify-center size-full">
+      <app-custom-button
+        [action]="saveChanges"
+        label="Guardar Cambios"
+        buttonClass="size-sm secondary"
+        class="w-full"
+      />
+    </div>
+  </div>
+</ion-content>

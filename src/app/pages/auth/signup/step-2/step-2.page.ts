@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { USER_MODEL } from 'src/app/models/user.mode';
+import { USER_MODEL } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-step-2',

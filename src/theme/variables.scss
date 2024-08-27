@@ -1,6 +1,3 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
-
 :root {
   --ion-background-color: var(--surface-primary-600);
   --ion-text-color: #fff;
@@ -52,10 +49,10 @@
 
 ion-button {
   text-transform: none;
-}
-
-ion-button::part(native) {
-  --border-radius: 12px;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .md:focus-visible {
@@ -90,6 +87,58 @@ ion-tab-bar {
     --ripple-color: var(--surface-primary-200);
     --color-selected: var(--surface-primary-200);
   }
+}
+
+ion-alert.custom-alert {
+  --background: var(--surface-secondary-600);
+
+  .alert-wrapper {
+    border-radius: 20px;
+
+    .alert-head {
+      border-bottom: 1px solid var(--surface-secondary-400);
+    }
+
+    h2.alert-title {
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .alert-head.sc-ion-alert-md + .alert-message.sc-ion-alert-md {
+      padding-top: 16px;
+    }
+
+    .alert-message {
+      padding-bottom: 0;
+      color: rgb(255 255 255 / var(--opacity-m));
+    }
+  }
+}
+
+button.alert-button.sc-ion-alert-md {
+  border-radius: 99px;
+  padding: 10px 16px;
+  text-transform: none;
+}
+
+button.alert-button.alert-button-role-cancel {
+  color: rgb(255 255 255 / var(--opacity-h));
+  border-radius: 99px;
+  padding: 10px 16px;
+  text-transform: none;
+  margin-right: 10px;
+}
+
+button.alert-button.alert-button-role-confirm {
+  border-radius: 99px;
+  padding: 10px 16px;
+  text-transform: none;
+}
+
+ion-toast.custom-toast {
+  --background: var(--surface-secondary-600);
+  --color: rgb(255 255 255 / var(--opacity-h));
+  --border-radius: 12px;
 }
 
 .ion-color-primary {

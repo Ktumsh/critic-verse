@@ -1,41 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from 'src/app/types/user';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class MainPage {
-  pages = [
-    {
-      title: 'Juegos',
-      url: '/game',
-      icon: 'game-controller',
-      fillIcon: 'fill-game-controller',
-      items: [
-        { title: 'Explorar Juegos', url: '' },
-        { title: 'Nuevos Juegos', url: '' },
-      ],
-    },
-    {
-      title: 'Películas',
-      url: '/movie',
-      icon: 'movie',
-      fillIcon: 'fill-movie',
-      items: [
-        { title: 'Explorar Películas', url: '' },
-        { title: 'Nuevas Películas', url: '' },
-      ],
-    },
-    {
-      title: 'TV',
-      url: '/tv',
-      icon: 'tv',
-      fillIcon: 'fill-tv',
-      items: [
-        { title: 'Explorar TV', url: '' },
-        { title: 'Nuevos TV Shows', url: '' },
-      ],
-    },
-  ];
+export class MainPage implements OnInit {
+  user: User | undefined;
+
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      this.user = navigation.extras.state['user'] as User;
+    }
+
+    if (!this.user) {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  ngOnInit() {
+    if (this.user) {
+      console.log('Usuario recibido en main:', this.user);
+    }
+  }
 }
