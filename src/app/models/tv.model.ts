@@ -6,7 +6,7 @@ const nanoid = customAlphabet(
   10
 );
 
-export const TV_MODEL = [
+export const TV_MODEL: TvShow[] = [
   {
     id: '1',
     title: 'Breaking Bad',
@@ -62,14 +62,14 @@ export const TV_MODEL = [
       { season: 1, episodes: 8 },
       { season: 2, episodes: 8 },
     ],
-    rating: 7.8,
+    rating: 3.4,
     releaseDate: '04-06-2021',
     episodeDuration: '45 minutos',
     streamingPlatforms: ['Netflix'],
     reviews: [
       {
         id: nanoid(),
-        rating: 7,
+        rating: 5,
         comment:
           'Sweet Tooth no ha sido necesariamente la historia más tranquila, ya que a la maravillosa primera temporada le siguió una segunda más torpe de lo esperado y muchos de esos problemas siguen presentes en la última temporada.',
         date: '06-06-2024',
@@ -131,7 +131,7 @@ export const TV_MODEL = [
       { season: 2, episodes: 8 },
       { season: 3, episodes: 8 },
     ],
-    rating: 7,
+    rating: 5.1,
     releaseDate: '26-07-2019',
     episodeDuration: '60 minutos',
     streamingPlatforms: ['Amazon Prime'],

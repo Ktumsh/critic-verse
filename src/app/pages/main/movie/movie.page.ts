@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MOVIE_MODEL } from 'src/app/models/movie.model';
+import { Movie } from 'src/app/types/movie';
 
 @Component({
   selector: 'app-movie',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./movie.page.scss'],
 })
 export class MoviePage implements OnInit {
+  movieList: Movie[] = [];
 
-  constructor() { }
+  loadMovies(): void {
+    this.movieList = MOVIE_MODEL;
+  }
+  constructor() {}
 
   ngOnInit() {
+    this.loadMovies();
   }
-
 }
