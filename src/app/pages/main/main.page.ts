@@ -17,7 +17,7 @@ export class MainPage implements OnInit {
     }
 
     if (!this.user) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth']);
     }
   }
 

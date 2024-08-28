@@ -22,7 +22,14 @@ export class EditProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userCopy = { ...this.user };
+    this.userCopy = {
+      id: this.user?.id || '1',
+      role: this.user?.role || 'user',
+      username: this.user?.username || 'Nombre por defecto',
+      email: this.user?.email || 'correo@ejemplo.com',
+      password: this.user?.password || '',
+      profileImage: this.user?.profileImage || '',
+    };
   }
 
   private async showAlert(message: string) {
@@ -30,7 +37,7 @@ export class EditProfileComponent implements OnInit {
       cssClass: 'custom-alert',
       header: 'Validación de Campos',
       message,
-      buttons: ['OK'],
+      buttons: ['Aceptar'],
     });
 
     await alert.present();

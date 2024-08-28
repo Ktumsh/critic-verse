@@ -8,12 +8,6 @@ import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [MenuComponent],
   exports: [MenuComponent],
-  imports: [
-    CommonModule,
-    IonicModule,
-    RouterLink,
-    NgOptimizedImage,
-    SharedModule,
-  ],
+  imports: [CommonModule, IonicModule, RouterLink, NgOptimizedImage],
 })
 export class MenuModule {}

@@ -68,9 +68,6 @@ ion-menu-button.md {
 }
 
 .tab-selected {
-  svg {
-    color: var(--color-primary-600);
-  }
   .inner-tab {
     span {
       color: var(--color-primary-600);
@@ -81,12 +78,20 @@ ion-menu-button.md {
 ion-tab-bar {
   padding: 0px 16px;
   height: 72px;
-  * {
-    --padding-start: 0;
-    --padding-end: 0;
-    --ripple-color: var(--surface-primary-200);
-    --color-selected: var(--surface-primary-200);
-  }
+
+  --padding-start: 0;
+  --padding-end: 0;
+  --color: rgb(255 255 255 / var(--opacity-h));
+  --color-selected: var(--color-primary-600);
+}
+
+ion-icon.game-icon {
+  width: 24px;
+  height: 24px;
+}
+
+ion-tab-button {
+  --ripple-color: var(--surface-primary-200);
 }
 
 ion-alert.custom-alert {
