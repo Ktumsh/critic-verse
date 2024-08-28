@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
-import { USER_MODEL } from 'src/app/models/user.mode';
+import { USER_MODEL } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -31,8 +31,6 @@ export class LoginPage implements OnInit {
     if (this.form.controls.email.valid) {
       const email = this.form.controls.email.value ?? '';
       const user = USER_MODEL.find((user) => user.email === email);
-
-      console.log('user', USER_MODEL);
 
       let navigationExtras: NavigationExtras = {
         state: {

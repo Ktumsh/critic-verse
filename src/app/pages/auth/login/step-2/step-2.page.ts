@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { User } from 'src/app/models/user.mode';
+import { NavigationExtras, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+import { User } from 'src/app/types/user';
 
 @Component({
   selector: 'app-step-2',
@@ -16,7 +17,10 @@ export class Step2Page implements OnInit {
   canShowError: boolean = false;
   user: User | undefined;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private toastController: ToastController
+  ) {
     const navigation = this.router.getCurrentNavigation();
 
     if (navigation?.extras.state) {
@@ -36,13 +40,35 @@ export class Step2Page implements OnInit {
     });
   }
 
+  async presentToast(position: 'top' | 'middle' | 'bottom', message: string) {
+    const toast = await this.toastController.create({
+      cssClass: 'custom-toast',
+      swipeGesture: 'vertical',
+      icon: 'checkmark-circle-outline',
+      message,
+      duration: 2000,
+      position: position,
+    });
+
+    await toast.present();
+  }
+
   submit() {
     this.canShowError = true;
     if (this.form.controls.password.valid) {
       const password = this.form.controls.password.value;
+
       if (this.user && this.user.password === password) {
         this.canShowError = false;
-        this.router.navigate(['/main/home']);
+
+        let navigationExtras: NavigationExtras = {
+          state: {
+            user: this.user,
+          },
+        };
+
+        this.presentToast('top', '¡Bienvenido de vuelta!');
+        this.router.navigate(['/main'], navigationExtras);
       } else {
         console.error('Contraseña incorrecta');
         this.form.controls.password.setErrors({ incorrect: true });

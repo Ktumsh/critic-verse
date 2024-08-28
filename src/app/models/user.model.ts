@@ -1,18 +1,10 @@
 import { customAlphabet } from 'nanoid';
+import { User } from '../types/user';
 
 const nanoid = customAlphabet(
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
   10
 );
-
-export interface User {
-  id: string;
-  role: string;
-  email: string;
-  username: string;
-  password: string;
-  birthdate?: Date | string;
-}
 
 export const USER_MODEL: User[] = [
   {

@@ -1,0 +1,61 @@
+<app-header title="Mi Perfil" [logo]="false">
+  <div custom-slot class="flex justify-end pr-5 mr-0.5">
+    <ion-button
+      color="secondary"
+      shape="round"
+      size="small"
+      (click)="openEditProfileModal()"
+      >Editar</ion-button
+    >
+  </div>
+</app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="flex flex-col items-center justify-center w-full pt-6">
+    <ion-thumbnail>
+      <img
+        [src]="user?.profileImage || 'https://ionicframework.com/docs/img/demos/thumbnail.svg'"
+      />
+    </ion-thumbnail>
+
+    <ion-label class="text-3xl font-bold text-primary-600 text-center mt-2">
+      {{ user?.username}}
+    </ion-label>
+    <ion-label class="text-sm text-white-l text-center">
+      {{ user?.email }}
+    </ion-label>
+  </div>
+  <ion-list [inset]="true">
+    <div class="mb-10">
+      <ion-item
+        *ngFor="let item of items.slice(0, 2)"
+        [button]="true"
+        [detail]="item.detail"
+      >
+        <div
+          slot="start"
+          [ngClass]="[item.color, 'flex items-center justify-center size-8 rounded']"
+        >
+          <ion-icon [src]="item.iconSrc" class="size-5"></ion-icon>
+        </div>
+        <ion-label>{{ item.label }}</ion-label>
+        <ion-note *ngIf="item.showNote" slot="end">{{ item.note }}</ion-note>
+      </ion-item>
+    </div>
+
+    <ion-item
+      *ngFor="let item of items.slice(2)"
+      [button]="true"
+      [detail]="item.detail"
+    >
+      <div
+        slot="start"
+        [ngClass]="[item.color, 'flex items-center justify-center size-8 rounded']"
+      >
+        <ion-icon [src]="item.iconSrc" class="size-5"></ion-icon>
+      </div>
+      <ion-label>{{ item.label }}</ion-label>
+      <ion-note *ngIf="item.showNote" slot="end">{{ item.note }}</ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,3 +1,42 @@
-<app-header title="Películas"></app-header>
+<app-header title="Películas" [logo]="false"></app-header>
 
-<ion-content [fullscreen]="true"></ion-content>
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="text-white">Peliculas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngFor="let movie of movieList">
+        <ion-item>
+          <ion-thumbnail slot="start" class="w-16 h-16">
+            <img alt="{{ movie.title }}" src="{{ movie.image }}" />
+          </ion-thumbnail>
+          <div>
+            <ion-label>{{ movie.title }}</ion-label>
+
+            <ion-card-subtitle
+              *ngIf="movie.rating >= 0 && movie.rating < 4"
+              color="danger"
+            >
+              {{ movie.rating }}
+            </ion-card-subtitle>
+
+            <ion-card-subtitle
+              *ngIf="movie.rating >= 4 && movie.rating < 6"
+              color="warning"
+            >
+              {{ movie.rating }}
+            </ion-card-subtitle>
+
+            <ion-card-subtitle
+              *ngIf="movie.rating >= 6 && movie.rating <= 10"
+              color="success"
+            >
+              {{ movie.rating }}
+            </ion-card-subtitle>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

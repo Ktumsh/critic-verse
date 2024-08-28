@@ -1,3 +1,42 @@
-<app-header title="Juegos"></app-header>
+<app-header title="Juegos" [logo]="false"></app-header>
 
-<ion-content [fullscreen]="true"></ion-content>
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="text-white">Videojuegos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngFor="let game of gameList">
+        <ion-item>
+          <ion-thumbnail slot="start" class="w-16 h-16">
+            <img alt="{{ game.title }}" src="{{ game.image }}" />
+          </ion-thumbnail>
+          <div>
+            <ion-label>{{ game.title }}</ion-label>
+
+            <ion-card-subtitle
+              *ngIf="game.rating >= 0 && game.rating < 4"
+              color="danger"
+            >
+              {{ game.rating }}
+            </ion-card-subtitle>
+
+            <ion-card-subtitle
+              *ngIf="game.rating >= 4 && game.rating < 6"
+              color="warning"
+            >
+              {{ game.rating }}
+            </ion-card-subtitle>
+
+            <ion-card-subtitle
+              *ngIf="game.rating >= 6 && game.rating <= 10"
+              color="success"
+            >
+              {{ game.rating }}
+            </ion-card-subtitle>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

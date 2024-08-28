@@ -16,7 +16,7 @@
       (ngSubmit)="submit()"
       class="flex flex-col justify-between size-full"
     >
-      <div class="flex flex-col mt-6 space-y-6">
+      <div class="flex flex-col mt-6">
         <app-custom-input
           type="password"
           placeholder="Contraseña"
@@ -39,11 +39,12 @@
           placeholder="Confirmar contraseña"
           autocomplete="new-password"
           [control]="confirmPasswordControl"
+          class="mt-6"
         ></app-custom-input>
 
         <div
           *ngIf="canShowError && confirmPasswordControl.invalid || canShowError && form.hasError('mismatch')"
-          class="flex flex-col px-5"
+          class="flex flex-col px-5 mt-1.5"
         >
           <span class="text-xs text-danger">
             {{ getErrorMessage('confirmPassword') }}

@@ -1,3 +1,42 @@
-<app-header title="Tv Shows"></app-header>
+<app-header title="Programas de TV" [logo]="false"></app-header>
 
-<ion-content [fullscreen]="true"></ion-content>
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="text-white">Programas de TV</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngFor="let tv of tvList">
+        <ion-item>
+          <ion-thumbnail slot="start" class="w-16 h-16">
+            <img alt="{{ tv.title }}" src="{{ tv.image }}" />
+          </ion-thumbnail>
+          <div>
+            <ion-label>{{ tv.title }}</ion-label>
+
+            <ion-card-subtitle
+              *ngIf="tv.rating >= 0 && tv.rating < 4"
+              color="danger"
+            >
+              {{ tv.rating }}
+            </ion-card-subtitle>
+
+            <ion-card-subtitle
+              *ngIf="tv.rating >= 4 && tv.rating < 6"
+              color="warning"
+            >
+              {{ tv.rating }}
+            </ion-card-subtitle>
+
+            <ion-card-subtitle
+              *ngIf="tv.rating >= 6 && tv.rating <= 10"
+              color="success"
+            >
+              {{ tv.rating }}
+            </ion-card-subtitle>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

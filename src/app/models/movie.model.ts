@@ -6,12 +6,12 @@ const nanoid = customAlphabet(
   10
 );
 
-export const MOVIE_MODEL = [
+export const MOVIE_MODEL: Movie[] = [
   {
     id: nanoid(),
     title: 'Deadpool & Wolverine',
     image: '/assets/movie/01.webp',
-    rating: 9,
+    rating: 9.7,
     details: {
       description:
         'Un cansado glotón se encuentra recuperándose de sus heridas cuando se encuentra con un Deadpool bocazas que ha viajado en el tiempo para curar a su mejor amigo con la esperanza de hacerse amigo de la bestia salvaje y formar equipo para derrotar a un enemigo que ambos tienen en común.',
@@ -60,7 +60,7 @@ export const MOVIE_MODEL = [
     id: nanoid(),
     title: 'I’ll Be Your Mirror',
     image: '/assets/movie/02.webp',
-    rating: 6.5,
+    rating: 3.8,
     details: {
       description:
         'Chloe (Carla Juri) viaja a Japón por trabajo, donde es recibida por un viejo amigo, Toshi (Takashi Ueno). Entre la melancolía por la pérdida de su marido y el asombro por el cambio de perspectivas, Chloe deambula por un paisaje desconocido.',
@@ -102,7 +102,7 @@ export const MOVIE_MODEL = [
     id: nanoid(),
     title: 'Blink Twice',
     image: '/assets/movie/03.webp',
-    rating: 7,
+    rating: 5.5,
     details: {
       description:
         'Cuando el multimillonario tecnológico Slater King (Channing Tatum) conoce a la camarera Frida (Naomi Ackie) en su gala benéfica, saltan chispas. La invita a unirse a él y a sus amigos en unas vacaciones de ensueño en su isla privada. Es el paraíso.',
@@ -130,7 +130,7 @@ export const MOVIE_MODEL = [
     reviews: [
       {
         id: nanoid(),
-        rating: 8,
+        rating: 6,
         comment:
           'Un thriller muy efectivo e incisivo que establece a Zoë Kravitz como una directora talentosa y te muestra un lado de Channing Tatum que nunca has visto antes.',
         date: '25-08-2024',

@@ -53,5 +53,17 @@
         </div>
       </div>
     </ion-tab-button>
+    <ion-tab-button tab="profile">
+      <div class="flex items-center justify-center h-full py-2.5">
+        <div
+          class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
+        >
+          <app-svg-icons
+            [iconName]="selectedTab === 'profile' ? 'fill-profile' : 'profile'"
+          ></app-svg-icons>
+          <span class="text-11 w-10 text-nowrap">Mi Perfil</span>
+        </div>
+      </div>
+    </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
