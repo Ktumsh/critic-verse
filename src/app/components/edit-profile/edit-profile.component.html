@@ -1,10 +1,8 @@
-<app-header title="Mi Perfil" [logo]="false">
-  <div custom-slot class="flex justify-end pr-5 mr-0.5">
-    <ion-button fill="clear" shape="round" size="small" (click)="dismiss()">
-      Cerrar
-    </ion-button>
-  </div>
-</app-header>
+<app-header
+  title="Editar perfil"
+  [logo]="false"
+  [backButton]="dismiss.bind(this)"
+/>
 
 <ion-content>
   <div class="flex flex-col items-center size-full py-6 px-6">
@@ -14,13 +12,13 @@
           <img
             [src]="
               userCopy.profileImage ||
-              'https://ionicframework.com/docs/img/demos/thumbnail.svg'
+              'https://ionicframework.com/docs/img/demos/avatar.svg'
             "
           />
           <ion-ripple-effect></ion-ripple-effect>
         </ion-thumbnail>
       </div>
-      <!-- Input de archivo oculto -->
+
       <input
         type="file"
         #fileInput
@@ -29,7 +27,7 @@
         hidden
       />
     </div>
-    <!-- Formulario de edición -->
+
     <div
       class="flex flex-col p-5 bg-surface-secondary-600 w-full rounded-xl space-y-4"
     >
@@ -54,7 +52,6 @@
       </div>
     </div>
 
-    <!-- Botón para guardar cambios -->
     <div class="flex items-end justify-center size-full">
       <app-custom-button
         [action]="saveChanges"

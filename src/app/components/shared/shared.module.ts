@@ -8,6 +8,7 @@ import { CustomButtonComponent } from './custom-button/custom-button.component';
 import { CustomInputComponent } from './custom-input/custom-input.component';
 import { LogoComponent } from './logo/logo.component';
 import { SvgIconsComponent } from './svg-icons/svg-icons.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SvgIconsComponent } from './svg-icons/svg-icons.component';
     LogoComponent,
     CustomInputComponent,
     CustomButtonComponent,
+    ChangePasswordComponent,
     SvgIconsComponent,
   ],
   exports: [
@@ -22,6 +24,7 @@ import { SvgIconsComponent } from './svg-icons/svg-icons.component';
     LogoComponent,
     CustomInputComponent,
     CustomButtonComponent,
+    ChangePasswordComponent,
     SvgIconsComponent,
     ReactiveFormsModule,
   ],

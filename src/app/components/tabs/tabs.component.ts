@@ -16,12 +16,14 @@ export class TabsComponent {
   tabChanged(event: any) {
     this.selectedTab = event.tab;
 
-    let navigationExtras: NavigationExtras = {
-      state: {
-        user: this.user,
-      },
-    };
+    if (this.router.url !== `/main/${event.tab}`) {
+      let navigationExtras: NavigationExtras = {
+        state: {
+          user: this.user,
+        },
+      };
 
-    this.router.navigate([`/main/${event.tab}`], navigationExtras);
+      this.router.navigate([`/main/${event.tab}`], navigationExtras);
+    }
   }
 }

@@ -5,9 +5,14 @@
         <div
           class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
         >
-          <app-svg-icons
-            [iconName]="selectedTab === 'home' ? 'fill-home' : 'home'"
-          ></app-svg-icons>
+          <ion-icon
+            [src]="
+              selectedTab === 'home'
+                ? 'assets/icon/core/home-fill.svg'
+                : 'assets/icon/core/home.svg'
+            "
+            class="size-5"
+          ></ion-icon>
           <span class="text-11 w-10 text-nowrap">Inicio</span>
         </div>
       </div>
@@ -15,16 +20,16 @@
     <ion-tab-button tab="game">
       <div class="flex items-center justify-center h-full py-2.5">
         <div
-          class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
+          class="inner-tab flex flex-col items-center justify-center w-10 overflow-hidden"
         >
-          <app-svg-icons
-            class="game-icon"
-            [iconName]="
+          <ion-icon
+            [src]="
               selectedTab === 'game'
-                ? 'fill-game-controller'
-                : 'game-controller'
+                ? 'assets/icon/core/game-fill.svg'
+                : 'assets/icon/core/game.svg'
             "
-          ></app-svg-icons>
+            class="size-5 game-icon"
+          ></ion-icon>
           <span class="text-11 w-10 text-nowrap">Juegos</span>
         </div>
       </div>
@@ -34,9 +39,14 @@
         <div
           class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
         >
-          <app-svg-icons
-            [iconName]="selectedTab === 'movie' ? 'fill-movie' : 'movie'"
-          ></app-svg-icons>
+          <ion-icon
+            [src]="
+              selectedTab === 'movie'
+                ? 'assets/icon/core/movie-fill.svg'
+                : 'assets/icon/core/movie.svg'
+            "
+            class="size-5"
+          ></ion-icon>
           <span class="text-11 w-10 text-nowrap">Pelis</span>
         </div>
       </div>
@@ -46,9 +56,14 @@
         <div
           class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
         >
-          <app-svg-icons
-            [iconName]="selectedTab === 'tv' ? 'fill-tv' : 'tv'"
-          ></app-svg-icons>
+          <ion-icon
+            [src]="
+              selectedTab === 'tv'
+                ? 'assets/icon/core/tv-fill.svg'
+                : 'assets/icon/core/tv.svg'
+            "
+            class="size-5"
+          ></ion-icon>
           <span class="text-11 w-10 text-nowrap">Tv</span>
         </div>
       </div>
@@ -58,9 +73,14 @@
         <div
           class="inner-tab flex flex-col items-center justify-center gap-1 overflow-hidden"
         >
-          <app-svg-icons
-            [iconName]="selectedTab === 'profile' ? 'fill-profile' : 'profile'"
-          ></app-svg-icons>
+          <ion-icon
+            [src]="
+              selectedTab === 'profile'
+                ? 'assets/icon/core/profile-fill.svg'
+                : 'assets/icon/core/profile.svg'
+            "
+            class="size-5"
+          ></ion-icon>
           <span class="text-11 w-10 text-nowrap">Mi Perfil</span>
         </div>
       </div>
