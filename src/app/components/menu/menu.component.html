@@ -41,23 +41,14 @@
           ></ion-icon>
           <ion-label class="ion-no-margin font-medium">{{ p.title }}</ion-label>
         </ion-item>
-        <ion-item
-          [routerLink]="p.items[0].url"
-          routerDirection="root"
-          *ngIf="p.items[0]"
-          detail
-        >
-          <ion-label class="ion-no-margin">{{ p.items[0].title }}</ion-label>
-        </ion-item>
-        <ion-item
-          [routerLink]="p.items[1].url"
-          routerDirection="root"
-          *ngIf="p.items[1]"
-          detail
-        >
-          <ion-label class="ion-no-margin">{{ p.items[1].title }}</ion-label>
-        </ion-item>
-        <ion-menu-toggle autoHide="false"> </ion-menu-toggle>
+        <ion-menu-toggle autoHide="false">
+          <ion-item [routerLink]="p.items[0].url" *ngIf="p.items[0]" detail>
+            <ion-label class="ion-no-margin">{{ p.items[0].title }}</ion-label>
+          </ion-item>
+          <ion-item [routerLink]="p.items[1].url" *ngIf="p.items[1]" detail>
+            <ion-label class="ion-no-margin">{{ p.items[1].title }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
       </div>
     </ion-list>
     <ion-footer>

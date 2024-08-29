@@ -1,0 +1,203 @@
+<app-header
+  [title]="'Mis calificaciones y reseñas'"
+  [logo]="false"
+  [backButton]="dismiss.bind(this)"
+/>
+
+<ion-content [fullscreen]="true">
+  <ion-segment
+    [(ngModel)]="selectedSegment"
+    (ionChange)="segmentChanged($event)"
+  >
+    <ion-segment-button value="games">
+      <ion-label>Juegos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="movies">
+      <ion-label>Películas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="tv">
+      <ion-label>TV</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="my-6" *ngIf="selectedSegment === 'games'">
+    <!-- Reseña juegos -->
+    <ion-card class="rounded-xl">
+      <div class="flex flex-col items-center justify-center w-full">
+        <div class="flex items-center justify-center w-full">
+          <div class="py-4 pl-4">
+            <ion-thumbnail class="min-w-24 min-h-24">
+              <img
+                alt="Black Myth: Wukong"
+                [ngSrc]="'assets/game/01.png'"
+                width="80"
+                height="80"
+                class="size-full"
+              />
+            </ion-thumbnail>
+          </div>
+          <div class="w-full">
+            <ion-card-header>
+              <ion-card-title class="text-base text-white font-semibold">
+                Black Myth: Wukong
+              </ion-card-title>
+              <ion-card-subtitle class="mt-0 text-xs text-white-m font-normal">
+                Realizada el 24 de agosto, 2024
+              </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <div class="flex items-center gap-2">
+                <div
+                  class="flex items-center justify-center size-7 bg-success rounded-full"
+                >
+                  <span class="font-bold text-white">9</span>
+                </div>
+                <span>Mi calificación</span>
+              </div>
+            </ion-card-content>
+          </div>
+        </div>
+        <div class="px-4 pb-4 w-full">
+          <div
+            class="flex items-center justify-center w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+          >
+            <span class="text-white font-normal text-sm">
+              Lo mejor que he jugado en todo el año 2024, tiene un apartado
+              visual magnífico, se nota que trabajaron mucho en su ambiente, el
+              mundo se siente vivo y dan ganas de perderte en todos los entornos
+              del mismo. La jugabilidad está súper asequible para todo tipo de
+              jugadores y una narrativa muy fiel a la novela.
+            </span>
+          </div>
+        </div>
+      </div>
+    </ion-card>
+  </div>
+
+  <div class="my-6 space-y-4" *ngIf="selectedSegment === 'movies'">
+    <!-- Reseña 1 películas -->
+    <ion-card class="rounded-xl">
+      <div class="flex flex-col items-center justify-center w-full">
+        <div class="flex items-center justify-cente w-full">
+          <div class="py-4 pl-4">
+            <ion-thumbnail class="min-w-24 min-h-24">
+              <img
+                alt="Deadpool & Wolverine"
+                [ngSrc]="'assets/movie/01.webp'"
+                width="80"
+                height="80"
+                class="size-full"
+              />
+            </ion-thumbnail>
+          </div>
+          <div class="w-full">
+            <ion-card-header>
+              <ion-card-title class="text-base text-white font-semibold">
+                Deadpool & Wolverine
+              </ion-card-title>
+              <ion-card-subtitle class="mt-0 text-xs text-white-m font-normal">
+                Realizada el 26 de agosto, 2024
+              </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <div class="flex items-center gap-2">
+                <div
+                  class="flex items-center justify-center size-7 bg-success rounded-full"
+                >
+                  <span class="font-bold text-white">10</span>
+                </div>
+                <span>Mi calificación</span>
+              </div>
+            </ion-card-content>
+          </div>
+        </div>
+        <div class="px-4 pb-4 w-full">
+          <div
+            class="flex items-center justify-center w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+          >
+            <span class="text-white font-normal text-sm">
+              Me encanta. Una película llena de emoción y múltiples cameos,
+              deseo ver más películas como esta. Esto es Marvel en su esencia,
+              que los superhéroes se mantengan fieles a los cómics. Ha regresado
+              esa emoción por ver una película de Marvel, una verdadera obra de
+              arte, épica ❤️ 10/10.
+            </span>
+          </div>
+        </div>
+      </div>
+    </ion-card>
+
+    <!-- Reseña 2 películas -->
+    <ion-card class="rounded-xl">
+      <div class="flex flex-col items-center justify-center w-full">
+        <div class="flex items-center justify-cente w-full">
+          <div class="py-4 pl-4">
+            <ion-thumbnail class="min-w-24 min-h-24">
+              <img
+                alt="I'll be your mirror"
+                [ngSrc]="'assets/movie/02.webp'"
+                width="80"
+                height="80"
+                class="size-full"
+              />
+            </ion-thumbnail>
+          </div>
+          <div class="w-full">
+            <ion-card-header>
+              <ion-card-title class="text-base text-white font-semibold">
+                I'll be your mirror
+              </ion-card-title>
+              <ion-card-subtitle class="mt-0 text-xs text-white-m font-normal">
+                Realizada el 03 de agosto, 2024
+              </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <div class="flex items-center gap-2">
+                <div
+                  class="flex items-center justify-center size-7 bg-warning rounded-full"
+                >
+                  <span class="font-bold text-white">6</span>
+                </div>
+                <span>Mi calificación</span>
+              </div>
+            </ion-card-content>
+          </div>
+        </div>
+        <div class="px-4 pb-4 w-full">
+          <div
+            class="flex flex-col items-center justify-center w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+          >
+            <span class="text-white font-normal text-sm">
+              Cuéntanos lo que piensas
+            </span>
+            <span class="text-white-l underline font-normal text-xs">
+              Escribe una reseña
+            </span>
+          </div>
+        </div>
+      </div>
+    </ion-card>
+  </div>
+
+  <div class="relative flex h-1/2 my-6" *ngIf="selectedSegment === 'tv'">
+    <!-- Reseña tv vacía -->
+    <div class="flex items-center justify-center absolute inset-0">
+      <img
+        src="assets/empty-screen-reviews.webp"
+        alt=""
+        class="opacity-40 w-2/3"
+      />
+    </div>
+    <div class="relative flex flex-col items-center justify-end size-full">
+      <h3 class="mt-4 font-semibold text-center text-white-h">
+        Aún no has calificado nada
+      </h3>
+      <small class="text-white-l">
+        Tus calificaciones y reseñas se guardarán aquí.
+      </small>
+    </div>
+  </div>
+</ion-content>

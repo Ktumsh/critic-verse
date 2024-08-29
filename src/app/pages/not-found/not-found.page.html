@@ -1,0 +1,29 @@
+<ion-content [fullscreen]="true">
+  <div class="flex flex-col items-center justify-between h-full px-6 py-6">
+    <div class="flex flex-col items-center justify-center mt-20">
+      <img
+        src="assets/empty-screen-notfound.webp"
+        alt=""
+        class="opacity-40 w-4/5"
+      />
+      <div
+        class="flex flex-col items-center justify-center text-center mt-4 gap-4"
+      >
+        <h1 class="text-2xl text-white-h font-semibold">
+          ¡Ups! Parece que esta página tiene una mala crítica...
+        </h1>
+        <p class="text-white-l">
+          Al igual que una película olvidable, esta página no merece tu tiempo.
+          Pero no te preocupes, ¡hay muchas críticas y reseñas interesantes
+          esperándote!
+        </p>
+      </div>
+    </div>
+    <app-custom-button
+      label="Regresar al inicio"
+      class="w-full"
+      buttonClass="secondary"
+      [routerLink]="['/main/home']"
+    />
+  </div>
+</ion-content>

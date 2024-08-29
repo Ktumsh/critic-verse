@@ -29,6 +29,7 @@ export class EditProfileComponent implements OnInit {
       email: this.user?.email || 'correo@ejemplo.com',
       password: this.user?.password || '',
       profileImage: this.user?.profileImage || '',
+      createdAt: this.user?.createdAt || new Date(),
     };
   }
 

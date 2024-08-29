@@ -105,17 +105,28 @@ ion-alert.custom-alert {
     }
 
     h2.alert-title {
+      font-size: 16px;
       font-weight: 600;
       text-align: center;
-    }
-
-    .alert-head.sc-ion-alert-md + .alert-message.sc-ion-alert-md {
-      padding-top: 16px;
     }
 
     .alert-message {
       padding-bottom: 0;
       color: rgb(255 255 255 / var(--opacity-m));
+    }
+  }
+}
+
+ion-alert.custom-alert.v2 {
+  .alert-wrapper {
+    .alert-head.sc-ion-alert-md + .alert-message.sc-ion-alert-md {
+      padding-top: 16px;
+    }
+
+    .alert-message {
+      padding-bottom: 1rem;
+      font-size: 14px;
+      border-bottom: 1px solid var(--surface-secondary-400);
     }
   }
 }

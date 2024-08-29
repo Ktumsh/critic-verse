@@ -5,8 +5,9 @@
       shape="round"
       size="small"
       (click)="openEditProfileModal()"
-      >Editar</ion-button
     >
+      Editar
+    </ion-button>
   </div>
 </app-header>
 
@@ -32,6 +33,7 @@
     <div class="mb-10">
       <ion-item
         *ngFor="let item of items.slice(0, 2)"
+        button
         [detail]="item.detail"
         (click)="navigateOrExecute(item)"
       >
@@ -48,7 +50,7 @@
 
     <ion-item
       *ngFor="let item of items.slice(2)"
-      [button]="true"
+      button
       [detail]="item.detail"
       (click)="navigateOrExecute(item)"
     >

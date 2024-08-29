@@ -52,29 +52,26 @@ export class MenuComponent implements OnInit {
   pages = [
     {
       title: 'Juegos',
-      url: '/game',
       icon: 'assets/icon/core/game-fill.svg',
       items: [
-        { title: 'Explorar Juegos', url: '' },
-        { title: 'Nuevos Juegos', url: '' },
+        { title: 'Explorar Juegos', url: '/main/search-games' },
+        { title: 'Nuevos Juegos', url: '/main/new-games' },
       ],
     },
     {
       title: 'Películas',
-      url: '/movie',
       icon: 'assets/icon/core/movie-fill.svg',
       items: [
-        { title: 'Explorar Películas', url: '' },
-        { title: 'Nuevas Películas', url: '' },
+        { title: 'Explorar Películas', url: '/main/search-movies' },
+        { title: 'Nuevas Películas', url: '/main/new-movies' },
       ],
     },
     {
       title: 'TV',
-      url: '/tv',
       icon: 'assets/icon/core/tv-fill.svg',
       items: [
-        { title: 'Explorar TV', url: '' },
-        { title: 'Nuevos TV Shows', url: '' },
+        { title: 'Explorar TV', url: '/main/search-tv' },
+        { title: 'Nuevos TV Shows', url: '/main/new-tv' },
       ],
     },
   ];

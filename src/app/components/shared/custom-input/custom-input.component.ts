@@ -21,6 +21,7 @@ export class CustomInputComponent implements OnInit {
   @Input() placeholder!: string;
   @Input() autofocus: boolean = false;
   @Input() autocomplete!: string;
+  @Input() value!: string;
   @Input() icon!: string;
 
   // Declarar el elemento del input DESACTIVADO POR EL MOMENTO
