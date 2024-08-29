@@ -1,20 +1,15 @@
-<app-header></app-header>
-
 <ion-content [fullscreen]="true">
   <!--Games-->
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="text-white">
-        Videojuegos
-        <ion-icon
-          name="game-controller-outline"
-          style="margin-left: 5px"
-        ></ion-icon>
-      </ion-card-title>
+      <ion-card-title class="text-white">Videojuegos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list *ngFor="let game of gameList">
-        <ion-item>
+      <ion-list>
+        <ion-item
+          *ngFor="let game of gameList"
+          [routerLink]="['/main/game-detail', game.id]"
+        >
           <ion-thumbnail slot="start" class="w-16 h-16">
             <img alt="{{ game.title }}" src="{{ game.image }}" />
           </ion-thumbnail>
@@ -50,14 +45,14 @@
   <!--Movies-->
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="text-white">
-        Peliculas
-        <ion-icon name="videocam-outline" style="margin-left: 5px"></ion-icon>
-      </ion-card-title>
+      <ion-card-title class="text-white">Películas</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list *ngFor="let movie of movieList">
-        <ion-item>
+      <ion-list>
+        <ion-item
+          *ngFor="let movie of movieList"
+          [routerLink]="['/main/movie-detail', movie.id]"
+        >
           <ion-thumbnail slot="start" class="w-16 h-16">
             <img alt="{{ movie.title }}" src="{{ movie.image }}" />
           </ion-thumbnail>
@@ -90,17 +85,17 @@
     </ion-card-content>
   </ion-card>
 
-  <!--TvShows-->
+  <!--TV Shows-->
   <ion-card>
     <ion-card-header>
-      <ion-card-title class="text-white">
-        Programas de TV
-        <ion-icon name="tv-outline" style="margin-left: 5px"></ion-icon>
-      </ion-card-title>
+      <ion-card-title class="text-white">Programas de TV</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list *ngFor="let tv of tvList">
-        <ion-item>
+      <ion-list>
+        <ion-item
+          *ngFor="let tv of tvList"
+          [routerLink]="['/main/tv-detail', tv.id]"
+        >
           <ion-thumbnail slot="start" class="w-16 h-16">
             <img alt="{{ tv.title }}" src="{{ tv.image }}" />
           </ion-thumbnail>

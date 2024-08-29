@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ game?.title }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="game">
+  <ion-card>
+    <div class="game-image-container" style="justify-content: flex-end">
+      <ion-img class="game-image" [src]="game.image"></ion-img>
+    </div>
+    <ion-card-header>
+      <ion-card-title class="game-title" style="text-align: left; color: white"
+        >{{ game.title }}</ion-card-title
+      >
+    </ion-card-header>
+    <ion-card-content>
+      <div class="game-description" style="text-align: left">
+        <p><strong>Descripción:</strong> {{ game.description }}</p>
+      </div>
+      <div class="game-details" style="text-align: left">
+        <p><strong>Género:</strong> {{ game.details.genre.join(', ') }}</p>
+        <p>
+          <strong>Plataformas:</strong> {{ game.details.plataforms.join(', ') }}
+        </p>
+        <p>
+          <strong>Fecha de lanzamiento:</strong> {{ game.details.releaseDate }}
+        </p>
+        <p><strong>Editor:</strong> {{ game.details.editor }}</p>
+        <p><strong>Desarrollador:</strong> {{ game.details.developer }}</p>
+      </div>
+      <div style="margin-top: 20px">
+        <ion-card-subtitle class="text-white" style="font-size: 1.2em">
+          Reseñas</ion-card-subtitle
+        >
+      </div>
+      <ion-list>
+        <ion-item *ngFor="let review of game.reviews">
+          <ion-label>
+            <ion-chip class="custom-chip">
+              <ion-avatar class="custom-avatar">
+                <img
+                  alt="Foto de perfil"
+                  src="https://i.pinimg.com/474x/03/7f/4d/037f4dfa61c3e61d20cb0284f64fb2c7.jpg"
+                />
+              </ion-avatar>
+              <ion-label class="custom-label">Pepito777</ion-label>
+            </ion-chip>
+
+            <p
+              [ngStyle]="{'color': review.rating >= 0 && review.rating < 4 ? 'red' : review.rating >= 4 && review.rating < 6 ? 'yellow' : 'green'}"
+            >
+              <strong>Rating:</strong> {{ review.rating }}
+            </p>
+            <p style="color: white">
+              <strong>Comentario:</strong> {{ review.comment }}
+            </p>
+            <p style="color: white">
+              <small><em>{{ review.date }}</em></small>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -6,7 +6,10 @@
       <ion-card-title class="text-white">Programas de TV</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list *ngFor="let tv of tvList">
+      <ion-list
+        *ngFor="let tv of tvList"
+        [routerLink]="['/main/tv-detail', tv.id]"
+      >
         <ion-item>
           <ion-thumbnail slot="start" class="w-16 h-16">
             <img alt="{{ tv.title }}" src="{{ tv.image }}" />

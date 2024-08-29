@@ -56,6 +56,27 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/main/tv/tv.module').then((m) => m.TvPageModule),
   },
+  {
+    path: 'main/game-detail/:id',
+    loadChildren: () =>
+      import('./pages/main/game-detail/game-detail.module').then(
+        (m) => m.GameDetailPageModule
+      ),
+  },
+  {
+    path: 'main/movie-detail/:id',
+    loadChildren: () =>
+      import('./pages/main/movie-detail/movie-detail.module').then(
+        (m) => m.MovieDetailPageModule
+      ),
+  },
+  {
+    path: 'main/tv-detail/:id',
+    loadChildren: () =>
+      import('./pages/main/tv-detail/tv-detail.module').then(
+        (m) => m.TvDetailPageModule
+      ),
+  },
 ];
 
 @NgModule({
