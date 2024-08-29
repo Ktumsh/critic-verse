@@ -114,7 +114,8 @@ ion-alert.custom-alert {
     }
 
     .alert-message {
-      padding-bottom: 0;
+      font-size: 14px;
+      border-bottom: 1px solid var(--surface-secondary-400);
       color: rgb(255 255 255 / var(--opacity-m));
     }
   }

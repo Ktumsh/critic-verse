@@ -4,6 +4,11 @@ import { ModalController } from '@ionic/angular';
 import { User } from 'src/app/types/user';
 import { EditProfileComponent } from 'src/app/components/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from 'src/app/components/shared/change-password/change-password.component';
+import { AccountDetailsComponent } from 'src/app/components/shared/account-details/account-details.component';
+import { ProfileReviewsComponent } from 'src/app/components/shared/profile-reviews/profile-reviews.component';
+import { NotificationsComponent } from 'src/app/components/shared/notifications/notifications.component';
+import { ConfigurationComponent } from 'src/app/components/shared/configuration/configuration.component';
+import { HelpComponent } from 'src/app/components/shared/help/help.component';
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +26,7 @@ export class ProfilePage implements OnInit {
     if (navigation?.extras.state) {
       this.user = navigation.extras.state['user'] as User;
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth']);
     }
   }
 
@@ -34,21 +39,6 @@ export class ProfilePage implements OnInit {
   async openEditProfileModal() {
     const modal = await this.modalController.create({
       component: EditProfileComponent,
-      componentProps: { user: this.user },
-    });
-
-    modal.onDidDismiss().then((data) => {
-      if (data.data && data.data.user) {
-        this.user = data.data.user;
-      }
-    });
-
-    return await modal.present();
-  }
-
-  async openChangePasswordModal() {
-    const modal = await this.modalController.create({
-      component: ChangePasswordComponent,
       componentProps: { user: this.user },
     });
 
@@ -90,7 +80,7 @@ export class ProfilePage implements OnInit {
       note: '2',
       showNote: true,
       detail: false,
-      action: () => this.openModal(EditProfileComponent),
+      action: () => this.openModal(ProfileReviewsComponent),
     },
     {
       label: 'Notificaciones',
@@ -99,7 +89,7 @@ export class ProfilePage implements OnInit {
       note: '3',
       showNote: true,
       detail: false,
-      action: () => this.openModal(EditProfileComponent),
+      action: () => this.openModal(NotificationsComponent),
     },
     {
       label: 'Detalles de mi cuenta',
@@ -108,7 +98,7 @@ export class ProfilePage implements OnInit {
       note: null,
       showNote: false,
       detail: true,
-      action: () => this.openEditProfileModal(),
+      action: () => this.openModal(AccountDetailsComponent),
     },
     {
       label: 'Cambiar contraseña',
@@ -117,7 +107,7 @@ export class ProfilePage implements OnInit {
       note: null,
       showNote: false,
       detail: true,
-      action: () => this.openChangePasswordModal(),
+      action: () => this.openModal(ChangePasswordComponent),
     },
     {
       label: 'Configuración',
@@ -126,7 +116,7 @@ export class ProfilePage implements OnInit {
       note: null,
       showNote: false,
       detail: true,
-      action: () => this.openModal(EditProfileComponent),
+      action: () => this.openModal(ConfigurationComponent),
     },
     {
       label: 'Ayuda',
@@ -135,7 +125,7 @@ export class ProfilePage implements OnInit {
       note: null,
       showNote: false,
       detail: true,
-      action: () => this.openModal(EditProfileComponent),
+      action: () => this.openModal(HelpComponent),
     },
   ];
 

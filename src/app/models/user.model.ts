@@ -13,7 +13,8 @@ export const USER_MODEL: User[] = [
     email: 'jo.barra@duocuc.cl',
     username: 'ktumsh',
     password: '12345',
-    birthdate: new Date('2002-01-11T12:00:00').toLocaleDateString('es-CL'),
+    birthdate: new Date('2002-01-11T12:00:00'),
+    createdAt: new Date('2024-08-28T12:00:00'),
   },
   {
     id: nanoid(),
@@ -21,7 +22,8 @@ export const USER_MODEL: User[] = [
     email: 'ren.rivera@duocuc.cl',
     username: 'rynat',
     password: '12345',
-    birthdate: new Date('2005-01-15T12:00:00').toLocaleDateString('es-CL'),
+    birthdate: new Date('2005-01-15T12:00:00'),
+    createdAt: new Date('2024-08-28T12:00:00'),
   },
   {
     id: nanoid(),
@@ -29,6 +31,7 @@ export const USER_MODEL: User[] = [
     email: 'usuario@duocuc.cl',
     username: '_username69',
     password: '12345',
-    birthdate: new Date('2003-01-10T12:00:00').toLocaleDateString('es-CL'),
+    birthdate: new Date('2003-01-10T12:00:00'),
+    createdAt: new Date('2024-08-28T12:00:00'),
   },
 ];

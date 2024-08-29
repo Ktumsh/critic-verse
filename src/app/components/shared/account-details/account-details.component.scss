@@ -1,0 +1,8 @@
+ion-item.custom-item::part(native) {
+  background: transparent;
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+  border-width: 1px;
+
+  border-radius: 16px;
+}
