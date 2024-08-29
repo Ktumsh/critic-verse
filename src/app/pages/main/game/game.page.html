@@ -6,8 +6,11 @@
       <ion-card-title class="text-white">Videojuegos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list *ngFor="let game of gameList">
-        <ion-item>
+      <ion-list>
+        <ion-item
+          *ngFor="let game of gameList"
+          [routerLink]="['/main/game-detail', game.id]"
+        >
           <ion-thumbnail slot="start" class="w-16 h-16">
             <img alt="{{ game.title }}" src="{{ game.image }}" />
           </ion-thumbnail>
