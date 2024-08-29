@@ -33,6 +33,7 @@
     <div class="mb-10">
       <ion-item
         *ngFor="let item of items.slice(0, 2)"
+        button
         [detail]="item.detail"
         (click)="navigateOrExecute(item)"
       >
@@ -49,7 +50,7 @@
 
     <ion-item
       *ngFor="let item of items.slice(2)"
-      [button]="true"
+      button
       [detail]="item.detail"
       (click)="navigateOrExecute(item)"
     >

@@ -1,0 +1,20 @@
+ion-item {
+  --border-color: var(--surface-secondary-600);
+
+  --inner-padding-top: 8px;
+  --inner-padding-bottom: 8px;
+  --inner-padding-start: 16px;
+}
+
+ion-item {
+  --inner-border-width: 0 0 1px 0;
+}
+
+ion-item::part(native) {
+  --padding-start: 0;
+}
+
+ion-thumbnail {
+  --size: 40px;
+  --border-radius: 12px;
+}

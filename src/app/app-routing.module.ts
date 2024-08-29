@@ -36,28 +36,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/main/main.module').then((m) => m.MainPageModule),
   },
-<<<<<<< HEAD
-=======
-  {
-    path: 'home',
-    loadChildren: () =>
-      import('./pages/main/home/home.module').then((m) => m.HomePageModule),
-  },
-  {
-    path: 'game',
-    loadChildren: () =>
-      import('./pages/main/game/game.module').then((m) => m.GamePageModule),
-  },
-  {
-    path: 'movie',
-    loadChildren: () =>
-      import('./pages/main/movie/movie.module').then((m) => m.MoviePageModule),
-  },
-  {
-    path: 'tv',
-    loadChildren: () =>
-      import('./pages/main/tv/tv.module').then((m) => m.TvPageModule),
-  },
   {
     path: 'main/game-detail/:id',
     loadChildren: () =>
@@ -79,7 +57,13 @@ const routes: Routes = [
         (m) => m.TvDetailPageModule
       ),
   },
->>>>>>> 20d9b19d21764f961d342c29c85c75d6913dec62
+  {
+    path: '**',
+    loadChildren: () =>
+      import('./pages/not-found/not-found.module').then(
+        (m) => m.NotFoundPageModule
+      ),
+  },
 ];
 
 @NgModule({

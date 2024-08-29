@@ -9,10 +9,15 @@ import { User } from 'src/app/types/user';
 })
 export class ProfileReviewsComponent implements OnInit {
   @Input() user!: User;
+  selectedSegment: string = 'games';
 
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {}
+
+  segmentChanged(event: any) {
+    this.selectedSegment = event.detail.value;
+  }
 
   dismiss() {
     this.modalController.dismiss({

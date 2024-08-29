@@ -21,7 +21,7 @@ export class AccountDetailsComponent implements OnInit {
 
   async showAlert() {
     const alert = await this.alertController.create({
-      cssClass: 'custom-alert',
+      cssClass: 'custom-alert v2',
       header: '¿Estás seguro que deseas eliminar tu cuenta?',
       message:
         'Esta acción es irreversible y perderás tu cuenta permanentemente.',

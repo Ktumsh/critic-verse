@@ -5,18 +5,243 @@
 />
 
 <ion-content [fullscreen]="true">
-  <ion-list [inset]="true">
-    <ion-item>
-      <ion-input label="First Name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input label="Last Name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-toggle>
-        <ion-label>Allow Notifications</ion-label>
-        <ion-note color="medium">Unsubscribe at any time</ion-note>
-      </ion-toggle>
-    </ion-item>
-  </ion-list>
+  <div class="my-6 space-y-8">
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">General</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Cuenta</h3>
+          </div>
+        </ion-item>
+
+        <ion-item>
+          <ion-toggle mode="md" checked>
+            <h3 class="text-white-h text-base text-wrap">
+              Permitir notificaciones
+            </h3>
+            <span class="text-xs text-white-l text-wrap">
+              Date de baja en cualquier momento
+            </span>
+          </ion-toggle>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Accesibilidad</h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Privacidad</h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Obtener ayuda</h3>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">Contenido</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Géneros favoritos</h3>
+          </div>
+        </ion-item>
+
+        <ion-item>
+          <ion-toggle mode="md" checked>
+            <h3 class="text-white-h text-base text-wrap">
+              Recomendaciones personalizadas
+            </h3>
+            <span class="text-xs text-white-l text-wrap">
+              Recomendaciones basadas en tu navegación y calificaciones
+            </span>
+          </ion-toggle>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">
+              Filtrado de contenido
+            </h3>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">Notificaciones</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item>
+          <ion-toggle mode="md" checked>
+            <h3 class="text-white-h text-base text-wrap">
+              Notificaciones por correo
+            </h3>
+            <span class="text-xs text-white-l text-wrap">
+              Recibe notificaciones en tu correo
+            </span>
+          </ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-toggle mode="md" checked>
+            <h3 class="text-white-h text-base text-wrap">
+              Notificaciones push
+            </h3>
+            <span class="text-xs text-white-l text-wrap">
+              Notificaciones de nuevas funcionalidades o actualizaciones
+            </span>
+          </ion-toggle>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">Accesibilidad</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Tamaño de fuente</h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Tipo de contraste</h3>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-toggle mode="md" checked>
+            <h3 class="text-white-h text-base text-wrap">
+              Desactivar animaciones
+            </h3>
+            <span class="text-xs text-white-l text-wrap">
+              Desactivar todas las animaciones de la aplicación
+            </span>
+          </ion-toggle>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">Seguridad y privacidad</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">
+              Autenticación en dos pasos
+            </h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">
+              Actividad de la cuenta
+            </h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">
+              Configuraciones de privacidad
+            </h3>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">Soporte y feedback</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Centro de ayuda</h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Enviar feedback</h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">
+              Información de la versión
+            </h3>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">Configuración avanzada</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">
+              Descargar Datos de la Cuenta
+            </h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Sesiones Activas</h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md" class="text-danger">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-base text-wrap text-danger">Eliminar cuenta</h3>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
 </ion-content>

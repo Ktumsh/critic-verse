@@ -4,4 +4,112 @@
   [backButton]="dismiss.bind(this)"
 />
 
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  <div class="my-6">
+    <ion-list mode="ios" class="border-t border-surface-secondary-600">
+      <!-- Notificación 1: Nueva Reseña de Película -->
+      <ion-item-sliding mode="md">
+        <ion-item mode="md" class="items-start">
+          <ion-thumbnail class="mr-4 min-w-10">
+            <img
+              alt="noti"
+              [ngSrc]="'assets/movie/01.webp'"
+              width="40"
+              height="40"
+              class="size-10"
+            />
+          </ion-thumbnail>
+          <div class="my-0.5">
+            <span class="text-white-h text-wrap font-semibold"
+              >Nueva Reseña de Película</span
+            ><br />
+            <small class="text-xs text-white-l text-wrap">
+              "Deadpool y Wolverine" ha sido valorada con 9.7 estrellas.
+              ¡Descubre por qué!
+            </small>
+          </div>
+          <div class="metadata-end-wrapper" slot="end">
+            <small class="text-sm text-white-l">8h</small>
+          </div>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option class="bg-secondary-600/50">
+            <ion-icon slot="icon-only" name="archive"></ion-icon>
+          </ion-item-option>
+          <ion-item-option class="bg-primary-600/50">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+      <!-- Notificación 2: Nueva Reseña de Videojuego -->
+      <ion-item-sliding mode="md">
+        <ion-item mode="md" class="items-start">
+          <ion-thumbnail class="mr-4 min-w-10">
+            <img
+              alt="noti"
+              [ngSrc]="'assets/game/01.png'"
+              width="40"
+              height="40"
+              class="size-10"
+            />
+          </ion-thumbnail>
+          <div class="my-0.5">
+            <span class="text-white-h text-wrap font-semibold"
+              >Nueva Reseña de Videojuego</span
+            ><br />
+            <small class="text-xs text-white-l text-wrap">
+              "Black Myth: Wukong" recibió una calificación de 9.5 estrellas.
+              ¡Lee la reseña completa ahora!
+            </small>
+          </div>
+          <div class="metadata-end-wrapper" slot="end">
+            <small class="text-sm text-white-l">2d</small>
+          </div>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option class="bg-secondary-600/50">
+            <ion-icon slot="icon-only" name="archive"></ion-icon>
+          </ion-item-option>
+          <ion-item-option class="bg-primary-600/50">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+      <!-- Notificación 3: Nueva Temporada de Serie -->
+      <ion-item-sliding mode="md">
+        <ion-item mode="md" class="items-start">
+          <ion-thumbnail class="mr-4 min-w-10">
+            <img
+              alt="noti"
+              [ngSrc]="'assets/tv/04.webp'"
+              width="40"
+              height="40"
+              class="size-10"
+            />
+          </ion-thumbnail>
+          <div class="my-0.5">
+            <span class="text-white-h text-wrap font-semibold"
+              >Nueva Temporada de Serie</span
+            ><br />
+            <small class="text-xs text-white-l text-wrap">
+              "The Boys" ha lanzado su nueva temporada. ¡No te la pierdas!
+            </small>
+          </div>
+          <div class="metadata-end-wrapper" slot="end">
+            <small class="text-sm text-white-l">5d</small>
+          </div>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option class="bg-secondary-600/50">
+            <ion-icon slot="icon-only" name="archive"></ion-icon>
+          </ion-item-option>
+          <ion-item-option class="bg-primary-600/50">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</ion-content>

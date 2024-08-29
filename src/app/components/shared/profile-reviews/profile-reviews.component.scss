@@ -1,0 +1,16 @@
+ion-segment-button.md {
+  --color: rgb(255 255 255 / var(--opacity-m));
+  --color-checked: var(--color-secondary-600);
+  --indicator-height: 4px;
+}
+
+ion-thumbnail {
+  --size: 80px;
+  --border-radius: 16px;
+  box-shadow: 0 0 10px 2px rgb(0 0 0 / 30%);
+}
+
+ion-card {
+  --background: var(--surface-secondary-600);
+  --color: rgb(255 255 255 / var(--opacity-h));
+}
