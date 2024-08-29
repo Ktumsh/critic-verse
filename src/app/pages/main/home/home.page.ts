@@ -23,8 +23,16 @@ export class HomePage implements OnInit {
   }
 
   loadContent(): void {
-    this.gameList = GAME_MODEL;
-    this.movieList = MOVIE_MODEL;
-    this.tvList = TV_MODEL;
+    if (this.gameList.length === 0) {
+      this.gameList = [...GAME_MODEL];
+    }
+
+    if (this.movieList.length === 0) {
+      this.movieList = [...MOVIE_MODEL];
+    }
+
+    if (this.tvList.length === 0) {
+      this.tvList = [...TV_MODEL];
+    }
   }
 }

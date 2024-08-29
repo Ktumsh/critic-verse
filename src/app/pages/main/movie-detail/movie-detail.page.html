@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ movie?.title }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="movie">
+  <ion-card>
+    <div>
+      <ion-img class="movie-image" [src]="movie.image"></ion-img>
+    </div>
+    <ion-card-header>
+      <ion-card-title
+        class="movie-title"
+        style="text-align: left; color: white"
+      >
+        {{ movie.title }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="movie-description" style="text-align: left">
+        <p><strong>Descripción:</strong> {{ movie.details.description }}</p>
+      </div>
+      <div class="movie-details" style="text-align: left">
+        <p><strong>Género:</strong> {{ movie.details.genre.join(', ') }}</p>
+        <p><strong>Elenco:</strong> {{ movie.details.cast.join(', ') }}</p>
+        <p>
+          <strong>Director:</strong> {{ movie.details.director.join(', ') }}
+        </p>
+        <p>
+          <strong>Productores:</strong> {{ movie.details.producer.join(', ') }}
+        </p>
+        <p>
+          <strong>Escritores:</strong> {{ movie.details.written.join(', ') }}
+        </p>
+        <p>
+          <strong>Fecha de lanzamiento:</strong> {{ movie.details.releaseDate }}
+        </p>
+        <p><strong>Duración:</strong> {{ movie.details.timeDuration }}</p>
+        <p>
+          <strong>Compañía de Producción:</strong> {{
+          movie.details.productionCompany }}
+        </p>
+      </div>
+      <div style="margin-top: 20px">
+        <ion-card-subtitle class="text-white" style="font-size: 1.2em">
+          Reseñas</ion-card-subtitle
+        >
+      </div>
+      <ion-list>
+        <ion-item *ngFor="let review of movie.reviews">
+          <ion-label>
+            <ion-chip class="custom-chip">
+              <ion-avatar class="custom-avatar">
+                <img
+                  alt="Foto de perfil"
+                  src="https://i.pinimg.com/474x/c7/56/76/c756769720b1232b6fabdd47c196f3e8.jpg"
+                />
+              </ion-avatar>
+              <ion-label class="custom-label">Zelith</ion-label>
+            </ion-chip>
+            <p
+              [ngStyle]="{'color': review.rating >= 0 && review.rating < 4 ? 'red' : review.rating >= 4 && review.rating < 6 ? 'yellow' : 'green'}"
+            >
+              <strong>Rating:</strong> {{ review.rating }}
+            </p>
+            <p style="color: white">
+              <strong>Comentario:</strong> {{ review.comment }}
+            </p>
+            <p style="color: white">
+              <small><em>{{ review.date }}</em></small>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

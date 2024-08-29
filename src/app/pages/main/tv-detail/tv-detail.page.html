@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ tv?.title }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="tv">
+  <ion-card>
+    <div class="tv-image-container" style="justify-content: flex-end">
+      <ion-img class="tv-image" [src]="tv.image"></ion-img>
+    </div>
+    <ion-card-header>
+      <ion-card-title class="tv-title" style="text-align: left; color: white">
+        {{ tv.title }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Establece color blanco para todo el contenido de la tarjeta -->
+      <div class="tv-description" style="text-align: left; color: white">
+        <p><strong>Descripción:</strong> {{ tv.description }}</p>
+      </div>
+      <div class="tv-details" style="text-align: left; color: white">
+        <p><strong>Género:</strong> {{ tv.genre.join(', ') }}</p>
+        <p><strong>Elenco:</strong> {{ tv.cast.join(', ') }}</p>
+        <p><strong>Director:</strong> {{ tv.director.join(', ') }}</p>
+        <p><strong>Productores:</strong> {{ tv.producers.join(', ') }}</p>
+        <p><strong>Escritores:</strong> {{ tv.writers.join(', ') }}</p>
+        <p><strong>Fecha de lanzamiento:</strong> {{ tv.releaseDate }}</p>
+        <p><strong>Duración del episodio:</strong> {{ tv.episodeDuration }}</p>
+        <p>
+          <strong>Plataformas de Streaming:</strong> {{
+          tv.streamingPlatforms.join(', ') }}
+        </p>
+        <p></p>
+      </div>
+      <div style="margin-top: 20px">
+        <ion-card-subtitle class="text-white" style="font-size: 1.2em">
+          Reseñas</ion-card-subtitle
+        >
+      </div>
+      <ion-list>
+        <ion-item *ngFor="let review of tv.reviews">
+          <ion-label>
+            <ion-chip class="custom-chip">
+              <ion-avatar class="custom-avatar">
+                <img
+                  alt="Foto de perfil"
+                  src="https://i.pinimg.com/474x/a2/1b/2f/a21b2fe8289e98d82d3ef6dc2e6441bc.jpg"
+                />
+              </ion-avatar>
+              <ion-label class="custom-label">JorgitoParrilla</ion-label>
+            </ion-chip>
+            <p
+              [ngStyle]="{'color': review.rating >= 0 && review.rating < 4 ? 'red' : review.rating >= 4 && review.rating < 6 ? 'yellow' : 'green'}"
+            >
+              <strong>Rating:</strong> {{ review.rating }}
+            </p>
+            <p style="color: white">
+              <strong>Comentario:</strong> {{ review.comment }}
+            </p>
+            <p style="color: white">
+              <small><em>{{ review.date }}</em></small>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
