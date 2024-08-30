@@ -157,6 +157,21 @@ ion-toast.custom-toast {
   --border-radius: 12px;
 }
 
+ion-action-sheet.custom-sheet {
+  --background: var(--surface-secondary-600);
+  --button-color: rgb(255 255 255 / var(--opacity-h));
+  --color: rgb(255 255 255 / var(--opacity-h));
+  --ion-color-danger: var(--color-primary-600);
+  .action-sheet-title {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  action-sheet-cancel {
+    --color: var(--color-primary-600);
+  }
+}
+
 .ion-color-primary {
   --ion-color-base: var(--ion-color-primary);
   --ion-color-base-rgb: var(--ion-color-primary-rgb);

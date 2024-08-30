@@ -7,40 +7,34 @@
       <ion-card-title class="text-white">Videojuegos</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list>
-        <ion-item
-          *ngFor="let game of gameList"
-          [routerLink]="['/main/game-detail', game.id]"
-        >
-          <ion-thumbnail slot="start" class="w-16 h-16">
-            <img alt="{{ game.title }}" src="{{ game.image }}" />
-          </ion-thumbnail>
-          <div>
-            <ion-label>{{ game.title }}</ion-label>
-
-            <ion-card-subtitle
-              *ngIf="game.rating >= 0 && game.rating < 4"
-              color="danger"
+      <div class="horizontal-scroll">
+        <div *ngFor="let game of gameList" class="item-container">
+          <ion-card
+            [routerLink]="['/main/game-detail', game.id]"
+            button
+            class="game-card"
+          >
+            <img [src]="game.image" [alt]="game.title" class="item-image" />
+            <ion-card-header>
+              <ion-card-title class="item-title"
+                >{{ game.title }}</ion-card-title
+              >
+            </ion-card-header>
+          </ion-card>
+          <div class="rating-container">
+            <div
+              class="rating-box"
+              [ngClass]="{
+                'rating-danger': game.rating >= 0 && game.rating < 4,
+                'rating-warning': game.rating >= 4 && game.rating < 6,
+                'rating-success': game.rating >= 6 && game.rating <= 10
+              }"
             >
-              {{ game.rating }}
-            </ion-card-subtitle>
-
-            <ion-card-subtitle
-              *ngIf="game.rating >= 4 && game.rating < 6"
-              color="warning"
-            >
-              {{ game.rating }}
-            </ion-card-subtitle>
-
-            <ion-card-subtitle
-              *ngIf="game.rating >= 6 && game.rating <= 10"
-              color="success"
-            >
-              {{ game.rating }}
-            </ion-card-subtitle>
+              <span class="rating-text">{{ game.rating }}</span>
+            </div>
           </div>
-        </ion-item>
-      </ion-list>
+        </div>
+      </div>
     </ion-card-content>
   </ion-card>
 
@@ -50,40 +44,34 @@
       <ion-card-title class="text-white">Películas</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list>
-        <ion-item
-          *ngFor="let movie of movieList"
-          [routerLink]="['/main/movie-detail', movie.id]"
-        >
-          <ion-thumbnail slot="start" class="w-16 h-16">
-            <img alt="{{ movie.title }}" src="{{ movie.image }}" />
-          </ion-thumbnail>
-          <div>
-            <ion-label>{{ movie.title }}</ion-label>
-
-            <ion-card-subtitle
-              *ngIf="movie.rating >= 0 && movie.rating < 4"
-              color="danger"
+      <div class="horizontal-scroll">
+        <div *ngFor="let movie of movieList" class="item-container">
+          <ion-card
+            [routerLink]="['/main/movie-detail', movie.id]"
+            button
+            class="movie-card"
+          >
+            <img [src]="movie.image" [alt]="movie.title" class="item-image" />
+            <ion-card-header>
+              <ion-card-title class="item-title"
+                >{{ movie.title }}</ion-card-title
+              >
+            </ion-card-header>
+          </ion-card>
+          <div class="rating-container">
+            <div
+              class="rating-box"
+              [ngClass]="{
+                'rating-danger': movie.rating >= 0 && movie.rating < 4,
+                'rating-warning': movie.rating >= 4 && movie.rating < 6,
+                'rating-success': movie.rating >= 6 && movie.rating <= 10
+              }"
             >
-              {{ movie.rating }}
-            </ion-card-subtitle>
-
-            <ion-card-subtitle
-              *ngIf="movie.rating >= 4 && movie.rating < 6"
-              color="warning"
-            >
-              {{ movie.rating }}
-            </ion-card-subtitle>
-
-            <ion-card-subtitle
-              *ngIf="movie.rating >= 6 && movie.rating <= 10"
-              color="success"
-            >
-              {{ movie.rating }}
-            </ion-card-subtitle>
+              <span class="rating-text">{{ movie.rating }}</span>
+            </div>
           </div>
-        </ion-item>
-      </ion-list>
+        </div>
+      </div>
     </ion-card-content>
   </ion-card>
 
@@ -93,40 +81,32 @@
       <ion-card-title class="text-white">Programas de TV</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-list>
-        <ion-item
-          *ngFor="let tv of tvList"
-          [routerLink]="['/main/tv-detail', tv.id]"
-        >
-          <ion-thumbnail slot="start" class="w-16 h-16">
-            <img alt="{{ tv.title }}" src="{{ tv.image }}" />
-          </ion-thumbnail>
-          <div>
-            <ion-label>{{ tv.title }}</ion-label>
-
-            <ion-card-subtitle
-              *ngIf="tv.rating >= 0 && tv.rating < 4"
-              color="danger"
+      <div class="horizontal-scroll">
+        <div *ngFor="let tv of tvList" class="item-container">
+          <ion-card
+            [routerLink]="['/main/tv-detail', tv.id]"
+            button
+            class="tv-card"
+          >
+            <img [src]="tv.image" [alt]="tv.title" class="item-image" />
+            <ion-card-header>
+              <ion-card-title class="item-title">{{ tv.title }}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+          <div class="rating-container">
+            <div
+              class="rating-box"
+              [ngClass]="{
+                'rating-danger': tv.rating >= 0 && tv.rating < 4,
+                'rating-warning': tv.rating >= 4 && tv.rating < 6,
+                'rating-success': tv.rating >= 6 && tv.rating <= 10
+              }"
             >
-              {{ tv.rating }}
-            </ion-card-subtitle>
-
-            <ion-card-subtitle
-              *ngIf="tv.rating >= 4 && tv.rating < 6"
-              color="warning"
-            >
-              {{ tv.rating }}
-            </ion-card-subtitle>
-
-            <ion-card-subtitle
-              *ngIf="tv.rating >= 6 && tv.rating <= 10"
-              color="success"
-            >
-              {{ tv.rating }}
-            </ion-card-subtitle>
+              <span class="rating-text">{{ tv.rating }}</span>
+            </div>
           </div>
-        </ion-item>
-      </ion-list>
+        </div>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

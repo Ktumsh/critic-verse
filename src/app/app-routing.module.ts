@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -66,10 +68,13 @@ const routes: Routes = [
   },
 ];
 
+registerLocaleData(localeEs);
+
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   exports: [RouterModule],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
 })
 export class AppRoutingModule {}

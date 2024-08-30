@@ -4,7 +4,7 @@ interface Detail {
   summary: string;
   genre: string[];
   plataforms: string[];
-  releaseDate: string;
+  releaseDate: Date | string;
   editor: string;
   developer: string;
 }

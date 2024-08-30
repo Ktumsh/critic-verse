@@ -13,7 +13,7 @@ export interface TvShow {
   seasons: number;
   episodesPerSeason: { season: number; episodes: number }[];
   rating: number;
-  releaseDate: string;
+  releaseDate: Date | string;
   episodeDuration: string;
   streamingPlatforms: string[];
   reviews: Review[];

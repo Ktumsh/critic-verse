@@ -42,7 +42,7 @@ export const MOVIE_MODEL: Movie[] = [
       ],
       productionCompany: 'Marvel Studios',
       genre: ['Acción', 'Aventura', 'Comedia', 'Ciencia ficción'],
-      releaseDate: '26 de julio de 2024',
+      releaseDate: new Date('2024-07-26'),
       timeDuration: '02:08',
     },
     reviews: [
@@ -51,7 +51,7 @@ export const MOVIE_MODEL: Movie[] = [
         rating: 10,
         comment:
           'Me encantó esta película, la comedia es excelente y para los fanáticos de Deadpool hay muchas referencias cómicas a la altura del personaje.',
-        date: '22-08-2024',
+        date: new Date('2024-08-22'),
         userId: '1',
       },
     ],
@@ -84,7 +84,7 @@ export const MOVIE_MODEL: Movie[] = [
       written: ['Bradley Rust Gray'],
       productionCompany: 'Mutressa Movies',
       genre: ['Drama'],
-      releaseDate: '23 de agosto de 2024',
+      releaseDate: new Date('2024-08-23'),
       timeDuration: '01:51',
     },
     reviews: [
@@ -93,7 +93,7 @@ export const MOVIE_MODEL: Movie[] = [
         rating: 5.8,
         comment:
           'En el fondo, la actuación de Juri es una maravilla de emoción contenida y asombro ante el mundo que la rodea. Es solo que la película que la rodea le hace un flaco favor a esa actuación.',
-        date: '25-08-2024',
+        date: new Date('2024-08-25'),
         userId: '2',
       },
     ],
@@ -124,7 +124,7 @@ export const MOVIE_MODEL: Movie[] = [
       written: ['Zoe Kravitz', 'Y. Feigenbaum'],
       productionCompany: 'Bruce Cohen Productions',
       genre: ['Misterio', 'Suspenso'],
-      releaseDate: '23 de agosto de 2024',
+      releaseDate: new Date('2024-08-23'),
       timeDuration: '01:42',
     },
     reviews: [
@@ -133,7 +133,7 @@ export const MOVIE_MODEL: Movie[] = [
         rating: 6,
         comment:
           'Un thriller muy efectivo e incisivo que establece a Zoë Kravitz como una directora talentosa y te muestra un lado de Channing Tatum que nunca has visto antes.',
-        date: '25-08-2024',
+        date: new Date('2024-08-25'),
         userId: '3',
       },
     ],
@@ -171,9 +171,9 @@ export const MOVIE_MODEL: Movie[] = [
         'Jack Kirby',
         'Stan Lee',
       ],
-      productionCompany: 'Twentieth Century Fox, Marvel Entertainment,',
+      productionCompany: 'Twentieth Century Fox, Marvel Entertainment',
       genre: ['Acción', 'Ciencia ficción', 'Aventura'],
-      releaseDate: '27 de mayo de 2016',
+      releaseDate: new Date('2016-05-27'),
       timeDuration: '02:24',
     },
     reviews: [
@@ -182,7 +182,7 @@ export const MOVIE_MODEL: Movie[] = [
         rating: 8,
         comment:
           'Al ver Apocalipsis, no tienes la sensación de que cada personaje esté preparado para su propia secuela. Se complementan entre sí. Se necesitan mutuamente. La naturaleza desbordante del elenco de la película es lo que realmente importa.',
-        date: '26-05-2016',
+        date: new Date('2016-05-26'),
         userId: '4',
       },
     ],
@@ -213,9 +213,9 @@ export const MOVIE_MODEL: Movie[] = [
         'Kurt Williams',
       ],
       written: ['James Mangold', 'Scott Frank', 'Michael Verde'],
-      productionCompany: 'Twentieth Century Fox, Marvel Entertainment,',
+      productionCompany: 'Twentieth Century Fox, Marvel Entertainment',
       genre: ['Acción', 'Ciencia ficción', 'Drama', 'Suspenso'],
-      releaseDate: '03 de marzo de 2017',
+      releaseDate: new Date('2017-03-03'),
       timeDuration: '02:17',
     },
     reviews: [
@@ -224,7 +224,7 @@ export const MOVIE_MODEL: Movie[] = [
         rating: 8,
         comment:
           'Este es un final excelente y apropiado para el mutante más grande de las películas.',
-        date: '17-02-2019',
+        date: new Date('2019-02-17'),
         userId: '5',
       },
     ],

@@ -1,69 +1,255 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{ game?.title }}</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
+<app-header
+  [title]="'Calificaciones y reseñas'"
+  [logo]="false"
+  [backButton]="goBack.bind(this)"
+/>
 <ion-content [fullscreen]="true" *ngIf="game">
-  <ion-card>
-    <div class="game-image-container" style="justify-content: flex-end">
-      <ion-img class="game-image" [src]="game.image"></ion-img>
-    </div>
-    <ion-card-header>
-      <ion-card-title class="game-title" style="text-align: left; color: white"
-        >{{ game.title }}</ion-card-title
-      >
-    </ion-card-header>
-    <ion-card-content>
-      <div class="game-description" style="text-align: left">
-        <p><strong>Descripción:</strong> {{ game.description }}</p>
-      </div>
-      <div class="game-details" style="text-align: left">
-        <p><strong>Género:</strong> {{ game.details.genre.join(', ') }}</p>
-        <p>
-          <strong>Plataformas:</strong> {{ game.details.plataforms.join(', ') }}
-        </p>
-        <p>
-          <strong>Fecha de lanzamiento:</strong> {{ game.details.releaseDate }}
-        </p>
-        <p><strong>Editor:</strong> {{ game.details.editor }}</p>
-        <p><strong>Desarrollador:</strong> {{ game.details.developer }}</p>
-      </div>
-      <div style="margin-top: 20px">
-        <ion-card-subtitle class="text-white" style="font-size: 1.2em">
-          Reseñas</ion-card-subtitle
-        >
-      </div>
-      <ion-list>
-        <ion-item *ngFor="let review of game.reviews">
-          <ion-label>
-            <ion-chip class="custom-chip">
-              <ion-avatar class="custom-avatar">
-                <img
-                  alt="Foto de perfil"
-                  src="https://i.pinimg.com/474x/03/7f/4d/037f4dfa61c3e61d20cb0284f64fb2c7.jpg"
-                />
-              </ion-avatar>
-              <ion-label class="custom-label">Pepito777</ion-label>
-            </ion-chip>
+  <div class="fixed bottom-0 p-6 z-10 w-full">
+    <app-custom-button label="Agregar mi reseña" buttonClass="secondary" />
+  </div>
 
-            <p
-              [ngStyle]="{'color': review.rating >= 0 && review.rating < 4 ? 'red' : review.rating >= 4 && review.rating < 6 ? 'yellow' : 'green'}"
+  <div class="relative -translate-y-14 w-full h-96">
+    <ion-thumbnail class="size-full overflow-hidden">
+      <img
+        [ngSrc]="game.image"
+        width="600"
+        height="900"
+        class="object-center size-full"
+      />
+    </ion-thumbnail>
+  </div>
+  <div class="-translate-y-32 flex flex-col items-center justify-center">
+    <app-logo size="w-12" />
+    <h2 class="text-5xl font-black text-center font-geist">{{game.title}}</h2>
+  </div>
+
+  <div class="-translate-y-32 m-2.5">
+    <div class="p-4 pt-0 space-y-4">
+      <!-- Plataformas y fecha de lanzamiento e imagen-->
+      <div>
+        <div class="flex items-center justify-center flex-wrap mb-1">
+          <div
+            *ngFor="let platform of game.details.plataforms"
+            class="inline-flex grow items-center min-h-8 px-3 py-1.5 m-1 rounded-full bg-secondary-600/10 text-secondary-600"
+          >
+            <ion-icon
+              [src]="'assets/icon/platform/' + platformIcon(platform) + '.svg'"
+              class="size-4 mr-1"
+            ></ion-icon>
+            <span>{{ platform }}</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-center text-white-l">
+          <ion-icon src="assets/icon/rocket.svg" class="size-3 mr-2"></ion-icon>
+          <span>
+            {{ game.details.releaseDate | date:'d \'de\' MMMM \'de\' y'}}
+          </span>
+        </div>
+      </div>
+
+      <hr class="h-px w-full bg-surface-secondary-600" />
+
+      <article>
+        <ion-segment
+          [(ngModel)]="selectedSegment"
+          (ionChange)="segmentChanged($event)"
+        >
+          <ion-segment-button value="reviews">
+            <ion-label>Reseñas</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="about">
+            <ion-label>Acerca de</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+
+        <!-- Clasificación -->
+        <section
+          *ngIf="selectedSegment === 'reviews'"
+          class="flex flex-col space-y-4 my-6"
+        >
+          <div class="flex flex-col space-y-4 mb-12">
+            <div class="flex flex-col w-full">
+              <div class="flex items-center">
+                <div class="flex flex-col w-full mr-4">
+                  <span
+                    class="text-white-l text-sm letter-spacing-widest uppercase"
+                  >
+                    Rating mundial
+                  </span>
+                  <span class="text-white-h text-base font-semibold">
+                    {{ getRatingDescription(game.rating) }}
+                  </span>
+                  <span class="text-white-l text-sm">Basada en 93 reseñas</span>
+                </div>
+                <div
+                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', game.rating >= 0 && game.rating < 4 ? 'bg-danger' : game.rating >= 4 && game.rating < 6 ? 'bg-warning' : 'bg-success']"
+                >
+                  <span class="font-geist font-black text-4xl text-white">
+                    {{ game.rating }}
+                  </span>
+                </div>
+              </div>
+              <div
+                [ngClass]="['w-full h-1.5 mt-4 rounded-full', game.rating >= 0 && game.rating < 4 ? 'bg-danger' : game.rating >= 4 && game.rating < 6 ? 'bg-warning' : 'bg-success']"
+              ></div>
+            </div>
+            <div class="flex flex-col w-full">
+              <div class="flex items-center">
+                <div class="flex flex-col w-full mr-4">
+                  <span
+                    class="text-white-l text-sm letter-spacing-widest uppercase"
+                  >
+                    Rating de usuarios
+                  </span>
+                  <span class="text-white-h text-base font-semibold">
+                    {{ getUserRatingDescription(getAverageRating(game)) }}
+                  </span>
+                  <span class="text-white-l text-sm"
+                    >Basada en {{ game.reviews.length}} {{ game.reviews.length >
+                    1 ? 'reseñas' : 'reseña'}}</span
+                  >
+                </div>
+                <div
+                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', getAverageRating(game) >= 0 && getAverageRating(game) < 4 ? 'bg-danger' : getAverageRating(game) >= 4 && getAverageRating(game) < 6 ? 'bg-warning' : 'bg-success']"
+                >
+                  <span class="font-geist font-black text-4xl text-white">
+                    {{ getAverageRating(game) }}
+                  </span>
+                </div>
+              </div>
+              <div
+                [ngClass]="['w-full h-1.5 mt-4 rounded-full', getAverageRating(game) >= 0 && getAverageRating(game) < 4 ? 'bg-danger' : getAverageRating(game) >= 4 && getAverageRating(game) < 6 ? 'bg-warning' : 'bg-success']"
+              ></div>
+            </div>
+          </div>
+
+          <div class="w-full pb-2 border-b border-surface-secondary-600">
+            <h3 class="text-2xl font-semibold text-white-h">Reseñas</h3>
+          </div>
+
+          <!-- Reseñas -->
+          <div class="flex flex-col space-y-4">
+            <div
+              *ngFor="let review of game.reviews"
+              class="p-4 bg-surface-secondary-600 rounded relative"
             >
-              <strong>Rating:</strong> {{ review.rating }}
-            </p>
-            <p style="color: white">
-              <strong>Comentario:</strong> {{ review.comment }}
-            </p>
-            <p style="color: white">
-              <small><em>{{ review.date }}</em></small>
-            </p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+              <div class="flex flex-col space-y-4 text-white-h">
+                <header class="flex items-center justify-between w-full">
+                  <div class="inline-flex items-center gap-3">
+                    <ion-avatar class="size-8 rounded-xl">
+                      <img
+                        alt="Foto de perfil"
+                        src="https://i.pinimg.com/474x/03/7f/4d/037f4dfa61c3e61d20cb0284f64fb2c7.jpg"
+                      />
+                    </ion-avatar>
+                    <span class="text-lg font-semibold">Pepito777</span>
+                  </div>
+
+                  <div
+                    [ngClass]="['flex items-center justify-center size-7 rounded-full', review.rating >= 0 && review.rating < 4 ? 'bg-danger' : review.rating >= 4 && review.rating < 6 ? 'bg-warning' : 'bg-success']"
+                  >
+                    <span class="font-bold text-white"
+                      >{{ review.rating }}</span
+                    >
+                  </div>
+                </header>
+                <p class="text-sm">{{ review.comment }}</p>
+                <footer
+                  class="flex items-center justify-end pt-4 border-t border-surface-secondary-400"
+                >
+                  <div class="inline-flex items-center gap-4">
+                    <small class="text-xs text-white-l"
+                      >{{ review.date| date:'d \'de\' MMM, y'}}
+                    </small>
+                    <ion-button
+                      (click)="presentActionSheet()"
+                      expand="block"
+                      fill="clear"
+                      shape="round"
+                      class="size-8"
+                      color="secondary"
+                    >
+                      <ion-icon
+                        src="assets/icon/report.svg"
+                        class="size-5 text-white-l"
+                      ></ion-icon>
+                    </ion-button>
+                  </div>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Acerca de -->
+        <section
+          class="flex flex-col space-y-4 my-6"
+          *ngIf="selectedSegment === 'about'"
+        >
+          <div class="w-full pb-2 border-b border-surface-secondary-600">
+            <h3 class="text-2xl font-semibold text-white-h">Detalles</h3>
+          </div>
+
+          <div class="flex flex-col">
+            <div class="mb-2">
+              <h4 class="text-lg text-white-m">Resumen</h4>
+            </div>
+            <div class="mb-4">
+              <p class="text-white-h text-sm">{{ game.description }}</p>
+            </div>
+            <div class="flex flex-col space-y-4">
+              <div
+                class="flex flex-col justify-center p-4 space-y-2 bg-surface-secondary-600 text-white-m rounded-xl text-sm"
+              >
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">Plataformas:</span>
+                  <ul class="inline-flex p-0">
+                    <li *ngFor="let plataform of game.details.plataforms">
+                      {{ plataform }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">
+                    Fecha de lanzamiento:
+                  </span>
+                  <span>
+                    {{ game.details.releaseDate | date:'d \'de\' MMM, y'}}
+                  </span>
+                </div>
+              </div>
+
+              <div
+                class="flex flex-col justify-center p-4 space-y-2 bg-surface-secondary-600 text-white-m rounded-xl text-sm"
+              >
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">
+                    Desarrollador:
+                  </span>
+                  <span> {{ game.details.developer }} </span>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h"> Editor: </span>
+                  <span> {{ game.details.editor }} </span>
+                </div>
+              </div>
+
+              <div
+                class="flex flex-col justify-center p-4 space-y-2 bg-surface-secondary-600 text-white-m rounded-xl text-sm"
+              >
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">Géneros:</span>
+                  <ul class="inline-flex p-0">
+                    <li *ngFor="let genre of game.details.genre">
+                      {{ genre }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
 </ion-content>
