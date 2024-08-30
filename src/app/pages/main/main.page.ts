@@ -16,9 +16,9 @@ export class MainPage implements OnInit {
       this.user = navigation.extras.state['user'] as User;
     }
 
-    if (!this.user) {
+    /* if (!this.user) {
       this.router.navigate(['/auth']);
-    }
+    } */
   }
 
   ngOnInit() {

@@ -1,81 +1,243 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{ movie?.title }}</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
+<app-header
+  [title]="'Calificaciones y reseñas'"
+  [logo]="false"
+  [backButton]="goBack.bind(this)"
+/>
 <ion-content [fullscreen]="true" *ngIf="movie">
-  <ion-card>
-    <div>
-      <ion-img class="movie-image" [src]="movie.image"></ion-img>
-    </div>
-    <ion-card-header>
-      <ion-card-title
-        class="movie-title"
-        style="text-align: left; color: white"
-      >
-        {{ movie.title }}
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="movie-description" style="text-align: left">
-        <p><strong>Descripción:</strong> {{ movie.details.description }}</p>
+  <div class="fixed bottom-0 p-6 z-10 w-full">
+    <app-custom-button label="Agregar mi reseña" buttonClass="blurred" />
+  </div>
+
+  <div class="relative -translate-y-14 w-full h-96">
+    <ion-thumbnail class="size-full overflow-hidden">
+      <img
+        [ngSrc]="movie.image"
+        width="600"
+        height="900"
+        class="object-center size-full"
+      />
+    </ion-thumbnail>
+  </div>
+  <div class="-translate-y-32 flex flex-col items-center justify-center">
+    <app-logo size="w-12" />
+    <h2 class="text-5xl font-black text-center font-geist">{{movie.title}}</h2>
+  </div>
+
+  <div class="-translate-y-32 m-2.5">
+    <div class="p-4 pt-0 space-y-4">
+      <!-- Género, Director, etc. -->
+      <div>
+        <div class="flex items-center justify-center flex-wrap mb-1">
+          <div
+            *ngFor="let genre of movie.details.genre"
+            class="inline-flex grow items-center min-h-8 px-3 py-1.5 m-1 rounded-full bg-secondary-600/10 text-secondary-600"
+          >
+            <span>{{ genre }}</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-center text-white-l">
+          <ion-icon src="assets/icon/rocket.svg" class="size-3 mr-2"></ion-icon>
+          <span>
+            {{ movie.details.releaseDate | date:'d \'de\' MMMM \'de\' y'}}
+          </span>
+        </div>
       </div>
-      <div class="movie-details" style="text-align: left">
-        <p><strong>Género:</strong> {{ movie.details.genre.join(', ') }}</p>
-        <p><strong>Elenco:</strong> {{ movie.details.cast.join(', ') }}</p>
-        <p>
-          <strong>Director:</strong> {{ movie.details.director.join(', ') }}
-        </p>
-        <p>
-          <strong>Productores:</strong> {{ movie.details.producer.join(', ') }}
-        </p>
-        <p>
-          <strong>Escritores:</strong> {{ movie.details.written.join(', ') }}
-        </p>
-        <p>
-          <strong>Fecha de lanzamiento:</strong> {{ movie.details.releaseDate }}
-        </p>
-        <p><strong>Duración:</strong> {{ movie.details.timeDuration }}</p>
-        <p>
-          <strong>Compañía de Producción:</strong> {{
-          movie.details.productionCompany }}
-        </p>
-      </div>
-      <div style="margin-top: 20px">
-        <ion-card-subtitle class="text-white" style="font-size: 1.2em">
-          Reseñas</ion-card-subtitle
+
+      <hr class="h-px w-full bg-surface-secondary-600" />
+
+      <article>
+        <ion-segment
+          [(ngModel)]="selectedSegment"
+          (ionChange)="segmentChanged($event)"
         >
-      </div>
-      <ion-list>
-        <ion-item *ngFor="let review of movie.reviews">
-          <ion-label>
-            <ion-chip class="custom-chip">
-              <ion-avatar class="custom-avatar">
-                <img
-                  alt="Foto de perfil"
-                  src="https://i.pinimg.com/474x/c7/56/76/c756769720b1232b6fabdd47c196f3e8.jpg"
-                />
-              </ion-avatar>
-              <ion-label class="custom-label">Zelith</ion-label>
-            </ion-chip>
-            <p
-              [ngStyle]="{'color': review.rating >= 0 && review.rating < 4 ? 'red' : review.rating >= 4 && review.rating < 6 ? 'yellow' : 'green'}"
+          <ion-segment-button value="reviews">
+            <ion-label>Reseñas</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="about">
+            <ion-label>Acerca de</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+
+        <!-- Clasificación -->
+        <section
+          *ngIf="selectedSegment === 'reviews'"
+          class="flex flex-col space-y-4 my-6"
+        >
+          <div class="flex flex-col space-y-4 mb-12">
+            <div class="flex flex-col w-full">
+              <div class="flex items-center">
+                <div class="flex flex-col w-full mr-4">
+                  <span
+                    class="text-white-l text-sm letter-spacing-widest uppercase"
+                  >
+                    Rating mundial
+                  </span>
+                  <span class="text-white-h text-base font-semibold">
+                    {{ getRatingDescription(movie.rating) }}
+                  </span>
+                  <span class="text-white-l text-sm">Basada en 93 reseñas</span>
+                </div>
+                <div
+                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', movie.rating >= 0 && movie.rating < 4 ? 'bg-danger' : movie.rating >= 4 && movie.rating < 6 ? 'bg-warning' : 'bg-success']"
+                >
+                  <span class="font-geist font-black text-4xl text-white">
+                    {{ movie.rating }}
+                  </span>
+                </div>
+              </div>
+              <div
+                [ngClass]="['w-full h-1.5 mt-4 rounded-full', movie.rating >= 0 && movie.rating < 4 ? 'bg-danger' : movie.rating >= 4 && movie.rating < 6 ? 'bg-warning' : 'bg-success']"
+              ></div>
+            </div>
+            <div class="flex flex-col w-full">
+              <div class="flex items-center">
+                <div class="flex flex-col w-full mr-4">
+                  <span
+                    class="text-white-l text-sm letter-spacing-widest uppercase"
+                  >
+                    Rating de usuarios
+                  </span>
+                  <span class="text-white-h text-base font-semibold">
+                    {{ getUserRatingDescription(getAverageRating(movie)) }}
+                  </span>
+                  <span class="text-white-l text-sm"
+                    >Basada en {{ movie.reviews.length}} {{ movie.reviews.length
+                    > 1 ? 'reseñas' : 'reseña'}}</span
+                  >
+                </div>
+                <div
+                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', getAverageRating(movie) >= 0 && getAverageRating(movie) < 4 ? 'bg-danger' : getAverageRating(movie) >= 4 && getAverageRating(movie) < 6 ? 'bg-warning' : 'bg-success']"
+                >
+                  <span class="font-geist font-black text-4xl text-white">
+                    {{ getAverageRating(movie) }}
+                  </span>
+                </div>
+              </div>
+              <div
+                [ngClass]="['w-full h-1.5 mt-4 rounded-full', getAverageRating(movie) >= 0 && getAverageRating(movie) < 4 ? 'bg-danger' : getAverageRating(movie) >= 4 && getAverageRating(movie) < 6 ? 'bg-warning' : 'bg-success']"
+              ></div>
+            </div>
+          </div>
+
+          <div class="w-full pb-2 border-b border-surface-secondary-600">
+            <h3 class="text-2xl font-semibold text-white-h">Reseñas</h3>
+          </div>
+
+          <!-- Reseñas -->
+          <div class="flex flex-col space-y-4">
+            <div
+              *ngFor="let review of movie.reviews"
+              class="p-4 bg-surface-secondary-600 rounded relative"
             >
-              <strong>Rating:</strong> {{ review.rating }}
-            </p>
-            <p style="color: white">
-              <strong>Comentario:</strong> {{ review.comment }}
-            </p>
-            <p style="color: white">
-              <small><em>{{ review.date }}</em></small>
-            </p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+              <div class="flex flex-col space-y-4 text-white-h">
+                <header class="flex items-center justify-between w-full">
+                  <div class="inline-flex items-center gap-3">
+                    <ion-avatar class="size-8 rounded-xl">
+                      <img
+                        alt="Foto de perfil"
+                        src="https://i.pinimg.com/474x/c7/56/76/c756769720b1232b6fabdd47c196f3e8.jpg"
+                      />
+                    </ion-avatar>
+                    <span class="text-lg font-semibold">Zelith</span>
+                  </div>
+
+                  <div
+                    [ngClass]="['flex items-center justify-center size-7 rounded-full', review.rating >= 0 && review.rating < 4 ? 'bg-danger' : review.rating >= 4 && review.rating < 6 ? 'bg-warning' : 'bg-success']"
+                  >
+                    <span class="font-bold text-white">
+                      {{ review.rating }}
+                    </span>
+                  </div>
+                </header>
+                <p class="text-sm">{{ review.comment }}</p>
+                <footer
+                  class="flex items-center justify-end pt-4 border-t border-surface-secondary-400"
+                >
+                  <div class="inline-flex items-center gap-4">
+                    <small class="text-xs text-white-l"
+                      >{{ review.date | date:'d \'de\' MMM, y' }}
+                    </small>
+                    <ion-button
+                      (click)="presentActionSheet()"
+                      expand="block"
+                      fill="clear"
+                      shape="round"
+                      class="size-8"
+                      color="secondary"
+                    >
+                      <ion-icon
+                        src="assets/icon/report.svg"
+                        class="size-5 text-white-l"
+                      ></ion-icon>
+                    </ion-button>
+                  </div>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Acerca de -->
+        <section
+          class="flex flex-col space-y-4 my-6"
+          *ngIf="selectedSegment === 'about'"
+        >
+          <div class="w-full pb-2 border-b border-surface-secondary-600">
+            <h3 class="text-2xl font-semibold text-white-h">Detalles</h3>
+          </div>
+
+          <div class="flex flex-col">
+            <div class="mb-2">
+              <h4 class="text-lg text-white-m">Resumen</h4>
+            </div>
+            <div class="mb-4">
+              <p class="text-white-h text-sm">
+                {{ movie.details.description }}
+              </p>
+            </div>
+            <div class="flex flex-col space-y-4">
+              <div
+                class="flex flex-col justify-center p-4 space-y-2 bg-surface-secondary-600 text-white-m rounded-xl text-sm"
+              >
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">Géneros:</span>
+                  <ul class="inline-flex p-0">
+                    <li *ngFor="let genre of movie.details.genre">
+                      {{ genre }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">
+                    Fecha de lanzamiento:
+                  </span>
+                  <span>
+                    {{ movie.details.releaseDate | date:'d \'de\' MMM, y' }}
+                  </span>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h"> Duración: </span>
+                  <span> {{ movie.details.timeDuration }} </span>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h"> Director: </span>
+                  <span> {{ movie.details.director.join(', ') }} </span>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h"> Productores: </span>
+                  <span> {{ movie.details.producer.join(', ') }} </span>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">
+                    Compañía de Producción:
+                  </span>
+                  <span> {{ movie.details.productionCompany }} </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
 </ion-content>

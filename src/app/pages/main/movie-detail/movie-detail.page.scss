@@ -1,52 +1,36 @@
 ion-content {
-    --padding-top: 20px;
-  }
-  
-  .movie-image-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  
-  .movie-image-container img {
-    width: 150px; 
-    height: auto;
-    border-radius: 10px;
-  }
-  
-  .movie-description,
-  .movie-details,
-  .movie-reviews {
-    color: white; 
-    margin-bottom: 20px; 
-    text-align: center; 
-  }
-  
-  .movie-details ion-item {
-    margin-bottom: 10px; 
-  }
-  
-  
-  .movie-color-white{
-    color: white;
-  }
+  --ion-background-color: transparent;
+}
 
-  .custom-chip {
-    font-size: 1.2em;
-    padding: 10px;
-  }
-  
-  .custom-avatar {
-    width: 50px;
-    height: 50px;
-  
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  
-  .custom-label {
-    color: white;
-    font-size: 1.2em;
-  }
+ion-thumbnail {
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+ion-segment-button.md {
+  --color: rgb(255 255 255 / var(--opacity-m));
+  --color-checked: var(--color-secondary-600);
+  --indicator-height: 4px;
+}
+
+li:after {
+  content: ", ";
+  margin-left: -3px;
+  margin-right: 0.25rem;
+}
+
+li:last-child:after {
+  content: "";
+}
+
+ion-avatar {
+  --border-radius: 12px;
+}
+
+ion-button {
+  min-height: auto;
+}
+
+ion-button::part(native) {
+  --padding-start: 0;
+  --padding-end: 0;
+}

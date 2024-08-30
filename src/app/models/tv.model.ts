@@ -27,7 +27,7 @@ export const TV_MODEL: TvShow[] = [
       { season: 5, episodes: 16 },
     ],
     rating: 9.5,
-    releaseDate: '20-01-2008',
+    releaseDate: new Date('2008-01-20'),
     episodeDuration: '47 minutos',
     streamingPlatforms: ['Netflix', 'Amazon Prime'],
     reviews: [
@@ -35,8 +35,8 @@ export const TV_MODEL: TvShow[] = [
         id: nanoid(),
         rating: 10,
         comment:
-          'Una conclusión sorprendente la ultima temporada y casi perfecta para una de las mejores historias jamás contadas en televisión. Impresionante en todos los sentidos.',
-        date: '12-08-2024',
+          'Una conclusión sorprendente la última temporada y casi perfecta para una de las mejores historias jamás contadas en televisión. Impresionante en todos los sentidos.',
+        date: new Date('2024-08-12'),
         userId: '1',
       },
     ],
@@ -63,7 +63,7 @@ export const TV_MODEL: TvShow[] = [
       { season: 2, episodes: 8 },
     ],
     rating: 3.4,
-    releaseDate: '04-06-2021',
+    releaseDate: new Date('2021-06-04'),
     episodeDuration: '45 minutos',
     streamingPlatforms: ['Netflix'],
     reviews: [
@@ -72,7 +72,7 @@ export const TV_MODEL: TvShow[] = [
         rating: 5,
         comment:
           'Sweet Tooth no ha sido necesariamente la historia más tranquila, ya que a la maravillosa primera temporada le siguió una segunda más torpe de lo esperado y muchos de esos problemas siguen presentes en la última temporada.',
-        date: '06-06-2024',
+        date: new Date('2024-06-06'),
         userId: '2',
       },
     ],
@@ -100,7 +100,7 @@ export const TV_MODEL: TvShow[] = [
       { season: 8, episodes: 6 },
     ],
     rating: 8.5,
-    releaseDate: '17-04-2011',
+    releaseDate: new Date('2011-04-17'),
     episodeDuration: '60 minutos',
     streamingPlatforms: ['HBO Max'],
     reviews: [
@@ -109,7 +109,7 @@ export const TV_MODEL: TvShow[] = [
         rating: 8,
         comment:
           'La dirección artística, las interpretaciones y los increíbles decorados son tan impresionantes como el alcance masivo de la serie. Al principio es un poco lenta, pero te atrapa una vez que te metes en ella.',
-        date: '13-04-2020',
+        date: new Date('2020-04-13'),
         userId: '3',
       },
     ],
@@ -132,7 +132,7 @@ export const TV_MODEL: TvShow[] = [
       { season: 3, episodes: 8 },
     ],
     rating: 5.1,
-    releaseDate: '26-07-2019',
+    releaseDate: new Date('2019-07-26'),
     episodeDuration: '60 minutos',
     streamingPlatforms: ['Amazon Prime'],
     reviews: [
@@ -141,7 +141,7 @@ export const TV_MODEL: TvShow[] = [
         rating: 4.5,
         comment:
           'Una verdadera lástima. La primera temporada fue increíble, nueva y fresca. La segunda temporada tuvo momentos muy buenos, muy sangrientos e impactantes, pero también se inclinó por las opiniones políticas de izquierdas como el resto de la basura de Hollywood, y eso ha dañado mucho a la serie. No es tan malo como el final de Juego de Tronos, pero es solo otra serie, nada especial.',
-        date: '16-09-2020',
+        date: new Date('2020-09-16'),
         userId: '4',
       },
     ],
@@ -170,7 +170,7 @@ export const TV_MODEL: TvShow[] = [
       { season: 9, episodes: 25 },
     ],
     rating: 9,
-    releaseDate: '24-03-2005',
+    releaseDate: new Date('2005-03-24'),
     episodeDuration: '22 minutos',
     streamingPlatforms: ['Netflix', 'Peacock'],
     reviews: [
@@ -179,7 +179,7 @@ export const TV_MODEL: TvShow[] = [
         rating: 10,
         comment:
           'Todo lo que hizo que la primera temporada fuera tan buena (el guión, la actuación, la incomodidad de todo) no ha disminuido en la segunda temporada. Genial.',
-        date: '06-01-2021',
+        date: new Date('2021-01-06'),
         userId: '5',
       },
     ],

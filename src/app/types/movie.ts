@@ -18,6 +18,6 @@ interface Detail {
   written: string[];
   productionCompany: string;
   genre: string[];
-  releaseDate: string;
+  releaseDate: Date | string;
   timeDuration: string;
 }

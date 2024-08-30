@@ -15,13 +15,13 @@ export class HeaderComponent {
 
   onBackButtonClick() {
     if (typeof this.backButton === 'function') {
-      this.backButton(); // Ejecuta la función
+      this.backButton();
     } else if (typeof this.backButton === 'string') {
-      this.router.navigate([this.backButton]); // Navega a la URL
+      this.router.navigate([this.backButton]);
     }
   }
 
   shouldShowBackButton(): boolean {
-    return this.backButton !== undefined; // Devuelve true si backButton está definido
+    return this.backButton !== undefined;
   }
 }
