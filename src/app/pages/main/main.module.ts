@@ -9,7 +9,6 @@ import { MainPageRoutingModule } from './main-routing.module';
 import { MainPage } from './main.page';
 import { SharedModule } from 'src/app/components/shared/shared.module';
 import { TabsModule } from 'src/app/components/tabs/tabs.module';
-import { MenuModule } from 'src/app/components/menu/menu.module';
 
 @NgModule({
   imports: [
@@ -19,7 +18,6 @@ import { MenuModule } from 'src/app/components/menu/menu.module';
     MainPageRoutingModule,
     SharedModule,
     TabsModule,
-    MenuModule,
   ],
   declarations: [MainPage],
 })

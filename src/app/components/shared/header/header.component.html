@@ -1,7 +1,7 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button *ngIf="shouldShowBackButton()" (click)="onBackButtonClick()">
+    <ion-buttons *ngIf="shouldShowBackButton()" slot="start">
+      <ion-button (click)="onBackButtonClick()">
         <ion-icon slot="icon-only" name="arrow-back" class="size-6"></ion-icon>
       </ion-button>
     </ion-buttons>
