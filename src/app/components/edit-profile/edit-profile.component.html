@@ -9,12 +9,7 @@
     <div class="flex items-center justify-center mb-5">
       <div class="ion-activatable ripple-parent">
         <ion-thumbnail (click)="fileInput.click()" class="cursor-pointer">
-          <img
-            [src]="
-              userCopy.profileImage ||
-              'https://ionicframework.com/docs/img/demos/avatar.svg'
-            "
-          />
+          <img [src]="userCopy.profileImage || 'assets/avatar-demo.svg'" />
           <ion-ripple-effect></ion-ripple-effect>
         </ion-thumbnail>
       </div>

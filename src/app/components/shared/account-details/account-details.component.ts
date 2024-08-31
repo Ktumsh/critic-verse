@@ -17,7 +17,19 @@ export class AccountDetailsComponent implements OnInit {
     private alertController: AlertController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.user) {
+      this.user = {
+        id: '1',
+        role: 'user',
+        email: 'usuario@duocuc.cl',
+        username: '_username69',
+        password: '12345',
+        birthdate: new Date('2003-01-10T12:00:00'),
+        createdAt: new Date('2024-08-28T12:00:00'),
+      };
+    }
+  }
 
   async showAlert() {
     const alert = await this.alertController.create({

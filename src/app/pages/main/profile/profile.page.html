@@ -15,18 +15,20 @@
   <div class="flex flex-col items-center justify-center w-full pt-6">
     <ion-thumbnail>
       <img
-        [ngSrc]="user?.profileImage || 'https://ionicframework.com/docs/img/demos/avatar.svg'"
-        alt="avatar de {{ user?.username }}"
+        [ngSrc]="user.profileImage || 'assets/avatar-demo.svg'"
+        alt="avatar de {{ user.username }}"
         width="120"
         height="120"
+        class="w-auto"
+        priority
       />
     </ion-thumbnail>
 
     <ion-label class="text-3xl font-bold text-primary-600 text-center mt-2">
-      {{ user?.username || 'user_example' }}
+      {{ user.username || 'user_example' }}
     </ion-label>
     <ion-label class="text-sm text-white-l text-center">
-      {{ user?.email || 'user@example.com' }}
+      {{ user.email || 'user@example.com' }}
     </ion-label>
   </div>
   <ion-list [inset]="true">
