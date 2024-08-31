@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button *ngIf="shouldShowBackButton()" (click)="onBackButtonClick()">
-        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        <ion-icon slot="icon-only" name="arrow-back" class="size-6"></ion-icon>
       </ion-button>
     </ion-buttons>
     <div *ngIf="logo" class="flex items-center h-full pl-4">
@@ -18,7 +18,7 @@
     <ion-title
       *ngIf="!logo"
       slot="start"
-      class="text-xl font-semibold text-white-h"
+      class="text-xl font-semibold text-white"
     >
       {{ title }}
     </ion-title>

@@ -4,6 +4,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { MOVIE_MODEL } from 'src/app/models/movie.model';
 import { Movie } from 'src/app/types/movie';
+import { ratingDescription } from 'src/utils/rating-desc';
 
 @Component({
   selector: 'app-movie-detail',
@@ -66,21 +67,7 @@ export class MovieDetailPage implements OnInit {
     return totalRating / movie.reviews.length;
   }
 
-  getRatingDescription(rating: number): string {
-    if (rating >= 9) {
-      return 'Aclamada mundialmente';
-    } else if (rating >= 8) {
-      return 'Generalmente favorable';
-    } else if (rating >= 6) {
-      return 'Recibida con críticas mixtas';
-    } else if (rating >= 4) {
-      return 'Críticas generalmente negativas';
-    } else if (rating >= 2) {
-      return 'Mala recepción crítica';
-    } else {
-      return 'Universalmente despreciada';
-    }
-  }
+  getRatingDescription = ratingDescription;
 
   getUserRatingDescription(userRating: number): string {
     if (userRating >= 9) {

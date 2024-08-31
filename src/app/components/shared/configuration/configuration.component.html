@@ -243,5 +243,28 @@
         </ion-item>
       </ion-list>
     </div>
+
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">Sesión</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item
+          button
+          detail
+          mode="md"
+          class="text-danger"
+          id="present-alert"
+          (click)="showAlert()"
+        >
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-base text-wrap text-danger">Cerrar sesión</h3>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
   </div>
 </ion-content>

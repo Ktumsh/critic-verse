@@ -1,63 +1,55 @@
-.horizontal-scroll {
+.carousel {
+  max-width: 48rem;
+  margin: auto;
+  --slide-height: 235.5px;
+  --slide-spacing: 1rem;
+  --slide-size: 44%;
+}
+.carousel-viewport {
+  padding-left: var(--slide-spacing);
+  overflow: hidden;
+  position: relative;
+}
+.carousel-container {
   display: flex;
-  overflow-x: auto;
-  padding: 10px 0;
-  -webkit-overflow-scrolling: touch;
+  margin-left: calc(var(--slide-spacing) * -1);
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
 }
-
-.item-container {
-  flex: 0 0 auto;
-  width: 200px;
-  margin-right: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.carousel-slide-game,
+.carousel-slide-movie,
+.carousel-slide-tv {
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+  scroll-snap-align: start;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 0.5;
+  transform: scale(0.95);
 }
-
-.item-image {
+.carousel-slide-game:last-child,
+.carousel-slide-movie:last-child,
+.carousel-slide-tv:last-child {
+  margin-right: var(--slide-spacing);
+}
+.carousel-slide-img {
+  border-radius: 12px;
+  display: block;
+  height: var(--slide-height);
   width: 100%;
-  height: auto;
-  border-radius: 10px;
+  object-fit: cover;
 }
 
-.item-title {
-  text-align: center;
-  font-weight: bold;
-  color: white;
-  margin-top: 10px;
-  font-size: 14px;
+.carousel-slide-game.active,
+.carousel-slide-movie.active,
+.carousel-slide-tv.active {
+  opacity: 1;
+  transform: scale(1);
 }
 
-.rating-container {
-  margin-top: 5px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.rating-box {
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.rating-danger {
-  background-color: #c43230;
-  color: black;
-}
-
-.rating-warning {
-  background-color: #f3f02c;
-  color: black;
-}
-
-.rating-success {
-  background-color: #1ac241;
-  color: black;
-}
-
-.rating-text {
-  font-size: 14px;
-  font-weight: bold;
-  color: black;
+.ripple-parent {
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
 }
