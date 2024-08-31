@@ -8,7 +8,7 @@ const nanoid = customAlphabet(
 
 export const GAME_MODEL: Game[] = [
   {
-    id: nanoid(),
+    id: 'black-myth:-wukong',
     title: 'Black Myth: Wukong',
     image: '/assets/game/01.png',
     description:
@@ -32,15 +32,23 @@ export const GAME_MODEL: Game[] = [
       },
       {
         id: nanoid(),
-        rating: 1,
-        comment: 'Muy buen juego, me gustó mucho. Le doy 10 de 10',
-        date: new Date('2024-08-23'),
-        userId: '1',
+        rating: 9,
+        comment:
+          'Gran jugabilidad y gráficos impresionantes, pero la historia podría ser más profunda.',
+        date: new Date('2024-08-30'),
+        userId: '2',
+      },
+      {
+        id: nanoid(),
+        rating: 8,
+        comment: 'Excelente juego, aunque tiene algunos bugs menores.',
+        date: new Date('2024-09-01'),
+        userId: '3',
       },
     ],
   },
   {
-    id: nanoid(),
+    id: 'elden-ring',
     title: 'Elden Ring',
     image: '/assets/game/02.png',
     description:
@@ -63,10 +71,26 @@ export const GAME_MODEL: Game[] = [
         date: new Date('2023-03-10'),
         userId: '2',
       },
+      {
+        id: nanoid(),
+        rating: 7,
+        comment:
+          'La dificultad es alta, pero eso es parte de su encanto. Sin embargo, no es para todos.',
+        date: new Date('2023-04-15'),
+        userId: '4',
+      },
+      {
+        id: nanoid(),
+        rating: 8,
+        comment:
+          'Gran juego, pero a veces se siente repetitivo en comparación con Dark Souls.',
+        date: new Date('2023-05-20'),
+        userId: '5',
+      },
     ],
   },
   {
-    id: nanoid(),
+    id: 'the-legend-of-zelda:-tears-of-the-kingdom',
     title: 'The Legend of Zelda: Tears of the Kingdom',
     image: '/assets/game/03.png',
     description:
@@ -89,10 +113,18 @@ export const GAME_MODEL: Game[] = [
         date: new Date('2024-01-15'),
         userId: '3',
       },
+      {
+        id: nanoid(),
+        rating: 3,
+        comment:
+          'Esperaba más innovación. El juego es bonito, pero carece de profundidad.',
+        date: new Date('2024-02-12'),
+        userId: '6',
+      },
     ],
   },
   {
-    id: nanoid(),
+    id: 'red-dead-redemption-2',
     title: 'Red Dead Redemption 2',
     image: '/assets/game/04.png',
     description:
@@ -115,10 +147,34 @@ export const GAME_MODEL: Game[] = [
         date: new Date('2020-01-11'),
         userId: '4',
       },
+      {
+        id: nanoid(),
+        rating: 8,
+        comment:
+          'La historia es increíble, pero algunas misiones pueden ser largas y aburridas.',
+        date: new Date('2021-02-15'),
+        userId: '7',
+      },
+      {
+        id: nanoid(),
+        rating: 9,
+        comment:
+          'Mundo abierto detallado y vibrante. Me encantó explorar cada rincón.',
+        date: new Date('2022-03-22'),
+        userId: '8',
+      },
+      {
+        id: nanoid(),
+        rating: 7,
+        comment:
+          'Aunque es un gran juego, los controles pueden ser algo torpes a veces.',
+        date: new Date('2023-04-10'),
+        userId: '9',
+      },
     ],
   },
   {
-    id: nanoid(),
+    id: 'sons-of-the-forest',
     title: 'Sons of the Forest',
     image: '/assets/game/05.png',
     description:
@@ -140,6 +196,38 @@ export const GAME_MODEL: Game[] = [
           'Sons of the Forest puede tener algunos problemas con su narrativa, pero sus fundamentos de supervivencia y su sandbox aún merecen una mirada.',
         date: new Date('2024-05-28'),
         userId: '5',
+      },
+      {
+        id: nanoid(),
+        rating: 5,
+        comment:
+          'El juego tiene potencial, pero la falta de contenido y los bugs arruinan la experiencia.',
+        date: new Date('2024-06-10'),
+        userId: '6',
+      },
+      {
+        id: nanoid(),
+        rating: 7,
+        comment:
+          'Gran atmósfera y jugabilidad, pero necesita más optimización y contenido para mantener a los jugadores interesados.',
+        date: new Date('2024-07-01'),
+        userId: '7',
+      },
+      {
+        id: nanoid(),
+        rating: 4,
+        comment:
+          'Esperaba más, pero parece más una versión beta que un lanzamiento completo.',
+        date: new Date('2024-07-15'),
+        userId: '8',
+      },
+      {
+        id: nanoid(),
+        rating: 5.5,
+        comment:
+          'El concepto es bueno, pero la ejecución deja mucho que desear. A la espera de futuras actualizaciones.',
+        date: new Date('2024-08-05'),
+        userId: '9',
       },
     ],
   },

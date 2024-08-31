@@ -5,25 +5,30 @@
 />
 <ion-content [fullscreen]="true" *ngIf="game">
   <div class="fixed bottom-0 p-6 z-10 w-full">
-    <app-custom-button label="Agregar mi reseña" buttonClass="secondary" />
+    <app-custom-button
+      label="Agregar mi reseña"
+      buttonClass="blurred size-sm"
+    />
   </div>
 
   <div class="relative -translate-y-14 w-full h-96">
     <ion-thumbnail class="size-full overflow-hidden">
       <img
         [ngSrc]="game.image"
+        alt="{{ game.title }}"
         width="600"
         height="900"
-        class="object-center size-full"
+        priority
+        class="object-center object-cover"
       />
     </ion-thumbnail>
   </div>
-  <div class="-translate-y-32 flex flex-col items-center justify-center">
+  <div class="px-4 -translate-y-32 flex flex-col items-center justify-center">
     <app-logo size="w-12" />
     <h2 class="text-5xl font-black text-center font-geist">{{game.title}}</h2>
   </div>
 
-  <div class="-translate-y-32 m-2.5">
+  <div class="-translate-y-32 my-2.5">
     <div class="p-4 pt-0 space-y-4">
       <!-- Plataformas y fecha de lanzamiento e imagen-->
       <div>
@@ -40,7 +45,10 @@
           </div>
         </div>
         <div class="flex items-center justify-center text-white-l">
-          <ion-icon src="assets/icon/rocket.svg" class="size-3 mr-2"></ion-icon>
+          <ion-icon
+            src="assets/icon/rocket.svg"
+            class="size-3.5 mr-2"
+          ></ion-icon>
           <span>
             {{ game.details.releaseDate | date:'d \'de\' MMMM \'de\' y'}}
           </span>
@@ -137,20 +145,19 @@
                 <header class="flex items-center justify-between w-full">
                   <div class="inline-flex items-center gap-3">
                     <ion-avatar class="size-8 rounded-xl">
-                      <img
-                        alt="Foto de perfil"
-                        src="https://i.pinimg.com/474x/03/7f/4d/037f4dfa61c3e61d20cb0284f64fb2c7.jpg"
-                      />
+                      <img alt="Foto de perfil" [src]="avatarsMap[review.id]" />
                     </ion-avatar>
-                    <span class="text-lg font-semibold">Pepito777</span>
+                    <span class="text-lg font-semibold"
+                      >{{ userNamesMap[review.id] }}</span
+                    >
                   </div>
 
                   <div
                     [ngClass]="['flex items-center justify-center size-7 rounded-full', review.rating >= 0 && review.rating < 4 ? 'bg-danger' : review.rating >= 4 && review.rating < 6 ? 'bg-warning' : 'bg-success']"
                   >
-                    <span class="font-bold text-white"
-                      >{{ review.rating }}</span
-                    >
+                    <span class="font-bold text-white">
+                      {{ review.rating }}
+                    </span>
                   </div>
                 </header>
                 <p class="text-sm">{{ review.comment }}</p>
@@ -162,7 +169,7 @@
                       >{{ review.date| date:'d \'de\' MMM, y'}}
                     </small>
                     <ion-button
-                      (click)="presentActionSheet()"
+                      (click)="openReportAlert()"
                       expand="block"
                       fill="clear"
                       shape="round"

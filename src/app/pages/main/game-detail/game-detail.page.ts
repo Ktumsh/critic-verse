@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Game } from 'src/app/types/game';
 import { GAME_MODEL } from 'src/app/models/game.model';
 import { Location } from '@angular/common';
 import { getPlatFormIcon } from 'src/utils/platform';
-import { ActionSheetController } from '@ionic/angular';
+import { ratingDescription } from 'src/utils/rating-desc';
+import { BottomSheetComponent } from 'src/app/components/shared/bottom-sheet/bottom-sheet.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { averageRating } from 'src/utils/average-rating';
+import { randomAvatar, randomName } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-game-detail',
@@ -15,11 +19,12 @@ export class GameDetailPage implements OnInit {
   game!: Game;
   selectedSegment: string = 'reviews';
 
+  userNamesMap: { [key: string]: string } = {};
+  avatarsMap: { [key: string]: string } = {};
+
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private location: Location,
-    private actionSheetCtrl: ActionSheetController
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -28,60 +33,26 @@ export class GameDetailPage implements OnInit {
 
     if (gameById) {
       this.game = gameById;
-    } else {
-      this.router.navigate(['/not-found']);
     }
-  }
 
-  async presentActionSheet() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      cssClass: 'custom-sheet',
-      header: 'Reportar reseña',
-      buttons: [
-        {
-          text: 'Enviar reporte',
-          data: {
-            action: 'report',
-          },
-        },
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          data: {
-            action: 'cancel',
-          },
-        },
-      ],
+    this.game.reviews.forEach((review) => {
+      this.userNamesMap[review.id] = this.getRandomName();
+      this.avatarsMap[review.id] = this.getRandomAvatar();
     });
-
-    await actionSheet.present();
   }
 
-  getAverageRating(game: Game): number {
-    if (!game.reviews || game.reviews.length === 0) return 0;
-
-    const totalRating = game.reviews.reduce(
-      (acc, review) => acc + review.rating,
-      0
-    );
-    return totalRating / game.reviews.length;
+  _bottomSheet = inject(MatBottomSheet);
+  openReportAlert(): void {
+    this._bottomSheet.open(BottomSheetComponent);
   }
 
-  getRatingDescription(rating: number): string {
-    if (rating >= 9) {
-      return 'Aclamada mundialmente';
-    } else if (rating >= 8) {
-      return 'Generalmente favorable';
-    } else if (rating >= 6) {
-      return 'Recibida con críticas mixtas';
-    } else if (rating >= 4) {
-      return 'Críticas generalmente negativas';
-    } else if (rating >= 2) {
-      return 'Mala recepción crítica';
-    } else {
-      return 'Universalmente despreciada';
-    }
-  }
+  getAverageRating = averageRating;
+
+  getRatingDescription = ratingDescription;
+
+  getRandomName = randomName;
+
+  getRandomAvatar = randomAvatar;
 
   getUserRatingDescription(userRating: number): string {
     if (userRating >= 9) {

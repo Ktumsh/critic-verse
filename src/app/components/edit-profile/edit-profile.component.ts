@@ -23,12 +23,12 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit() {
     this.userCopy = {
-      id: this.user?.id || '1',
-      role: this.user?.role || 'user',
-      username: this.user?.username || 'Nombre por defecto',
-      email: this.user?.email || 'correo@ejemplo.com',
-      password: this.user?.password || '',
-      profileImage: this.user?.profileImage || '',
+      id: this.user?.id,
+      role: this.user?.role,
+      username: this.user?.username,
+      email: this.user?.email,
+      password: this.user?.password,
+      profileImage: this.user?.profileImage,
       createdAt: this.user?.createdAt || new Date(),
     };
   }
