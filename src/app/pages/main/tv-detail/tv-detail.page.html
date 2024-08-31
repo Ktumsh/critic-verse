@@ -5,7 +5,10 @@
 />
 <ion-content [fullscreen]="true" *ngIf="tv">
   <div class="fixed bottom-0 p-6 z-10 w-full">
-    <app-custom-button label="Agregar mi reseña" buttonClass="blurred" />
+    <app-custom-button
+      label="Agregar mi reseña"
+      buttonClass="blurred size-sm"
+    />
   </div>
 
   <div class="relative -translate-y-14 w-full h-96">
@@ -20,26 +23,42 @@
       />
     </ion-thumbnail>
   </div>
-  <div class="-translate-y-32 flex flex-col items-center justify-center">
+  <div class="px-4 -translate-y-32 flex flex-col items-center justify-center">
     <app-logo size="w-12" />
     <h2 class="text-5xl font-black text-center font-geist">{{tv.title}}</h2>
   </div>
 
-  <div class="-translate-y-32 m-2.5">
+  <div class="-translate-y-32 my-2.5">
     <div class="p-4 pt-0 space-y-4">
       <!-- Géneros, Director, Productores, etc. -->
       <div>
         <div class="flex items-center justify-center flex-wrap mb-1">
           <div
-            *ngFor="let genre of tv.genre"
+            *ngFor="let genre of tv.detail.genre"
             class="inline-flex grow items-center min-h-8 px-3 py-1.5 m-1 rounded-full bg-secondary-600/10 text-secondary-600"
           >
             <span>{{ genre }}</span>
           </div>
         </div>
+        <div class="flex items-center justify-center flex-wrap mb-1">
+          <div
+            class="inline-flex grow items-center min-h-8 px-3 py-1.5 m-1 rounded-full bg-primary-600/10 text-primary-600"
+          >
+            <ion-icon
+              src="assets/icon/time.svg"
+              class="size-3.5 mr-2"
+            ></ion-icon>
+            <span>{{ tv.detail.seasons }} temporadas</span>
+          </div>
+        </div>
         <div class="flex items-center justify-center text-white-l">
-          <ion-icon src="assets/icon/rocket.svg" class="size-3 mr-2"></ion-icon>
-          <span> {{ tv.releaseDate | date:'d \'de\' MMMM \'de\' y'}} </span>
+          <ion-icon
+            src="assets/icon/rocket.svg"
+            class="size-3.5 mr-2"
+          ></ion-icon>
+          <span>
+            {{ tv.detail.releaseDate | date:'d \'de\' MMMM \'de\' y'}}
+          </span>
         </div>
       </div>
 
@@ -58,11 +77,11 @@
           </ion-segment-button>
         </ion-segment>
 
-        <!-- Clasificación -->
         <section
           *ngIf="selectedSegment === 'reviews'"
           class="flex flex-col space-y-4 my-6"
         >
+          <!-- Clasificación -->
           <div class="flex flex-col space-y-4 mb-12">
             <div class="flex flex-col w-full">
               <div class="flex items-center">
@@ -119,6 +138,31 @@
             </div>
           </div>
 
+          <!-- Casting -->
+          <div class="w-full pb-2 border-b border-surface-secondary-600">
+            <h3 class="text-2xl font-semibold text-white-h">Elenco</h3>
+          </div>
+
+          <div class="flex items-center mb-12 overflow-x-scroll text-white-h">
+            <div class="flex items-start gap-4 h-full">
+              <div
+                *ngFor="let cast of tv.detail.cast"
+                class="flex flex-col justify-center"
+              >
+                <div class="size-32 rounded-lg overflow-hidden">
+                  <img
+                    alt="Silhouette of a person's head"
+                    src="assets/avatar-demo.svg"
+                  />
+                </div>
+                <span class="text-xs text-white-m mt-2">{{ cast.actor }}</span>
+                <span class="text-sm font-semibold mt-1"
+                  >{{ cast.character }}</span
+                >
+              </div>
+            </div>
+          </div>
+
           <div class="w-full pb-2 border-b border-surface-secondary-600">
             <h3 class="text-2xl font-semibold text-white-h">Reseñas</h3>
           </div>
@@ -133,12 +177,11 @@
                 <header class="flex items-center justify-between w-full">
                   <div class="inline-flex items-center gap-3">
                     <ion-avatar class="size-8 rounded-xl">
-                      <img
-                        alt="Foto de perfil"
-                        src="https://i.pinimg.com/474x/a2/1b/2f/a21b2fe8289e98d82d3ef6dc2e6441bc.jpg"
-                      />
+                      <img alt="Foto de perfil" [src]="avatarsMap[review.id]" />
                     </ion-avatar>
-                    <span class="text-lg font-semibold">JorgitoParrilla</span>
+                    <span class="text-lg font-semibold">
+                      {{ userNamesMap[review.id] }}
+                    </span>
                   </div>
 
                   <div
@@ -191,43 +234,88 @@
               <h4 class="text-lg text-white-m">Resumen</h4>
             </div>
             <div class="mb-4">
-              <p class="text-white-h text-sm">{{ tv.description }}</p>
+              <p class="text-white-h text-sm">{{ tv.detail.description }}</p>
             </div>
             <div class="flex flex-col space-y-4">
               <div
                 class="flex flex-col justify-center p-4 space-y-2 bg-surface-secondary-600 text-white-m rounded-xl text-sm"
               >
                 <div class="inline-flex gap-2">
-                  <span class="font-semibold text-white-h">Géneros:</span>
+                  <span class="font-semibold text-white-h">Género:</span>
                   <ul class="inline-flex p-0">
-                    <li *ngFor="let genre of tv.genre">{{ genre }}</li>
+                    <li *ngFor="let genre of tv.detail.genre" class="">
+                      {{ genre }}
+                    </li>
                   </ul>
                 </div>
                 <div class="inline-flex gap-2">
                   <span class="font-semibold text-white-h">
                     Fecha de lanzamiento:
                   </span>
-                  <span> {{ tv.releaseDate | date:'d \'de\' MMM, y' }} </span>
+                  <span>
+                    {{ tv.detail.releaseDate | date:'d \'de\' MMM, y' }}
+                  </span>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">Temporadas:</span>
+                  <span>{{ tv.detail.seasons }}</span>
                 </div>
                 <div class="inline-flex gap-2">
                   <span class="font-semibold text-white-h">
-                    Duración del episodio:
+                    Episodios por temporada:
                   </span>
-                  <span> {{ tv.episodeDuration }} </span>
-                </div>
-                <div class="inline-flex gap-2">
-                  <span class="font-semibold text-white-h"> Director: </span>
-                  <span> {{ tv.director.join(', ') }} </span>
-                </div>
-                <div class="inline-flex gap-2">
-                  <span class="font-semibold text-white-h"> Productores: </span>
-                  <span> {{ tv.producers.join(', ') }} </span>
+                  <span>
+                    {{ getAverageEpisodes(tv.detail.episodesPerSeason) }}
+                    episodios promedio
+                  </span>
                 </div>
                 <div class="inline-flex gap-2">
                   <span class="font-semibold text-white-h">
-                    Plataformas de Streaming:
+                    Duración episodios:
                   </span>
-                  <span> {{ tv.streamingPlatforms.join(', ') }} </span>
+                  <span>{{ tv.detail.episodeDuration }} promedio</span>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">Director:</span>
+                  <ul class="inline-flex p-0">
+                    <li *ngFor="let director of tv.detail.director">
+                      {{ director }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">Productor:</span>
+                  <ul class="inline-flex p-0">
+                    <li *ngFor="let producer of tv.detail.producer">
+                      {{ producer }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">Escritor:</span>
+                  <ul class="inline-flex p-0">
+                    <li *ngFor="let writer of tv.detail.writer">
+                      {{ writer }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">Elenco:</span>
+                  <ul class="inline-flex p-0">
+                    <li *ngFor="let cast of tv.detail.cast" class="">
+                      {{ cast.actor }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="inline-flex gap-2">
+                  <span class="font-semibold text-white-h">Plataformas:</span>
+                  <ul class="inline-flex p-0">
+                    <li
+                      *ngFor="let streamingPlatform of tv.detail.streamingPlatform"
+                    >
+                      {{ streamingPlatform }}
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>

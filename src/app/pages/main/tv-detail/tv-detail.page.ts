@@ -1,9 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { TV_MODEL } from 'src/app/models/tv.model';
+import { randomAvatar, randomName } from 'src/app/models/user.model';
 import { TvShow } from 'src/app/types/tv';
+import { averageRating } from 'src/utils/average-rating';
 import { ratingDescription } from 'src/utils/rating-desc';
 
 @Component({
@@ -15,8 +17,10 @@ export class TvDetailPage implements OnInit {
   tv!: TvShow;
   selectedSegment: string = 'reviews';
 
+  userNamesMap: { [key: string]: string } = {};
+  avatarsMap: { [key: string]: string } = {};
+
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private actionSheetCtrl: ActionSheetController
@@ -28,9 +32,12 @@ export class TvDetailPage implements OnInit {
 
     if (tvById) {
       this.tv = tvById;
-    } else {
-      this.router.navigate(['/not-found']);
     }
+
+    this.tv.reviews.forEach((review) => {
+      this.userNamesMap[review.id] = this.getRandomName();
+      this.avatarsMap[review.id] = this.getRandomAvatar();
+    });
   }
 
   async presentActionSheet() {
@@ -57,17 +64,29 @@ export class TvDetailPage implements OnInit {
     await actionSheet.present();
   }
 
-  getAverageRating(tv: TvShow): number {
-    if (!tv.reviews || tv.reviews.length === 0) return 0;
-
-    const totalRating = tv.reviews.reduce(
-      (acc, review) => acc + review.rating,
-      0
-    );
-    return totalRating / tv.reviews.length;
-  }
+  getAverageRating = averageRating;
 
   getRatingDescription = ratingDescription;
+
+  getAverageEpisodes(
+    episodesPerSeason: { season: number; episodes: number }[]
+  ): number {
+    if (episodesPerSeason.length === 0) return 0;
+
+    const totalEpisodes = episodesPerSeason.reduce(
+      (sum, season) => sum + season.episodes,
+      0
+    );
+    const numberOfSeasons = episodesPerSeason.length;
+
+    const averageEpisodes = totalEpisodes / numberOfSeasons;
+
+    return Math.round(averageEpisodes);
+  }
+
+  getRandomName = randomName;
+
+  getRandomAvatar = randomAvatar;
 
   getUserRatingDescription(userRating: number): string {
     if (userRating >= 9) {

@@ -1,5 +1,5 @@
 ion-content {
-  --ion-background-color: transparent;
+  --ion-background-color: var(--surface-primary-600);
 }
 
 ion-thumbnail {
@@ -10,6 +10,14 @@ ion-segment-button.md {
   --color: rgb(255 255 255 / var(--opacity-m));
   --color-checked: var(--color-secondary-600);
   --indicator-height: 4px;
+}
+
+ul {
+  flex-wrap: wrap;
+}
+
+li {
+  text-wrap: nowrap;
 }
 
 li:after {
@@ -33,4 +41,8 @@ ion-button {
 ion-button::part(native) {
   --padding-start: 0;
   --padding-end: 0;
+}
+
+::ng-deep mat-bottom-sheet-container {
+  background-color: var(--surface-primary-600);
 }

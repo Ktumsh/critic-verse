@@ -1,3 +1,4 @@
+import { CinemaDetail } from './cinema-detail';
 import { Review } from './review';
 
 export interface Movie {
@@ -6,18 +7,11 @@ export interface Movie {
   image: string;
   video?: string;
   rating: number;
-  details: Detail;
+  detail: Detail;
   reviews: Review[];
 }
 
-interface Detail {
-  description: string;
-  cast: string[];
-  director: string[];
-  producer: string[];
-  written: string[];
-  productionCompany: string;
-  genre: string[];
-  releaseDate: Date | string;
+interface Detail extends CinemaDetail {
+  productionCompany: string[];
   timeDuration: string;
 }

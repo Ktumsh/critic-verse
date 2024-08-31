@@ -14,6 +14,11 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ProfileReviewsComponent } from './profile-reviews/profile-reviews.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { HelpComponent } from './help/help.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatButtonModule } from '@angular/material/button';
+import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,7 @@ import { HelpComponent } from './help/help.component';
     ProfileReviewsComponent,
     ConfigurationComponent,
     HelpComponent,
+    BottomSheetComponent,
     SvgIconsComponent,
   ],
   exports: [
@@ -40,6 +46,7 @@ import { HelpComponent } from './help/help.component';
     ProfileReviewsComponent,
     ConfigurationComponent,
     HelpComponent,
+    BottomSheetComponent,
     SvgIconsComponent,
     ReactiveFormsModule,
   ],
@@ -50,6 +57,10 @@ import { HelpComponent } from './help/help.component';
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
+    MatButtonModule,
+    MatBottomSheetModule,
+    MatListModule,
+    MatIconModule,
   ],
 })
 export class SharedModule {}

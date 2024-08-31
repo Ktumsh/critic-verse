@@ -12,15 +12,15 @@ export const MOVIE_MODEL: Movie[] = [
     title: 'Deadpool & Wolverine',
     image: '/assets/movie/01.webp',
     rating: 9.7,
-    details: {
+    detail: {
       description:
         'Un cansado glotón se encuentra recuperándose de sus heridas cuando se encuentra con un Deadpool bocazas que ha viajado en el tiempo para curar a su mejor amigo con la esperanza de hacerse amigo de la bestia salvaje y formar equipo para derrotar a un enemigo que ambos tienen en común.',
       cast: [
-        'Ryan Reynolds',
-        'Hugh Jackman',
-        'Emma Corrin',
-        'Matthew Macfadyen',
-        'Dafne Keen',
+        { actor: 'Ryan Reynolds', character: 'Deadpool' },
+        { actor: 'Hugh Jackman', character: 'Wolverine' },
+        { actor: 'Emma Corrin', character: 'Cassandra Nova' },
+        { actor: 'Matthew Macfadyen', character: 'Mr. Paradox' },
+        { actor: 'Dafne Keen', character: 'Laura/X-23' },
       ],
       director: ['Shawn Levy'],
       producer: [
@@ -33,17 +33,17 @@ export const MOVIE_MODEL: Movie[] = [
         'Ryan Reynolds',
         'Lauren Shuler Donner',
       ],
-      written: [
+      writer: [
         'Ryan Reynolds',
         'Rhett Reese',
         'Pablo Wernick',
         'Pozos de Zeb',
         'Shawn Levy',
       ],
-      productionCompany: 'Marvel Studios',
+      productionCompany: ['Marvel Studios'],
       genre: ['Acción', 'Aventura', 'Comedia', 'Ciencia ficción'],
       releaseDate: new Date('2024-07-26'),
-      timeDuration: '02:08',
+      timeDuration: '2h 8m',
     },
     reviews: [
       {
@@ -54,6 +54,30 @@ export const MOVIE_MODEL: Movie[] = [
         date: new Date('2024-08-22'),
         userId: '1',
       },
+      {
+        id: nanoid(),
+        rating: 9,
+        comment:
+          '¡Una combinación épica! Ryan Reynolds y Hugh Jackman tienen una química increíble en pantalla.',
+        date: new Date('2024-08-24'),
+        userId: '2',
+      },
+      {
+        id: nanoid(),
+        rating: 8,
+        comment:
+          'Divertida y llena de acción, aunque algunos chistes podrían no ser para todos.',
+        date: new Date('2024-08-26'),
+        userId: '3',
+      },
+      {
+        id: nanoid(),
+        rating: 9.5,
+        comment:
+          'Un crossover que nunca supimos que necesitábamos. Una película entretenida y emocionante.',
+        date: new Date('2024-08-28'),
+        userId: '4',
+      },
     ],
   },
   {
@@ -61,15 +85,15 @@ export const MOVIE_MODEL: Movie[] = [
     title: 'I’ll Be Your Mirror',
     image: '/assets/movie/02.webp',
     rating: 3.8,
-    details: {
+    detail: {
       description:
         'Chloe (Carla Juri) viaja a Japón por trabajo, donde es recibida por un viejo amigo, Toshi (Takashi Ueno). Entre la melancolía por la pérdida de su marido y el asombro por el cambio de perspectivas, Chloe deambula por un paisaje desconocido.',
       cast: [
-        'Carla Juri',
-        'Takashi Ueno',
-        'Sachiko Ohshima',
-        'Futaba Okazaki',
-        'Gustaf Skarsgård',
+        { actor: 'Carla Juri', character: 'Chloe' },
+        { actor: 'Takashi Ueno', character: 'Toshi' },
+        { actor: 'Sachiko Ohshima', character: 'Desconocido' },
+        { actor: 'Futaba Okazaki', character: 'Desconocido' },
+        { actor: 'Gustaf Skarsgård', character: 'Peter' },
       ],
       director: ['Bradley Rust Gray'],
       producer: [
@@ -81,11 +105,11 @@ export const MOVIE_MODEL: Movie[] = [
         'David Urrutia',
         'Kiyoshi Inoue',
       ],
-      written: ['Bradley Rust Gray'],
-      productionCompany: 'Mutressa Movies',
+      writer: ['Bradley Rust Gray'],
+      productionCompany: ['Mutressa Movies'],
       genre: ['Drama'],
       releaseDate: new Date('2024-08-23'),
-      timeDuration: '01:51',
+      timeDuration: '1h 51m',
     },
     reviews: [
       {
@@ -96,6 +120,14 @@ export const MOVIE_MODEL: Movie[] = [
         date: new Date('2024-08-25'),
         userId: '2',
       },
+      {
+        id: nanoid(),
+        rating: 3,
+        comment:
+          'La trama es un poco lenta y confusa, no es para todos los gustos.',
+        date: new Date('2024-08-27'),
+        userId: '3',
+      },
     ],
   },
   {
@@ -103,15 +135,15 @@ export const MOVIE_MODEL: Movie[] = [
     title: 'Blink Twice',
     image: '/assets/movie/03.webp',
     rating: 5.5,
-    details: {
+    detail: {
       description:
         'Cuando el multimillonario tecnológico Slater King (Channing Tatum) conoce a la camarera Frida (Naomi Ackie) en su gala benéfica, saltan chispas. La invita a unirse a él y a sus amigos en unas vacaciones de ensueño en su isla privada. Es el paraíso.',
       cast: [
-        'Naomi Ackie',
-        'Channing Tatum',
-        'Alia Shawkat',
-        'Cristiano Slater',
-        'Simón Rex',
+        { actor: 'Naomi Ackie', character: 'Frida' },
+        { actor: 'Channing Tatum', character: 'Slater King' },
+        { actor: 'Alia Shawkat', character: 'Jess' },
+        { actor: 'Cristiano Slater', character: 'Vlc' },
+        { actor: 'Simon Rex', character: 'Cody' },
       ],
       director: ['Zoe Kravitz'],
       producer: [
@@ -121,11 +153,11 @@ export const MOVIE_MODEL: Movie[] = [
         'Garret Levitz',
         'Channing Tatum',
       ],
-      written: ['Zoe Kravitz', 'Y. Feigenbaum'],
-      productionCompany: 'Bruce Cohen Productions',
+      writer: ['Zoe Kravitz', 'Y. Feigenbaum'],
+      productionCompany: ['Bruce Cohen Productions'],
       genre: ['Misterio', 'Suspenso'],
       releaseDate: new Date('2024-08-23'),
-      timeDuration: '01:42',
+      timeDuration: '1h 42m',
     },
     reviews: [
       {
@@ -136,6 +168,14 @@ export const MOVIE_MODEL: Movie[] = [
         date: new Date('2024-08-25'),
         userId: '3',
       },
+      {
+        id: nanoid(),
+        rating: 5,
+        comment:
+          'La historia es intrigante, pero algunos elementos no se desarrollan bien.',
+        date: new Date('2024-08-28'),
+        userId: '4',
+      },
     ],
   },
   {
@@ -143,17 +183,17 @@ export const MOVIE_MODEL: Movie[] = [
     title: 'X-Men: Apocalipsis',
     image: '/assets/movie/04.webp',
     rating: 8,
-    details: {
+    detail: {
       description:
         'Desde los albores de la civilización, fue adorado como un dios. Apocalipsis, el primer y más poderoso mutante del universo X-Men de Marvel, acumuló los poderes de muchos otros mutantes, volviéndose inmortal e invencible.',
       cast: [
-        'James McAvoy',
-        'Michael Fassbender',
-        'Jennifer Lawrence',
-        'Nicolás Hoult',
-        'Óscar Isaac',
+        { actor: 'James McAvoy', character: 'Professor Charles Xavier' },
+        { actor: 'Michael Fassbender', character: 'Erik Lehnsherr / Magneto' },
+        { actor: 'Jennifer Lawrence', character: 'Raven Darkhölme / Mystique' },
+        { actor: 'Nicolás Hoult', character: 'Hank McCoy / Beast' },
+        { actor: 'Óscar Isaac', character: 'Apocalypse' },
       ],
-      director: ['Bryan cantante'],
+      director: ['Bryan Cantante'],
       producer: [
         'Aidoo Rubio',
         'Simón Kinberg',
@@ -163,7 +203,7 @@ export const MOVIE_MODEL: Movie[] = [
         'Bryan Cantante',
         'Jason Taylor',
       ],
-      written: [
+      writer: [
         'Simón Kinberg',
         'Bryan Cantante',
         'Michael Dougherty',
@@ -171,10 +211,10 @@ export const MOVIE_MODEL: Movie[] = [
         'Jack Kirby',
         'Stan Lee',
       ],
-      productionCompany: 'Twentieth Century Fox, Marvel Entertainment',
+      productionCompany: ['Twentieth Century Fox', 'Marvel Entertainment'],
       genre: ['Acción', 'Ciencia ficción', 'Aventura'],
       releaseDate: new Date('2016-05-27'),
-      timeDuration: '02:24',
+      timeDuration: '2h 24m',
     },
     reviews: [
       {
@@ -185,6 +225,21 @@ export const MOVIE_MODEL: Movie[] = [
         date: new Date('2016-05-26'),
         userId: '4',
       },
+      {
+        id: nanoid(),
+        rating: 7.5,
+        comment: 'Un buen equilibrio entre acción y desarrollo de personajes.',
+        date: new Date('2016-06-01'),
+        userId: '5',
+      },
+      {
+        id: nanoid(),
+        rating: 6,
+        comment:
+          'Algunas partes del guion son predecibles, pero los efectos especiales son impresionantes.',
+        date: new Date('2016-06-05'),
+        userId: '6',
+      },
     ],
   },
   {
@@ -192,17 +247,17 @@ export const MOVIE_MODEL: Movie[] = [
     title: 'Logan',
     image: '/assets/movie/05.webp',
     rating: 7.7,
-    details: {
+    detail: {
       description:
         'En un futuro cercano, un cansado Logan cuida al enfermo Profesor X en un escondite en la frontera mexicana. Pero los intentos de Logan de esconderse del mundo y de su legado se ven frustrados cuando llega un joven mutante perseguido por fuerzas oscuras.',
       cast: [
-        'Hugh Jackman',
-        'Patrick Stewart',
-        'Dafne Keen',
-        'Boyd Holbrook',
-        'Esteban Comerciante',
-        'Elizabeth Rodríguez',
-        'Richard E. Grant',
+        { actor: 'Hugh Jackman', character: 'Logan / Wolverine' },
+        { actor: 'Patrick Stewart', character: 'Charles Xavier' },
+        { actor: 'Dafne Keen', character: 'Laura / X-23' },
+        { actor: 'Boyd Holbrook', character: 'Pierce' },
+        { actor: 'Esteban Comerciante', character: 'Caliban' },
+        { actor: 'Elizabeth Rodríguez', character: 'Gabriela' },
+        { actor: 'Richard E. Grant', character: 'Dr. Rice' },
       ],
       director: ['James Mangold'],
       producer: [
@@ -212,11 +267,11 @@ export const MOVIE_MODEL: Movie[] = [
         'Dana Robin',
         'Kurt Williams',
       ],
-      written: ['James Mangold', 'Scott Frank', 'Michael Verde'],
-      productionCompany: 'Twentieth Century Fox, Marvel Entertainment',
+      writer: ['James Mangold', 'Scott Frank', 'Michael Verde'],
+      productionCompany: ['Twentieth Century Fox', 'Marvel Entertainment'],
       genre: ['Acción', 'Ciencia ficción', 'Drama', 'Suspenso'],
       releaseDate: new Date('2017-03-03'),
-      timeDuration: '02:17',
+      timeDuration: '2h 17m',
     },
     reviews: [
       {
@@ -226,6 +281,30 @@ export const MOVIE_MODEL: Movie[] = [
           'Este es un final excelente y apropiado para el mutante más grande de las películas.',
         date: new Date('2019-02-17'),
         userId: '5',
+      },
+      {
+        id: nanoid(),
+        rating: 7,
+        comment:
+          'Una película oscura y emocionalmente intensa que muestra una faceta diferente de Wolverine.',
+        date: new Date('2019-03-01'),
+        userId: '6',
+      },
+      {
+        id: nanoid(),
+        rating: 7.8,
+        comment:
+          'Un buen cierre para el personaje de Logan, aunque algunas partes podrían haber sido mejor elaboradas.',
+        date: new Date('2019-04-10'),
+        userId: '7',
+      },
+      {
+        id: nanoid(),
+        rating: 8.5,
+        comment:
+          'Profunda y conmovedora, con grandes actuaciones de Hugh Jackman y Patrick Stewart.',
+        date: new Date('2019-05-05'),
+        userId: '8',
       },
     ],
   },

@@ -52,12 +52,14 @@ ion-button.secondary::part(native) {
 }
 
 ion-button.blurred::part(native) {
-  --background: transparent;
-  box-shadow: 0 0 8px 0 var(--color-secondary-600-50),
-    0 0 16px 2px var(--color-secondary-600-20);
+  --background: var(--surface-primary-600);
   color: var(--color-secondary-600);
-  -webkit-backdrop-filter: blur(16px) saturate(1.5);
-  backdrop-filter: blur(16px) saturate(1.5);
+
+  box-shadow: 3px 3px 10px 0 var(--color-secondary-600-50),
+    -3px -3px 10px 0px var(--color-primary-600-50);
+
+  /*   -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  backdrop-filter: blur(16px) saturate(1.5); */
 
   &:active {
     box-shadow: none;

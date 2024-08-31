@@ -25,7 +25,7 @@
               class="carousel-slide-game"
             >
               <div
-                class="ion-activatable ripple-parent"
+                class="ion-activatable ripple-parent shadow-lg"
                 [routerLink]="['/main/game-detail', game.id]"
               >
                 <img
@@ -33,6 +33,7 @@
                   [alt]="game.title"
                   width="157"
                   height="235.5"
+                  priority
                   class="carousel-slide-img"
                 />
                 <ion-ripple-effect></ion-ripple-effect>
@@ -81,7 +82,7 @@
               class="carousel-slide-movie"
             >
               <div
-                class="ion-activatable ripple-parent"
+                class="ion-activatable ripple-parent shadow-lg"
                 [routerLink]="['/main/movie-detail', movie.id]"
               >
                 <img
@@ -137,7 +138,7 @@
               class="carousel-slide-tv"
             >
               <div
-                class="ion-activatable ripple-parent"
+                class="ion-activatable ripple-parent shadow-lg"
                 [routerLink]="['/main/tv-detail', tv.id]"
               >
                 <img

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { MOVIE_MODEL } from 'src/app/models/movie.model';
 import { Movie } from 'src/app/types/movie';
 import { ratingDescription } from 'src/utils/rating-desc';
+import { averageRating } from 'src/utils/average-rating';
+import { randomAvatar, randomName } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-movie-detail',
@@ -15,8 +17,10 @@ export class MovieDetailPage implements OnInit {
   movie!: Movie;
   selectedSegment: string = 'reviews';
 
+  userNamesMap: { [key: string]: string } = {};
+  avatarsMap: { [key: string]: string } = {};
+
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private actionSheetCtrl: ActionSheetController
@@ -28,9 +32,12 @@ export class MovieDetailPage implements OnInit {
 
     if (movieById) {
       this.movie = movieById;
-    } else {
-      this.router.navigate(['/not-found']);
     }
+
+    this.movie.reviews.forEach((review) => {
+      this.userNamesMap[review.id] = this.getRandomName();
+      this.avatarsMap[review.id] = this.getRandomAvatar();
+    });
   }
 
   async presentActionSheet() {
@@ -57,17 +64,13 @@ export class MovieDetailPage implements OnInit {
     await actionSheet.present();
   }
 
-  getAverageRating(movie: Movie): number {
-    if (!movie.reviews || movie.reviews.length === 0) return 0;
-
-    const totalRating = movie.reviews.reduce(
-      (acc, review) => acc + review.rating,
-      0
-    );
-    return totalRating / movie.reviews.length;
-  }
+  getAverageRating = averageRating;
 
   getRatingDescription = ratingDescription;
+
+  getRandomName = randomName;
+
+  getRandomAvatar = randomAvatar;
 
   getUserRatingDescription(userRating: number): string {
     if (userRating >= 9) {

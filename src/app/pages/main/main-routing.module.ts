@@ -38,28 +38,26 @@ const routes: Routes = [
         loadChildren: () =>
           import('./profile/profile.module').then((m) => m.ProfilePageModule),
       },
-      {
-        path: 'game-detail',
-        loadChildren: () =>
-          import('./game-detail/game-detail.module').then(
-            (m) => m.GameDetailPageModule
-          ),
-      },
-      {
-        path: 'movie-detail',
-        loadChildren: () =>
-          import('./movie-detail/movie-detail.module').then(
-            (m) => m.MovieDetailPageModule
-          ),
-      },
-      {
-        path: 'tv-detail',
-        loadChildren: () =>
-          import('./tv-detail/tv-detail.module').then(
-            (m) => m.TvDetailPageModule
-          ),
-      },
     ],
+  },
+  {
+    path: 'game-detail/:id',
+    loadChildren: () =>
+      import('./game-detail/game-detail.module').then(
+        (m) => m.GameDetailPageModule
+      ),
+  },
+  {
+    path: 'movie-detail/:id',
+    loadChildren: () =>
+      import('./movie-detail/movie-detail.module').then(
+        (m) => m.MovieDetailPageModule
+      ),
+  },
+  {
+    path: 'tv-detail/:id',
+    loadChildren: () =>
+      import('./tv-detail/tv-detail.module').then((m) => m.TvDetailPageModule),
   },
 ];
 
