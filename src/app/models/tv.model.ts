@@ -8,7 +8,7 @@ const nanoid = customAlphabet(
 
 export const TV_MODEL: TvShow[] = [
   {
-    id: '1',
+    id: 'breaking-bad',
     title: 'Breaking Bad',
     image: '/assets/tv/01.webp',
     description:
@@ -42,7 +42,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: '2',
+    id: 'sweet-tooth',
     title: 'Sweet Tooth',
     image: '/assets/tv/02.webp',
     description:
@@ -78,7 +78,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: '3',
+    id: 'game-of-thrones',
     title: 'Game of Thrones',
     image: '/assets/tv/03.webp',
     description:
@@ -115,7 +115,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: '4',
+    id: 'the-boys',
     title: 'The Boys',
     image: '/assets/tv/04.webp',
     description:
@@ -147,7 +147,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: '5',
+    id: 'the-office',
     title: 'The Office',
     image: '/assets/tv/05.webp',
     description:

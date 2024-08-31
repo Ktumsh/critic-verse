@@ -8,7 +8,7 @@ const nanoid = customAlphabet(
 
 export const MOVIE_MODEL: Movie[] = [
   {
-    id: nanoid(),
+    id: 'deadpool-&-wolverine',
     title: 'Deadpool & Wolverine',
     image: '/assets/movie/01.webp',
     rating: 9.7,
@@ -57,7 +57,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: nanoid(),
+    id: 'i’ll-be-your-mirror',
     title: 'I’ll Be Your Mirror',
     image: '/assets/movie/02.webp',
     rating: 3.8,
@@ -99,7 +99,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: nanoid(),
+    id: 'blink-twice',
     title: 'Blink Twice',
     image: '/assets/movie/03.webp',
     rating: 5.5,
@@ -139,7 +139,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: nanoid(),
+    id: 'x-men:-apocalipsis',
     title: 'X-Men: Apocalipsis',
     image: '/assets/movie/04.webp',
     rating: 8,
@@ -188,7 +188,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: nanoid(),
+    id: 'logan',
     title: 'Logan',
     image: '/assets/movie/05.webp',
     rating: 7.7,

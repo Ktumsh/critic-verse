@@ -8,7 +8,7 @@ const nanoid = customAlphabet(
 
 export const GAME_MODEL: Game[] = [
   {
-    id: nanoid(),
+    id: 'black-myth:-wukong',
     title: 'Black Myth: Wukong',
     image: '/assets/game/01.png',
     description:
@@ -40,7 +40,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: nanoid(),
+    id: 'elden-ring',
     title: 'Elden Ring',
     image: '/assets/game/02.png',
     description:
@@ -66,7 +66,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: nanoid(),
+    id: 'the-legend-of-zelda:-tears-of-the-kingdom',
     title: 'The Legend of Zelda: Tears of the Kingdom',
     image: '/assets/game/03.png',
     description:
@@ -92,7 +92,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: nanoid(),
+    id: 'red-dead-redemption-2',
     title: 'Red Dead Redemption 2',
     image: '/assets/game/04.png',
     description:
@@ -118,7 +118,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: nanoid(),
+    id: 'sons-of-the-forest',
     title: 'Sons of the Forest',
     image: '/assets/game/05.png',
     description:
