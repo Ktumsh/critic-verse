@@ -10,6 +10,7 @@ export class HeaderComponent {
   @Input() title!: string;
   @Input() logo: boolean = true;
   @Input() backButton?: string | (() => void);
+  @Input() headerClass?: string;
 
   constructor(private router: Router) {}
 

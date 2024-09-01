@@ -4,42 +4,60 @@
   <!--Admin float button-->
   <app-admin-float-btn class="fixed bottom-0 right-0 z-50" />
 
-  <ion-card>
-    <ion-card-content>
-      <ion-list>
-        <ion-item
+  <article class="p-4 space-y-10">
+    <section>
+      <div class="flex justify-between items-center px-4 mb-2">
+        <h2 class="text-base text-white-m letter-spacing-widest uppercase">
+          Más populares
+        </h2>
+        <!-- <ion-chip [routerLink]="['/main/tv']" color="secondary">
+          <span class="text-xs text-white-m">Ver todo</span>
+        </ion-chip> -->
+      </div>
+      <div class="flex flex-col space-y-4">
+        <div
           *ngFor="let game of gameList"
+          class="flex items-center gap-4 ion-activatable relative overflow-hidden rounded-xl"
           [routerLink]="['/main/game-detail', game.id]"
         >
-          <ion-thumbnail slot="start" class="w-16 h-16">
-            <img alt="{{ game.title }}" src="{{ game.image }}" />
-          </ion-thumbnail>
-          <div>
-            <ion-label>{{ game.title }}</ion-label>
-
-            <ion-card-subtitle
-              *ngIf="game.rating >= 0 && game.rating < 4"
-              color="danger"
-            >
-              {{ game.rating }}
-            </ion-card-subtitle>
-
-            <ion-card-subtitle
-              *ngIf="game.rating >= 4 && game.rating < 6"
-              color="warning"
-            >
-              {{ game.rating }}
-            </ion-card-subtitle>
-
-            <ion-card-subtitle
-              *ngIf="game.rating >= 6 && game.rating <= 10"
-              color="success"
-            >
-              {{ game.rating }}
-            </ion-card-subtitle>
+          <div class="flex min-w-20 rounded-xl overflow-hidden shadow-lg">
+            <img
+              [alt]="game.title"
+              [ngSrc]="game.image || 'https://ionicframework.com/docs/img/demos/thumbnail.svg'"
+              width="80"
+              height="120"
+              class="h-full object-cover object-center animate-fade-in animate-duration-300"
+            />
           </div>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+          <div class="flex flex-col gap-2 pr-4">
+            <h3 class="text-lg text-white-h font-semibold">{{ game.title }}</h3>
+            <div class="flex items-center gap-3">
+              <div
+                [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', game.rating >= 0 && game.rating < 4 ? 'bg-danger' : game.rating >= 4 && game.rating < 6 ? 'bg-warning' : 'bg-success']"
+              >
+                <span class="font-bold text-white"> {{ game.rating }} </span>
+              </div>
+              <span class="text-xs text-white-m">
+                {{ getRatingDescription(game.rating) }}
+              </span>
+            </div>
+          </div>
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+      </div>
+    </section>
+    <section class="relative mb-8">
+      <div class="flex items-center justify-center">
+        <img
+          src="assets/empty-screen-working.webp"
+          alt=""
+          class="opacity-40 w-2/3"
+        />
+      </div>
+      <div class="flex flex-col justify-center items-center px-4 mb-2">
+        <h3 class="text-base text-white-m">Más proximamente...</h3>
+        <p class="text-sm text-white-l">Estamos trabajando para ti</p>
+      </div>
+    </section>
+  </article>
 </ion-content>

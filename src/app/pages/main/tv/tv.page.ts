@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TV_MODEL } from 'src/app/models/tv.model';
 import { TvShow } from 'src/app/types/tv';
+import { ratingDescription } from 'src/utils/rating-desc';
 
 @Component({
   selector: 'app-tv',
@@ -10,12 +11,15 @@ import { TvShow } from 'src/app/types/tv';
 export class TvPage implements OnInit {
   tvList: TvShow[] = [];
 
-  loadTvShows(): void {
-    this.tvList = TV_MODEL;
-  }
   constructor() {}
 
   ngOnInit() {
     this.loadTvShows();
   }
+
+  loadTvShows(): void {
+    this.tvList = TV_MODEL;
+  }
+
+  getRatingDescription = ratingDescription;
 }

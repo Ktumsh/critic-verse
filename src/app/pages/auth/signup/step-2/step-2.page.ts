@@ -13,7 +13,8 @@ export class Step2Page implements OnInit {
     username: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.pattern('^[a-zA-Z0-9_-]+$'),
+      Validators.maxLength(30),
+      Validators.pattern('^(?=.*[a-zA-Z])[a-zA-Z0-9_-]+$'),
     ]),
   });
 
