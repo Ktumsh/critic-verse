@@ -69,6 +69,11 @@ export const TV_MODEL: TvShow[] = [
           'Brillante desde el comienzo hasta el final. La transformación de Walter White es una obra maestra.',
         date: new Date('2024-08-18'),
         userId: '4',
+        report: {
+          reason: 'Spoilers sin advertencia.',
+          date: new Date('2024-08-19'),
+          reportedBy: '5',
+        },
       },
     ],
   },
@@ -107,6 +112,11 @@ export const TV_MODEL: TvShow[] = [
           'Sweet Tooth no ha sido necesariamente la historia más tranquila, ya que a la maravillosa primera temporada le siguió una segunda más torpe de lo esperado y muchos de esos problemas siguen presentes en la última temporada.',
         date: new Date('2024-06-06'),
         userId: '2',
+        report: {
+          reason: 'Comentario confuso e incoherente.',
+          date: new Date('2024-06-07'),
+          reportedBy: '3',
+        },
       },
       {
         id: nanoid(),
@@ -167,6 +177,11 @@ export const TV_MODEL: TvShow[] = [
           'La serie es grandiosa hasta la última temporada. Una gran decepción con el final.',
         date: new Date('2021-05-01'),
         userId: '4',
+        report: {
+          reason: 'Spoilers sobre el final sin advertencia.',
+          date: new Date('2021-05-02'),
+          reportedBy: '5',
+        },
       },
       {
         id: nanoid(),
@@ -230,6 +245,11 @@ export const TV_MODEL: TvShow[] = [
           'Interesante enfoque sobre los superhéroes, pero a veces exagera en su tono.',
         date: new Date('2020-09-25'),
         userId: '6',
+        report: {
+          reason: 'Comentario ofensivo hacia los creadores.',
+          date: new Date('2020-09-26'),
+          reportedBy: '7',
+        },
       },
     ],
   },
@@ -283,6 +303,11 @@ export const TV_MODEL: TvShow[] = [
           'Un clásico moderno. Cada episodio tiene algo que te hace reír o reflexionar.',
         date: new Date('2021-02-10'),
         userId: '6',
+        report: {
+          reason: 'Comentario considerado como spoiler.',
+          date: new Date('2021-02-11'),
+          reportedBy: '7',
+        },
       },
       {
         id: nanoid(),

@@ -8,10 +8,8 @@ ion-item {
 
 ion-item {
   --inner-border-width: 0 0 1px 0;
-}
-
-ion-item::part(native) {
-  --padding-start: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
 }
 
 ion-thumbnail {

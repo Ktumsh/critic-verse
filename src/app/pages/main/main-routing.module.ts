@@ -58,7 +58,11 @@ const routes: Routes = [
     path: 'tv-detail/:id',
     loadChildren: () =>
       import('./tv-detail/tv-detail.module').then((m) => m.TvDetailPageModule),
+  },  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
   },
+
 ];
 
 @NgModule({

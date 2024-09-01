@@ -22,6 +22,8 @@ export class GameDetailPage implements OnInit {
   userNamesMap: { [key: string]: string } = {};
   avatarsMap: { [key: string]: string } = {};
 
+  _bottomSheet = inject(MatBottomSheet);
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location
@@ -41,9 +43,21 @@ export class GameDetailPage implements OnInit {
     });
   }
 
-  _bottomSheet = inject(MatBottomSheet);
-  openReportAlert(): void {
-    this._bottomSheet.open(BottomSheetComponent);
+  openReportAlert(user: any): void {
+    this._bottomSheet.open(BottomSheetComponent, {
+      data: {
+        title: 'Reportar contenido de ' + '"' + user + '"',
+        options: [
+          {
+            label: 'Crear reporte',
+          },
+          {
+            label: 'Cancelar',
+            isDanger: true,
+          },
+        ],
+      },
+    });
   }
 
   getAverageRating = averageRating;

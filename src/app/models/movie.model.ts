@@ -69,6 +69,11 @@ export const MOVIE_MODEL: Movie[] = [
           'Divertida y llena de acción, aunque algunos chistes podrían no ser para todos.',
         date: new Date('2024-08-26'),
         userId: '3',
+        report: {
+          reason: 'Comentario ofensivo sobre el humor de la película.',
+          date: new Date('2024-08-27'),
+          reportedBy: '5',
+        },
       },
       {
         id: nanoid(),
@@ -127,6 +132,11 @@ export const MOVIE_MODEL: Movie[] = [
           'La trama es un poco lenta y confusa, no es para todos los gustos.',
         date: new Date('2024-08-27'),
         userId: '3',
+        report: {
+          reason: 'Comentario negativo excesivo, no constructivo.',
+          date: new Date('2024-08-28'),
+          reportedBy: '6',
+        },
       },
     ],
   },
@@ -175,6 +185,11 @@ export const MOVIE_MODEL: Movie[] = [
           'La historia es intrigante, pero algunos elementos no se desarrollan bien.',
         date: new Date('2024-08-28'),
         userId: '4',
+        report: {
+          reason: 'Comentario ambiguo y no claro.',
+          date: new Date('2024-08-29'),
+          reportedBy: '7',
+        },
       },
     ],
   },

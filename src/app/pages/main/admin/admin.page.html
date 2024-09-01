@@ -1,0 +1,319 @@
+<app-header
+  title="Administrador"
+  [logo]="false"
+  [backButton]="goBack.bind(this)"
+></app-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Panel de Control -->
+  <div class="py-6 space-y-8">
+    <div class="flex flex-col">
+      <!-- Visión General -->
+      <section class="px-5">
+        <div class="mb-2">
+          <h2 class="text-white-m text-sm uppercase">Visión general</h2>
+        </div>
+
+        <!-- Filtro por Fecha -->
+        <ion-segment
+          [(ngModel)]="filterOption"
+          [value]="filterOption"
+          (ionChange)="filterData($event)"
+        >
+          <ion-segment-button value="all"> Todo </ion-segment-button>
+          <ion-segment-button value="last7days">
+            Últimos 7 días
+          </ion-segment-button>
+          <ion-segment-button value="lastMonth">
+            Último mes
+          </ion-segment-button>
+        </ion-segment>
+
+        <!-- Estadísticas -->
+        <div class="grid grid-cols-2 gap-2 mt-4 text-xs text-white-h">
+          <div
+            class="flex flex-col justify-between p-4 bg-surface-secondary-600 rounded-xl"
+          >
+            <div class="inline-flex items-center justify-between gap-2">
+              <span>Usuarios nuevos</span>
+              <div
+                class="flex items-center justify-center rounded-lg bg-green/30 text-green"
+              >
+                <ion-icon
+                  src="assets/icon/miscellaneous/smile-fill.svg"
+                  class="size-4 p-1.5"
+                ></ion-icon>
+              </div>
+            </div>
+            <span class="mt-2 font-extrabold font-geist text-2xl leading-none">
+              {{ newUsers }}
+            </span>
+            <div
+              *ngIf="filterOption === 'last7days'"
+              class="inline-flex gap-1 items-center text-white-l text-xxs"
+            >
+              <span class="inline-flex text-success">
+                <ion-icon
+                  src="assets/icon/miscellaneous/arrow-up.svg"
+                  class="size-3.5"
+                ></ion-icon>
+                <span>10%</span>
+              </span>
+              <span>vs últimos 7 días</span>
+            </div>
+            <div
+              *ngIf="filterOption === 'lastMonth'"
+              class="inline-flex gap-1 items-center text-white-l text-xxs"
+            >
+              <span class="inline-flex text-sky">
+                <ion-icon
+                  src="assets/icon/miscellaneous/minus.svg"
+                  class="size-3.5"
+                ></ion-icon>
+                <span>0%</span>
+              </span>
+              <span>vs último mes</span>
+            </div>
+          </div>
+          <div
+            class="flex flex-col justify-between p-4 bg-surface-secondary-600 rounded-xl"
+          >
+            <div class="inline-flex items-center justify-between gap-2">
+              <span>Promedio de calificaciones</span>
+              <div
+                class="flex items-center justify-center rounded-lg bg-pink/30 text-pink"
+              >
+                <ion-icon
+                  src="assets/icon/miscellaneous/heart-fill.svg"
+                  class="size-4 p-1.5"
+                ></ion-icon>
+              </div>
+            </div>
+            <span class="mt-2 font-extrabold font-geist text-2xl leading-none">
+              {{ averageRecentRating }}
+            </span>
+            <div
+              *ngIf="filterOption === 'last7days'"
+              class="inline-flex gap-1 items-center text-white-l text-xxs"
+            >
+              <span class="inline-flex text-danger">
+                <ion-icon
+                  src="assets/icon/miscellaneous/arrow-up.svg"
+                  class="size-3.5 rotate-180"
+                ></ion-icon>
+                <span>3.5%</span>
+              </span>
+              <span>vs últimos 7 días</span>
+            </div>
+            <div
+              *ngIf="filterOption === 'lastMonth'"
+              class="inline-flex gap-1 items-center text-white-l text-xxs"
+            >
+              <span class="inline-flex text-sky">
+                <ion-icon
+                  src="assets/icon/miscellaneous/minus.svg"
+                  class="size-3.5"
+                ></ion-icon>
+                <span>0%</span>
+              </span>
+              <span>vs último mes</span>
+            </div>
+          </div>
+          <div
+            class="flex flex-col justify-between p-4 bg-surface-secondary-600 rounded-xl"
+          >
+            <div class="inline-flex items-center justify-between gap-2">
+              <span>Nuevas críticas pendientes</span>
+              <div
+                class="flex items-center justify-center rounded-lg bg-yellow/30 text-yellow"
+              >
+                <ion-icon
+                  src="assets/icon/miscellaneous/flag-fill.svg"
+                  class="size-4 p-1.5"
+                ></ion-icon>
+              </div>
+            </div>
+            <span class="mt-2 font-extrabold font-geist text-2xl leading-none">
+              {{ pendingReviews }}
+            </span>
+            <div
+              *ngIf="filterOption === 'last7days'"
+              class="inline-flex gap-1 items-center text-white-l text-xxs"
+            >
+              <span class="inline-flex text-success">
+                <ion-icon
+                  src="assets/icon/miscellaneous/arrow-up.svg"
+                  class="size-3.5"
+                ></ion-icon>
+                <span>20%</span>
+              </span>
+              <span>vs últimos 7 días</span>
+            </div>
+            <div
+              *ngIf="filterOption === 'lastMonth'"
+              class="inline-flex gap-1 items-center text-white-l text-xxs"
+            >
+              <span class="inline-flex text-sky">
+                <ion-icon
+                  src="assets/icon/miscellaneous/minus.svg"
+                  class="size-3.5"
+                ></ion-icon>
+                <span>0%</span>
+              </span>
+              <span>vs último mes</span>
+            </div>
+          </div>
+          <div
+            class="flex flex-col justify-between p-4 bg-surface-secondary-600 rounded-xl"
+          >
+            <div class="inline-flex items-center justify-between gap-2">
+              <span>Reseñas publicadas</span>
+              <div
+                class="flex items-center justify-center rounded-lg bg-sky/30 text-sky"
+              >
+                <ion-icon
+                  src="assets/icon/miscellaneous/comment-fill.svg"
+                  class="size-4 p-1.5"
+                ></ion-icon>
+              </div>
+            </div>
+            <span class="mt-2 font-extrabold font-geist text-2xl leading-none">
+              {{ totalReviews }}
+            </span>
+            <div
+              *ngIf="filterOption === 'last7days'"
+              class="inline-flex gap-1 items-center text-white-l text-xxs"
+            >
+              <span class="inline-flex text-sky">
+                <ion-icon
+                  src="assets/icon/miscellaneous/minus.svg"
+                  class="size-3.5"
+                ></ion-icon>
+                <span>0%</span>
+              </span>
+              <span>vs últimos 7 días</span>
+            </div>
+            <div
+              *ngIf="filterOption === 'lastMonth'"
+              class="inline-flex gap-1 items-center text-white-l text-xxs"
+            >
+              <span class="inline-flex text-sky">
+                <ion-icon
+                  src="assets/icon/miscellaneous/minus.svg"
+                  class="size-3.5"
+                ></ion-icon>
+                <span>0%</span>
+              </span>
+              <span>vs último mes</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Estadísticas Recientes -->
+    <div class="px-5">
+      <div class="mb-2">
+        <h2 class="text-white-m text-sm uppercase">Estadísticas recientes</h2>
+      </div>
+      <div class="space-y-2 text-white-h">
+        <div
+          class="flex justify-between items-center p-4 rounded-xl bg-surface-secondary-600"
+        >
+          <span>Usuarios activos esta semana</span>
+          <div class="inline-flex items-center gap-2">
+            <span class="font-extrabold font-geist text-lg">24</span>
+            <ion-icon
+              src="assets/icon/miscellaneous/chart-lines.svg"
+              class="size-5 text-success"
+            ></ion-icon>
+          </div>
+        </div>
+        <div
+          class="flex justify-between items-center p-4 rounded-xl bg-surface-secondary-600"
+        >
+          <span>Usuarios con reseñas esta semana</span>
+          <div class="inline-flex items-center gap-2">
+            <span class="font-extrabold font-geist text-lg">5</span>
+            <ion-icon
+              src="assets/icon/miscellaneous/chart-lines.svg"
+              class="size-5 text-success"
+            ></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gestión de Usuarios -->
+
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">Gestión de usuarios</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item button detail mode="md" (click)="openUserList()">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Lista de usuarios</h3>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- Moderación de Contenido -->
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">Moderación de contenido</h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item button detail mode="md" (click)="openReviewList()">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">Revisar reseñas</h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md" (click)="openReportedContent()">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">
+              Contenido reportado
+            </h3>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- Configuración del Sistema -->
+    <div>
+      <div class="px-5 mb-2">
+        <h2 class="text-white-m text-sm uppercase">
+          Configuración del sistema
+        </h2>
+      </div>
+      <ion-list
+        class="border-t border-b border-surface-secondary-600"
+        mode="ios"
+      >
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">
+              Opciones de configuración
+            </h3>
+          </div>
+        </ion-item>
+
+        <ion-item button detail mode="md">
+          <div class="flex flex-col my-2.5">
+            <h3 class="text-white-h text-base text-wrap">
+              Gestión de copias de seguridad
+            </h3>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

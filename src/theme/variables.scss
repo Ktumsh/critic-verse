@@ -55,6 +55,11 @@ ion-button {
   margin-bottom: 0;
 }
 
+ion-item::part(native) {
+  --padding-end: 20px;
+  --padding-start: 20px;
+}
+
 .md:focus-visible {
   outline: none;
 }
