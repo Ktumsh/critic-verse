@@ -17,10 +17,30 @@ export const TV_MODEL: TvShow[] = [
         'Un profesor de química de secundaria convertido en fabricante de metanfetaminas navega los peligros del comercio de drogas.',
       genre: ['Crimen', 'Drama', 'Suspenso'],
       cast: [
-        { actor: 'Bryan Cranston', character: 'Walter White' },
-        { actor: 'Aaron Paul', character: 'Jesse Pinkman' },
-        { actor: 'Anna Gunn', character: 'Skyler White' },
-        { actor: 'Dean Norris', character: 'Hank Schrader' },
+        {
+          actor: 'Bryan Cranston',
+          character: 'Walter White',
+          image:
+            'https://www.metacritic.com/a/img/resize/95c4d7c41d5dcbbf5a957072637480c4a50af37a/catalog/provider/2/9/2-f93822c86cb64a5b776b6cc41b92ade7.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Aaron Paul',
+          character: 'Jesse Pinkman',
+          image:
+            'https://www.metacritic.com/a/img/resize/9724607a4d1f73d5158e802ce45b07f438171cac/catalog/provider/2/9/2-5c460500af1abf4357b784e091bbe73b.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Anna Gunn',
+          character: 'Skyler White',
+          image:
+            'https://www.metacritic.com/a/img/resize/3e5aa9d3d6829e74d5c0971bac1d0de3a625c8d6/catalog/provider/2/9/2-0461cc43aa19670570e7c634d139a48a.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Dean Norris',
+          character: 'Hank Schrader',
+          image:
+            'https://www.metacritic.com/a/img/resize/61f9e17c36ede6104ec052695114a4adf484e9d7/catalog/provider/2/9/2-577996223516c62a40afa5ec27a68d4c.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
       ],
       director: ['Vince Gilligan'],
       producer: ['Vince Gilligan', 'Mark Johnson', 'Michelle MacLaren'],
@@ -87,10 +107,29 @@ export const TV_MODEL: TvShow[] = [
         'Un niño mitad humano, mitad ciervo busca un nuevo comienzo en un mundo post-apocalíptico devastado por un virus mortal.',
       genre: ['Drama', 'Fantasía', 'Aventura'],
       cast: [
-        { actor: 'Christian Convery', character: 'Gus' },
-        { actor: 'Nonso Anozie', character: 'Tommy Jepperd' },
-        { actor: 'Adeel Akhtar', character: 'Dr. Singh' },
-        { actor: 'Stefania LaVie Owen', character: 'Bear' },
+        {
+          actor: 'Christian Convery',
+          character: 'Gus',
+          image: '',
+        },
+        {
+          actor: 'Nonso Anozie',
+          character: 'Tommy Jepperd',
+          image:
+            'https://www.metacritic.com/a/img/resize/a73439250cf4b016d43e5bb4a34331ec9afe98bc/catalog/provider/2/9/2-20a6c25df79190f500610111d2999ef9.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Adeel Akhtar',
+          character: 'Dr. Singh',
+          image:
+            'https://www.metacritic.com/a/img/resize/bf8b24e800210df72f58bdabedecabb509254898/catalog/provider/2/14/2-1a050572a51cc7b108d215a94aec27cf.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Stefania LaVie Owen',
+          character: 'Bear',
+          image:
+            'https://www.metacritic.com/a/img/resize/43800af8e03421c292f1d787dfb50bba6f0d7bd1/catalog/provider/2/14/2-01ea0680e75d72e62b8024234ae01a4e.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
       ],
       director: ['Jim Mickle'],
       producer: ['Robert Downey Jr.', 'Susan Downey', 'Amanda Burrell'],
@@ -137,10 +176,30 @@ export const TV_MODEL: TvShow[] = [
       description:
         'Nueve familias nobles luchan por el control de las tierras de Westeros, mientras un enemigo antiguo regresa.',
       cast: [
-        { actor: 'Emilia Clarke', character: 'Daenerys Targaryen' },
-        { actor: 'Kit Harington', character: 'Jon Snow' },
-        { actor: 'Lena Headey', character: 'Cersei Lannister' },
-        { actor: 'Peter Dinklage', character: 'Tyrion Lannister' },
+        {
+          actor: 'Emilia Clarke',
+          character: 'Daenerys Targaryen',
+          image:
+            'https://www.metacritic.com/a/img/resize/26c088e28ab87a5edf262c84d83c91f91015ee6d/catalog/provider/2/9/2-abd65dc6c917111cfabef3616350e12a.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Kit Harington',
+          character: 'Jon Snow',
+          image:
+            'https://www.metacritic.com/a/img/resize/e4a0f0f540db16402b6ca4738b2bab5dbdc7d064/catalog/provider/2/9/2-254636fe50fa428c0de944e97f8cefb0.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Lena Headey',
+          character: 'Cersei Lannister',
+          image:
+            'https://www.metacritic.com/a/img/resize/b36c91696ac5ead2bc9be85b950eb56d7d60b525/catalog/provider/2/9/2-b081cf76c45215b6614b9ee53fbed5d0.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Peter Dinklage',
+          character: 'Tyrion Lannister',
+          image:
+            'https://www.metacritic.com/a/img/resize/3c5df7599474ac60f8c7f41b371bd3600b3b9146/catalog/provider/2/9/2-26a8d155f1769d63523daa9f4506e17f.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
       ],
       director: ['David Benioff', 'D.B. Weiss'],
       producer: ['David Benioff', 'D.B. Weiss', 'Carolyn Strauss'],
@@ -203,10 +262,30 @@ export const TV_MODEL: TvShow[] = [
         'Un grupo de vigilantes conocido informalmente como "The Boys" se propone acabar con los superhéroes corruptos que abusan de sus poderes.',
       genre: ['Acción', 'Drama', 'Ciencia Ficción'],
       cast: [
-        { actor: 'Karl Urban', character: 'Billy Butcher' },
-        { actor: 'Jack Quaid', character: 'Hughie Campbell' },
-        { actor: 'Antony Starr', character: 'Homelander' },
-        { actor: 'Erin Moriarty', character: 'Starlight' },
+        {
+          actor: 'Karl Urban',
+          character: 'Billy Butcher',
+          image:
+            'https://www.metacritic.com/a/img/resize/e381f34af764e1abf9e68cf9df2916a0596b4008/catalog/provider/2/9/2-aa7272388ea505e3815717f35f53cac3.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Jack Quaid',
+          character: 'Hughie Campbell',
+          image:
+            'https://www.metacritic.com/a/img/resize/35d9cf83a707f54be86b7702305e22683f1344c9/catalog/provider/2/9/2-1630e33c2db988f0629a7b870c448caa.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Antony Starr',
+          character: 'Homelander',
+          image:
+            'https://www.metacritic.com/a/img/resize/586c5522da58c503f9f0a5a3492295cac11ad1cd/catalog/provider/2/9/2-223b88573b530cba7ab526e52f3675a2.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Erin Moriarty',
+          character: 'Starlight',
+          image:
+            'https://www.metacritic.com/a/img/resize/feb681a41bcdbc9d61e38991b60498e269ea09dc/catalog/provider/2/9/2-acc2ba93f3cb81080dbd9f9b5387d8fc.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
       ],
       director: ['Eric Kripke'],
       producer: ['Seth Rogen', 'Evan Goldberg', 'Neal H. Moritz'],
@@ -263,10 +342,30 @@ export const TV_MODEL: TvShow[] = [
         'Una comedia sobre un grupo de trabajadores de oficina típicos, donde el día de trabajo consiste en choques de ego, comportamientos inapropiados y tedio.',
       genre: ['Comedia'],
       cast: [
-        { actor: 'Steve Carell', character: 'Michael Scott' },
-        { actor: 'Rainn Wilson', character: 'Dwight Schrute' },
-        { actor: 'John Krasinski', character: 'Jim Halpert' },
-        { actor: 'Jenna Fischer', character: 'Pam Beesly' },
+        {
+          actor: 'Steve Carell',
+          character: 'Michael Scott',
+          image:
+            'https://www.metacritic.com/a/img/resize/84239affd07003910066ccea5d0893b1f23a3cdf/catalog/provider/2/9/2-a22e528cedd1ac7d0e6cde73d2c75f26.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Rainn Wilson',
+          character: 'Dwight Schrute',
+          image:
+            'https://www.metacritic.com/a/img/resize/e8fbfd2071bdc11a633c9c4445d0d145914103aa/catalog/provider/2/9/2-90a5dc70069665f6ed7890b6b22d8fae.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'John Krasinski',
+          character: 'Jim Halpert',
+          image:
+            'https://www.metacritic.com/a/img/resize/66bcca394bef6077485bb572b7428452d7df5552/catalog/provider/2/14/2-e874b4d2652462f08467e56f5528de4a.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Jenna Fischer',
+          character: 'Pam Beesly',
+          image:
+            'https://www.metacritic.com/a/img/resize/fc1e7dbe09dcf193a2330fa4ab849e0f8a478cd2/catalog/provider/2/9/2-c5c597cc8e87d8afa232c7f8a76297ac.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
       ],
       director: ['Greg Daniels'],
       producer: ['Greg Daniels', 'Paul Lieberstein', 'Ricky Gervais'],
