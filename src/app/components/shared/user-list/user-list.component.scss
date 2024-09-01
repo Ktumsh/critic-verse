@@ -1,0 +1,37 @@
+ion-thumbnail {
+  --size: 40px;
+  --border-radius: 12px;
+}
+
+.shadow-small {
+  --tw-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.05),
+    0px 2px 10px 0px rgba(0, 0, 0, 0.2),
+    inset 0px 0px 1px 0px hsla(0, 0%, 100%, 0.15);
+  --tw-shadow-colored: 0px 0px 5px 0px rgba(0, 0, 0, 0.05),
+    0px 2px 10px 0px rgba(0, 0, 0, 0.2),
+    inset 0px 0px 1px 0px hsla(0, 0%, 100%, 0.15);
+  box-shadow: 0 0 0 #0000, 0 0 0 #0000, var(--tw-shadow);
+}
+
+ion-button.search-btn,
+ion-button.add-btn {
+  --border-radius: 12px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+ion-button.search-btn {
+  width: 200px;
+}
+
+ion-button.search-btn::part(native) {
+  background: var(--surface-secondary-600);
+}
+
+.demo-paginator {
+  border-radius: 12px;
+}
+
+.chevron {
+  transform: translateY(2px);
+}

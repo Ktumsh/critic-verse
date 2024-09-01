@@ -12,14 +12,14 @@
 </app-header>
 
 <ion-content [fullscreen]="true">
+  <!--Admin float button-->
+  <app-admin-float-btn class="fixed bottom-0 right-0 z-50" />
+
   <div class="flex flex-col items-center justify-center w-full pt-6">
     <ion-thumbnail>
       <img
-        [ngSrc]="user.profileImage || 'assets/avatar-demo.svg'"
+        [src]="user.profileImage || 'assets/avatar-demo.svg'"
         alt="avatar de {{ user.username }}"
-        width="120"
-        height="120"
-        class="w-auto"
         priority
       />
     </ion-thumbnail>
@@ -31,7 +31,7 @@
       {{ user.email || 'user@example.com' }}
     </ion-label>
   </div>
-  <ion-list [inset]="true">
+  <ion-list [inset]="false">
     <div class="mb-10">
       <ion-item
         *ngFor="let item of items.slice(0, 2)"

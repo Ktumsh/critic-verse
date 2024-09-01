@@ -1,0 +1,119 @@
+<app-header
+  [title]="'Contenido reportado'"
+  [logo]="false"
+  [backButton]="dismiss.bind(this)"
+></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="flex flex-col gap-4 py-6 px-4">
+    <div class="flex flex-col space-y-4">
+      <!-- Filtro por Tipo de Contenido -->
+      <ion-segment
+        [(ngModel)]="filterOption"
+        [value]="filterOption"
+        (ionChange)="filterData($event)"
+      >
+        <ion-segment-button value="all">
+          <div class="inline-flex items-center gap-1">
+            Todo
+            <span
+              class="flex items-center justify-center text-xxs size-6 bg-secondary-600/10 rounded-full"
+            >
+              {{ totalReports }}
+            </span>
+          </div>
+        </ion-segment-button>
+        <ion-segment-button value="game">
+          <div class="inline-flex items-center gap-1">
+            Juegos
+            <span
+              class="flex items-center justify-center text-xxs size-6 bg-secondary-600/10 rounded-full"
+            >
+              {{ totalGameReports }}
+            </span>
+          </div>
+        </ion-segment-button>
+        <ion-segment-button value="movie">
+          <div class="inline-flex items-center gap-1">
+            Pelis
+            <span
+              class="flex items-center justify-center text-xxs size-6 bg-secondary-600/10 rounded-full"
+            >
+              {{ totalMovieReports }}
+            </span>
+          </div>
+        </ion-segment-button>
+        <ion-segment-button value="tv">
+          <div class="inline-flex items-center gap-1">
+            TV
+            <span
+              class="flex items-center justify-center text-xxs size-6 bg-secondary-600/10 rounded-full"
+            >
+              {{ totalTvReports }}
+            </span>
+          </div>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Listado de Contenido Reportado -->
+      <div
+        *ngFor="let report of allReports"
+        class="p-4 bg-surface-secondary-600 rounded-lg shadow-sm relative"
+      >
+        <div class="flex flex-col space-y-4 text-white-h">
+          <header class="flex items-center justify-between w-full">
+            <div class="inline-flex items-center gap-3">
+              <ion-avatar class="size-8 rounded-xl">
+                <img
+                  alt="Foto de perfil"
+                  [src]="avatarsMap[report.reportedBy]"
+                />
+              </ion-avatar>
+              <span class="text-lg font-semibold">
+                {{ userNamesMap[report.reportedBy] }}
+              </span>
+            </div>
+          </header>
+
+          <!-- Mostrar el origen del reporte y el comentario de la reseña -->
+          <div class="text-sm space-y-4">
+            <p>
+              <span class="text-white-m mr-1">Origen:</span>
+              {{ report.source | titlecase }} -
+              {{ report.contentTitle }}
+            </p>
+            <p>
+              <span class="text-white-m mr-1">Comentario de la Reseña:</span>
+              "{{ report.reviewComment }}"
+            </p>
+            <p>
+              <span class="text-white-m mr-1">Razón del reporte:</span>
+              "{{ report.reason }}"
+            </p>
+          </div>
+
+          <footer
+            class="flex items-center justify-between pt-4 border-t border-surface-secondary-400"
+          >
+            <small class="text-xs text-white-l">
+              {{ report.date | date : "d 'de' MMM, y" }}
+            </small>
+            <ion-button
+              (click)="openReportAlert(userNamesMap[report.reportedBy])"
+              expand="block"
+              fill="clear"
+              shape="round"
+              class="size-8"
+              color="secondary"
+            >
+              <ion-icon
+                src="assets/icon/options.svg"
+                class="size-5 text-white-l"
+              ></ion-icon>
+            </ion-button>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

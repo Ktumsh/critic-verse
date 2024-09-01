@@ -1,5 +1,16 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  MAT_BOTTOM_SHEET_DATA,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
+
+interface BottomSheetOption {
+  label: string;
+  action?: () => void;
+  isSuccess?: boolean;
+  isWarning?: boolean;
+  isDanger?: boolean;
+}
 
 @Component({
   selector: 'app-bottom-sheet',
@@ -7,15 +18,30 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
   styleUrls: ['./bottom-sheet.component.scss'],
 })
 export class BottomSheetComponent implements OnInit {
-  _bottomSheetRef =
-    inject<MatBottomSheetRef<BottomSheetComponent>>(MatBottomSheetRef);
+  title!: string;
+  options: BottomSheetOption[] = [];
 
-  constructor() {}
+  constructor(
+    private _bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
+  ) {
+    this.title = data.title;
+    this.options = data.options;
+  }
 
   ngOnInit() {}
 
-  openLink(event: MouseEvent): void {
+  executeAction(event: MouseEvent, action?: () => void): void {
+    event.preventDefault();
+    if (action) {
+      action();
+    }
     this._bottomSheetRef.dismiss();
     event.preventDefault();
+  }
+
+  openLink(event: MouseEvent): void {
+    event.preventDefault();
+    this._bottomSheetRef.dismiss();
   }
 }

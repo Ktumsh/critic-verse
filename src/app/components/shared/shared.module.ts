@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { CustomButtonComponent } from './custom-button/custom-button.component';
 import { CustomInputComponent } from './custom-input/custom-input.component';
 import { LogoComponent } from './logo/logo.component';
-import { SvgIconsComponent } from './svg-icons/svg-icons.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
 import { NotificationsComponent } from './notifications/notifications.component';
@@ -19,6 +18,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { AdminFloatBtnComponent } from './admin-float-btn/admin-float-btn.component';
+import { ReportedContentComponent } from './reported-content/reported-content.component';
+import { ReviewsListComponent } from './reviews-list/reviews-list.component';
+import { UserListComponent } from './user-list/user-list.component';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -33,7 +40,10 @@ import { MatIconModule } from '@angular/material/icon';
     ConfigurationComponent,
     HelpComponent,
     BottomSheetComponent,
-    SvgIconsComponent,
+    AdminFloatBtnComponent,
+    ReportedContentComponent,
+    ReviewsListComponent,
+    UserListComponent,
   ],
   exports: [
     HeaderComponent,
@@ -47,7 +57,10 @@ import { MatIconModule } from '@angular/material/icon';
     ConfigurationComponent,
     HelpComponent,
     BottomSheetComponent,
-    SvgIconsComponent,
+    AdminFloatBtnComponent,
+    ReportedContentComponent,
+    ReviewsListComponent,
+    UserListComponent,
     ReactiveFormsModule,
   ],
   imports: [
@@ -61,6 +74,30 @@ import { MatIconModule } from '@angular/material/icon';
     MatBottomSheetModule,
     MatListModule,
     MatIconModule,
+    MatPaginatorModule,
+  ],
+  providers: [
+    {
+      provide: MatPaginatorIntl,
+      useValue: (() => {
+        const paginatorIntl = new MatPaginatorIntl();
+        paginatorIntl.itemsPerPageLabel = '';
+        paginatorIntl.nextPageLabel = 'Siguiente';
+        paginatorIntl.previousPageLabel = 'Anterior';
+        paginatorIntl.getRangeLabel = (
+          page: number,
+          pageSize: number,
+          length: number
+        ) => {
+          if (length === 0 || pageSize === 0) {
+            return `1 de 1`;
+          }
+          const totalPages = Math.ceil(length / pageSize);
+          return `${page + 1} de ${totalPages}`;
+        };
+        return paginatorIntl;
+      })(),
+    },
   ],
 })
 export class SharedModule {}

@@ -18,3 +18,10 @@ ion-toggle {
   --handle-background: var(--surface-secondary-500);
   --track-background: var(--surface-secondary-300);
 }
+
+ion-segment-button.md {
+  --color: rgb(255 255 255 / var(--opacity-m));
+  --color-checked: var(--color-secondary-600);
+  --indicator-height: 4px;
+  text-transform: capitalize;
+}

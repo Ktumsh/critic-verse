@@ -44,6 +44,11 @@ export const GAME_MODEL: Game[] = [
         comment: 'Excelente juego, aunque tiene algunos bugs menores.',
         date: new Date('2024-09-01'),
         userId: '3',
+        report: {
+          reason: 'Comentario repetitivo y no constructivo.',
+          date: new Date('2024-09-02'),
+          reportedBy: '4',
+        },
       },
     ],
   },
@@ -78,6 +83,11 @@ export const GAME_MODEL: Game[] = [
           'La dificultad es alta, pero eso es parte de su encanto. Sin embargo, no es para todos.',
         date: new Date('2023-04-15'),
         userId: '4',
+        report: {
+          reason: 'Comentario negativo sin justificación.',
+          date: new Date('2023-04-16'),
+          reportedBy: '5',
+        },
       },
       {
         id: nanoid(),
@@ -112,6 +122,11 @@ export const GAME_MODEL: Game[] = [
           'En general, es entretenido, pero eso es todo, es simplemente entretenido. Hay mucho que hacer, pero las cosas que realmente estás haciendo se sienten un poco superficiales. Noto que mi cerebro se desconecta mientras juego, de la misma manera que lo hace cuando veo cosas como TikTok.',
         date: new Date('2024-01-15'),
         userId: '3',
+        report: {
+          reason: 'Comentario considerado inapropiado.',
+          date: new Date('2024-01-16'),
+          reportedBy: '6',
+        },
       },
       {
         id: nanoid(),
@@ -154,6 +169,11 @@ export const GAME_MODEL: Game[] = [
           'La historia es increíble, pero algunas misiones pueden ser largas y aburridas.',
         date: new Date('2021-02-15'),
         userId: '7',
+        report: {
+          reason: 'Comentario negativo sin justificación.',
+          date: new Date('2021-02-16'),
+          reportedBy: '8',
+        },
       },
       {
         id: nanoid(),
@@ -204,6 +224,11 @@ export const GAME_MODEL: Game[] = [
           'El juego tiene potencial, pero la falta de contenido y los bugs arruinan la experiencia.',
         date: new Date('2024-06-10'),
         userId: '6',
+        report: {
+          reason: 'Crítica negativa sin detalles suficientes.',
+          date: new Date('2024-06-11'),
+          reportedBy: '7',
+        },
       },
       {
         id: nanoid(),

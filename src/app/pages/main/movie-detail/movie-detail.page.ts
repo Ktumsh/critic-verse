@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { Location } from '@angular/common';
@@ -7,6 +7,8 @@ import { Movie } from 'src/app/types/movie';
 import { ratingDescription } from 'src/utils/rating-desc';
 import { averageRating } from 'src/utils/average-rating';
 import { randomAvatar, randomName } from 'src/app/models/user.model';
+import { BottomSheetComponent } from 'src/app/components/shared/bottom-sheet/bottom-sheet.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-movie-detail',
@@ -20,10 +22,11 @@ export class MovieDetailPage implements OnInit {
   userNamesMap: { [key: string]: string } = {};
   avatarsMap: { [key: string]: string } = {};
 
+  _bottomSheet = inject(MatBottomSheet);
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private location: Location,
-    private actionSheetCtrl: ActionSheetController
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -40,28 +43,21 @@ export class MovieDetailPage implements OnInit {
     });
   }
 
-  async presentActionSheet() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      cssClass: 'custom-sheet',
-      header: 'Reportar reseña',
-      buttons: [
-        {
-          text: 'Enviar reporte',
-          data: {
-            action: 'report',
+  openReportAlert(user: any): void {
+    this._bottomSheet.open(BottomSheetComponent, {
+      data: {
+        title: 'Reportar contenido de ' + '"' + user + '"',
+        options: [
+          {
+            label: 'Crear reporte',
           },
-        },
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          data: {
-            action: 'cancel',
+          {
+            label: 'Cancelar',
+            isDanger: true,
           },
-        },
-      ],
+        ],
+      },
     });
-
-    await actionSheet.present();
   }
 
   getAverageRating = averageRating;

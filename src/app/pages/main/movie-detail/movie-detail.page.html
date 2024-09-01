@@ -201,7 +201,7 @@
                       >{{ review.date | date:'d \'de\' MMM, y' }}
                     </small>
                     <ion-button
-                      (click)="presentActionSheet()"
+                      (click)="openReportAlert(userNamesMap[review.id])"
                       expand="block"
                       fill="clear"
                       shape="round"

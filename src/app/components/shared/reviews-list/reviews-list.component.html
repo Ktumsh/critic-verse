@@ -1,0 +1,115 @@
+<app-header
+  [title]="'Revisar reseñas'"
+  [logo]="false"
+  [backButton]="dismiss.bind(this)"
+/>
+
+<ion-content [fullscreen]="true">
+  <div class="flex flex-col gap-4 py-6 px-4">
+    <div class="flex flex-col space-y-4">
+      <!-- Filtro por Fecha -->
+      <ion-segment
+        [(ngModel)]="filterOption"
+        [value]="filterOption"
+        (ionChange)="filterData($event)"
+      >
+        <ion-segment-button value="all">
+          <div class="inline-flex items-center gap-1">
+            Todo
+            <span
+              class="flex items-center justify-center text-xxs size-6 bg-secondary-600/10 rounded-full"
+            >
+              {{ totalReviews }}
+            </span>
+          </div>
+        </ion-segment-button>
+        <ion-segment-button value="game">
+          <div class="inline-flex items-center gap-1">
+            Juegos
+            <span
+              class="flex items-center justify-center text-xxs size-6 bg-secondary-600/10 rounded-full"
+            >
+              {{ totalGameReviews }}
+            </span>
+          </div>
+        </ion-segment-button>
+        <ion-segment-button value="movie">
+          <div class="inline-flex items-center gap-1">
+            Pelis
+            <span
+              class="flex items-center justify-center text-xxs size-6 bg-secondary-600/10 rounded-full"
+            >
+              {{ totalMovieReviews }}
+            </span>
+          </div>
+        </ion-segment-button>
+        <ion-segment-button value="tv">
+          <div class="inline-flex items-center gap-1">
+            TV
+            <span
+              class="flex items-center justify-center text-xxs size-6 bg-secondary-600/10 rounded-full"
+            >
+              {{ totalTvReviews }}
+            </span>
+          </div>
+        </ion-segment-button>
+      </ion-segment>
+
+      <div
+        *ngFor="let review of allReviews"
+        class="p-4 bg-surface-secondary-600 rounded relative"
+      >
+        <div class="flex flex-col space-y-4 text-white-h">
+          <header class="flex items-center justify-between w-full">
+            <div class="inline-flex items-center gap-3">
+              <ion-avatar class="size-8 rounded-xl">
+                <img alt="Foto de perfil" [src]="avatarsMap[review.id]" />
+              </ion-avatar>
+              <span class="text-lg font-semibold">
+                {{ userNamesMap[review.id] }}
+              </span>
+            </div>
+
+            <div
+              [ngClass]="[
+                'flex items-center justify-center size-7 rounded-full',
+                review.rating >= 0 && review.rating < 4
+                  ? 'bg-danger'
+                  : review.rating >= 4 && review.rating < 6
+                  ? 'bg-warning'
+                  : 'bg-success'
+              ]"
+            >
+              <span class="font-bold text-white">
+                {{ review.rating }}
+              </span>
+            </div>
+          </header>
+          <p class="text-sm">{{ review.comment }}</p>
+          <footer
+            class="flex items-center justify-end pt-4 border-t border-surface-secondary-400"
+          >
+            <div class="inline-flex items-center gap-4">
+              <small class="text-xs text-white-l"
+                >{{ review.date | date : "d 'de' MMM, y" }}
+              </small>
+              <ion-button
+                (click)="openReportAlert(userNamesMap[review.id])"
+                expand="block"
+                fill="clear"
+                shape="round"
+                class="size-8"
+                color="secondary"
+              >
+                <ion-icon
+                  src="assets/icon/options.svg"
+                  class="size-5 text-white-l"
+                ></ion-icon>
+              </ion-button>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
