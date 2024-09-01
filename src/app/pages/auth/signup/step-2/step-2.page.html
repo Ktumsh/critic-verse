@@ -1,4 +1,8 @@
-<app-header [logo]="false" backButton="/signup"></app-header>
+<app-header
+  [logo]="false"
+  backButton="/signup"
+  headerClass="no-transparent"
+></app-header>
 
 <ion-content>
   <div class="flex flex-col items-center h-full px-6 pb-6">
@@ -41,10 +45,17 @@
             El nombre de usuario debe tener al menos 3 caracteres.
           </span>
           <span
+            *ngIf="form.controls.username.errors?.['maxlength']"
+            class="text-xs text-danger"
+          >
+            El nombre de usuario debe tener menos de 30 caracteres.
+          </span>
+          <span
             *ngIf="form.controls.username.errors?.['pattern']"
             class="text-xs text-danger"
           >
-            Solo se pueden incluir letras, números y guiones.
+            Solo se pueden incluir letras, números y guiones y debe contener al
+            menos una letra.
           </span>
           <span
             *ngIf="form.controls.username.errors?.['usernameTaken']"

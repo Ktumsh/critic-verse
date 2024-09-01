@@ -16,11 +16,36 @@ export const MOVIE_MODEL: Movie[] = [
       description:
         'Un cansado glotón se encuentra recuperándose de sus heridas cuando se encuentra con un Deadpool bocazas que ha viajado en el tiempo para curar a su mejor amigo con la esperanza de hacerse amigo de la bestia salvaje y formar equipo para derrotar a un enemigo que ambos tienen en común.',
       cast: [
-        { actor: 'Ryan Reynolds', character: 'Deadpool' },
-        { actor: 'Hugh Jackman', character: 'Wolverine' },
-        { actor: 'Emma Corrin', character: 'Cassandra Nova' },
-        { actor: 'Matthew Macfadyen', character: 'Mr. Paradox' },
-        { actor: 'Dafne Keen', character: 'Laura/X-23' },
+        {
+          actor: 'Ryan Reynolds',
+          character: 'Deadpool',
+          image:
+            'https://www.metacritic.com/a/img/resize/008bc9abb36f96d2d07d1f6a1fccebad09e9db90/catalog/provider/2/9/2-9916bf29a5dec935b32b93d92e40dee2.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Hugh Jackman',
+          character: 'Wolverine',
+          image:
+            'https://www.metacritic.com/a/img/resize/5dfd48e5d55ffc9f98835c51a53bf1e264e2c70b/catalog/provider/2/9/2-fe33f7bac54383e9ed757559162f3265.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Emma Corrin',
+          character: 'Cassandra Nova',
+          image:
+            'https://www.metacritic.com/a/img/resize/3e1e73932a366912f816016158448601f22ff7e8/catalog/provider/2/9/2-e5e54561c905148b4caee7949549e80a.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Matthew Macfadyen',
+          character: 'Mr. Paradox',
+          image:
+            'https://www.metacritic.com/a/img/resize/e3af78fb601824e235de2dcea9e76ca6833ddb35/catalog/provider/2/9/2-10a042edbe335fd89b456d96fc7b4e90.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Dafne Keen',
+          character: 'Laura/X-23',
+          image:
+            'https://www.metacritic.com/a/img/resize/70ec3bb5af94ba6b4cfb8032fd14032d0f634226/catalog/provider/2/13/2-800dbb8c1b612c26ca851ffdd1422e21.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
       ],
       director: ['Shawn Levy'],
       producer: [
@@ -94,11 +119,33 @@ export const MOVIE_MODEL: Movie[] = [
       description:
         'Chloe (Carla Juri) viaja a Japón por trabajo, donde es recibida por un viejo amigo, Toshi (Takashi Ueno). Entre la melancolía por la pérdida de su marido y el asombro por el cambio de perspectivas, Chloe deambula por un paisaje desconocido.',
       cast: [
-        { actor: 'Carla Juri', character: 'Chloe' },
-        { actor: 'Takashi Ueno', character: 'Toshi' },
-        { actor: 'Sachiko Ohshima', character: 'Desconocido' },
-        { actor: 'Futaba Okazaki', character: 'Desconocido' },
-        { actor: 'Gustaf Skarsgård', character: 'Peter' },
+        {
+          actor: 'Carla Juri',
+          character: 'Chloe',
+          image:
+            'https://www.metacritic.com/a/img/resize/d04d0a4060a799addf1b7846cb70f516744c4604/catalog/provider/2/9/2-68baad1148a4ed6f6006a2fca0f1a76c.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Takashi Ueno',
+          character: 'Toshi',
+          image: '',
+        },
+        {
+          actor: 'Sachiko Ohshima',
+          character: 'Grandmother',
+          image: '',
+        },
+        {
+          actor: 'Futaba Okazaki',
+          character: 'Futaba',
+          image: '',
+        },
+        {
+          actor: 'Gustaf Skarsgård',
+          character: 'Peter',
+          image:
+            'https://www.metacritic.com/a/img/resize/6469b43ce11630f1b48389b49050f2b537cca552/catalog/provider/2/9/2-5e9895a11173f4ffacc035a811855b66.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
       ],
       director: ['Bradley Rust Gray'],
       producer: [
@@ -149,11 +196,35 @@ export const MOVIE_MODEL: Movie[] = [
       description:
         'Cuando el multimillonario tecnológico Slater King (Channing Tatum) conoce a la camarera Frida (Naomi Ackie) en su gala benéfica, saltan chispas. La invita a unirse a él y a sus amigos en unas vacaciones de ensueño en su isla privada. Es el paraíso.',
       cast: [
-        { actor: 'Naomi Ackie', character: 'Frida' },
-        { actor: 'Channing Tatum', character: 'Slater King' },
-        { actor: 'Alia Shawkat', character: 'Jess' },
-        { actor: 'Cristiano Slater', character: 'Vlc' },
-        { actor: 'Simon Rex', character: 'Cody' },
+        {
+          actor: 'Naomi Ackie',
+          character: 'Frida',
+          image:
+            'https://www.metacritic.com/a/img/resize/b7560872ec9771f27e27d3f61f0f4b6ff549b084/catalog/provider/2/14/2-4c20503be627d2b5c63f0d8afb54f595.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Channing Tatum',
+          character: 'Slater King',
+          image:
+            'https://www.metacritic.com/a/img/resize/a2f06c140114421b4aff75b0bddb07c1eb27f741/catalog/provider/2/9/2-55ea54a52acd864f3575302151ff5d8f.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Alia Shawkat',
+          character: 'Jess',
+          image:
+            'https://www.metacritic.com/a/img/resize/b81e1a08b1847c35e687e995db87633b68b358f0/catalog/provider/2/9/2-de2b4046cc635e44ff294fc44f06ece6.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Cristiano Slater',
+          character: 'Vlc',
+          image:
+            'https://www.metacritic.com/a/img/resize/bcc53564e43dc8e4e18fa537871dce53be7baf75/catalog/provider/2/9/2-bdfdd2d791269c1c3d7fa08479c55c86.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Simon Rex',
+          character: 'Cody',
+          image: '',
+        },
       ],
       director: ['Zoe Kravitz'],
       producer: [
@@ -202,11 +273,35 @@ export const MOVIE_MODEL: Movie[] = [
       description:
         'Desde los albores de la civilización, fue adorado como un dios. Apocalipsis, el primer y más poderoso mutante del universo X-Men de Marvel, acumuló los poderes de muchos otros mutantes, volviéndose inmortal e invencible.',
       cast: [
-        { actor: 'James McAvoy', character: 'Professor Charles Xavier' },
-        { actor: 'Michael Fassbender', character: 'Erik Lehnsherr / Magneto' },
-        { actor: 'Jennifer Lawrence', character: 'Raven Darkhölme / Mystique' },
-        { actor: 'Nicolás Hoult', character: 'Hank McCoy / Beast' },
-        { actor: 'Óscar Isaac', character: 'Apocalypse' },
+        {
+          actor: 'James McAvoy',
+          character: 'Professor Charles Xavier',
+          image:
+            'https://www.metacritic.com/a/img/resize/03a2daf9a7b216469d152cf82a78387d5288dd21/catalog/provider/2/9/2-cf40dd56b72c8b05f3f2181724d2bfec.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Michael Fassbender',
+          character: 'Erik Lehnsherr / Magneto',
+          image:
+            'https://www.metacritic.com/a/img/resize/0feed6697cbefef1e6ea54faa99e59a9f5872237/catalog/provider/2/14/2-c077c3d1636c2cad5a27c5d1f30887ee.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Jennifer Lawrence',
+          character: 'Raven Darkhölme / Mystique',
+          image:
+            'https://www.metacritic.com/a/img/resize/b693790aab40f86a1bb99acdda0e17f3a87174c4/catalog/provider/2/9/2-37b38c1f1b7359f2ac6d145ac3cb6245.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Nicolás Hoult',
+          character: 'Hank McCoy / Beast',
+          image:
+            'https://www.metacritic.com/a/img/resize/c1f2ff384b8f658927ef1095468978013c099efc/catalog/provider/2/9/2-98596c00f4dfc5bcb56b68bf24dd17d9.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Óscar Isaac',
+          character: 'Apocalypse',
+          image: '',
+        },
       ],
       director: ['Bryan Cantante'],
       producer: [
@@ -266,13 +361,45 @@ export const MOVIE_MODEL: Movie[] = [
       description:
         'En un futuro cercano, un cansado Logan cuida al enfermo Profesor X en un escondite en la frontera mexicana. Pero los intentos de Logan de esconderse del mundo y de su legado se ven frustrados cuando llega un joven mutante perseguido por fuerzas oscuras.',
       cast: [
-        { actor: 'Hugh Jackman', character: 'Logan / Wolverine' },
-        { actor: 'Patrick Stewart', character: 'Charles Xavier' },
-        { actor: 'Dafne Keen', character: 'Laura / X-23' },
-        { actor: 'Boyd Holbrook', character: 'Pierce' },
-        { actor: 'Esteban Comerciante', character: 'Caliban' },
-        { actor: 'Elizabeth Rodríguez', character: 'Gabriela' },
-        { actor: 'Richard E. Grant', character: 'Dr. Rice' },
+        {
+          actor: 'Hugh Jackman',
+          character: 'Logan / Wolverine',
+          image:
+            'https://www.metacritic.com/a/img/resize/5dfd48e5d55ffc9f98835c51a53bf1e264e2c70b/catalog/provider/2/9/2-fe33f7bac54383e9ed757559162f3265.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Patrick Stewart',
+          character: 'Charles Xavier',
+          image:
+            'https://www.metacritic.com/a/img/resize/798ca393d2347c99d24c77198328c6dd140d43eb/catalog/provider/2/9/2-4ad4b8dfcb2bc33bb4f1d16d193e7610.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Dafne Keen',
+          character: 'Laura / X-23',
+          image:
+            'https://www.metacritic.com/a/img/resize/70ec3bb5af94ba6b4cfb8032fd14032d0f634226/catalog/provider/2/13/2-800dbb8c1b612c26ca851ffdd1422e21.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Boyd Holbrook',
+          character: 'Pierce',
+          image:
+            'https://www.metacritic.com/a/img/resize/0e6107491927b82fb94c5b1de2509e8c5005c139/catalog/provider/2/9/2-350732f4bb015b0266917e383c2a0785.jpg?auto=webp&fit=cover&height=300&width=200',
+        },
+        {
+          actor: 'Esteban Comerciante',
+          character: 'Caliban',
+          image: '',
+        },
+        {
+          actor: 'Elizabeth Rodríguez',
+          character: 'Gabriela',
+          image: '',
+        },
+        {
+          actor: 'Richard E. Grant',
+          character: 'Dr. Rice',
+          image: '',
+        },
       ],
       director: ['James Mangold'],
       producer: [

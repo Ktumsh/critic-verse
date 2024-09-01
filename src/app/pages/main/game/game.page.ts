@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GAME_MODEL } from 'src/app/models/game.model';
 import { Game } from 'src/app/types/game';
+import { ratingDescription } from 'src/utils/rating-desc';
 
 @Component({
   selector: 'app-game',
@@ -10,12 +11,15 @@ import { Game } from 'src/app/types/game';
 export class GamePage implements OnInit {
   gameList: Game[] = [];
 
-  loadGames(): void {
-    this.gameList = GAME_MODEL;
-  }
   constructor() {}
 
   ngOnInit() {
     this.loadGames();
   }
+
+  loadGames(): void {
+    this.gameList = GAME_MODEL;
+  }
+
+  getRatingDescription = ratingDescription;
 }

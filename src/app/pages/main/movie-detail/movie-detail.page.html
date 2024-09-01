@@ -149,10 +149,15 @@
                 *ngFor="let cast of movie.detail.cast"
                 class="flex flex-col justify-center"
               >
-                <div class="size-32 rounded-lg overflow-hidden">
+                <div
+                  class="flex items-center justify-center w-32 h-48 rounded-lg overflow-hidden"
+                >
                   <img
-                    alt="Silhouette of a person's head"
-                    src="assets/avatar-demo.svg"
+                    [alt]="'foto de ' + cast.actor"
+                    [ngSrc]="cast.image || 'assets/cast-placeholder.svg'"
+                    width="128"
+                    height="192"
+                    class="h-full object-cover object-center"
                   />
                 </div>
                 <span class="text-xs text-white-m mt-2">{{ cast.actor }}</span>

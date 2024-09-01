@@ -4,6 +4,10 @@ ion-header {
   backdrop-filter: blur(16px);
 }
 
+ion-header.no-transparent {
+  --ion-background-color: var(--surface-primary-600);
+}
+
 ion-button {
   width: 42px !important;
   height: 42px !important;

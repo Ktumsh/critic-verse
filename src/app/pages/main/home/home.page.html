@@ -5,7 +5,7 @@
   <app-admin-float-btn class="fixed bottom-0 right-0 z-50" />
 
   <!--Games-->
-  <article class="py-6 space-y-10">
+  <article class="py-4 space-y-10">
     <section>
       <div class="flex justify-between items-center pr-4 pl-8 mb-2">
         <h2 class="text-base text-white-m letter-spacing-widest uppercase">
@@ -37,7 +37,7 @@
                   width="157"
                   height="235.5"
                   priority
-                  class="carousel-slide-img"
+                  class="carousel-slide-img animate-fade-in animate-duration-300"
                 />
                 <ion-ripple-effect></ion-ripple-effect>
               </div>
@@ -93,7 +93,7 @@
                   [alt]="movie.title"
                   width="157"
                   height="235.5"
-                  class="carousel-slide-img"
+                  class="carousel-slide-img animate-fade-in animate-duration-300"
                 />
                 <ion-ripple-effect></ion-ripple-effect>
               </div>
@@ -108,9 +108,9 @@
                 >
                   <span class="font-bold text-white"> {{ movie.rating }} </span>
                 </div>
-                <span class="text-xs text-white-m"
-                  >{{ getRatingDescription(movie.rating) }}</span
-                >
+                <span class="text-xs text-white-m">
+                  {{ getRatingDescription(movie.rating) }}
+                </span>
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@
                   [alt]="tv.title"
                   width="157"
                   height="235.5"
-                  class="carousel-slide-img"
+                  class="carousel-slide-img animate-fade-in animate-duration-300"
                 />
                 <ion-ripple-effect></ion-ripple-effect>
               </div>
@@ -162,11 +162,11 @@
                 <div
                   [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', tv.rating >= 0 && tv.rating < 4 ? 'bg-danger' : tv.rating >= 4 && tv.rating < 6 ? 'bg-warning' : 'bg-success']"
                 >
-                  <span class="font-bold text-white"> {{ tv.rating }} </span>
+                  <span class="font-bold text-white">{{ tv.rating }}</span>
                 </div>
-                <span class="text-xs text-white-m"
-                  >{{ getRatingDescription(tv.rating) }}</span
-                >
+                <span class="text-xs text-white-m">
+                  {{ getRatingDescription(tv.rating) }}
+                </span>
               </div>
             </div>
           </div>
