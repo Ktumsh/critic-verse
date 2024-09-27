@@ -33,7 +33,7 @@
             <h3 class="text-lg text-white-h font-semibold">{{ tv.title }}</h3>
             <div class="flex items-center gap-3">
               <div
-                [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', tv.rating >= 0 && tv.rating < 4 ? 'bg-danger' : tv.rating >= 4 && tv.rating < 6 ? 'bg-warning' : 'bg-success']"
+                [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', tv.rating >= 0 && tv.rating < 5 ? 'bg-danger' : tv.rating >= 5 && tv.rating < 8 ? 'bg-warning' : 'bg-success']"
               >
                 <span class="font-bold text-white"> {{ tv.rating }} </span>
               </div>

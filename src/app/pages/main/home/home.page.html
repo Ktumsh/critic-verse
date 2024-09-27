@@ -5,173 +5,35 @@
   <app-admin-float-btn class="fixed bottom-0 right-0 z-50" />
 
   <!--Games-->
-  <article class="py-4 space-y-10">
-    <section>
-      <div class="flex justify-between items-center pr-4 pl-8 mb-2">
-        <h2 class="text-base text-white-m letter-spacing-widest uppercase">
-          Juegos
-        </h2>
-        <ion-chip [routerLink]="['/main/game']" color="secondary">
-          <span class="text-xs text-white-m">Ver todo</span>
-        </ion-chip>
-      </div>
-      <div class="carousel">
-        <div class="carousel-viewport">
-          <div
-            class="carousel-container"
-            #carouselContainerGame
-            (scroll)="onScrollGame(carouselContainerGame)"
-          >
-            <div
-              *ngFor="let game of gameList; let i = index"
-              [ngClass]="{'active': activeIndicesGame.includes(i)}"
-              class="carousel-slide-game"
-            >
-              <div
-                class="ion-activatable ripple-parent shadow-lg"
-                [routerLink]="['/main/game-detail', game.id]"
-              >
-                <img
-                  [ngSrc]="game.image"
-                  [alt]="game.title"
-                  width="157"
-                  height="235.5"
-                  priority
-                  class="carousel-slide-img animate-fade-in animate-duration-300"
-                />
-                <ion-ripple-effect></ion-ripple-effect>
-              </div>
-              <div class="flex items-center mt-3">
-                <h3 class="text-base text-white-h font-semibold truncate">
-                  {{ game.title }}
-                </h3>
-              </div>
-              <div class="flex items-center justify-center gap-3 mt-3">
-                <div
-                  [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', game.rating >= 0 && game.rating < 4 ? 'bg-danger' : game.rating >= 4 && game.rating < 6 ? 'bg-warning' : 'bg-success']"
-                >
-                  <span class="font-bold text-white"> {{ game.rating }} </span>
-                </div>
-                <span class="text-xs text-white-m"
-                  >{{ getRatingDescription(game.rating) }}</span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <article class="py-4">
+    <!-- Juegos -->
+    <app-home-carousel-section
+      title="Juegos"
+      [list]="gameList"
+      [activeIndices]="activeIndicesGame"
+      detailRoute="/main/game-detail"
+      viewAllRoute="/main/game"
+      carouselClass="carousel-slide-game"
+    ></app-home-carousel-section>
 
-    <!--Movies-->
-    <section>
-      <div class="flex justify-between items-center pr-4 pl-8 mb-2">
-        <h2 class="text-base text-white-m letter-spacing-widest uppercase">
-          Películas
-        </h2>
-        <ion-chip [routerLink]="['/main/movie']" color="secondary">
-          <span class="text-xs text-white-m">Ver todo</span>
-        </ion-chip>
-      </div>
-      <div class="carousel">
-        <div class="carousel-viewport">
-          <div
-            class="carousel-container"
-            #carouselContainerMovie
-            (scroll)="onScrollMovie(carouselContainerMovie)"
-          >
-            <div
-              *ngFor="let movie of movieList; let i = index"
-              [ngClass]="{'active': activeIndicesMovie.includes(i)}"
-              class="carousel-slide-movie"
-            >
-              <div
-                class="ion-activatable ripple-parent shadow-lg"
-                [routerLink]="['/main/movie-detail', movie.id]"
-              >
-                <img
-                  [ngSrc]="movie.image"
-                  [alt]="movie.title"
-                  width="157"
-                  height="235.5"
-                  class="carousel-slide-img animate-fade-in animate-duration-300"
-                />
-                <ion-ripple-effect></ion-ripple-effect>
-              </div>
-              <div class="flex items-center mt-3">
-                <h3 class="text-base text-white-h font-semibold truncate">
-                  {{ movie.title }}
-                </h3>
-              </div>
-              <div class="flex items-center justify-center gap-3 mt-3">
-                <div
-                  [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', movie.rating >= 0 && movie.rating < 4 ? 'bg-danger' : movie.rating >= 4 && movie.rating < 6 ? 'bg-warning' : 'bg-success']"
-                >
-                  <span class="font-bold text-white"> {{ movie.rating }} </span>
-                </div>
-                <span class="text-xs text-white-m">
-                  {{ getRatingDescription(movie.rating) }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Películas -->
+    <app-home-carousel-section
+      title="Películas"
+      [list]="movieList"
+      [activeIndices]="activeIndicesMovie"
+      detailRoute="/main/movie-detail"
+      viewAllRoute="/main/movie"
+      carouselClass="carousel-slide-movie"
+    ></app-home-carousel-section>
 
-    <!--TV Shows-->
-    <section>
-      <div class="flex justify-between items-center pr-4 pl-8 mb-2">
-        <h2 class="text-base text-white-m letter-spacing-widest uppercase">
-          Programas de TV
-        </h2>
-        <ion-chip [routerLink]="['/main/tv']" color="secondary">
-          <span class="text-xs text-white-m">Ver todo</span>
-        </ion-chip>
-      </div>
-      <div class="carousel">
-        <div class="carousel-viewport">
-          <div
-            class="carousel-container"
-            #carouselContainerTv
-            (scroll)="onScrollTv(carouselContainerTv)"
-          >
-            <div
-              *ngFor="let tv of tvList; let i = index"
-              [ngClass]="{'active': activeIndicesTv.includes(i)}"
-              class="carousel-slide-tv"
-            >
-              <div
-                class="ion-activatable ripple-parent shadow-lg"
-                [routerLink]="['/main/tv-detail', tv.id]"
-              >
-                <img
-                  [ngSrc]="tv.image"
-                  [alt]="tv.title"
-                  width="157"
-                  height="235.5"
-                  class="carousel-slide-img animate-fade-in animate-duration-300"
-                />
-                <ion-ripple-effect></ion-ripple-effect>
-              </div>
-              <div class="flex items-center mt-3">
-                <h3 class="text-base text-white-h font-semibold truncate">
-                  {{ tv.title }}
-                </h3>
-              </div>
-              <div class="flex items-center justify-center gap-3 mt-3">
-                <div
-                  [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', tv.rating >= 0 && tv.rating < 4 ? 'bg-danger' : tv.rating >= 4 && tv.rating < 6 ? 'bg-warning' : 'bg-success']"
-                >
-                  <span class="font-bold text-white">{{ tv.rating }}</span>
-                </div>
-                <span class="text-xs text-white-m">
-                  {{ getRatingDescription(tv.rating) }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Programas de TV -->
+    <app-home-carousel-section
+      title="Programas de TV"
+      [list]="tvList"
+      [activeIndices]="activeIndicesTv"
+      detailRoute="/main/tv-detail"
+      viewAllRoute="/main/tv"
+      carouselClass="carousel-slide-tv"
+    ></app-home-carousel-section>
   </article>
 </ion-content>

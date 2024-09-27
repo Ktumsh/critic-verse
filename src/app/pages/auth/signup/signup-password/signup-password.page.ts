@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-step-3',
-  templateUrl: './step-3.page.html',
-  styleUrls: ['./step-3.page.scss'],
+  selector: 'app-signup-password',
+  templateUrl: './signup-password.page.html',
+  styleUrls: ['./signup-password.page.scss'],
 })
-export class Step3Page implements OnInit {
+export class SignupPasswordPage implements OnInit {
   form!: FormGroup;
   canShowError: boolean = false;
 

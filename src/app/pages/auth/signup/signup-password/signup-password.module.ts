@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { Step2PageRoutingModule } from './step-2-routing.module';
+import { SignupPasswordPageRoutingModule } from './signup-password-routing.module';
 
-import { Step2Page } from './step-2.page';
+import { SignupPasswordPage } from './signup-password.page';
 import { SharedModule } from 'src/app/components/shared/shared.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { SharedModule } from 'src/app/components/shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    Step2PageRoutingModule,
+    SignupPasswordPageRoutingModule,
     SharedModule,
   ],
-  declarations: [Step2Page],
+  declarations: [SignupPasswordPage],
 })
-export class Step2PageModule {}
+export class SignupPasswordPageModule {}

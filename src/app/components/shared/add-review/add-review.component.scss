@@ -1,0 +1,91 @@
+.content {
+  min-height: 604px;
+  max-height: 604px;
+}
+
+ion-range {
+  --bar-height: 20px;
+  --knob-handle-size: 50px;
+}
+
+ion-range::part(knob) {
+  --knob-border-radius: 10px;
+  --knob-size: 40px;
+  --knob-width: 12px;
+  --knob-background: rgb(255 255 255 / 0.9);
+  width: var(--knob-width);
+  inset-inline-start: calc(50% + 24px);
+
+  &::before {
+    content: none;
+  }
+}
+
+ion-range::part(bar) {
+  --bar-background: transparent;
+}
+
+ion-range::part(bar-active) {
+  --bar-background-active: transparent;
+}
+
+ion-range::part(tick) {
+  --bar-background-active: var(--surface-primary-600);
+  --bar-width: 28px;
+  border: 1px solid var(--surface-secondary-500);
+  width: var(--bar-width);
+  border-radius: 6px;
+}
+
+ion-range::part(tick-active) {
+  --bar-width: 28px;
+  height: var(--bar-height);
+  width: var(--bar-width);
+  border-radius: 6px;
+}
+
+ion-range.danger::part(tick-active) {
+  background: var(--color-danger);
+}
+
+ion-range.warning::part(tick-active) {
+  background: var(--color-warning);
+}
+
+ion-range.success::part(tick-active) {
+  background: var(--color-success);
+}
+
+ion-range::part(pin)::before {
+  content: none;
+}
+
+ion-textarea.custom {
+  --background: var(--surface-primary-600);
+  --border-radius: 12px;
+  --border-color: var(--surface-secondary-500);
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --padding-end: 12px;
+  --padding-start: 16px;
+  --placeholder-opacity: 0.3;
+  --ion-color-step-550: rgb(255 255 255 / var(--opacity-l));
+  --highlight-color: var(--color-primary-600);
+
+  .textarea-bottom.sc-ion-textarea-md {
+    padding-top: 10px;
+  }
+}
+
+ion-checkbox {
+  --checkbox-background: var(--surface-primary-600);
+}
+
+ion-checkbox::part(container) {
+  border-radius: 6px;
+  border: 1px solid var(--surface-secondary-500);
+}
+
+ion-checkbox::part(label) {
+  margin-inline-start: 8px;
+}

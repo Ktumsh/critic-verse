@@ -36,7 +36,7 @@ export class SignupPage implements OnInit {
       const age = this.calculateAge(birthday, today);
 
       if (age >= 13) {
-        this.router.navigate(['/signup/step-2']);
+        this.router.navigate(['/signup/signup-username']);
       } else {
         console.error(
           'El usuario debe tener al menos 13 años para registrarse.'

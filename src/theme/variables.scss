@@ -177,6 +177,22 @@ ion-action-sheet.custom-sheet {
   }
 }
 
+ion-modal.custom-modal ion-content::part(background) {
+  background: transparent;
+  opacity: 1;
+}
+
+ion-modal.custom-modal::part(content) {
+  background: transparent;
+  --border-radius: 12px 12px 0 0;
+  --box-shadow: 0 0 15px 0 #000;
+  backdrop-filter: blur(40px) saturate(1.5);
+}
+
+ion-modal.custom-modal {
+  --height: auto;
+}
+
 .ion-color-primary {
   --ion-color-base: var(--ion-color-primary);
   --ion-color-base-rgb: var(--ion-color-primary-rgb);

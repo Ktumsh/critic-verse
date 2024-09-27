@@ -26,6 +26,9 @@ import {
   MatPaginatorIntl,
   MatPaginatorModule,
 } from '@angular/material/paginator';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { AddReviewComponent } from './add-review/add-review.component';
+import { HomeCarouselSectionComponent } from './home-carousel-section/home-carousel-section.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import {
     ReportedContentComponent,
     ReviewsListComponent,
     UserListComponent,
+    EditProfileComponent,
+    AddReviewComponent,
+    HomeCarouselSectionComponent,
   ],
   exports: [
     HeaderComponent,
@@ -62,6 +68,9 @@ import {
     ReviewsListComponent,
     UserListComponent,
     ReactiveFormsModule,
+    EditProfileComponent,
+    AddReviewComponent,
+    HomeCarouselSectionComponent,
   ],
   imports: [
     CommonModule,

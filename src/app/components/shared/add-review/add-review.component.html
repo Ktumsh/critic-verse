@@ -1,0 +1,108 @@
+<ion-content class="content">
+  <div
+    class="flex flex-1 flex-col justify-between w-full px-6 pt-8 pb-6 space-y-6"
+  >
+    <!-- Agregar review JUEGOS -->
+    <div
+      *ngIf="item"
+      class="flex items-center gap-4 ion-activatable relative overflow-hidden rounded-xl"
+    >
+      <div class="flex rounded-xl overflow-hidden shadow-lg">
+        <img
+          [alt]="item.title"
+          [ngSrc]="
+            item.image ||
+            'https://ionicframework.com/docs/img/demos/thumbnail.svg'
+          "
+          width="60"
+          height="90"
+          class="h-full object-cover object-center animate-fade-in animate-duration-300"
+        />
+      </div>
+      <div class="flex flex-col gap-2 pr-4">
+        <h3 class="text-lg text-white-h font-semibold">{{ item.title }}</h3>
+        <div class="flex items-center gap-3">
+          <div
+            [ngClass]="[
+              'flex items-center justify-center size-7 min-w-7 rounded-full',
+              item.rating < 5
+                ? 'bg-danger'
+                : item.rating < 8
+                ? 'bg-warning'
+                : 'bg-success'
+            ]"
+          >
+            <span class="font-bold text-white">{{ item.rating }}</span>
+          </div>
+          <span class="text-xs text-white-m">
+            {{ getRatingDescription(item.rating) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating personal -->
+    <div class="flex items-center gap-3">
+      <div
+        [ngClass]="[
+          'flex items-center justify-center size-16 min-w-16 rounded-full',
+          rating < 5 ? 'bg-danger' : rating < 8 ? 'bg-warning' : 'bg-success'
+        ]"
+      >
+        <span class="font-bold text-white text-2xl"> {{ rating }} </span>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-white-m text-sm uppercase">Mi calificación</span>
+        <span>{{ getUserRatingDescription(rating) }}</span>
+      </div>
+    </div>
+
+    <!-- Rating range -->
+    <div class="pr-8">
+      <ion-range
+        aria-label="Custom range"
+        [min]="0"
+        [max]="10"
+        [value]="rating"
+        [ticks]="true"
+        [snaps]="true"
+        class="w-full"
+        (ionChange)="onRangeChange($event)"
+        [ngClass]="rating < 5 ? 'danger' : rating < 8 ? 'warning' : 'success'"
+      ></ion-range>
+    </div>
+
+    <!-- Rating review -->
+    <div class="relative flex flex-col gap-2">
+      <span *ngIf="item" class="text-sm"
+        >Escribe una reseña para {{ item.title }}</span
+      >
+      <ion-textarea
+        placeholder="Mínimo 75 caracteres"
+        minlength="75"
+        maxlength="5000"
+        [(ngModel)]="inputValue"
+        (ionInput)="onInputChange($event)"
+        rows="6"
+        color="primary"
+        fill="outline"
+        class="custom"
+      ></ion-textarea>
+      <div class="inline-flex items-center justify-between">
+        <ion-checkbox mode="ios" labelPlacement="end" class="text-sm">
+          Contiene spoilers
+        </ion-checkbox>
+        <span class="text-xs text-white-l">{{
+          customCounterFormatter(inputValue.length, 5000)
+        }}</span>
+      </div>
+    </div>
+
+    <!-- Botón de publicar -->
+    <app-custom-button
+      label="Publicar"
+      class="w-full"
+      buttonClass="size-sm"
+    ></app-custom-button>
+  </div>
+</ion-content>

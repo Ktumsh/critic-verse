@@ -1,0 +1,62 @@
+<section class="mt-10">
+  <div class="flex justify-between items-center pr-4 pl-8 mb-2">
+    <h2 class="text-base text-white-m letter-spacing-widest uppercase">
+      Juegos
+    </h2>
+    <ion-chip (click)="viewAll()" color="secondary">
+      <span class="text-xs text-white-m">Ver todo</span>
+    </ion-chip>
+  </div>
+  <div class="carousel">
+    <div class="carousel-viewport">
+      <div
+        class="carousel-container"
+        #carouselContainer
+        (scroll)="onScroll(carouselContainer)"
+      >
+        <div
+          *ngFor="let item of list; let i = index"
+          [ngClass]="{ active: activeIndices.includes(i) }"
+          [class]="carouselClass"
+        >
+          <div
+            class="ion-activatable ripple-parent shadow-lg"
+            (click)="goToDetail(item.id)"
+          >
+            <img
+              [ngSrc]="item.image"
+              [alt]="item.title"
+              width="157"
+              height="235.5"
+              priority
+              class="carousel-slide-img animate-fade-in animate-duration-300"
+            />
+            <ion-ripple-effect></ion-ripple-effect>
+          </div>
+          <div class="flex items-center mt-3">
+            <h3 class="text-base text-white-h font-semibold truncate">
+              {{ item.title }}
+            </h3>
+          </div>
+          <div class="flex items-center justify-center gap-3 mt-3">
+            <div
+              [ngClass]="[
+                'flex items-center justify-center size-7 min-w-7 rounded-full',
+                item.rating >= 0 && item.rating < 5
+                  ? 'bg-danger'
+                  : item.rating >= 5 && item.rating < 8
+                  ? 'bg-warning'
+                  : 'bg-success'
+              ]"
+            >
+              <span class="font-bold text-white"> {{ item.rating }} </span>
+            </div>
+            <span class="text-xs text-white-m">{{
+              getRatingDescription(item.rating)
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

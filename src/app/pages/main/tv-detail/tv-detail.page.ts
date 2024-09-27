@@ -1,14 +1,22 @@
 import { Location } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  IonContent,
+  ModalController,
+} from '@ionic/angular';
+import { AddReviewComponent } from 'src/app/components/shared/add-review/add-review.component';
 import { BottomSheetComponent } from 'src/app/components/shared/bottom-sheet/bottom-sheet.component';
 import { TV_MODEL } from 'src/app/models/tv.model';
 import { randomAvatar, randomName } from 'src/app/models/user.model';
 import { TvShow } from 'src/app/types/tv';
 import { averageRating } from 'src/utils/average-rating';
-import { ratingDescription } from 'src/utils/rating-desc';
+import {
+  ratingCinemaDescription,
+  ratingDescription,
+} from 'src/utils/rating-desc';
 
 @Component({
   selector: 'app-tv-detail',
@@ -16,6 +24,8 @@ import { ratingDescription } from 'src/utils/rating-desc';
   styleUrls: ['./tv-detail.page.scss'],
 })
 export class TvDetailPage implements OnInit {
+  @ViewChild(IonContent) content!: IonContent;
+
   tv!: TvShow;
   selectedSegment: string = 'reviews';
 
@@ -27,7 +37,7 @@ export class TvDetailPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private actionSheetCtrl: ActionSheetController
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -85,21 +95,7 @@ export class TvDetailPage implements OnInit {
 
   getRandomAvatar = randomAvatar;
 
-  getUserRatingDescription(userRating: number): string {
-    if (userRating >= 9) {
-      return 'Extremadamente popular entre los espectadores';
-    } else if (userRating >= 8) {
-      return 'Muy bien valorado por la audiencia';
-    } else if (userRating >= 6) {
-      return 'Opiniones mixtas de los usuarios';
-    } else if (userRating >= 4) {
-      return 'Críticas negativas de la mayoría de los espectadores';
-    } else if (userRating >= 2) {
-      return 'Generalmente no gustado por los usuarios';
-    } else {
-      return 'Aborrecido por la mayoría de los espectadores';
-    }
-  }
+  getUserRatingDescription = ratingCinemaDescription;
 
   goBack() {
     this.location.back();
@@ -107,5 +103,27 @@ export class TvDetailPage implements OnInit {
 
   segmentChanged(event: any) {
     this.selectedSegment = event.detail.value;
+  }
+
+  async openAddReviewModal() {
+    this.content.getScrollElement().then((scrollElement) => {
+      scrollElement.style.overflow = 'hidden';
+    });
+
+    const modal = await this.modalController.create({
+      component: AddReviewComponent,
+      cssClass: 'custom-modal',
+      initialBreakpoint: 1,
+      breakpoints: [0, 1],
+      componentProps: { tvShow: this.tv },
+    });
+
+    modal.onDidDismiss().then(() => {
+      this.content.getScrollElement().then((scrollElement) => {
+        scrollElement.style.overflow = '';
+      });
+    });
+
+    return await modal.present();
   }
 }

@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
 
       if (user) {
         this.canShowError = false;
-        this.router.navigate(['/login/step-2'], navigationExtras);
+        this.router.navigate(['/login/login-password'], navigationExtras);
       } else {
         this.router.navigate(['/signup', navigationExtras]);
       }

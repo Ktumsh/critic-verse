@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { User } from 'src/app/types/user';
-import { EditProfileComponent } from 'src/app/components/edit-profile/edit-profile.component';
+import { EditProfileComponent } from 'src/app/components/shared/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from 'src/app/components/shared/change-password/change-password.component';
 import { AccountDetailsComponent } from 'src/app/components/shared/account-details/account-details.component';
 import { ProfileReviewsComponent } from 'src/app/components/shared/profile-reviews/profile-reviews.component';
@@ -21,14 +21,7 @@ export class ProfilePage implements OnInit {
   constructor(
     private router: Router,
     private modalController: ModalController
-  ) {
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state) {
-      this.user = navigation.extras.state['user'] as User;
-    } else {
-      this.router.navigate(['/auth']);
-    }
-  }
+  ) {}
 
   ngOnInit() {
     if (!this.user) {

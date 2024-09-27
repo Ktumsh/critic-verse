@@ -3,11 +3,13 @@
   [logo]="false"
   [backButton]="goBack.bind(this)"
 />
+
 <ion-content [fullscreen]="true" *ngIf="game">
   <div class="fixed bottom-0 p-6 z-10 w-full">
     <app-custom-button
       label="Agregar mi reseña"
       buttonClass="blurred size-sm"
+      (click)="openAddReviewModal()"
     />
   </div>
 
@@ -90,7 +92,7 @@
                   <span class="text-white-l text-sm">Basada en 93 reseñas</span>
                 </div>
                 <div
-                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', game.rating >= 0 && game.rating < 4 ? 'bg-danger' : game.rating >= 4 && game.rating < 6 ? 'bg-warning' : 'bg-success']"
+                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', game.rating >= 0 && game.rating < 5 ? 'bg-danger' : game.rating >= 5 && game.rating < 8 ? 'bg-warning' : 'bg-success']"
                 >
                   <span class="font-geist font-black text-4xl text-white">
                     {{ game.rating }}
@@ -98,7 +100,7 @@
                 </div>
               </div>
               <div
-                [ngClass]="['w-full h-1.5 mt-4 rounded-full', game.rating >= 0 && game.rating < 4 ? 'bg-danger' : game.rating >= 4 && game.rating < 6 ? 'bg-warning' : 'bg-success']"
+                [ngClass]="['w-full h-1.5 mt-4 rounded-full', game.rating >= 0 && game.rating < 5 ? 'bg-danger' : game.rating >= 5 && game.rating < 8 ? 'bg-warning' : 'bg-success']"
               ></div>
             </div>
             <div class="flex flex-col w-full">
@@ -118,7 +120,7 @@
                   >
                 </div>
                 <div
-                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', getAverageRating(game) >= 0 && getAverageRating(game) < 4 ? 'bg-danger' : getAverageRating(game) >= 4 && getAverageRating(game) < 6 ? 'bg-warning' : 'bg-success']"
+                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', getAverageRating(game) >= 0 && getAverageRating(game) < 5 ? 'bg-danger' : getAverageRating(game) >= 5 && getAverageRating(game) < 8 ? 'bg-warning' : 'bg-success']"
                 >
                   <span class="font-geist font-black text-4xl text-white">
                     {{ getAverageRating(game) }}
@@ -126,7 +128,7 @@
                 </div>
               </div>
               <div
-                [ngClass]="['w-full h-1.5 mt-4 rounded-full', getAverageRating(game) >= 0 && getAverageRating(game) < 4 ? 'bg-danger' : getAverageRating(game) >= 4 && getAverageRating(game) < 6 ? 'bg-warning' : 'bg-success']"
+                [ngClass]="['w-full h-1.5 mt-4 rounded-full', getAverageRating(game) >= 0 && getAverageRating(game) < 5 ? 'bg-danger' : getAverageRating(game) >= 5 && getAverageRating(game) < 8 ? 'bg-warning' : 'bg-success']"
               ></div>
             </div>
           </div>

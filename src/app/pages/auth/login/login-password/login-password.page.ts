@@ -5,11 +5,11 @@ import { ToastController } from '@ionic/angular';
 import { User } from 'src/app/types/user';
 
 @Component({
-  selector: 'app-step-2',
-  templateUrl: './step-2.page.html',
-  styleUrls: ['./step-2.page.scss'],
+  selector: 'app-login-password',
+  templateUrl: './login-password.page.html',
+  styleUrls: ['./login-password.page.scss'],
 })
-export class Step2Page implements OnInit {
+export class LoginPasswordPage implements OnInit {
   form = new FormGroup({
     password: new FormControl('', [Validators.required]),
   });

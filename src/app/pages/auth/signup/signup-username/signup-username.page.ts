@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { USER_MODEL } from 'src/app/models/user.model';
 
 @Component({
-  selector: 'app-step-2',
-  templateUrl: './step-2.page.html',
-  styleUrls: ['./step-2.page.scss'],
+  selector: 'app-signup-username',
+  templateUrl: './signup-username.page.html',
+  styleUrls: ['./signup-username.page.scss'],
 })
-export class Step2Page implements OnInit {
+export class SignupUsernamePage implements OnInit {
   form = new FormGroup({
     username: new FormControl('', [
       Validators.required,
@@ -40,7 +40,7 @@ export class Step2Page implements OnInit {
         console.error('Nombre de usuario ya existe');
         this.form.controls.username.setErrors({ usernameTaken: true });
       } else {
-        this.router.navigate(['/signup/step-3']);
+        this.router.navigate(['/signup/signup-password']);
       }
     } else {
       console.error('Nombre de usuario no válido');

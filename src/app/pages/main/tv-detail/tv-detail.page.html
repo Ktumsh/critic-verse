@@ -8,6 +8,7 @@
     <app-custom-button
       label="Agregar mi reseña"
       buttonClass="blurred size-sm"
+      (click)="openAddReviewModal()"
     />
   </div>
 
@@ -97,7 +98,7 @@
                   <span class="text-white-l text-sm">Basada en 93 reseñas</span>
                 </div>
                 <div
-                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', tv.rating >= 0 && tv.rating < 4 ? 'bg-danger' : tv.rating >= 4 && tv.rating < 6 ? 'bg-warning' : 'bg-success']"
+                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', tv.rating >= 0 && tv.rating < 5 ? 'bg-danger' : tv.rating >= 5 && tv.rating < 8 ? 'bg-warning' : 'bg-success']"
                 >
                   <span class="font-geist font-black text-4xl text-white">
                     {{ tv.rating }}
@@ -105,7 +106,7 @@
                 </div>
               </div>
               <div
-                [ngClass]="['w-full h-1.5 mt-4 rounded-full', tv.rating >= 0 && tv.rating < 4 ? 'bg-danger' : tv.rating >= 4 && tv.rating < 6 ? 'bg-warning' : 'bg-success']"
+                [ngClass]="['w-full h-1.5 mt-4 rounded-full', tv.rating >= 0 && tv.rating < 5 ? 'bg-danger' : tv.rating >= 5 && tv.rating < 8 ? 'bg-warning' : 'bg-success']"
               ></div>
             </div>
             <div class="flex flex-col w-full">
@@ -125,7 +126,7 @@
                   >
                 </div>
                 <div
-                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', getAverageRating(tv) >= 0 && getAverageRating(tv) < 4 ? 'bg-danger' : getAverageRating(tv) >= 4 && getAverageRating(tv) < 6 ? 'bg-warning' : 'bg-success']"
+                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', getAverageRating(tv) >= 0 && getAverageRating(tv) < 5 ? 'bg-danger' : getAverageRating(tv) >= 5 && getAverageRating(tv) < 8 ? 'bg-warning' : 'bg-success']"
                 >
                   <span class="font-geist font-black text-4xl text-white">
                     {{ getAverageRating(tv) }}
@@ -133,7 +134,7 @@
                 </div>
               </div>
               <div
-                [ngClass]="['w-full h-1.5 mt-4 rounded-full', getAverageRating(tv) >= 0 && getAverageRating(tv) < 4 ? 'bg-danger' : getAverageRating(tv) >= 4 && getAverageRating(tv) < 6 ? 'bg-warning' : 'bg-success']"
+                [ngClass]="['w-full h-1.5 mt-4 rounded-full', getAverageRating(tv) >= 0 && getAverageRating(tv) < 5 ? 'bg-danger' : getAverageRating(tv) >= 5 && getAverageRating(tv) < 8 ? 'bg-warning' : 'bg-success']"
               ></div>
             </div>
           </div>
@@ -190,7 +191,7 @@
                   </div>
 
                   <div
-                    [ngClass]="['flex items-center justify-center size-7 rounded-full', review.rating >= 0 && review.rating < 4 ? 'bg-danger' : review.rating >= 4 && review.rating < 6 ? 'bg-warning' : 'bg-success']"
+                    [ngClass]="['flex items-center justify-center size-7 rounded-full', review.rating >= 0 && review.rating < 5 ? 'bg-danger' : review.rating >= 5 && review.rating < 8 ? 'bg-warning' : 'bg-success']"
                   >
                     <span class="font-bold text-white">
                       {{ review.rating }}

@@ -8,7 +8,6 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 
 import { ProfilePage } from './profile.page';
 import { SharedModule } from 'src/app/components/shared/shared.module';
-import { EditProfileModule } from 'src/app/components/edit-profile/edit-profile.module';
 
 @NgModule({
   imports: [
@@ -17,7 +16,6 @@ import { EditProfileModule } from 'src/app/components/edit-profile/edit-profile.
     IonicModule,
     ProfilePageRoutingModule,
     SharedModule,
-    EditProfileModule,
     NgOptimizedImage,
   ],
   declarations: [ProfilePage],

@@ -6,16 +6,22 @@ import { SignupPage } from './signup.page';
 const routes: Routes = [
   {
     path: '',
-    component: SignupPage
-  },  {
-    path: 'step-2',
-    loadChildren: () => import('./step-2/step-2.module').then( m => m.Step2PageModule)
+    component: SignupPage,
   },
   {
-    path: 'step-3',
-    loadChildren: () => import('./step-3/step-3.module').then( m => m.Step3PageModule)
-  }
-
+    path: 'signup-username',
+    loadChildren: () =>
+      import('./signup-username/signup-username.module').then(
+        (m) => m.SignupUsernamePageModule
+      ),
+  },
+  {
+    path: 'signup-password',
+    loadChildren: () =>
+      import('./signup-password/signup-password.module').then(
+        (m) => m.SignupPasswordPageModule
+      ),
+  },
 ];
 
 @NgModule({

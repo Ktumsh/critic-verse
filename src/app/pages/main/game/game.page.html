@@ -33,7 +33,7 @@
             <h3 class="text-lg text-white-h font-semibold">{{ game.title }}</h3>
             <div class="flex items-center gap-3">
               <div
-                [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', game.rating >= 0 && game.rating < 4 ? 'bg-danger' : game.rating >= 4 && game.rating < 6 ? 'bg-warning' : 'bg-success']"
+                [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', game.rating >= 0 && game.rating < 5 ? 'bg-danger' : game.rating >= 5 && game.rating < 8 ? 'bg-warning' : 'bg-success']"
               >
                 <span class="font-bold text-white"> {{ game.rating }} </span>
               </div>

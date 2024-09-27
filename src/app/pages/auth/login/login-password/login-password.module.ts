@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { Step3PageRoutingModule } from './step-3-routing.module';
+import { LoginPasswordPageRoutingModule } from './login-password-routing.module';
 
-import { Step3Page } from './step-3.page';
+import { LoginPasswordPage } from './login-password.page';
 import { SharedModule } from 'src/app/components/shared/shared.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { SharedModule } from 'src/app/components/shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    Step3PageRoutingModule,
+    LoginPasswordPageRoutingModule,
     SharedModule,
   ],
-  declarations: [Step3Page],
+  declarations: [LoginPasswordPage],
 })
-export class Step3PageModule {}
+export class LoginPasswordPageModule {}
