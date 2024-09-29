@@ -1,4 +1,5 @@
 import { Report } from './report';
+import { User } from './user';
 
 export interface Review {
   id: string;

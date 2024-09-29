@@ -10,11 +10,11 @@ export const MOVIE_MODEL: Movie[] = [
   {
     id: 'deadpool-&-wolverine',
     title: 'Deadpool & Wolverine',
+    description:
+      'Un cansado glotón se encuentra recuperándose de sus heridas cuando se encuentra con un Deadpool bocazas que ha viajado en el tiempo para curar a su mejor amigo con la esperanza de hacerse amigo de la bestia salvaje y formar equipo para derrotar a un enemigo que ambos tienen en común.',
     image: '/assets/movie/01.webp',
     rating: 9.7,
     detail: {
-      description:
-        'Un cansado glotón se encuentra recuperándose de sus heridas cuando se encuentra con un Deadpool bocazas que ha viajado en el tiempo para curar a su mejor amigo con la esperanza de hacerse amigo de la bestia salvaje y formar equipo para derrotar a un enemigo que ambos tienen en común.',
       cast: [
         {
           actor: 'Ryan Reynolds',
@@ -113,11 +113,11 @@ export const MOVIE_MODEL: Movie[] = [
   {
     id: 'i’ll-be-your-mirror',
     title: 'I’ll Be Your Mirror',
+    description:
+      'Chloe (Carla Juri) viaja a Japón por trabajo, donde es recibida por un viejo amigo, Toshi (Takashi Ueno). Entre la melancolía por la pérdida de su marido y el asombro por el cambio de perspectivas, Chloe deambula por un paisaje desconocido.',
     image: '/assets/movie/02.webp',
     rating: 3.8,
     detail: {
-      description:
-        'Chloe (Carla Juri) viaja a Japón por trabajo, donde es recibida por un viejo amigo, Toshi (Takashi Ueno). Entre la melancolía por la pérdida de su marido y el asombro por el cambio de perspectivas, Chloe deambula por un paisaje desconocido.',
       cast: [
         {
           actor: 'Carla Juri',
@@ -190,11 +190,11 @@ export const MOVIE_MODEL: Movie[] = [
   {
     id: 'blink-twice',
     title: 'Blink Twice',
+    description:
+      'Cuando el multimillonario tecnológico Slater King (Channing Tatum) conoce a la camarera Frida (Naomi Ackie) en su gala benéfica, saltan chispas. La invita a unirse a él y a sus amigos en unas vacaciones de ensueño en su isla privada. Es el paraíso.',
     image: '/assets/movie/03.webp',
     rating: 5.5,
     detail: {
-      description:
-        'Cuando el multimillonario tecnológico Slater King (Channing Tatum) conoce a la camarera Frida (Naomi Ackie) en su gala benéfica, saltan chispas. La invita a unirse a él y a sus amigos en unas vacaciones de ensueño en su isla privada. Es el paraíso.',
       cast: [
         {
           actor: 'Naomi Ackie',
@@ -267,11 +267,11 @@ export const MOVIE_MODEL: Movie[] = [
   {
     id: 'x-men:-apocalipsis',
     title: 'X-Men: Apocalipsis',
+    description:
+      'Desde los albores de la civilización, fue adorado como un dios. Apocalipsis, el primer y más poderoso mutante del universo X-Men de Marvel, acumuló los poderes de muchos otros mutantes, volviéndose inmortal e invencible.',
     image: '/assets/movie/04.webp',
     rating: 8,
     detail: {
-      description:
-        'Desde los albores de la civilización, fue adorado como un dios. Apocalipsis, el primer y más poderoso mutante del universo X-Men de Marvel, acumuló los poderes de muchos otros mutantes, volviéndose inmortal e invencible.',
       cast: [
         {
           actor: 'James McAvoy',
@@ -355,11 +355,11 @@ export const MOVIE_MODEL: Movie[] = [
   {
     id: 'logan',
     title: 'Logan',
+    description:
+      'En un futuro cercano, un cansado Logan cuida al enfermo Profesor X en un escondite en la frontera mexicana. Pero los intentos de Logan de esconderse del mundo y de su legado se ven frustrados cuando llega un joven mutante perseguido por fuerzas oscuras.',
     image: '/assets/movie/05.webp',
     rating: 7.7,
     detail: {
-      description:
-        'En un futuro cercano, un cansado Logan cuida al enfermo Profesor X en un escondite en la frontera mexicana. Pero los intentos de Logan de esconderse del mundo y de su legado se ven frustrados cuando llega un joven mutante perseguido por fuerzas oscuras.',
       cast: [
         {
           actor: 'Hugh Jackman',

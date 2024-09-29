@@ -10,11 +10,11 @@ export const TV_MODEL: TvShow[] = [
   {
     id: 'breaking-bad',
     title: 'Breaking Bad',
+    description:
+      'Un profesor de química de secundaria convertido en fabricante de metanfetaminas navega los peligros del comercio de drogas.',
     image: '/assets/tv/01.webp',
     rating: 9.5,
     detail: {
-      description:
-        'Un profesor de química de secundaria convertido en fabricante de metanfetaminas navega los peligros del comercio de drogas.',
       genre: ['Crimen', 'Drama', 'Suspenso'],
       cast: [
         {
@@ -100,11 +100,11 @@ export const TV_MODEL: TvShow[] = [
   {
     id: 'sweet-tooth',
     title: 'Sweet Tooth',
+    description:
+      'Un niño mitad humano, mitad ciervo busca un nuevo comienzo en un mundo post-apocalíptico devastado por un virus mortal.',
     image: '/assets/tv/02.webp',
     rating: 3.4,
     detail: {
-      description:
-        'Un niño mitad humano, mitad ciervo busca un nuevo comienzo en un mundo post-apocalíptico devastado por un virus mortal.',
       genre: ['Drama', 'Fantasía', 'Aventura'],
       cast: [
         {
@@ -170,11 +170,11 @@ export const TV_MODEL: TvShow[] = [
   {
     id: 'game-of-thrones',
     title: 'Game of Thrones',
+    description:
+      'Nueve familias nobles luchan por el control de las tierras de Westeros, mientras un enemigo antiguo regresa.',
     image: '/assets/tv/03.webp',
     rating: 8.5,
     detail: {
-      description:
-        'Nueve familias nobles luchan por el control de las tierras de Westeros, mientras un enemigo antiguo regresa.',
       cast: [
         {
           actor: 'Emilia Clarke',
@@ -255,11 +255,11 @@ export const TV_MODEL: TvShow[] = [
   {
     id: 'the-boys',
     title: 'The Boys',
+    description:
+      'Un grupo de vigilantes conocido informalmente como "The Boys" se propone acabar con los superhéroes corruptos que abusan de sus poderes.',
     image: '/assets/tv/04.webp',
     rating: 5.1,
     detail: {
-      description:
-        'Un grupo de vigilantes conocido informalmente como "The Boys" se propone acabar con los superhéroes corruptos que abusan de sus poderes.',
       genre: ['Acción', 'Drama', 'Ciencia Ficción'],
       cast: [
         {
@@ -335,11 +335,11 @@ export const TV_MODEL: TvShow[] = [
   {
     id: 'the-office',
     title: 'The Office',
+    description:
+      'Una comedia sobre un grupo de trabajadores de oficina típicos, donde el día de trabajo consiste en choques de ego, comportamientos inapropiados y tedio.',
     image: '/assets/tv/05.webp',
     rating: 9,
     detail: {
-      description:
-        'Una comedia sobre un grupo de trabajadores de oficina típicos, donde el día de trabajo consiste en choques de ego, comportamientos inapropiados y tedio.',
       genre: ['Comedia'],
       cast: [
         {

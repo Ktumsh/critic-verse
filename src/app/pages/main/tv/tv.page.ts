@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TV_MODEL } from 'src/app/models/tv.model';
+import { DbService } from 'src/app/services/db.service';
 import { TvShow } from 'src/app/types/tv';
 import { ratingDescription } from 'src/utils/rating-desc';
 
@@ -11,14 +11,14 @@ import { ratingDescription } from 'src/utils/rating-desc';
 export class TvPage implements OnInit {
   tvList: TvShow[] = [];
 
-  constructor() {}
+  constructor(private dbService: DbService) {}
 
   ngOnInit() {
     this.loadTvShows();
   }
 
-  loadTvShows(): void {
-    this.tvList = TV_MODEL;
+  async loadTvShows() {
+    this.tvList = await this.dbService.getTvShows();
   }
 
   getRatingDescription = ratingDescription;

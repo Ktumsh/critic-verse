@@ -36,7 +36,7 @@
       <div>
         <div class="flex items-center justify-center flex-wrap mb-1">
           <div
-            *ngFor="let platform of game.details.plataforms"
+            *ngFor="let platform of game.detail.platforms"
             class="inline-flex grow items-center min-h-8 px-3 py-1.5 m-1 rounded-full bg-secondary-600/10 text-secondary-600"
           >
             <ion-icon
@@ -52,7 +52,7 @@
             class="size-3.5 mr-2"
           ></ion-icon>
           <span>
-            {{ game.details.releaseDate | date:'d \'de\' MMMM \'de\' y'}}
+            {{ game.detail.releaseDate | date:'d \'de\' MMMM \'de\' y'}}
           </span>
         </div>
       </div>
@@ -89,7 +89,6 @@
                   <span class="text-white-h text-base font-semibold">
                     {{ getRatingDescription(game.rating) }}
                   </span>
-                  <span class="text-white-l text-sm">Basada en 93 reseñas</span>
                 </div>
                 <div
                   [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', game.rating >= 0 && game.rating < 5 ? 'bg-danger' : game.rating >= 5 && game.rating < 8 ? 'bg-warning' : 'bg-success']"
@@ -213,7 +212,7 @@
                 <div class="inline-flex gap-2">
                   <span class="font-semibold text-white-h">Plataformas:</span>
                   <ul class="inline-flex p-0">
-                    <li *ngFor="let plataform of game.details.plataforms">
+                    <li *ngFor="let plataform of game.detail.platforms">
                       {{ plataform }}
                     </li>
                   </ul>
@@ -223,7 +222,7 @@
                     Fecha de lanzamiento:
                   </span>
                   <span>
-                    {{ game.details.releaseDate | date:'d \'de\' MMM, y'}}
+                    {{ game.detail.releaseDate | date:'d \'de\' MMM, y'}}
                   </span>
                 </div>
               </div>
@@ -235,11 +234,11 @@
                   <span class="font-semibold text-white-h">
                     Desarrollador:
                   </span>
-                  <span> {{ game.details.developer }} </span>
+                  <span> {{ game.detail.developer }} </span>
                 </div>
                 <div class="inline-flex gap-2">
                   <span class="font-semibold text-white-h"> Editor: </span>
-                  <span> {{ game.details.editor }} </span>
+                  <span> {{ game.detail.editor }} </span>
                 </div>
               </div>
 
@@ -249,9 +248,7 @@
                 <div class="inline-flex gap-2">
                   <span class="font-semibold text-white-h">Géneros:</span>
                   <ul class="inline-flex p-0">
-                    <li *ngFor="let genre of game.details.genre">
-                      {{ genre }}
-                    </li>
+                    <li *ngFor="let genre of game.detail.genre">{{ genre }}</li>
                   </ul>
                 </div>
               </div>

@@ -14,10 +14,10 @@ export const GAME_MODEL: Game[] = [
     description:
       'Black Myth: Wukong es un juego de rol de acción basado en la mitología china. La historia está basada en Viaje al Oeste, una de las cuatro grandes novelas clásicas de la literatura china. Te embarcarás en el papel del Destinado para aventurarte en los desafíos y maravillas que te esperan, para descubrir la verdad oculta tras el velo de una gloriosa leyenda del pasado',
     rating: 9.5,
-    details: {
+    detail: {
       summary: 'Black Myth: Wukong',
       genre: ['Acción', 'Aventura'],
-      plataforms: ['PS5', 'Xbox One', 'PC'],
+      platforms: ['PS5', 'Xbox One', 'PC'],
       releaseDate: new Date('2024-08-19'),
       editor: 'Game Science',
       developer: 'Game Science',
@@ -59,10 +59,10 @@ export const GAME_MODEL: Game[] = [
     description:
       'Las Tierras Intermedias, empañadas por la guerra, sólo pueden sentir la gracia de la Gran Voluntad una vez más cuando un nuevo Señor de los Elden blande el Anillo de los Elden. Levántate, Tarnished, y sigue el camino más allá del mar de niebla para encontrar tu destino en la nueva experiencia similar a Dark Souls de FromSoftware Inc. Escrito por Hidetaka Miyazaki, el creador de Dark Souls, y George R.R. Martin, la mente maestra detrás de Canción de Hielo y Fuego, el juego promete un viaje cautivador pero brutal, en el que la valentía, la determinación y la insaciable sed de triunfo son la clave para acabar recogiendo todos los fragmentos del Elden Ring.',
     rating: 8,
-    details: {
+    detail: {
       summary: 'Elden Ring',
       genre: ['Acción', 'RPG'],
-      plataforms: ['PS4', 'Xbox One', 'PC', 'PS5'],
+      platforms: ['PS4', 'Xbox One', 'PC', 'PS5'],
       releaseDate: new Date('2022-02-25'),
       editor: 'Bandai Namco Games',
       developer: 'From Software',
@@ -106,10 +106,10 @@ export const GAME_MODEL: Game[] = [
     description:
       'Te espera una aventura épica por las tierras y los cielos de Hyrule en The Legend of Zelda™: Tears of the Kingdom para Nintendo Switch™. La aventura es tuya para crearla en un mundo alimentado por tu imaginación. En esta secuela de The Legend of Zelda: Breath of the Wild, decidirás tu propio camino a través de los extensos paisajes de Hyrule y las misteriosas islas que flotan en los vastos cielos.',
     rating: 2.5,
-    details: {
+    detail: {
       summary: 'The Legend of Zelda: Tears of the Kingdom',
       genre: ['Acción', 'RPG'],
-      plataforms: ['Nintendo Switch'],
+      platforms: ['Nintendo Switch'],
       releaseDate: new Date('2023-05-12'),
       editor: 'Nintendo',
       developer: 'Nintendo',
@@ -145,10 +145,10 @@ export const GAME_MODEL: Game[] = [
     description:
       'Desarrollado por los creadores de Grand Theft Auto V y Red Dead Redemption, Red Dead Redemption 2 es una historia épica sobre la vida en el implacable corazón de Estados Unidos. El vasto y atmosférico mundo del juego también proporciona la base para una nueva experiencia multijugador en línea. Estados Unidos, 1899. Ha comenzado el fin de la era del Salvaje Oeste.',
     rating: 9,
-    details: {
+    detail: {
       summary: 'Red Dead Redemption 2',
       genre: ['Acción', 'RPG'],
-      plataforms: ['Xbox One', 'PC', 'PS5', 'PS4'],
+      platforms: ['Xbox One', 'PC', 'PS5', 'PS4'],
       releaseDate: new Date('2018-10-28'),
       editor: 'Rockstar Games',
       developer: 'Rockstar Games',
@@ -200,10 +200,10 @@ export const GAME_MODEL: Game[] = [
     description:
       'Una experiencia completamente nueva de los creadores de "The Forest". Te envían a buscar a un multimillonario desaparecido en una isla remota y te encuentras en un infierno infestado de caníbales. Crea, construye y lucha por sobrevivir, solo o con amigos, en este nuevo y aterrador simulador de terror de supervivencia en mundo abierto. Experimenta la libertad total para enfrentarte al mundo como quieras.',
     rating: 5.8,
-    details: {
+    detail: {
       summary: 'Sons of the Forest',
       genre: ['Acción', 'Survival'],
-      plataforms: ['PC'],
+      platforms: ['PC'],
       releaseDate: new Date('2024-02-22'),
       editor: 'Newnight',
       developer: 'Endnight Studios',

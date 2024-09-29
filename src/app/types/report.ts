@@ -1,5 +1,7 @@
+import { User } from './user';
+
 export interface Report {
   reason: string;
-  date: Date;
+  date: Date | string;
   reportedBy: string;
 }

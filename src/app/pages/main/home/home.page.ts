@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { GAME_MODEL } from 'src/app/models/game.model';
-import { MOVIE_MODEL } from 'src/app/models/movie.model';
-import { TV_MODEL } from 'src/app/models/tv.model';
+import { DbService } from 'src/app/services/db.service';
 import { Game } from 'src/app/types/game';
 import { Movie } from 'src/app/types/movie';
 import { TvShow } from 'src/app/types/tv';
-import { ratingDescription } from 'src/utils/rating-desc';
 
 @Component({
   selector: 'app-home',
@@ -22,15 +18,15 @@ export class HomePage implements OnInit {
   activeIndicesMovie: number[] = [];
   activeIndicesTv: number[] = [];
 
-  constructor(private navCtrl: NavController) {}
+  constructor(private dbService: DbService) {}
 
   ngOnInit() {
     this.loadContent();
   }
 
-  loadContent(): void {
-    this.gameList = [...GAME_MODEL];
-    this.movieList = [...MOVIE_MODEL];
-    this.tvList = [...TV_MODEL];
+  async loadContent() {
+    this.gameList = await this.dbService.getGames();
+    this.movieList = await this.dbService.getMovies();
+    this.tvList = await this.dbService.getTvShows();
   }
 }

@@ -1,7 +1,8 @@
 {
   "name": "critic-verse",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }

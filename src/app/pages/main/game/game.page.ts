@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GAME_MODEL } from 'src/app/models/game.model';
+import { DbService } from 'src/app/services/db.service';
 import { Game } from 'src/app/types/game';
 import { ratingDescription } from 'src/utils/rating-desc';
 
@@ -11,14 +11,14 @@ import { ratingDescription } from 'src/utils/rating-desc';
 export class GamePage implements OnInit {
   gameList: Game[] = [];
 
-  constructor() {}
+  constructor(private dbService: DbService) {}
 
   ngOnInit() {
     this.loadGames();
   }
 
-  loadGames(): void {
-    this.gameList = GAME_MODEL;
+  async loadGames() {
+    this.gameList = await this.dbService.getGames();
   }
 
   getRatingDescription = ratingDescription;
