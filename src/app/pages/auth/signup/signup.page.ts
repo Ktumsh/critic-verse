@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,10 @@ export class SignupPage implements OnInit {
   canShowError: boolean = false;
   daysUntilBirthday: number | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private registrationService: RegistrationService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.form.statusChanges.subscribe((status) => {
@@ -36,6 +40,7 @@ export class SignupPage implements OnInit {
       const age = this.calculateAge(birthday, today);
 
       if (age >= 13) {
+        this.registrationService.setBirthdate(birthday);
         this.router.navigate(['/signup/signup-username']);
       } else {
         console.error(

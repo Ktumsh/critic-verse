@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { USER_MODEL } from 'src/app/models/user.model';
+import { DbService } from 'src/app/services/db.service';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-signup-username',
@@ -20,7 +22,11 @@ export class SignupUsernamePage implements OnInit {
 
   canShowError: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private registrationService: RegistrationService,
+    private dbService: DbService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.form.statusChanges.subscribe((status) => {
@@ -31,26 +37,22 @@ export class SignupUsernamePage implements OnInit {
     });
   }
 
-  submit() {
+  async submit() {
     this.canShowError = true;
     if (this.form.controls.username.valid) {
       const usernameValue = this.form.controls.username.value ?? '';
+      const usernameExists = await this.dbService.usernameExists(usernameValue);
 
-      if (this.checkUsername(usernameValue)) {
+      if (usernameExists) {
         console.error('Nombre de usuario ya existe');
         this.form.controls.username.setErrors({ usernameTaken: true });
       } else {
+        this.registrationService.setUsername(usernameValue);
         this.router.navigate(['/signup/signup-password']);
       }
     } else {
       console.error('Nombre de usuario no válido');
       this.form.controls.username.markAsTouched();
     }
-  }
-
-  checkUsername(username: string): boolean {
-    return USER_MODEL.some(
-      (user) => user.username.toLowerCase() === username.toLowerCase()
-    );
   }
 }

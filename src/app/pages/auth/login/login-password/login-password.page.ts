@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { User } from 'src/app/types/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { DbService } from 'src/app/services/db.service';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-login-password',
@@ -15,22 +17,14 @@ export class LoginPasswordPage implements OnInit {
   });
 
   canShowError: boolean = false;
-  user: User | undefined;
 
   constructor(
+    private dbService: DbService,
+    private registrationService: RegistrationService,
+    private authService: AuthService,
     private router: Router,
     private toastController: ToastController
-  ) {
-    const navigation = this.router.getCurrentNavigation();
-
-    if (navigation?.extras.state) {
-      this.user = navigation.extras.state['user'] as User;
-    }
-
-    if (!this.user) {
-      this.router.navigate(['/login']);
-    }
-  }
+  ) {}
 
   ngOnInit() {
     this.form.statusChanges.subscribe((status) => {
@@ -40,39 +34,41 @@ export class LoginPasswordPage implements OnInit {
     });
   }
 
-  async presentToast(position: 'top' | 'middle' | 'bottom', message: string) {
+  async presentToast(message: string) {
     const toast = await this.toastController.create({
       cssClass: 'custom-toast',
       swipeGesture: 'vertical',
       icon: 'checkmark-circle-outline',
       message,
       duration: 2000,
-      position: position,
+      position: 'top',
     });
 
     await toast.present();
   }
 
-  submit() {
+  async submit() {
     this.canShowError = true;
-    if (this.form.controls.password.valid) {
+    try {
+      const email = this.registrationService.getEmail();
       const password = this.form.controls.password.value;
-
-      if (this.user && this.user.password === password) {
-        this.canShowError = false;
-
-        let navigationExtras: NavigationExtras = {
-          state: {
-            user: this.user,
-          },
-        };
-
-        this.presentToast('top', '¡Bienvenido de vuelta!');
-        this.router.navigate(['/main'], navigationExtras);
+      const isValid = await this.dbService.verifyPassword(
+        email as string,
+        password as string
+      );
+      if (isValid) {
+        const user = await this.dbService.getUserByEmail(email as string);
+        this.authService.login(user);
+        this.presentToast('¡Bienvenido de vuelta!');
+        this.router.navigate(['/main']);
       } else {
         console.error('Contraseña incorrecta');
         this.form.controls.password.setErrors({ incorrect: true });
       }
+    } catch (error) {
+      console.error('Error al verificar la contraseña:', error);
+      this.presentToast('Se produjo un error. Por favor, inténtalo más tarde.');
+      this.canShowError = true;
     }
   }
 }

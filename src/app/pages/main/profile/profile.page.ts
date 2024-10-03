@@ -9,6 +9,7 @@ import { ProfileReviewsComponent } from 'src/app/components/shared/profile-revie
 import { NotificationsComponent } from 'src/app/components/shared/notifications/notifications.component';
 import { ConfigurationComponent } from 'src/app/components/shared/configuration/configuration.component';
 import { HelpComponent } from 'src/app/components/shared/help/help.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,9 +20,12 @@ export class ProfilePage implements OnInit {
   @Input() user!: User;
 
   constructor(
+    private authService: AuthService,
     private router: Router,
     private modalController: ModalController
-  ) {}
+  ) {
+    this.user = this.authService.user;
+  }
 
   ngOnInit() {
     if (!this.user) {
