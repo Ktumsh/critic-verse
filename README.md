@@ -1,3 +1,9 @@
+<div align="center">
+  
+# **CriticVerse** 🎥 🎮
+
+</div>
+
 ### 🚀 Comandos de instalación
 
   ```sh
@@ -14,4 +20,18 @@
   ```
   ```sh
   npm list @ionic/angular
+  ```
+
+### 📱 Agregar Android
+  ```sh
+  ionic cap add android
+  ```
+  ```sh
+  ionic cap sync
+  ```
+  ```sh
+  ionic cap copy android
+  ```
+  ```sh
+  ionic cap run android --livereload --external
   ```
