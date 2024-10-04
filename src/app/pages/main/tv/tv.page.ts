@@ -10,6 +10,7 @@ import { ratingDescription } from 'src/utils/rating-desc';
 })
 export class TvPage implements OnInit {
   tvList: TvShow[] = [];
+  isLoading: boolean = true;
 
   constructor(private dbService: DbService) {}
 
@@ -18,7 +19,14 @@ export class TvPage implements OnInit {
   }
 
   async loadTvShows() {
-    this.tvList = await this.dbService.getTvShows();
+    try {
+      this.isLoading = true;
+      this.tvList = await this.dbService.getTvShows();
+    } catch (error) {
+      console.error('Error loading tv shows:', error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   getRatingDescription = ratingDescription;

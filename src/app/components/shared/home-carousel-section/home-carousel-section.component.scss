@@ -40,7 +40,6 @@
   width: 100%;
   object-fit: cover;
 }
-
 .carousel-slide-game.active,
 .carousel-slide-movie.active,
 .carousel-slide-tv.active {
@@ -52,4 +51,19 @@
   border-radius: 12px;
   position: relative;
   overflow: hidden;
+}
+.carousel-slide-skeleton {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+}
+.carousel-slide-img-skeleton {
+  width: 157px;
+  height: 235.5px;
+  border-radius: 8px;
+}
+
+ion-skeleton-text {
+  --background: var(--surface-secondary-600);
+  --background-rgb: 188, 0, 255;
 }

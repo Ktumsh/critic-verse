@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import { ratingDescription } from 'src/utils/rating-desc';
 
 @Component({
@@ -15,6 +14,8 @@ export class HomeCarouselSectionComponent {
   @Input() viewAllRoute!: string;
   @Input() activeIndices!: number[];
   @Input() carouselClass!: string;
+  @Input() sectionClass?: string;
+  @Input() isLoading: boolean = false;
 
   constructor(private router: Router) {}
 

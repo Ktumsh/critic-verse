@@ -5,3 +5,13 @@ export function generateUUID(): string {
     return v.toString(16);
   });
 }
+
+export function ratingClass(rating: number): string {
+  if (rating >= 0 && rating < 5) {
+    return 'bg-danger';
+  } else if (rating >= 5 && rating < 8) {
+    return 'bg-warning';
+  } else {
+    return 'bg-success';
+  }
+}

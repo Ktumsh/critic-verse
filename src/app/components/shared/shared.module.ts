@@ -29,6 +29,9 @@ import {
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { AddReviewComponent } from './add-review/add-review.component';
 import { HomeCarouselSectionComponent } from './home-carousel-section/home-carousel-section.component';
+import { ClasificationComponent } from './clasification/clasification.component';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { CastingComponent } from './casting/casting.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,9 @@ import { HomeCarouselSectionComponent } from './home-carousel-section/home-carou
     EditProfileComponent,
     AddReviewComponent,
     HomeCarouselSectionComponent,
+    ClasificationComponent,
+    ReviewsComponent,
+    CastingComponent,
   ],
   exports: [
     HeaderComponent,
@@ -71,6 +77,9 @@ import { HomeCarouselSectionComponent } from './home-carousel-section/home-carou
     EditProfileComponent,
     AddReviewComponent,
     HomeCarouselSectionComponent,
+    ClasificationComponent,
+    ReviewsComponent,
+    CastingComponent,
   ],
   imports: [
     CommonModule,

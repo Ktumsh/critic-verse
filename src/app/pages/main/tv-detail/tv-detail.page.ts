@@ -1,22 +1,10 @@
 import { Location } from '@angular/common';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  ActionSheetController,
-  IonContent,
-  ModalController,
-} from '@ionic/angular';
+import { IonContent, ModalController } from '@ionic/angular';
 import { AddReviewComponent } from 'src/app/components/shared/add-review/add-review.component';
-import { BottomSheetComponent } from 'src/app/components/shared/bottom-sheet/bottom-sheet.component';
 import { TV_MODEL } from 'src/app/models/tv.model';
-import { randomAvatar, randomName } from 'src/app/models/user.model';
 import { TvShow } from 'src/app/types/tv';
-import { averageRating } from 'src/utils/average-rating';
-import {
-  ratingCinemaDescription,
-  ratingDescription,
-} from 'src/utils/rating-desc';
 
 @Component({
   selector: 'app-tv-detail',
@@ -26,13 +14,9 @@ import {
 export class TvDetailPage implements OnInit {
   @ViewChild(IonContent) content!: IonContent;
 
+  //Variables
   tv!: TvShow;
   selectedSegment: string = 'reviews';
-
-  userNamesMap: { [key: string]: string } = {};
-  avatarsMap: { [key: string]: string } = {};
-
-  _bottomSheet = inject(MatBottomSheet);
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,33 +31,7 @@ export class TvDetailPage implements OnInit {
     if (tvById) {
       this.tv = tvById;
     }
-
-    this.tv.reviews.forEach((review) => {
-      this.userNamesMap[review.id] = this.getRandomName();
-      this.avatarsMap[review.id] = this.getRandomAvatar();
-    });
   }
-
-  openReportAlert(user: any): void {
-    this._bottomSheet.open(BottomSheetComponent, {
-      data: {
-        title: 'Reportar contenido de ' + '"' + user + '"',
-        options: [
-          {
-            label: 'Crear reporte',
-          },
-          {
-            label: 'Cancelar',
-            isDanger: true,
-          },
-        ],
-      },
-    });
-  }
-
-  getAverageRating = averageRating;
-
-  getRatingDescription = ratingDescription;
 
   getAverageEpisodes(
     episodesPerSeason: { season: number; episodes: number }[]
@@ -90,12 +48,6 @@ export class TvDetailPage implements OnInit {
 
     return Math.round(averageEpisodes);
   }
-
-  getRandomName = randomName;
-
-  getRandomAvatar = randomAvatar;
-
-  getUserRatingDescription = ratingCinemaDescription;
 
   goBack() {
     this.location.back();

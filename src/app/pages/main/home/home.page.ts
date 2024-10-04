@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
   activeIndicesGame: number[] = [];
   activeIndicesMovie: number[] = [];
   activeIndicesTv: number[] = [];
+  isLoading: boolean = true;
 
   constructor(private dbService: DbService) {}
 
@@ -25,8 +26,15 @@ export class HomePage implements OnInit {
   }
 
   async loadContent() {
-    this.gameList = await this.dbService.getGames();
-    this.movieList = await this.dbService.getMovies();
-    this.tvList = await this.dbService.getTvShows();
+    try {
+      this.isLoading = true;
+      this.gameList = await this.dbService.getGames();
+      this.movieList = await this.dbService.getMovies();
+      this.tvList = await this.dbService.getTvShows();
+    } catch (error) {
+      console.error('Error loading content:', error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 }

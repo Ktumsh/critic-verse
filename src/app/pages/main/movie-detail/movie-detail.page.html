@@ -7,7 +7,7 @@
   <div class="fixed bottom-0 p-6 z-10 w-full">
     <app-custom-button
       label="Agregar mi reseña"
-      buttonClass="blurred size-sm"
+      buttonClass="shadowed size-sm"
       (click)="openAddReviewModal()"
     />
   </div>
@@ -29,7 +29,7 @@
     <h2 class="text-5xl font-black text-center font-geist">{{movie.title}}</h2>
   </div>
 
-  <div class="-translate-y-32 my-2.5">
+  <div class="-translate-y-32 mt-2.5 fix-margin">
     <div class="p-4 pt-0 space-y-4">
       <!-- Género, Director, etc. -->
       <div>
@@ -63,176 +63,44 @@
         </div>
       </div>
 
-      <hr class="h-px w-full bg-surface-secondary-600" />
-
       <article>
         <ion-segment
           [(ngModel)]="selectedSegment"
           (ionChange)="segmentChanged($event)"
+          class="border-b border-secondary-600"
         >
           <ion-segment-button value="reviews">
             <ion-label>Reseñas</ion-label>
           </ion-segment-button>
           <ion-segment-button value="about">
-            <ion-label>Acerca de</ion-label>
+            <ion-label>Detalles</ion-label>
           </ion-segment-button>
         </ion-segment>
 
+        <!-- Reseñas -->
         <section
           *ngIf="selectedSegment === 'reviews'"
           class="flex flex-col space-y-4 my-6"
         >
           <!-- Clasificación -->
-          <div class="flex flex-col space-y-4 mb-12">
-            <div class="flex flex-col w-full">
-              <div class="flex items-center">
-                <div class="flex flex-col w-full mr-4">
-                  <span
-                    class="text-white-l text-sm letter-spacing-widest uppercase"
-                  >
-                    Rating mundial
-                  </span>
-                  <span class="text-white-h text-base font-semibold">
-                    {{ getRatingDescription(movie.rating) }}
-                  </span>
-                  <span class="text-white-l text-sm">Basada en 93 reseñas</span>
-                </div>
-                <div
-                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', movie.rating >= 0 && movie.rating < 5 ? 'bg-danger' : movie.rating >= 5 && movie.rating < 8 ? 'bg-warning' : 'bg-success']"
-                >
-                  <span class="font-geist font-black text-4xl text-white">
-                    {{ movie.rating }}
-                  </span>
-                </div>
-              </div>
-              <div
-                [ngClass]="['w-full h-1.5 mt-4 rounded-full', movie.rating >= 0 && movie.rating < 5 ? 'bg-danger' : movie.rating >= 5 && movie.rating < 8 ? 'bg-warning' : 'bg-success']"
-              ></div>
-            </div>
-            <div class="flex flex-col w-full">
-              <div class="flex items-center">
-                <div class="flex flex-col w-full mr-4">
-                  <span
-                    class="text-white-l text-sm letter-spacing-widest uppercase"
-                  >
-                    Rating de usuarios
-                  </span>
-                  <span class="text-white-h text-base font-semibold">
-                    {{ getUserRatingDescription(getAverageRating(movie)) }}
-                  </span>
-                  <span class="text-white-l text-sm"
-                    >Basada en {{ movie.reviews.length}} {{ movie.reviews.length
-                    > 1 ? 'reseñas' : 'reseña'}}</span
-                  >
-                </div>
-                <div
-                  [ngClass]="['flex items-center justify-center min-h-20 min-w-20 rounded-xl', getAverageRating(movie) >= 0 && getAverageRating(movie) < 5 ? 'bg-danger' : getAverageRating(movie) >= 5 && getAverageRating(movie) < 8 ? 'bg-warning' : 'bg-success']"
-                >
-                  <span class="font-geist font-black text-4xl text-white">
-                    {{ getAverageRating(movie) }}
-                  </span>
-                </div>
-              </div>
-              <div
-                [ngClass]="['w-full h-1.5 mt-4 rounded-full', getAverageRating(movie) >= 0 && getAverageRating(movie) < 5 ? 'bg-danger' : getAverageRating(movie) >= 5 && getAverageRating(movie) < 8 ? 'bg-warning' : 'bg-success']"
-              ></div>
-            </div>
-          </div>
+          <app-clasification [item]="movie" />
 
           <!-- Casting -->
-          <div class="w-full pb-2 border-b border-surface-secondary-600">
-            <h3 class="text-2xl font-semibold text-white-h">Elenco</h3>
-          </div>
-
-          <div class="flex items-center mb-12 overflow-x-scroll text-white-h">
-            <div class="flex items-start gap-4 h-full">
-              <div
-                *ngFor="let cast of movie.detail.cast"
-                class="flex flex-col justify-center"
-              >
-                <div
-                  class="flex items-center justify-center w-32 h-48 rounded-lg overflow-hidden"
-                >
-                  <img
-                    [alt]="'foto de ' + cast.actor"
-                    [ngSrc]="cast.image || 'assets/cast-placeholder.svg'"
-                    width="128"
-                    height="192"
-                    class="h-full object-cover object-center"
-                  />
-                </div>
-                <span class="text-xs text-white-m mt-2">{{ cast.actor }}</span>
-                <span class="text-sm font-semibold mt-1">
-                  {{ cast.character }}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="w-full pb-2 border-b border-surface-secondary-600">
-            <h3 class="text-2xl font-semibold text-white-h">Reseñas</h3>
-          </div>
+          <app-casting [item]="movie" />
 
           <!-- Reseñas -->
-          <div class="flex flex-col space-y-4">
-            <div
-              *ngFor="let review of movie.reviews"
-              class="p-4 bg-surface-secondary-600 rounded relative"
-            >
-              <div class="flex flex-col space-y-4 text-white-h">
-                <header class="flex items-center justify-between w-full">
-                  <div class="inline-flex items-center gap-3">
-                    <ion-avatar class="size-8 rounded-xl">
-                      <img alt="Foto de perfil" [src]="avatarsMap[review.id]" />
-                    </ion-avatar>
-                    <span class="text-lg font-semibold">
-                      {{ userNamesMap[review.id] }}
-                    </span>
-                  </div>
-
-                  <div
-                    [ngClass]="['flex items-center justify-center size-7 rounded-full', review.rating >= 0 && review.rating < 5 ? 'bg-danger' : review.rating >= 5 && review.rating < 8 ? 'bg-warning' : 'bg-success']"
-                  >
-                    <span class="font-bold text-white">
-                      {{ review.rating }}
-                    </span>
-                  </div>
-                </header>
-                <p class="text-sm">{{ review.comment }}</p>
-                <footer
-                  class="flex items-center justify-end pt-4 border-t border-surface-secondary-400"
-                >
-                  <div class="inline-flex items-center gap-4">
-                    <small class="text-xs text-white-l"
-                      >{{ review.date | date:'d \'de\' MMM, y' }}
-                    </small>
-                    <ion-button
-                      (click)="openReportAlert(userNamesMap[review.id])"
-                      expand="block"
-                      fill="clear"
-                      shape="round"
-                      class="size-8"
-                      color="secondary"
-                    >
-                      <ion-icon
-                        src="assets/icon/report.svg"
-                        class="size-5 text-white-l"
-                      ></ion-icon>
-                    </ion-button>
-                  </div>
-                </footer>
-              </div>
-            </div>
-          </div>
+          <app-reviews [item]="movie" />
         </section>
 
-        <!-- Acerca de -->
+        <!-- Detalles -->
         <section
           class="flex flex-col space-y-4 my-6"
           *ngIf="selectedSegment === 'about'"
         >
-          <div class="w-full pb-2 border-b border-surface-secondary-600">
-            <h3 class="text-2xl font-semibold text-white-h">Detalles</h3>
+          <div class="w-full pb-2">
+            <h3 class="text-2xl font-semibold text-white-h">
+              {{ movie.title }}
+            </h3>
           </div>
 
           <div class="flex flex-col">
@@ -244,9 +112,9 @@
             </div>
             <div class="flex flex-col space-y-4">
               <div
-                class="flex flex-col justify-center p-4 space-y-2 bg-surface-secondary-600 text-white-m rounded-xl text-sm"
+                class="flex flex-col justify-center p-4 space-y-3 bg-surface-secondary-600 text-white-m rounded-xl text-sm"
               >
-                <div class="inline-flex gap-2">
+                <div class="inline-flex flex-col">
                   <span class="font-semibold text-white-h">Género:</span>
                   <ul class="inline-flex p-0">
                     <li *ngFor="let genre of movie.detail.genre">
@@ -254,7 +122,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="inline-flex gap-2">
+                <div class="inline-flex flex-col">
                   <span class="font-semibold text-white-h">
                     Fecha de lanzamiento:
                   </span>
@@ -262,11 +130,11 @@
                     {{ movie.detail.releaseDate | date:'d \'de\' MMM, y' }}
                   </span>
                 </div>
-                <div class="inline-flex gap-2">
+                <div class="inline-flex flex-col">
                   <span class="font-semibold text-white-h">Duración:</span>
                   <span>{{ movie.detail.timeDuration }}</span>
                 </div>
-                <div class="inline-flex gap-2">
+                <div class="inline-flex flex-col">
                   <span class="font-semibold text-white-h">Director:</span>
                   <ul class="inline-flex p-0">
                     <li *ngFor="let director of movie.detail.director">
@@ -274,7 +142,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="inline-flex gap-2">
+                <div class="inline-flex flex-col">
                   <span class="font-semibold text-white-h">Productor:</span>
                   <ul class="inline-flex p-0">
                     <li *ngFor="let producer of movie.detail.producer">
@@ -282,7 +150,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="inline-flex gap-2">
+                <div class="inline-flex flex-col">
                   <span class="font-semibold text-white-h">Escritor:</span>
                   <ul class="inline-flex p-0">
                     <li *ngFor="let writer of movie.detail.writer">
@@ -290,7 +158,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="inline-flex gap-2">
+                <div class="inline-flex flex-col">
                   <span class="font-semibold text-white-h">Elenco:</span>
                   <ul class="inline-flex p-0">
                     <li *ngFor="let cast of movie.detail.cast" class="">
@@ -298,7 +166,7 @@
                     </li>
                   </ul>
                 </div>
-                <div class="inline-flex gap-2">
+                <div class="inline-flex flex-col">
                   <span class="font-semibold text-white-h"
                     >Compañía de producción:</span
                   >

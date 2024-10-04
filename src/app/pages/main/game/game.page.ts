@@ -10,6 +10,7 @@ import { ratingDescription } from 'src/utils/rating-desc';
 })
 export class GamePage implements OnInit {
   gameList: Game[] = [];
+  isLoading: boolean = true;
 
   constructor(private dbService: DbService) {}
 
@@ -18,7 +19,14 @@ export class GamePage implements OnInit {
   }
 
   async loadGames() {
-    this.gameList = await this.dbService.getGames();
+    try {
+      this.isLoading = true;
+      this.gameList = await this.dbService.getGames();
+    } catch (error) {
+      console.error('Error loading games:', error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   getRatingDescription = ratingDescription;

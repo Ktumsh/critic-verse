@@ -4,7 +4,7 @@
   <!--Admin float button-->
   <app-admin-float-btn class="fixed bottom-0 right-0 z-50" />
 
-  <!--Games-->
+  <!-- Contenido -->
   <article class="py-4">
     <!-- Juegos -->
     <app-home-carousel-section
@@ -14,6 +14,7 @@
       detailRoute="/main/game-detail"
       viewAllRoute="/main/game"
       carouselClass="carousel-slide-game"
+      [isLoading]="isLoading"
     ></app-home-carousel-section>
 
     <!-- Películas -->
@@ -24,6 +25,8 @@
       detailRoute="/main/movie-detail"
       viewAllRoute="/main/movie"
       carouselClass="carousel-slide-movie"
+      sectionClass="mt-10"
+      [isLoading]="isLoading"
     ></app-home-carousel-section>
 
     <!-- Programas de TV -->
@@ -34,6 +37,8 @@
       detailRoute="/main/tv-detail"
       viewAllRoute="/main/tv"
       carouselClass="carousel-slide-tv"
+      sectionClass="mt-10"
+      [isLoading]="isLoading"
     ></app-home-carousel-section>
   </article>
 </ion-content>

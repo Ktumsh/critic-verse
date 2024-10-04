@@ -51,15 +51,13 @@ ion-button.secondary::part(native) {
   color: var(--surface-alternative-300);
 }
 
-ion-button.blurred::part(native) {
+/* Shadowed */
+ion-button.shadowed::part(native) {
   --background: var(--surface-primary-600);
   color: var(--color-secondary-600);
 
   box-shadow: 3px 3px 10px 0 var(--color-secondary-600-50),
     -3px -3px 10px 0px var(--color-primary-600-50);
-
-  /*   -webkit-backdrop-filter: blur(16px) saturate(1.5);
-  backdrop-filter: blur(16px) saturate(1.5); */
 
   &:active {
     box-shadow: none;
