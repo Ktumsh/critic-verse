@@ -11,6 +11,7 @@ import { ratingDescription } from 'src/utils/rating-desc';
 })
 export class MoviePage implements OnInit {
   movieList: Movie[] = [];
+  isLoading: boolean = true;
 
   constructor(private dbService: DbService) {}
 
@@ -19,7 +20,14 @@ export class MoviePage implements OnInit {
   }
 
   async loadMovies() {
-    this.movieList = await this.dbService.getMovies();
+    try {
+      this.isLoading = true;
+      this.movieList = await this.dbService.getMovies();
+    } catch (error) {
+      console.error('Error loading movies:', error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   getRatingDescription = ratingDescription;

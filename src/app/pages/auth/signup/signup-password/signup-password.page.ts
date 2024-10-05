@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
+import { DbService } from 'src/app/services/db.service';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-signup-password',
@@ -19,6 +22,9 @@ export class SignupPasswordPage implements OnInit {
   canShowError: boolean = false;
 
   constructor(
+    private registrationService: RegistrationService,
+    private dbService: DbService,
+    private authService: AuthService,
     private router: Router,
     private toastController: ToastController
   ) {}
@@ -84,24 +90,47 @@ export class SignupPasswordPage implements OnInit {
     return !this.passwordControl.value && !this.confirmPasswordControl.value;
   }
 
-  submit() {
+  async submit() {
     this.canShowError = true;
+
     if (!this.form.valid) {
-      this.showToast(
-        'top',
-        'Por favor, revisa los campos.',
-        'alert-circle-outline'
-      );
+      this.showToast('Por favor, revisa los campos.', 'alert-circle-outline');
       return;
     }
-    if (this.form.valid) {
+
+    try {
+      const password = this.form.value.password;
+      this.registrationService.setPassword(password);
+
+      const userData = this.registrationService.getUserData();
+
+      const newUser = {
+        email: userData.email!,
+        username: userData.username!,
+        password: userData.password!,
+        birthdate: userData.birthdate,
+      };
+
+      await this.dbService.createUser(newUser);
+
+      this.registrationService.clearData();
+
+      const user = await this.dbService.getUserByEmail(newUser.email);
+
+      this.authService.login(user);
       console.log('Contraseña creada con éxito:', this.form.value.password);
+
       this.showToast(
-        'top',
         '¡Cuenta creada con éxito! ¡Bienvenido!',
         'checkmark-circle-outline'
       );
       this.router.navigate(['/main/home']);
+    } catch (error) {
+      console.error('Error durante el proceso de registro:', error);
+      this.showToast(
+        'Ocurrió un error al crear la cuenta. Inténtalo de nuevo.',
+        'alert-circle-outline'
+      );
     }
   }
 
@@ -142,18 +171,14 @@ export class SignupPasswordPage implements OnInit {
     };
   }
 
-  async showToast(
-    position: 'top' | 'middle' | 'bottom',
-    message: string,
-    icon?: string
-  ) {
+  async showToast(message: string, icon?: string) {
     const toast = await this.toastController.create({
       cssClass: 'custom-toast',
       swipeGesture: 'vertical',
       icon,
       message,
       duration: 2000,
-      position: position,
+      position: 'top',
     });
 
     await toast.present();

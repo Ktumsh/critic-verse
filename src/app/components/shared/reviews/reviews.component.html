@@ -1,0 +1,62 @@
+<div class="w-full">
+  <h3 class="text-2xl font-semibold text-white-h mb-5">Reseñas</h3>
+</div>
+
+<div class="flex flex-col space-y-4">
+  <div
+    *ngFor="let review of item.reviews"
+    class="p-4 bg-surface-secondary-600 rounded relative"
+  >
+    <div class="flex flex-col space-y-4 text-white-h">
+      <header class="flex items-center justify-between w-full">
+        <div class="inline-flex items-center gap-3">
+          <ion-avatar class="size-8 rounded-xl">
+            <img alt="Foto de perfil" [src]="avatarsMap[review.id]" />
+          </ion-avatar>
+          <span class="text-lg font-semibold">
+            {{ userNamesMap[review.id] }}
+          </span>
+          <small class="text-xs text-white-l"
+            >{{ review.date | date : "d 'de' MMM, y" }}
+          </small>
+        </div>
+
+        <div
+          [ngClass]="[
+            'flex items-center justify-center size-7 rounded-full',
+            getRatingClass(review.rating)
+          ]"
+        >
+          <span class="font-bold text-white">
+            {{ review.rating }}
+          </span>
+        </div>
+      </header>
+      <p class="text-sm">{{ review.comment }}</p>
+      <footer class="flex items-center justify-between">
+        <div class="inline-flex items-center justify-between gap-4 w-full">
+          <ion-button
+            (click)="openReportAlert(userNamesMap[review.id])"
+            expand="block"
+            shape="round"
+            class="h-8"
+          >
+            Reportar
+          </ion-button>
+          <ion-button
+            expand="block"
+            fill="clear"
+            shape="round"
+            class="size-8 custom"
+            color="secondary"
+          >
+            <ion-icon
+              src="assets/icon/like.svg"
+              class="size-5 text-white-l"
+            ></ion-icon>
+          </ion-button>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,8 @@ import { Platform } from '@ionic/angular';
 import { Game } from '../types/game';
 import { Movie } from '../types/movie';
 import { TvShow } from '../types/tv';
+import { generateUUID } from 'src/utils/common';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +14,10 @@ export class DbService {
   private database!: SQLiteObject;
   private isNative: boolean = false;
   private dbInitialized: Promise<void> | undefined;
+
+  private async hashPassword(password: string, salt: string): Promise<string> {
+    return CryptoJS.SHA256(password + salt).toString();
+  }
 
   constructor(private sqlite: SQLite, private platform: Platform) {
     this.init();
@@ -82,9 +88,10 @@ export class DbService {
         email TEXT NOT NULL UNIQUE,
         username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
+        salt TEXT NOT NULL,
         birthdate TEXT,
         profileImage TEXT,
-        createdAt TEXT NOT NULL
+        createdAt TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
       );
     `;
 
@@ -191,19 +198,6 @@ export class DbService {
       );
     `;
 
-    const tableFavorites = `
-      CREATE TABLE IF NOT EXISTS Favorites (
-        id TEXT PRIMARY KEY,
-        userId TEXT NOT NULL,
-        contentId TEXT NOT NULL,
-        tipo TEXT,
-        FOREIGN KEY (userId) REFERENCES Users (id),
-        FOREIGN KEY (contentId) REFERENCES Movies (id),
-        FOREIGN KEY (contentId) REFERENCES TvShows (id),
-        FOREIGN KEY (contentId) REFERENCES Games (id)
-      );
-    `;
-
     const db = this.database as SQLiteObject;
     await db.sqlBatch([
       tableUsers,
@@ -214,25 +208,8 @@ export class DbService {
       tableReviews,
       tableReports,
       tableCast,
-      tableFavorites,
     ]);
     console.log('Tablas creadas exitosamente en SQLite.');
-  }
-
-  public async showTables(): Promise<void> {
-    await this.dbInitialized;
-    await this.checkNative();
-
-    const db = this.database as SQLiteObject;
-    const res = await db.executeSql(
-      'SELECT name FROM sqlite_master WHERE type="table"',
-      []
-    );
-    const tables: string[] = [];
-    for (let i = 0; i < res.rows.length; i++) {
-      tables.push(res.rows.item(i).name);
-    }
-    console.log('Tablas en la base de datos (SQLite):', tables);
   }
 
   async clearDatabase(): Promise<void> {
@@ -523,6 +500,242 @@ export class DbService {
     } catch (error) {
       console.error('Error al obtener series:', error);
       return [];
+    }
+  }
+
+  async insertUser(user: {
+    role: string;
+    email: string;
+    username: string;
+    password: string;
+    birthdate?: string | Date;
+    profileImage?: string;
+  }): Promise<void> {
+    await this.dbInitialized;
+    await this.checkNative();
+
+    const db = this.database as SQLiteObject;
+
+    const userId = generateUUID();
+    const salt = generateUUID();
+    const hashedPassword = await this.hashPassword(user.password, salt);
+
+    const formattedBirthdate =
+      typeof user.birthdate === 'string'
+        ? new Date(user.birthdate).toISOString().split('T')[0]
+        : user.birthdate?.toISOString().split('T')[0] || null;
+
+    try {
+      const userInsert = `
+        INSERT INTO Users (id, role, email, username, password, salt, birthdate, profileImage, createdAt)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      `;
+      const userValues = [
+        userId,
+        user.role,
+        user.email,
+        user.username,
+        hashedPassword,
+        salt,
+        formattedBirthdate,
+        user.profileImage || null,
+      ];
+
+      await db.executeSql(userInsert, userValues);
+      console.log(`Usuario con email "${user.email}" insertado manualmente.`);
+    } catch (error) {
+      console.error('Error al insertar el usuario manualmente:', error);
+      throw error;
+    }
+  }
+
+  async createUser(user: {
+    email: string;
+    username: string;
+    password: string;
+    birthdate?: string | Date;
+    profileImage?: string;
+  }): Promise<void> {
+    await this.dbInitialized;
+    await this.checkNative();
+
+    const db = this.database as SQLiteObject;
+
+    try {
+      const userId = generateUUID();
+      const role = 'user';
+      const salt = generateUUID();
+      const hashedPassword = await this.hashPassword(user.password, salt);
+
+      const formattedBirthdate =
+        typeof user.birthdate === 'string'
+          ? new Date(user.birthdate).toISOString().split('T')[0]
+          : user.birthdate?.toISOString().split('T')[0] || null;
+
+      const userInsert = `
+        INSERT INTO Users (id, role, email, username, password, salt, birthdate, profileImage, createdAt)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      `;
+      const userValues = [
+        userId,
+        role,
+        user.email,
+        user.username,
+        hashedPassword,
+        salt,
+        formattedBirthdate,
+        user.profileImage || null,
+      ];
+
+      await db.executeSql(userInsert, userValues);
+      console.log(
+        `Usuario con email "${user.email}" registrado correctamente.`
+      );
+    } catch (error) {
+      console.error('Error al registrar el usuario:', error);
+      throw error;
+    }
+  }
+
+  async verifyUser(email: string, password: string): Promise<boolean> {
+    await this.dbInitialized;
+    const db = this.database as SQLiteObject;
+
+    try {
+      const query = `SELECT * FROM Users WHERE email = ?`;
+      const result = await db.executeSql(query, [email]);
+
+      if (result.rows.length > 0) {
+        const user = result.rows.item(0);
+        const salt = user.salt;
+        const storedHash = user.password;
+
+        const inputHash = await this.hashPassword(password, salt);
+
+        if (inputHash === storedHash) {
+          console.log('Contraseña correcta');
+          return true;
+        } else {
+          console.log('Contraseña incorrecta');
+          return false;
+        }
+      } else {
+        console.log('Usuario no encontrado');
+        return false;
+      }
+    } catch (error) {
+      console.error('Error al verificar el usuario:', error);
+      throw error;
+    }
+  }
+
+  async verifyPassword(email: string, password: string): Promise<boolean> {
+    await this.dbInitialized;
+    await this.checkNative();
+
+    const db = this.database as SQLiteObject;
+
+    try {
+      const query = `SELECT password, salt FROM Users WHERE email = ?`;
+      const result = await db.executeSql(query, [email]);
+
+      if (result.rows.length > 0) {
+        const user = result.rows.item(0);
+        const storedHash = user.password;
+        const salt = user.salt;
+
+        const inputHash = CryptoJS.SHA256(password + salt).toString();
+
+        return inputHash === storedHash;
+      } else {
+        console.log('Usuario no encontrado');
+        return false;
+      }
+    } catch (error) {
+      console.error('Error al verificar la contraseña del usuario:', error);
+      throw error;
+    }
+  }
+
+  async usernameExists(username: string): Promise<boolean> {
+    await this.dbInitialized;
+    await this.checkNative();
+
+    const db = this.database as SQLiteObject;
+
+    try {
+      const query = 'SELECT COUNT(*) AS count FROM Users WHERE username = ?';
+      const result = await db.executeSql(query, [username]);
+
+      if (result.rows.item(0).count > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error('Error al verificar el username:', error);
+      throw error;
+    }
+  }
+
+  async emailExists(email: string): Promise<boolean> {
+    await this.dbInitialized;
+    await this.checkNative();
+
+    const db = this.database as SQLiteObject;
+
+    try {
+      const query = 'SELECT COUNT(*) AS count FROM Users WHERE email = ?';
+      const result = await db.executeSql(query, [email]);
+
+      if (result.rows.length > 0) {
+        const count = result.rows.item(0).count;
+        return count > 0;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error('Error al verificar el email:', error);
+      throw error;
+    }
+  }
+
+  async getUserByEmail(email: string): Promise<any> {
+    await this.dbInitialized;
+    await this.checkNative();
+
+    const db = this.database as SQLiteObject;
+
+    try {
+      const query = 'SELECT * FROM Users WHERE email = ?';
+      const result = await db.executeSql(query, [email]);
+
+      if (result.rows.length > 0) {
+        return result.rows.item(0);
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error al obtener el usuario:', error);
+      throw error;
+    }
+  }
+
+  async deleteUserByUsername(username: string): Promise<void> {
+    await this.dbInitialized;
+    await this.checkNative();
+
+    const db = this.database as SQLiteObject;
+
+    try {
+      const query = 'DELETE FROM Users WHERE username = ?';
+      await db.executeSql(query, [username]);
+      console.log(
+        `Usuario con username "${username}" eliminado correctamente.`
+      );
+    } catch (error) {
+      console.error('Error al eliminar el usuario:', error);
+      throw error;
     }
   }
 }

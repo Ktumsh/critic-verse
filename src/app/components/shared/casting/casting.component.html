@@ -1,0 +1,28 @@
+<div class="w-full">
+  <h3 class="text-2xl font-semibold text-white-h mb-4">Elenco</h3>
+</div>
+
+<div class="flex items-center mb-8 overflow-x-scroll text-white-h">
+  <div class="flex items-start gap-4 h-full">
+    <div
+      *ngFor="let cast of item.detail.cast"
+      class="flex flex-col justify-center"
+    >
+      <div
+        class="flex items-center justify-center w-32 h-48 rounded-lg overflow-hidden"
+      >
+        <img
+          [alt]="'foto de ' + cast.actor"
+          [ngSrc]="cast.image || 'assets/cast-placeholder.svg'"
+          width="128"
+          height="192"
+          class="h-full object-cover object-center"
+        />
+      </div>
+      <span class="text-xs text-white-m mt-2">{{ cast.actor }}</span>
+      <span class="text-sm font-semibold mt-1">
+        {{ cast.character }}
+      </span>
+    </div>
+  </div>
+</div>

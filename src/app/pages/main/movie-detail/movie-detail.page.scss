@@ -30,15 +30,6 @@ li:last-child:after {
   content: "";
 }
 
-ion-avatar {
-  --border-radius: 12px;
-}
-
-ion-button {
-  min-height: auto;
-}
-
-ion-button::part(native) {
-  --padding-start: 0;
-  --padding-end: 0;
+.fix-margin {
+  margin-bottom: -3rem;
 }

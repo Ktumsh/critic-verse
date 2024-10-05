@@ -1,12 +1,13 @@
-<section class="mt-10">
+<section [ngClass]="sectionClass">
   <div class="flex justify-between items-center pr-4 pl-8 mb-2">
     <h2 class="text-base text-white-m letter-spacing-widest uppercase">
-      Juegos
+      {{ title }}
     </h2>
     <ion-chip (click)="viewAll()" color="secondary">
       <span class="text-xs text-white-m">Ver todo</span>
     </ion-chip>
   </div>
+
   <div class="carousel">
     <div class="carousel-viewport">
       <div
@@ -14,48 +15,77 @@
         #carouselContainer
         (scroll)="onScroll(carouselContainer)"
       >
-        <div
-          *ngFor="let item of list; let i = index"
-          [ngClass]="{ active: activeIndices.includes(i) }"
-          [class]="carouselClass"
-        >
-          <div
-            class="ion-activatable ripple-parent shadow-lg"
-            (click)="goToDetail(item.id)"
-          >
-            <img
-              [ngSrc]="item.image"
-              [alt]="item.title"
-              width="157"
-              height="235.5"
-              priority
-              class="carousel-slide-img animate-fade-in animate-duration-300"
-            />
-            <ion-ripple-effect></ion-ripple-effect>
-          </div>
-          <div class="flex items-center mt-3">
-            <h3 class="text-base text-white-h font-semibold truncate">
-              {{ item.title }}
-            </h3>
-          </div>
-          <div class="flex items-center justify-center gap-3 mt-3">
-            <div
-              [ngClass]="[
-                'flex items-center justify-center size-7 min-w-7 rounded-full',
-                item.rating >= 0 && item.rating < 5
-                  ? 'bg-danger'
-                  : item.rating >= 5 && item.rating < 8
-                  ? 'bg-warning'
-                  : 'bg-success'
-              ]"
-            >
-              <span class="font-bold text-white"> {{ item.rating }} </span>
+        <!-- Skeletons de carga -->
+        <ng-container *ngIf="isLoading; else content">
+          <div class="carousel-slide-skeleton" *ngFor="let skeleton of [1, 2]">
+            <ion-skeleton-text
+              [animated]="true"
+              class="carousel-slide-img-skeleton"
+            ></ion-skeleton-text>
+            <div class="mt-3">
+              <ion-skeleton-text
+                [animated]="true"
+                class="w-24 h-4 rounded-full"
+              ></ion-skeleton-text>
             </div>
-            <span class="text-xs text-white-m">{{
-              getRatingDescription(item.rating)
-            }}</span>
+            <div class="flex gap-3 mt-3">
+              <ion-skeleton-text
+                [animated]="true"
+                class="size-6 rounded-full"
+              ></ion-skeleton-text>
+              <ion-skeleton-text
+                [animated]="true"
+                class="w-12 h-6 rounded-full"
+              ></ion-skeleton-text>
+            </div>
           </div>
-        </div>
+        </ng-container>
+
+        <!-- Contenido real -->
+        <ng-template #content>
+          <div
+            *ngFor="let item of list; let i = index"
+            [ngClass]="{ active: activeIndices.includes(i) }"
+            [class]="carouselClass"
+          >
+            <div
+              class="ion-activatable ripple-parent shadow-lg"
+              (click)="goToDetail(item.id)"
+            >
+              <img
+                [ngSrc]="item.image"
+                [alt]="item.title"
+                width="157"
+                height="235.5"
+                priority
+                class="carousel-slide-img animate-fade-in animate-duration-300"
+              />
+              <ion-ripple-effect></ion-ripple-effect>
+            </div>
+            <div class="flex items-center mt-3">
+              <h3 class="text-base text-white-h font-semibold truncate">
+                {{ item.title }}
+              </h3>
+            </div>
+            <div class="flex items-center justify-center gap-3 mt-3">
+              <div
+                [ngClass]="[
+                  'flex items-center justify-center size-7 min-w-7 rounded-full',
+                  item.rating >= 0 && item.rating < 5
+                    ? 'bg-danger'
+                    : item.rating >= 5 && item.rating < 8
+                    ? 'bg-warning'
+                    : 'bg-success'
+                ]"
+              >
+                <span class="font-bold text-white"> {{ item.rating }} </span>
+              </div>
+              <span class="text-xs text-white-m">{{
+                getRatingDescription(item.rating)
+              }}</span>
+            </div>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<ion-fab vertical="bottom" horizontal="end" class="m-1.5">
+<ion-fab *ngIf="isAdmin()" vertical="bottom" horizontal="end" class="m-1.5">
   <ion-fab-button [routerLink]="['/main/admin']">
     <ion-icon src="assets/icon/admin.svg"></ion-icon>
   </ion-fab-button>

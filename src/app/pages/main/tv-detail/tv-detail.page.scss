@@ -42,3 +42,7 @@ ion-button::part(native) {
   --padding-start: 0;
   --padding-end: 0;
 }
+
+.fix-margin {
+  margin-bottom: -3rem;
+}

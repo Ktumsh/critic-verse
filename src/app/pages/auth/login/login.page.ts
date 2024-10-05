@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
-import { USER_MODEL } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
+import { DbService } from 'src/app/services/db.service';
+import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,11 @@ export class LoginPage implements OnInit {
 
   canShowError: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private dbService: DbService,
+    private registrationService: RegistrationService,
+    private router: Router
+  ) {}
 
   // Aquí se controla el error de correo electrónico cuando el campo este vacío
   ngOnInit() {
@@ -26,23 +31,19 @@ export class LoginPage implements OnInit {
     });
   }
 
-  submit() {
+  async submit() {
     this.canShowError = true;
     if (this.form.controls.email.valid) {
       const email = this.form.controls.email.value ?? '';
-      const user = USER_MODEL.find((user) => user.email === email);
+      const emailExists = await this.dbService.emailExists(email);
 
-      let navigationExtras: NavigationExtras = {
-        state: {
-          user: user,
-        },
-      };
-
-      if (user) {
+      if (emailExists) {
         this.canShowError = false;
-        this.router.navigate(['/login/login-password'], navigationExtras);
+        this.registrationService.setEmail(email);
+        this.router.navigate(['/login/login-password']);
       } else {
-        this.router.navigate(['/signup', navigationExtras]);
+        this.registrationService.setEmail(email);
+        this.router.navigate(['/signup']);
       }
     } else {
       console.error('Correo electrónico no válido');

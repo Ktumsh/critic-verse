@@ -1,21 +1,9 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  ActionSheetController,
-  IonContent,
-  ModalController,
-} from '@ionic/angular';
+import { IonContent, ModalController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { MOVIE_MODEL } from 'src/app/models/movie.model';
 import { Movie } from 'src/app/types/movie';
-import {
-  ratingCinemaDescription,
-  ratingDescription,
-} from 'src/utils/rating-desc';
-import { averageRating } from 'src/utils/average-rating';
-import { randomAvatar, randomName } from 'src/app/models/user.model';
-import { BottomSheetComponent } from 'src/app/components/shared/bottom-sheet/bottom-sheet.component';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AddReviewComponent } from 'src/app/components/shared/add-review/add-review.component';
 
 @Component({
@@ -26,13 +14,9 @@ import { AddReviewComponent } from 'src/app/components/shared/add-review/add-rev
 export class MovieDetailPage implements OnInit {
   @ViewChild(IonContent) content!: IonContent;
 
+  //Variables
   movie!: Movie;
   selectedSegment: string = 'reviews';
-
-  userNamesMap: { [key: string]: string } = {};
-  avatarsMap: { [key: string]: string } = {};
-
-  _bottomSheet = inject(MatBottomSheet);
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,39 +31,7 @@ export class MovieDetailPage implements OnInit {
     if (movieById) {
       this.movie = movieById;
     }
-
-    this.movie.reviews.forEach((review) => {
-      this.userNamesMap[review.id] = this.getRandomName();
-      this.avatarsMap[review.id] = this.getRandomAvatar();
-    });
   }
-
-  openReportAlert(user: any): void {
-    this._bottomSheet.open(BottomSheetComponent, {
-      data: {
-        title: 'Reportar contenido de ' + '"' + user + '"',
-        options: [
-          {
-            label: 'Crear reporte',
-          },
-          {
-            label: 'Cancelar',
-            isDanger: true,
-          },
-        ],
-      },
-    });
-  }
-
-  getAverageRating = averageRating;
-
-  getRatingDescription = ratingDescription;
-
-  getRandomName = randomName;
-
-  getRandomAvatar = randomAvatar;
-
-  getUserRatingDescription = ratingCinemaDescription;
 
   goBack() {
     this.location.back();
