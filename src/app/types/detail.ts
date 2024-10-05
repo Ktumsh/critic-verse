@@ -18,4 +18,5 @@ export interface Detail {
   director?: string[];
   producer?: string[];
   writer?: string[];
+  class?: string;
 }
