@@ -17,8 +17,8 @@
       <div class="flex flex-col space-y-4">
         <div
           *ngFor="let game of gameList"
-          class="flex items-center gap-4 ion-activatable relative overflow-hidden rounded-xl"
-          [routerLink]="['/main/game-detail', game.id]"
+          class="flex items-center gap-4 io n-activatable relative overflow-hidden rounded-xl"
+          [routerLink]="['/main/game-detail', game.id    ]"
         >
           <div class="flex min-w-20 rounded-xl overflow-hidden shadow-lg">
             <img
@@ -31,6 +31,7 @@
           </div>
           <div class="flex flex-col gap-2 pr-4">
             <h3 class="text-lg text-white-h font-semibold">{{ game.title }}</h3>
+
             <div class="flex items-center gap-3">
               <div
                 [ngClass]="['flex items-center justify-center size-7 min-w-7 rounded-full', game.rating >= 0 && game.rating < 5 ? 'bg-danger' : game.rating >= 5 && game.rating < 8 ? 'bg-warning' : 'bg-success']"
