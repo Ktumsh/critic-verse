@@ -12,7 +12,9 @@
     />
   </div>
 
-  <div class="relative -translate-y-14 w-full h-96">
+  <div
+    class="relative -translate-y-14 w-full h-96 animate-fade-in animate-duration-1000"
+  >
     <ion-thumbnail class="size-full overflow-hidden">
       <img
         [ngSrc]="tv.image"
@@ -49,7 +51,10 @@
               src="assets/icon/time.svg"
               class="size-3.5 mr-2"
             ></ion-icon>
-            <span>{{ tv.detail.seasons }} temporadas</span>
+            <span
+              >{{ tv.detail.seasons }} {{tv.detail.seasons && tv.detail.seasons
+              > 1 ? 'temporadas' : 'temporada'}}</span
+            >
           </div>
         </div>
         <div class="flex items-center justify-center text-white-l">
@@ -89,7 +94,11 @@
           <app-casting [item]="tv" />
 
           <!-- Reseñas -->
-          <app-reviews [item]="tv" />
+          <app-reviews
+            [item]="tv"
+            [contentRef]="content"
+            [refreshContentData]="refreshTvData"
+          />
         </section>
 
         <!-- Detalles -->

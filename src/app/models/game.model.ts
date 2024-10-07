@@ -266,7 +266,7 @@ export const GAME_MODEL: Game[] = [
     detail: {
       summary: 'EA SPORTS FC 25',
       genre: ['Soccer sim'],
-      platforms: ['PC', 'PS5', 'PS4', 'XBOX SERIES X'],
+      platforms: ['PC', 'PS5', 'PS4', 'Xbox Series X/S'],
       releaseDate: new Date('2024-09-27'),
       editor: 'Electronic Arts',
       developer: 'EA Canada',
@@ -324,7 +324,7 @@ export const GAME_MODEL: Game[] = [
     detail: {
       summary: 'Grand Theft Auto V',
       genre: ['Accion'],
-      platforms: ['PC', 'PS3', 'PS4', 'PS5', 'XBOX SERIES X'],
+      platforms: ['PC', 'PS3', 'PS4', 'PS5', 'Xbox Series X/S'],
       releaseDate: new Date('2014-11-18'),
       editor: 'Rockstar Games',
       developer: 'Rockstar North',
@@ -382,7 +382,7 @@ export const GAME_MODEL: Game[] = [
     detail: {
       summary: 'Overwatch',
       genre: ['FPS'],
-      platforms: ['PC', 'PS4', 'XBOX ONE'],
+      platforms: ['PC', 'PS4', 'Xbox One'],
       releaseDate: new Date('2016-05-23'),
       editor: 'Blizzard Entertainment',
       developer: 'Blizzard Entertainment',
@@ -440,7 +440,7 @@ export const GAME_MODEL: Game[] = [
     detail: {
       summary: 'Terraria',
       genre: ['Aventura', 'Sandbox'],
-      platforms: ['PC', 'PS4', 'XBOX ONE'],
+      platforms: ['PC', 'PS4', 'Xbox One'],
       releaseDate: new Date('2013-03-27'),
       editor: '505 Games',
       developer: 'Engine Software',

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
 
 @Component({
@@ -14,7 +16,9 @@ export class AccountDetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private modalController: ModalController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private userService: UserService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -31,8 +35,13 @@ export class AccountDetailsComponent implements OnInit {
     }
   }
 
-  async showAlert() {
+  async deleteUser() {
+    await this.showDeleteUserAlert();
+  }
+
+  async showDeleteUserAlert() {
     const alert = await this.alertController.create({
+      mode: 'ios',
       cssClass: 'custom-alert v2',
       header: '¿Estás seguro que deseas eliminar tu cuenta?',
       message:
@@ -46,6 +55,8 @@ export class AccountDetailsComponent implements OnInit {
           text: 'Eliminar mi cuenta',
           role: 'confirm',
           handler: async () => {
+            await this.userService.deleteUserByUsername(this.user.username);
+            this.authService.logout();
             await this.modalController.dismiss();
             this.router.navigate(['/auth']);
           },

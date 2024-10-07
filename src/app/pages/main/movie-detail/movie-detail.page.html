@@ -12,7 +12,9 @@
     />
   </div>
 
-  <div class="relative -translate-y-14 w-full h-96">
+  <div
+    class="relative -translate-y-14 w-full h-96 animate-fade-in animate-duration-1000"
+  >
     <ion-thumbnail class="size-full overflow-hidden">
       <img
         [ngSrc]="movie.image"
@@ -89,7 +91,11 @@
           <app-casting [item]="movie" />
 
           <!-- Reseñas -->
-          <app-reviews [item]="movie" />
+          <app-reviews
+            [item]="movie"
+            [contentRef]="content"
+            [refreshContentData]="refreshMovieData"
+          />
         </section>
 
         <!-- Detalles -->

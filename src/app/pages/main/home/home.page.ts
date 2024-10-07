@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DbService } from 'src/app/services/db.service';
+import { ContentService } from 'src/app/services/content.service';
 import { Game } from 'src/app/types/game';
 import { Movie } from 'src/app/types/movie';
 import { TvShow } from 'src/app/types/tv';
+import { sortByReleaseDate } from 'src/utils/common';
 
 @Component({
   selector: 'app-home',
@@ -19,20 +20,26 @@ export class HomePage implements OnInit {
   activeIndicesTv: number[] = [];
   isLoading: boolean = true;
 
-  constructor(private dbService: DbService) {}
+  constructor(private contentService: ContentService) {}
 
-  ngOnInit() {
-    this.loadContent();
+  async ngOnInit() {
+    await this.loadContent();
   }
 
   async loadContent() {
     try {
       this.isLoading = true;
-      this.gameList = await this.dbService.getGames();
-      this.movieList = await this.dbService.getMovies();
-      this.tvList = await this.dbService.getTvShows();
+
+      const games = await this.contentService.getGames();
+      this.gameList = sortByReleaseDate(games);
+
+      const movies = await this.contentService.getMovies();
+      this.movieList = sortByReleaseDate(movies);
+
+      const tvShows = await this.contentService.getTvShows();
+      this.tvList = sortByReleaseDate(tvShows);
     } catch (error) {
-      console.error('Error loading content:', error);
+      console.error('Error al cargar el contenido:', error);
     } finally {
       this.isLoading = false;
     }

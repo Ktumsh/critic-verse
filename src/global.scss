@@ -2882,6 +2882,11 @@ li {
 .animate-delay-4000 { --animate-delay: 4000ms; }
 .animate-delay-5000 { --animate-delay: 5000ms; }
 
+/* Aspect Ratio */
+.aspect-auto { aspect-ratio: auto; }
+.aspect-square { aspect-ratio: 1 / 1; }
+.aspect-video { aspect-ratio: 16 / 9; }
+
 /* Animation Keyframes */
 @keyframes spin { 
   0% { transform: rotate(0deg); } 

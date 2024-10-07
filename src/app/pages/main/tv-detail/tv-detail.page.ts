@@ -1,10 +1,17 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  NgZone,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent, ModalController } from '@ionic/angular';
 import { AddReviewComponent } from 'src/app/components/shared/add-review/add-review.component';
-import { TV_MODEL } from 'src/app/models/tv.model';
+import { ContentService } from 'src/app/services/content.service';
 import { TvShow } from 'src/app/types/tv';
+import { refreshContentData } from 'src/utils/common';
 
 @Component({
   selector: 'app-tv-detail',
@@ -14,22 +21,42 @@ import { TvShow } from 'src/app/types/tv';
 export class TvDetailPage implements OnInit {
   @ViewChild(IonContent) content!: IonContent;
 
-  //Variables
-  tv!: TvShow;
+  tv: TvShow | null = null;
   selectedSegment: string = 'reviews';
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private contentService: ContentService,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    const tvById = TV_MODEL.find((tv) => tv.id === id);
+    if (id) {
+      this.loadTvShow(id);
+    }
+  }
 
-    if (tvById) {
-      this.tv = tvById;
+  async loadTvShow(id: string) {
+    try {
+      const tvShowById = await this.contentService.getTvShowById(id);
+
+      if (tvShowById) {
+        this.tv = tvShowById;
+        this.ngZone.run(() => {
+          this.tv = tvShowById;
+          this.cdr.detectChanges();
+        });
+      } else {
+        console.log(
+          `No se encontró una serie con ID "${id}" en la base de datos.`
+        );
+      }
+    } catch (error) {
+      console.error(`Error al cargar la serie con ID "${id}":`, error);
     }
   }
 
@@ -57,6 +84,10 @@ export class TvDetailPage implements OnInit {
     this.selectedSegment = event.detail.value;
   }
 
+  async refreshTvData() {
+    await refreshContentData(this.tv!.id, this.loadTvShow.bind(this), this.cdr);
+  }
+
   async openAddReviewModal() {
     this.content.getScrollElement().then((scrollElement) => {
       scrollElement.style.overflow = 'hidden';
@@ -73,6 +104,9 @@ export class TvDetailPage implements OnInit {
     modal.onDidDismiss().then(() => {
       this.content.getScrollElement().then((scrollElement) => {
         scrollElement.style.overflow = '';
+      });
+      this.loadTvShow(this.tv!.id).then(() => {
+        this.cdr.detectChanges();
       });
     });
 

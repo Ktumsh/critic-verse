@@ -13,7 +13,9 @@
     />
   </div>
 
-  <div class="relative -translate-y-14 w-full h-96">
+  <div
+    class="relative -translate-y-14 w-full h-96 animate-fade-in animate-duration-1000"
+  >
     <ion-thumbnail class="size-full overflow-hidden">
       <img
         [ngSrc]="game.image"
@@ -80,7 +82,11 @@
           <app-clasification [item]="game" />
 
           <!-- Reseñas -->
-          <app-reviews [item]="game" />
+          <app-reviews
+            [item]="game"
+            [contentRef]="content"
+            [refreshContentData]="refreshGameData"
+          />
         </section>
 
         <!-- Detalles -->
@@ -134,7 +140,9 @@
                 <div class="inline-flex flex-col">
                   <span class="font-semibold text-white-h">Géneros:</span>
                   <ul class="inline-flex p-0">
-                    <li *ngFor="let genre of game.detail.genre">{{ genre }}</li>
+                    <li *ngFor="let genre of game.detail.genre" class="genre">
+                      {{ genre }}
+                    </li>
                   </ul>
                 </div>
               </div>

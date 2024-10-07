@@ -1,11 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  NgZone,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Game } from 'src/app/types/game';
-import { GAME_MODEL } from 'src/app/models/game.model';
 import { Location } from '@angular/common';
 import { getPlatFormIcon } from 'src/utils/platform';
 import { IonContent, ModalController } from '@ionic/angular';
 import { AddReviewComponent } from 'src/app/components/shared/add-review/add-review.component';
+import { ContentService } from 'src/app/services/content.service';
+import { Review } from 'src/app/types/review';
+import { refreshContentData } from 'src/utils/common';
 
 @Component({
   selector: 'app-game-detail',
@@ -15,21 +23,43 @@ import { AddReviewComponent } from 'src/app/components/shared/add-review/add-rev
 export class GameDetailPage implements OnInit {
   @ViewChild(IonContent) content!: IonContent;
 
-  game!: Game;
+  game: Game | null = null;
   selectedSegment: string = 'reviews';
+  reviews: Review[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private contentService: ContentService,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    const gameById = GAME_MODEL.find((game) => game.id === id);
+    if (id) {
+      await this.loadGame(id);
+    }
+  }
 
-    if (gameById) {
-      this.game = gameById;
+  async loadGame(id: string) {
+    try {
+      const gameById = await this.contentService.getGameById(id);
+
+      if (gameById) {
+        this.game = gameById;
+        this.ngZone.run(() => {
+          this.game = gameById;
+          this.cdr.detectChanges();
+        });
+      } else {
+        console.log(
+          `No se encontró un juego con ID "${id}" en la base de datos.`
+        );
+      }
+    } catch (error) {
+      console.error(`Error al cargar el juego con ID "${id}":`, error);
     }
   }
 
@@ -43,6 +73,10 @@ export class GameDetailPage implements OnInit {
 
   segmentChanged(event: any) {
     this.selectedSegment = event.detail.value;
+  }
+
+  async refreshGameData() {
+    await refreshContentData(this.game!.id, this.loadGame.bind(this), this.cdr);
   }
 
   async openAddReviewModal() {
@@ -61,6 +95,9 @@ export class GameDetailPage implements OnInit {
     modal.onDidDismiss().then(() => {
       this.content.getScrollElement().then((scrollElement) => {
         scrollElement.style.overflow = '';
+      });
+      this.loadGame(this.game!.id).then(() => {
+        this.cdr.detectChanges();
       });
     });
 

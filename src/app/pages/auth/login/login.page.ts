@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DbService } from 'src/app/services/db.service';
 import { RegistrationService } from 'src/app/services/registration.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
   canShowError: boolean = false;
 
   constructor(
-    private dbService: DbService,
+    private userService: UserService,
     private registrationService: RegistrationService,
     private router: Router
   ) {}
@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
     this.canShowError = true;
     if (this.form.controls.email.valid) {
       const email = this.form.controls.email.value ?? '';
-      const emailExists = await this.dbService.emailExists(email);
+      const emailExists = await this.userService.emailExists(email);
 
       if (emailExists) {
         this.canShowError = false;

@@ -4,23 +4,61 @@
 
 <div class="flex flex-col space-y-4">
   <div
-    *ngFor="let review of item.reviews"
+    *ngFor="let review of item.reviews; let i = index"
     class="p-4 bg-surface-secondary-600 rounded relative"
   >
+    <div
+      *ngIf="review.containsSpoilers && !revealedReviews[review.id]"
+      class="absolute inset-0 size-full flex flex-col p-4 gap-1 items-center justify-between backdrop-blur z-10"
+    >
+      <div
+        class="py-1 px-2 inline-flex items-center justify-center bg-amber/20 rounded gap-1"
+      >
+        <ion-icon name="alert-circle-outline" class="text-warning"></ion-icon>
+        <span class="text-sm text-warning">
+          {{ review.containsSpoilers === true ? "Alerta de spoiler" : "" }}
+        </span>
+      </div>
+      <ion-button
+        class="text-lg reveal w-full"
+        size="large"
+        (click)="revealReview(review.id)"
+      >
+        Revelar
+      </ion-button>
+    </div>
+    <div
+      *ngIf="showProgressBarMap[review.id]"
+      class="absolute inset-0 size-full flex flex-col items-center justify-between backdrop-blur z-10"
+    >
+      <ion-progress-bar [value]="progressMap[review.id]"></ion-progress-bar>
+      <span>¿Estás seguro que deseas eliminarla?</span>
+      <div class="pb-4 px-4 w-full">
+        <ion-button
+          class="text-lg reveal w-full"
+          size="large"
+          (click)="undoDeleteReview()"
+        >
+          Deshacer
+        </ion-button>
+      </div>
+    </div>
     <div class="flex flex-col space-y-4 text-white-h">
       <header class="flex items-center justify-between w-full">
         <div class="inline-flex items-center gap-3">
           <ion-avatar class="size-8 rounded-xl">
-            <img alt="Foto de perfil" [src]="avatarsMap[review.id]" />
+            <img
+              alt="Foto de perfil"
+              [src]="avatarsMap[review.id] || 'assets/avatar-demo.svg'"
+            />
           </ion-avatar>
           <span class="text-lg font-semibold">
             {{ userNamesMap[review.id] }}
           </span>
-          <small class="text-xs text-white-l"
-            >{{ review.date | date : "d 'de' MMM, y" }}
+          <small class="text-xs text-white-l">
+            {{ review.date | date : "d 'de' MMM, y" }}
           </small>
         </div>
-
         <div
           [ngClass]="[
             'flex items-center justify-center size-7 rounded-full',
@@ -32,7 +70,29 @@
           </span>
         </div>
       </header>
-      <p class="text-sm">{{ review.comment }}</p>
+      <div
+        *ngIf="longReviewMap[review.id]; else shortReview"
+        class="line-clamp-container"
+        [ngClass]="{ expanded: expandedReviews[review.id] }"
+      >
+        <p class="text-sm line-clamp">{{ review.comment }}</p>
+      </div>
+
+      <ng-template #shortReview>
+        <p class="text-sm" [ngClass]="[review.comment ? '' : 'text-white-l']">
+          {{ review.comment || "(No se ha escrito un comentario)" }}
+        </p>
+      </ng-template>
+
+      <ion-button
+        *ngIf="longReviewMap[review.id] && !expandedReviews[review.id]"
+        fill="clear"
+        class="show-more text-xxs"
+        (click)="toggleExpandReview(review.id)"
+      >
+        Mostrar más
+      </ion-button>
+
       <footer class="flex items-center justify-between">
         <div class="inline-flex items-center justify-between gap-4 w-full">
           <ion-button
@@ -44,14 +104,16 @@
             Reportar
           </ion-button>
           <ion-button
+            *ngIf="review.userId === user.id || user.role === 'admin'"
             expand="block"
             fill="clear"
             shape="round"
             class="size-8 custom"
             color="secondary"
+            (click)="presentPopover($event, review)"
           >
             <ion-icon
-              src="assets/icon/like.svg"
+              src="assets/icon/options.svg"
               class="size-5 text-white-l"
             ></ion-icon>
           </ion-button>

@@ -10,6 +10,7 @@ import { NotificationsComponent } from 'src/app/components/shared/notifications/
 import { ConfigurationComponent } from 'src/app/components/shared/configuration/configuration.component';
 import { HelpComponent } from 'src/app/components/shared/help/help.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  @Input() user!: User;
+  user!: User;
 
   constructor(
     private authService: AuthService,

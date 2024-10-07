@@ -14,3 +14,34 @@ ion-card {
   --background: var(--surface-secondary-600);
   --color: rgb(255 255 255 / var(--opacity-h));
 }
+
+ion-skeleton-text {
+  --background: var(--surface-secondary-600);
+  --background-rgb: 188, 0, 255;
+}
+
+ion-button {
+  min-height: auto;
+}
+
+ion-button::part(native) {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --border-radius: 4px;
+  --background: var(--surface-primary-600-50);
+  color: rgb(255 255 255 / var(--opacity-h));
+  font-weight: 400;
+  letter-spacing: normal;
+  box-shadow: none;
+}
+
+ion-button.custom::part(native) {
+  --padding-start: 0;
+  --padding-end: 0;
+  --border-radius: 50%;
+}
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}

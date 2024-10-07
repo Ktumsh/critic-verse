@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
+import { ReviewService } from 'src/app/services/review.service';
 import { Game } from 'src/app/types/game';
 import { Movie } from 'src/app/types/movie';
+import { Review } from 'src/app/types/review';
 import { TvShow } from 'src/app/types/tv';
 import {
   ratingDescription,
@@ -17,15 +20,31 @@ export class AddReviewComponent implements OnInit {
   @Input() game!: Game;
   @Input() movie!: Movie;
   @Input() tvShow!: TvShow;
+  @Input() review!: Review | null;
 
+  userId!: string;
   inputValue: string = '';
-  item: any;
   rating: number = 0;
+  containsSpoilers: boolean = false;
+  item: any;
 
-  constructor(private modalController: ModalController) {}
+  constructor(
+    private modalController: ModalController,
+    private reviewService: ReviewService,
+    private authService: AuthService,
+    private toastController: ToastController
+  ) {
+    this.userId = this.authService.user.id;
+  }
 
   ngOnInit() {
     this.item = this.game || this.movie || this.tvShow;
+
+    if (this.review) {
+      this.inputValue = this.review.comment;
+      this.rating = this.review.rating;
+      this.containsSpoilers = this.review.containsSpoilers || false;
+    }
   }
 
   onRangeChange(event: any) {
@@ -58,9 +77,59 @@ export class AddReviewComponent implements OnInit {
     return `${maxLength - inputLength} caracteres restantes`;
   }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      cssClass: 'custom-toast',
+      swipeGesture: 'vertical',
+      icon: 'checkmark-circle-outline',
+      message,
+      duration: 2000,
+      position: 'top',
+    });
+
+    await toast.present();
+  }
+
+  async publishReview() {
+    try {
+      const contentId = this.item.id;
+
+      if (this.review) {
+        await this.reviewService.updateReview(
+          this.review.id,
+          this.rating,
+          this.inputValue,
+          this.containsSpoilers
+        );
+        await this.presentToast('¡Reseña actualizada exitosamente!');
+      } else {
+        await this.reviewService.insertReview(
+          contentId,
+          this.userId,
+          this.rating,
+          this.inputValue,
+          this.containsSpoilers
+        );
+        await this.presentToast('¡Reseña publicada exitosamente!');
+      }
+
+      this.dismiss();
+    } catch (error) {
+      console.error('Error al publicar/actualizar la reseña:', error);
+    }
+  }
+
   dismiss() {
     this.modalController.dismiss({
-      dismissed: true,
+      updatedReview: {
+        id: this.review ? this.review.id : 'new-id',
+        comment: this.inputValue,
+        rating: this.rating,
+        containsSpoilers: this.containsSpoilers,
+        date: this.review?.date ? this.review.date : new Date(),
+        userId: this.userId,
+        contentId: this.item.id,
+      },
     });
   }
 }

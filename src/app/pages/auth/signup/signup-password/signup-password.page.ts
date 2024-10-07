@@ -9,8 +9,8 @@ import {
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { DbService } from 'src/app/services/db.service';
 import { RegistrationService } from 'src/app/services/registration.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-signup-password',
@@ -23,7 +23,7 @@ export class SignupPasswordPage implements OnInit {
 
   constructor(
     private registrationService: RegistrationService,
-    private dbService: DbService,
+    private userService: UserService,
     private authService: AuthService,
     private router: Router,
     private toastController: ToastController
@@ -111,15 +111,13 @@ export class SignupPasswordPage implements OnInit {
         birthdate: userData.birthdate,
       };
 
-      await this.dbService.createUser(newUser);
+      await this.userService.createUser(newUser);
 
       this.registrationService.clearData();
 
-      const user = await this.dbService.getUserByEmail(newUser.email);
+      const user = await this.userService.getUserByEmail(newUser.email);
 
       this.authService.login(user);
-      console.log('Contraseña creada con éxito:', this.form.value.password);
-
       this.showToast(
         '¡Cuenta creada con éxito! ¡Bienvenido!',
         'checkmark-circle-outline'

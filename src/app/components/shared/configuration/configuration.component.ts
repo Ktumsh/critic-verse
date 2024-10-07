@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
 
 @Component({
@@ -14,16 +15,21 @@ export class ConfigurationComponent {
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private modalController: ModalController,
     private alertController: AlertController
   ) {}
 
-  logout() {
-    this.showAlert();
+  async logout() {
+    await this.showLogoutAlert();
   }
 
-  async showAlert() {
+  async deleteUser() {
+    await this.showDeleteUserAlert();
+  }
+
+  async showLogoutAlert() {
     const alert = await this.alertController.create({
       cssClass: 'custom-alert',
       header: '¿Estás seguro que deseas cerrar sesión?',
@@ -44,6 +50,33 @@ export class ConfigurationComponent {
       ],
     });
 
+    await alert.present();
+  }
+
+  async showDeleteUserAlert() {
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      cssClass: 'custom-alert v2',
+      header: '¿Estás seguro que deseas eliminar tu cuenta?',
+      message:
+        'Esta acción es irreversible y perderás tu cuenta permanentemente.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar mi cuenta',
+          role: 'confirm',
+          handler: async () => {
+            await this.userService.deleteUserByUsername(this.user.username);
+            this.authService.logout();
+            await this.modalController.dismiss();
+            this.router.navigate(['/auth']);
+          },
+        },
+      ],
+    });
     await alert.present();
   }
 

@@ -26,6 +26,8 @@ export class AuthService {
 
     await this.nativeStorage.remove('isAuthenticated');
     await this.nativeStorage.remove('currentUser');
+
+    window.location.reload();
   }
 
   get isLoggedIn(): boolean {

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DbService } from './services/db.service';
+import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
+import { ContentService } from './services/content.service';
+import { SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
+import { UserService } from './services/user.service';
 import { GAME_MODEL } from './models/game.model';
 import { MOVIE_MODEL } from './models/movie.model';
 import { TV_MODEL } from './models/tv.model';
-import { AuthService } from './services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +15,12 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  private database!: SQLiteObject;
+
   constructor(
     private dbService: DbService,
+    private contentService: ContentService,
+    private userService: UserService,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -21,9 +28,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     //Crear base de datos y tablas
     /* await this.createDBandTables(); */
-
-    //Crear usuario
-    /* this.createUser(); */
 
     //Borrar usuario
     /* this.deleteUser('Josuesin'); */
@@ -38,9 +42,10 @@ export class AppComponent implements OnInit {
       .then(() => {
         console.log('Base de datos y tablas creadas exitosamente.');
         return (
-          this.dbService.insertGameData(GAME_MODEL),
-          this.dbService.insertMovieData(MOVIE_MODEL),
-          this.dbService.insertTvShowData(TV_MODEL)
+          /* this.contentService.insertGameData(GAME_MODEL), */
+          /* this.contentService.insertMovieData(MOVIE_MODEL) */
+          this.contentService.insertTvShowData(TV_MODEL)
+          /* this.createUser() */
         );
       })
       .catch((error) => {
@@ -61,7 +66,7 @@ export class AppComponent implements OnInit {
   }
 
   deleteUser(username: string) {
-    this.dbService.deleteUserByUsername(username);
+    this.userService.deleteUserByUsername(username);
   }
 
   async createUser() {
@@ -74,7 +79,7 @@ export class AppComponent implements OnInit {
     };
 
     try {
-      await this.dbService.insertUser(newUser);
+      await this.userService.insertUser(newUser);
       console.log('Nuevo usuario creado exitosamente.');
     } catch (error) {
       console.error('Error al crear el usuario:', error);

@@ -1,4 +1,4 @@
-<app-header title="Juegos" [logo]="false"></app-header>
+<app-header></app-header>
 
 <ion-content [fullscreen]="true">
   <!--Admin float button-->
@@ -7,10 +7,37 @@
   ></app-admin-float-btn>
 
   <article class="p-4 space-y-10">
+    <!-- Filtros -->
     <section>
-      <div class="flex justify-between items-center px-4 mb-2">
+      <div class="flex flex-col">
+        <div class="px-4">
+          <ion-select
+            [(ngModel)]="sortBy"
+            (ionChange)="onSortOptionChange($event)"
+            interface="popover"
+            label="Ordenar por"
+            justify="space-between"
+            color="primary"
+            class="custom-select text-white-m text-sm"
+            [interfaceOptions]="customPopoverOptions"
+          >
+            <ion-select-option
+              *ngFor="let option of sortingOptions"
+              [value]="option.value"
+            >
+              {{ option.label }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        <hr
+          class="w-full h-auto border-b-4 border-surface-secondary-600 -translate-y-2"
+        />
+      </div>
+    </section>
+    <section>
+      <div class="flex justify-between items-center px-4 mb-2 fix-margin">
         <h2 class="text-base text-white-m letter-spacing-widest uppercase">
-          Más populares
+          {{ sortedTitle }}
         </h2>
       </div>
 
@@ -59,8 +86,8 @@
                 [alt]="game.title"
                 [ngSrc]="game.image || 'https://ionicframework.com/docs/img/demos/thumbnail.svg'"
                 width="80"
-                height="120"
-                class="h-full object-cover object-center animate-fade-in animate-duration-300"
+                height="110"
+                class="aspect-auto object-cover object-center animate-fade-in animate-duration-300"
               />
             </div>
             <div class="flex flex-col gap-2 pr-4">

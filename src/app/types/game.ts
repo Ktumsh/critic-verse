@@ -10,4 +10,5 @@ export interface Game {
   rating: number;
   detail: Detail;
   reviews: Review[];
+  detailId?: number;
 }

@@ -5,6 +5,16 @@ ion-skeleton-text {
 
 .img-skeleton {
   width: 108px;
-  height: 114px;
+  height: 110px;
   border-radius: 8px;
+}
+
+ion-select {
+  --border-width: 0;
+  --highlight-height: 0;
+  --highlight-color: var(--color-primary-600);
+}
+
+.fix-margin {
+  margin-top: -2rem;
 }

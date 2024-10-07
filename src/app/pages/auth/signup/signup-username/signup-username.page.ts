@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { USER_MODEL } from 'src/app/models/user.model';
-import { DbService } from 'src/app/services/db.service';
 import { RegistrationService } from 'src/app/services/registration.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-signup-username',
@@ -24,7 +23,7 @@ export class SignupUsernamePage implements OnInit {
 
   constructor(
     private registrationService: RegistrationService,
-    private dbService: DbService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -41,7 +40,9 @@ export class SignupUsernamePage implements OnInit {
     this.canShowError = true;
     if (this.form.controls.username.valid) {
       const usernameValue = this.form.controls.username.value ?? '';
-      const usernameExists = await this.dbService.usernameExists(usernameValue);
+      const usernameExists = await this.userService.usernameExists(
+        usernameValue
+      );
 
       if (usernameExists) {
         console.error('Nombre de usuario ya existe');

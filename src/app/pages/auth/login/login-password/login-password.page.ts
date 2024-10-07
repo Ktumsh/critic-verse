@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { DbService } from 'src/app/services/db.service';
 import { RegistrationService } from 'src/app/services/registration.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login-password',
@@ -19,7 +19,7 @@ export class LoginPasswordPage implements OnInit {
   canShowError: boolean = false;
 
   constructor(
-    private dbService: DbService,
+    private userService: UserService,
     private registrationService: RegistrationService,
     private authService: AuthService,
     private router: Router,
@@ -34,11 +34,11 @@ export class LoginPasswordPage implements OnInit {
     });
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, icon: string) {
     const toast = await this.toastController.create({
       cssClass: 'custom-toast',
       swipeGesture: 'vertical',
-      icon: 'checkmark-circle-outline',
+      icon,
       message,
       duration: 2000,
       position: 'top',
@@ -52,14 +52,14 @@ export class LoginPasswordPage implements OnInit {
     try {
       const email = this.registrationService.getEmail();
       const password = this.form.controls.password.value;
-      const isValid = await this.dbService.verifyPassword(
+      const isValid = await this.userService.verifyPassword(
         email as string,
         password as string
       );
       if (isValid) {
-        const user = await this.dbService.getUserByEmail(email as string);
+        const user = await this.userService.getUserByEmail(email as string);
         this.authService.login(user);
-        this.presentToast('¡Bienvenido de vuelta!');
+        this.presentToast('¡Bienvenido de vuelta!', 'checkmark-circle-outline');
         this.router.navigate(['/main']);
       } else {
         console.error('Contraseña incorrecta');
@@ -67,7 +67,10 @@ export class LoginPasswordPage implements OnInit {
       }
     } catch (error) {
       console.error('Error al verificar la contraseña:', error);
-      this.presentToast('Se produjo un error. Por favor, inténtalo más tarde.');
+      this.presentToast(
+        'Se produjo un error. Por favor, inténtalo más tarde.',
+        'close-circle-outline'
+      );
       this.canShowError = true;
     }
   }

@@ -44,7 +44,7 @@
         <!-- Contenido real -->
         <ng-template #content>
           <div
-            *ngFor="let item of list; let i = index"
+            *ngFor="let item of list | slice : 0 : 5; let i = index"
             [ngClass]="{ active: activeIndices.includes(i) }"
             [class]="carouselClass"
           >

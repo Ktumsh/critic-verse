@@ -32,6 +32,7 @@ import { HomeCarouselSectionComponent } from './home-carousel-section/home-carou
 import { ClasificationComponent } from './clasification/clasification.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { CastingComponent } from './casting/casting.component';
+import { ReviewOptionsComponent } from './review-options/review-options.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { CastingComponent } from './casting/casting.component';
     ClasificationComponent,
     ReviewsComponent,
     CastingComponent,
+    ReviewOptionsComponent,
   ],
   exports: [
     HeaderComponent,
@@ -80,6 +82,7 @@ import { CastingComponent } from './casting/casting.component';
     ClasificationComponent,
     ReviewsComponent,
     CastingComponent,
+    ReviewOptionsComponent,
   ],
   imports: [
     CommonModule,

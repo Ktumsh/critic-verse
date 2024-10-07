@@ -89,7 +89,12 @@
         class="custom"
       ></ion-textarea>
       <div class="inline-flex items-center justify-between">
-        <ion-checkbox mode="ios" labelPlacement="end" class="text-sm">
+        <ion-checkbox
+          mode="ios"
+          [(ngModel)]="containsSpoilers"
+          labelPlacement="end"
+          class="text-sm"
+        >
           Contiene spoilers
         </ion-checkbox>
         <span class="text-xs text-white-l">{{
@@ -103,6 +108,7 @@
       label="Publicar"
       class="w-full"
       buttonClass="size-sm"
+      (click)="publishReview()"
     ></app-custom-button>
   </div>
 </ion-content>

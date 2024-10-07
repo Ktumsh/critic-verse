@@ -1,7 +1,9 @@
 export enum Platform {
   PLAYSTATION5 = 'PS5',
   PLAYSTATION4 = 'PS4',
+  PLAYSTATION3 = 'PS3',
   XBOXONE = 'Xbox One',
+  XBOXSERIESX = 'Xbox Series X/S',
   PC = 'PC',
   NINTENDOSWITCH = 'Nintendo Switch',
   WINDOWS = 'Windows',
@@ -16,7 +18,11 @@ export const getPlatFormIcon = (platform: string) => {
       return 'playstation';
     case Platform.PLAYSTATION4:
       return 'playstation';
+    case Platform.PLAYSTATION3:
+      return 'playstation';
     case Platform.XBOXONE:
+      return 'xbox';
+    case Platform.XBOXSERIESX:
       return 'xbox';
     case Platform.PC:
       return 'windows';
