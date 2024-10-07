@@ -143,6 +143,16 @@ button.alert-button.sc-ion-alert-md {
   text-transform: none;
 }
 
+button.alert-button.sc-ion-alert-ios {
+  font-size: 14px;
+  flex: auto;
+  min-width: 0;
+}
+
+button.alert-button.sc-ion-alert-ios.alert-button-role-cancel {
+  border-right: 1px solid var(--surface-secondary-400, 0, 0, 0);
+}
+
 button.alert-button.alert-button-role-cancel {
   color: rgb(255 255 255 / var(--opacity-h));
   text-transform: none;

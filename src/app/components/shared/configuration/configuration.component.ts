@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
+import { AccessibilityService } from 'src/app/services/accessibility.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
+import { AccountDetailsComponent } from '../account-details/account-details.component';
 
 @Component({
   selector: 'app-configuration',
@@ -13,33 +15,48 @@ import { User } from 'src/app/types/user';
 export class ConfigurationComponent {
   @Input() user!: User;
 
+  customPopoverOptions = {
+    cssClass: 'custom-popover v2',
+  };
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
     private modalController: ModalController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    public accessibilityService: AccessibilityService
   ) {}
 
-  async logout() {
-    await this.showLogoutAlert();
+  changeFontSize(size: string) {
+    this.accessibilityService.setFontSize(size);
   }
 
-  async deleteUser() {
-    await this.showDeleteUserAlert();
+  toggleDisableAnimations(event: any) {
+    this.accessibilityService.toggleAnimations(event.detail.checked);
+  }
+
+  logout() {
+    this.showLogoutAlert();
+  }
+
+  deleteUser() {
+    this.showDeleteUserAlert();
   }
 
   async showLogoutAlert() {
     const alert = await this.alertController.create({
-      cssClass: 'custom-alert',
+      mode: 'ios',
+      cssClass: 'custom-alert v2',
       header: '¿Estás seguro que deseas cerrar sesión?',
+      message: 'Podrás volver a iniciar sesión cuando quieras.',
       buttons: [
         {
           text: 'Cancelar',
           role: 'cancel',
         },
         {
-          text: 'Sí, cerrar sesión',
+          text: 'Cerrar sesión',
           role: 'confirm',
           handler: async () => {
             this.authService.logout();
@@ -78,6 +95,21 @@ export class ConfigurationComponent {
       ],
     });
     await alert.present();
+  }
+
+  async openAccountModal() {
+    const modal = await this.modalController.create({
+      component: AccountDetailsComponent,
+      componentProps: { user: this.user },
+    });
+
+    modal.onDidDismiss().then((data) => {
+      if (data.data && data.data.user) {
+        this.user = data.data.user;
+      }
+    });
+
+    return await modal.present();
   }
 
   dismiss() {

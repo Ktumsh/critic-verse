@@ -124,7 +124,7 @@ export class ReviewsComponent implements OnInit, OnChanges {
   async presentPopover(event: MouseEvent, review: Review) {
     const popover = await this.popoverController.create({
       component: ReviewOptionsComponent,
-      cssClass: 'custom-popover',
+      cssClass: 'custom-popover v2',
       event: event,
       translucent: true,
       componentProps: {

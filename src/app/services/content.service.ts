@@ -46,13 +46,20 @@ export class ContentService {
 
       if (game.reviews && game.reviews.length > 0) {
         for (const review of game.reviews) {
-          await this.reviewService.insertReview(
+          const existingReview = await this.reviewService.getExistingReview(
             game.id,
             review.userId,
-            review.rating,
-            review.comment,
-            review.containsSpoilers
+            review.comment
           );
+          if (!existingReview) {
+            await this.reviewService.insertReview(
+              game.id,
+              review.userId,
+              review.rating,
+              review.comment,
+              review.containsSpoilers
+            );
+          }
         }
       }
 
@@ -85,30 +92,44 @@ export class ContentService {
 
       if (movie.reviews && movie.reviews.length > 0) {
         for (const review of movie.reviews) {
-          await this.reviewService.insertReview(
+          const existingReview = await this.reviewService.getExistingReview(
             movie.id,
             review.userId,
-            review.rating,
-            review.comment,
-            review.containsSpoilers
+            review.comment
           );
+          if (!existingReview) {
+            await this.reviewService.insertReview(
+              movie.id,
+              review.userId,
+              review.rating,
+              review.comment,
+              review.containsSpoilers
+            );
+          }
         }
       }
 
       if (movie.detail.cast && movie.detail.cast.length > 0) {
         for (const cast of movie.detail.cast) {
-          const castInsert = `
-            INSERT INTO Cast (id, actor, character, image, contentId)
-            VALUES (?, ?, ?, ?, ?)
-          `;
-          const castValues = [
-            generateUUID(),
-            cast.actor,
-            cast.character,
-            cast.image || null,
+          const existingCast = await this.getExistingCast(
             movie.id,
-          ];
-          await database.executeSql(castInsert, castValues);
+            cast.actor,
+            cast.character
+          );
+          if (!existingCast) {
+            const castInsert = `
+              INSERT INTO Cast (id, actor, character, image, contentId)
+              VALUES (?, ?, ?, ?, ?)
+            `;
+            const castValues = [
+              generateUUID(),
+              cast.actor,
+              cast.character,
+              cast.image || null,
+              movie.id,
+            ];
+            await database.executeSql(castInsert, castValues);
+          }
         }
       }
 
@@ -143,30 +164,44 @@ export class ContentService {
 
       if (tvShow.reviews && tvShow.reviews.length > 0) {
         for (const review of tvShow.reviews) {
-          await this.reviewService.insertReview(
+          const existingReview = await this.reviewService.getExistingReview(
             tvShow.id,
             review.userId,
-            review.rating,
-            review.comment,
-            review.containsSpoilers
+            review.comment
           );
+          if (!existingReview) {
+            await this.reviewService.insertReview(
+              tvShow.id,
+              review.userId,
+              review.rating,
+              review.comment,
+              review.containsSpoilers
+            );
+          }
         }
       }
 
       if (tvShow.detail.cast && tvShow.detail.cast.length > 0) {
         for (const cast of tvShow.detail.cast) {
-          const castInsert = `
-            INSERT INTO Cast (id, actor, character, image, contentId)
-            VALUES (?, ?, ?, ?, ?)
-          `;
-          const castValues = [
-            generateUUID(),
-            cast.actor,
-            cast.character,
-            cast.image || null,
+          const existingCast = await this.getExistingCast(
             tvShow.id,
-          ];
-          await database.executeSql(castInsert, castValues);
+            cast.actor,
+            cast.character
+          );
+          if (!existingCast) {
+            const castInsert = `
+              INSERT INTO Cast (id, actor, character, image, contentId)
+              VALUES (?, ?, ?, ?, ?)
+            `;
+            const castValues = [
+              generateUUID(),
+              cast.actor,
+              cast.character,
+              cast.image || null,
+              tvShow.id,
+            ];
+            await database.executeSql(castInsert, castValues);
+          }
         }
       }
 
@@ -248,6 +283,24 @@ export class ContentService {
     ];
     await database.executeSql(detailInsert, detailValues);
     return detailId;
+  }
+
+  //Verificar si el cast ya existe
+  private async getExistingCast(
+    contentId: string,
+    actor: string,
+    character: string
+  ): Promise<Cast | null> {
+    const database = await this.dbService.getDatabase();
+    const query =
+      'SELECT * FROM Cast WHERE contentId = ? AND actor = ? AND character = ?';
+    const result = await database.executeSql(query, [
+      contentId,
+      actor,
+      character,
+    ]);
+
+    return result.rows.length > 0 ? result.rows.item(0) : null;
   }
 
   //Obtener todos los juegos
@@ -573,29 +626,5 @@ export class ContentService {
       );
       return [];
     }
-  }
-
-  // Verificar si el contentId pertenece a un juego
-  async isGameContent(contentId: string): Promise<boolean> {
-    const database = await this.dbService.getDatabase();
-    const query = 'SELECT id FROM Games WHERE id = ?';
-    const result = await database.executeSql(query, [contentId]);
-    return result.rows.length > 0;
-  }
-
-  // Verificar si el contentId pertenece a una película
-  async isMovieContent(contentId: string): Promise<boolean> {
-    const database = await this.dbService.getDatabase();
-    const query = 'SELECT id FROM Movies WHERE id = ?';
-    const result = await database.executeSql(query, [contentId]);
-    return result.rows.length > 0;
-  }
-
-  // Verificar si el contentId pertenece a una serie de TV
-  async isTvShowContent(contentId: string): Promise<boolean> {
-    const database = await this.dbService.getDatabase();
-    const query = 'SELECT id FROM TvShows WHERE id = ?';
-    const result = await database.executeSql(query, [contentId]);
-    return result.rows.length > 0;
   }
 }

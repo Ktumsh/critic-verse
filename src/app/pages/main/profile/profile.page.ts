@@ -10,15 +10,22 @@ import { NotificationsComponent } from 'src/app/components/shared/notifications/
 import { ConfigurationComponent } from 'src/app/components/shared/configuration/configuration.component';
 import { HelpComponent } from 'src/app/components/shared/help/help.component';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
-  user!: User;
+export class ProfilePage {
+  user: User = {
+    id: '1',
+    role: 'user',
+    email: 'usuario@duocuc.cl',
+    username: '_username69',
+    password: '12345',
+    birthdate: new Date('2003-01-10T12:00:00'),
+    createdAt: new Date('2024-08-28T12:00:00'),
+  };
 
   constructor(
     private authService: AuthService,
@@ -26,20 +33,6 @@ export class ProfilePage implements OnInit {
     private modalController: ModalController
   ) {
     this.user = this.authService.user;
-  }
-
-  ngOnInit() {
-    if (!this.user) {
-      this.user = {
-        id: '1',
-        role: 'user',
-        email: 'usuario@duocuc.cl',
-        username: '_username69',
-        password: '12345',
-        birthdate: new Date('2003-01-10T12:00:00'),
-        createdAt: new Date('2024-08-28T12:00:00'),
-      };
-    }
   }
 
   async openEditProfileModal() {

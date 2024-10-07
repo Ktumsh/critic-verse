@@ -18,3 +18,13 @@ ion-toggle {
   --handle-background: var(--surface-secondary-500);
   --track-background: var(--surface-secondary-300);
 }
+
+ion-select {
+  --border-width: 0;
+  --highlight-height: 0;
+  --highlight-color: var(--color-primary-600);
+}
+
+ion-select::part(label) {
+  color: rgb(255 255 255 / var(--opacity-h));
+}

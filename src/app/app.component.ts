@@ -8,6 +8,7 @@ import { UserService } from './services/user.service';
 import { GAME_MODEL } from './models/game.model';
 import { MOVIE_MODEL } from './models/movie.model';
 import { TV_MODEL } from './models/tv.model';
+import { AccessibilityService } from './services/accessibility.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent implements OnInit {
     private contentService: ContentService,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private accessibilityService: AccessibilityService
   ) {}
 
   async ngOnInit() {
@@ -31,6 +33,9 @@ export class AppComponent implements OnInit {
 
     //Borrar usuario
     /* this.deleteUser('Josuesin'); */
+
+    //Cargar accesibilidad
+    this.accessibilityService.loadSettings();
 
     //Checkear estado de autenticación
     await this.authState();

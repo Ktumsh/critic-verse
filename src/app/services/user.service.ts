@@ -202,6 +202,29 @@ export class UserService {
     console.log(`Usuario con username "${username}" eliminado correctamente.`);
   }
 
+  //Actualizar la contraseña de un usuario
+  async updatePassword(email: string, newPassword: string): Promise<void> {
+    const database = await this.dbService.getDatabase();
+    try {
+      const salt = generateUUID();
+      const hashedPassword = this.hashPassword(newPassword, salt);
+
+      const query = `
+        UPDATE Users
+        SET password = ?, salt = ?
+        WHERE email = ?
+      `;
+      await database.executeSql(query, [hashedPassword, salt, email]);
+
+      console.log(
+        `Contraseña actualizada para el usuario con email "${email}"`
+      );
+    } catch (error) {
+      console.error('Error al actualizar la contraseña:', error);
+      throw error;
+    }
+  }
+
   //Hashea la contraseña
   private hashPassword(password: string, salt: string): string {
     return CryptoJS.SHA256(password + salt).toString();

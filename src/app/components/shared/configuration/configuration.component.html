@@ -14,13 +14,13 @@
         class="border-t border-b border-surface-secondary-600"
         mode="ios"
       >
-        <ion-item button detail mode="md">
+        <ion-item button detail mode="md" (click)="openAccountModal()">
           <div class="flex flex-col my-2.5">
             <h3 class="text-white-h text-base text-wrap">Cuenta</h3>
           </div>
         </ion-item>
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-toggle mode="md" checked>
             <h3 class="text-white-h text-base text-wrap">
               Permitir notificaciones
@@ -31,7 +31,11 @@
           </ion-toggle>
         </ion-item>
 
-        <ion-item button detail mode="md">
+        <ion-item
+          button
+          detail
+          mode="md"
+        >
           <div class="flex flex-col my-2.5">
             <h3 class="text-white-h text-base text-wrap">Accesibilidad</h3>
           </div>
@@ -47,11 +51,11 @@
           <div class="flex flex-col my-2.5">
             <h3 class="text-white-h text-base text-wrap">Obtener ayuda</h3>
           </div>
-        </ion-item>
+        </ion-item> -->
       </ion-list>
     </div>
 
-    <div>
+    <!-- <div>
       <div class="px-5 mb-2">
         <h2 class="text-white-m text-sm uppercase">Contenido</h2>
       </div>
@@ -84,9 +88,9 @@
           </div>
         </ion-item>
       </ion-list>
-    </div>
+    </div> -->
 
-    <div>
+    <!-- <div>
       <div class="px-5 mb-2">
         <h2 class="text-white-m text-sm uppercase">Notificaciones</h2>
       </div>
@@ -116,29 +120,42 @@
           </ion-toggle>
         </ion-item>
       </ion-list>
-    </div>
+    </div> -->
 
     <div>
       <div class="px-5 mb-2">
-        <h2 class="text-white-m text-sm uppercase">Accesibilidad</h2>
+        <h2 id="accessibility" class="text-white-m text-sm uppercase">
+          Accesibilidad
+        </h2>
       </div>
       <ion-list
         class="border-t border-b border-surface-secondary-600"
         mode="ios"
       >
-        <ion-item button detail mode="md">
-          <div class="flex flex-col my-2.5">
-            <h3 class="text-white-h text-base text-wrap">Tamaño de fuente</h3>
-          </div>
-        </ion-item>
-
-        <ion-item button detail mode="md">
-          <div class="flex flex-col my-2.5">
-            <h3 class="text-white-h text-base text-wrap">Tipo de contraste</h3>
-          </div>
+        <ion-item button mode="md">
+          <ion-select
+            [value]="accessibilityService.accessibilitySettings.fontSize"
+            (ionChange)="changeFontSize($event.detail.value)"
+            [interfaceOptions]="customPopoverOptions"
+            interface="popover"
+            label="Tamaño de fuente"
+            mode="md"
+            color="primary"
+            class="custom-select text-white-m font-medium"
+          >
+            <ion-select-option value="small">Pequeño</ion-select-option>
+            <ion-select-option value="medium">Mediano</ion-select-option>
+            <ion-select-option value="large">Grande</ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-item>
-          <ion-toggle mode="md" checked>
+          <ion-toggle
+            mode="md"
+            [checked]="
+              accessibilityService.accessibilitySettings.disableAnimations
+            "
+            (ionChange)="toggleDisableAnimations($event)"
+          >
             <h3 class="text-white-h text-base text-wrap">
               Desactivar animaciones
             </h3>
@@ -150,7 +167,7 @@
       </ion-list>
     </div>
 
-    <div>
+    <!-- <div>
       <div class="px-5 mb-2">
         <h2 class="text-white-m text-sm uppercase">Seguridad y privacidad</h2>
       </div>
@@ -182,9 +199,9 @@
           </div>
         </ion-item>
       </ion-list>
-    </div>
+    </div> -->
 
-    <div>
+    <!-- <div>
       <div class="px-5 mb-2">
         <h2 class="text-white-m text-sm uppercase">Soporte y feedback</h2>
       </div>
@@ -212,7 +229,7 @@
           </div>
         </ion-item>
       </ion-list>
-    </div>
+    </div> -->
 
     <div>
       <div class="px-5 mb-2">
@@ -222,7 +239,7 @@
         class="border-t border-b border-surface-secondary-600"
         mode="ios"
       >
-        <ion-item button detail mode="md">
+        <!-- <ion-item button detail mode="md">
           <div class="flex flex-col my-2.5">
             <h3 class="text-white-h text-base text-wrap">
               Descargar Datos de la Cuenta
@@ -234,7 +251,7 @@
           <div class="flex flex-col my-2.5">
             <h3 class="text-white-h text-base text-wrap">Sesiones Activas</h3>
           </div>
-        </ion-item>
+        </ion-item> -->
 
         <ion-item
           button

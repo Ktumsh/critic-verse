@@ -11,6 +11,13 @@ import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegistrationService } from 'src/app/services/registration.service';
 import { UserService } from 'src/app/services/user.service';
+import {
+  lowerCaseValidator,
+  numberValidator,
+  passwordsMatchValidator,
+  specialCharacterValidator,
+  upperCaseValidator,
+} from 'src/utils/validations';
 
 @Component({
   selector: 'app-signup-password',
@@ -35,14 +42,14 @@ export class SignupPasswordPage implements OnInit {
         password: new FormControl('', [
           Validators.required,
           Validators.minLength(8),
-          this.upperCaseValidator(),
-          this.lowerCaseValidator(),
-          this.numberValidator(),
-          this.specialCharacterValidator(),
+          upperCaseValidator(),
+          lowerCaseValidator(),
+          numberValidator(),
+          specialCharacterValidator(),
         ]),
         confirmPassword: new FormControl('', Validators.required),
       },
-      { validators: this.passwordsMatchValidator() }
+      { validators: passwordsMatchValidator() }
     );
 
     this.form.statusChanges.subscribe(() => {
@@ -130,43 +137,6 @@ export class SignupPasswordPage implements OnInit {
         'alert-circle-outline'
       );
     }
-  }
-
-  passwordsMatchValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const group = control as FormGroup;
-      const password = group.get('password')?.value;
-      const confirmPassword = group.get('confirmPassword')?.value;
-      return password === confirmPassword ? null : { mismatch: true };
-    };
-  }
-
-  upperCaseValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const hasUpperCase = /[A-Z]/.test(control.value);
-      return hasUpperCase ? null : { uppercase: true };
-    };
-  }
-
-  lowerCaseValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const hasLowerCase = /[a-z]/.test(control.value);
-      return hasLowerCase ? null : { lowercase: true };
-    };
-  }
-
-  numberValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const hasNumber = /\d/.test(control.value);
-      return hasNumber ? null : { number: true };
-    };
-  }
-
-  specialCharacterValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(control.value);
-      return hasSpecialCharacter ? null : { specialCharacter: true };
-    };
   }
 
   async showToast(message: string, icon?: string) {
