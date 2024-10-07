@@ -2,12 +2,15 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { authGuard } from './auth.guard';
+import { guestGuard } from './guest.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
       import('./pages/auth/auth.module').then((m) => m.AuthPageModule),
+    canActivate: [guestGuard],
   },
   {
     path: '',
@@ -18,6 +21,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./pages/auth/login/login.module').then((m) => m.LoginPageModule),
+    canActivate: [guestGuard],
   },
   {
     path: 'signup',
@@ -25,6 +29,7 @@ const routes: Routes = [
       import('./pages/auth/signup/signup.module').then(
         (m) => m.SignupPageModule
       ),
+    canActivate: [guestGuard],
   },
   {
     path: 'forgot-password',
@@ -32,11 +37,13 @@ const routes: Routes = [
       import('./pages/auth/forgot-password/forgot-password.module').then(
         (m) => m.ForgotPasswordPageModule
       ),
+    canActivate: [guestGuard],
   },
   {
     path: 'main',
     loadChildren: () =>
       import('./pages/main/main.module').then((m) => m.MainPageModule),
+    canActivate: [authGuard],
   },
   {
     path: '**',

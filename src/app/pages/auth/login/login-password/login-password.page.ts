@@ -60,7 +60,7 @@ export class LoginPasswordPage implements OnInit {
         const user = await this.userService.getUserByEmail(email as string);
         this.authService.login(user);
         this.presentToast('¡Bienvenido de vuelta!', 'checkmark-circle-outline');
-        this.router.navigate(['/main']);
+        this.router.navigate(['/main'], { replaceUrl: true });
       } else {
         console.error('Contraseña incorrecta');
         this.form.controls.password.setErrors({ incorrect: true });

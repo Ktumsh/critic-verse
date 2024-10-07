@@ -122,7 +122,7 @@ export class SignupPasswordPage implements OnInit {
         '¡Cuenta creada con éxito! ¡Bienvenido!',
         'checkmark-circle-outline'
       );
-      this.router.navigate(['/main/home']);
+      this.router.navigate(['/main'], { replaceUrl: true });
     } catch (error) {
       console.error('Error durante el proceso de registro:', error);
       this.showToast(
