@@ -4,11 +4,16 @@ import { DbService } from './db.service';
 import * as CryptoJS from 'crypto-js';
 import { createAvatar } from '@dicebear/core';
 import * as botttsNeutral from '@dicebear/bottts-neutral';
+import { BehaviorSubject } from 'rxjs';
+import { User } from '../types/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  private usersSubject = new BehaviorSubject<User[]>([]);
+  users$ = this.usersSubject.asObservable();
+
   constructor(private dbService: DbService) {}
 
   //Crear un nuevo usuario (para el registro)
@@ -17,12 +22,13 @@ export class UserService {
     username: string;
     password: string;
     birthdate?: string | Date;
+    role?: string;
     profileImage?: string;
   }): Promise<void> {
     const database = await this.dbService.getDatabase();
     try {
       const userId = generateUUID();
-      const role = 'user';
+      const role = user.role ?? 'user';
       const salt = generateUUID();
       const hashedPassword = this.hashPassword(user.password, salt);
       const formattedBirthdate = this.formatDate(user.birthdate);
@@ -50,6 +56,7 @@ export class UserService {
       ];
 
       await database.executeSql(userInsert, userValues);
+      this.getAllUsers();
       console.log(
         `Usuario con email "${user.email}" registrado correctamente.`
       );
@@ -160,7 +167,7 @@ export class UserService {
     for (let i = 0; i < result.rows.length; i++) {
       users.push(result.rows.item(i));
     }
-
+    this.usersSubject.next(users);
     return users;
   }
 
@@ -199,6 +206,7 @@ export class UserService {
     const database = await this.dbService.getDatabase();
     const query = 'DELETE FROM Users WHERE username = ?';
     await database.executeSql(query, [username]);
+    this.getAllUsers();
     console.log(`Usuario con username "${username}" eliminado correctamente.`);
   }
 
@@ -221,6 +229,37 @@ export class UserService {
       );
     } catch (error) {
       console.error('Error al actualizar la contraseña:', error);
+      throw error;
+    }
+  }
+
+  //Actualizar un usuario
+  async updateUser(user: {
+    id: string;
+    username: string;
+    profileImage?: string;
+    role?: string;
+    birthdate?: string | Date;
+  }): Promise<void> {
+    const database = await this.dbService.getDatabase();
+    const formattedBirthdate = this.formatDate(user.birthdate);
+    try {
+      let query = `UPDATE Users SET username = ?, role = ?, birthdate = ?`;
+      const userValues: any[] = [user.username, user.role, formattedBirthdate];
+
+      if (user.profileImage !== undefined) {
+        query += `, profileImage = ?`;
+        userValues.push(user.profileImage);
+      }
+
+      query += ` WHERE id = ?`;
+      userValues.push(user.id);
+
+      await database.executeSql(query, userValues);
+      this.getAllUsers();
+      console.log(`Usuario con id "${user.id}" actualizado correctamente.`);
+    } catch (error) {
+      console.error('Error al actualizar el usuario:', error);
       throw error;
     }
   }

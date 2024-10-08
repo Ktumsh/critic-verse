@@ -5,9 +5,9 @@
 />
 
 <ion-content [fullscreen]="true">
-  <div class="my-4">
+  <!-- <div class="my-4">
     <ion-list mode="ios" class="border-t border-surface-secondary-600">
-      <!-- Notificación 1: Nueva Reseña de Película -->
+      Notificación 1: Nueva Reseña de Película
       <ion-item-sliding mode="md">
         <ion-item mode="md" class="items-start">
           <ion-thumbnail class="mr-4 min-w-10">
@@ -42,7 +42,7 @@
         </ion-item-options>
       </ion-item-sliding>
 
-      <!-- Notificación 2: Nueva Reseña de Videojuego -->
+      Notificación 2: Nueva Reseña de Videojuego
       <ion-item-sliding mode="md">
         <ion-item mode="md" class="items-start">
           <ion-thumbnail class="mr-4 min-w-10">
@@ -77,7 +77,7 @@
         </ion-item-options>
       </ion-item-sliding>
 
-      <!-- Notificación 3: Nueva Temporada de Serie -->
+      Notificación 3: Nueva Temporada de Serie
       <ion-item-sliding mode="md">
         <ion-item mode="md" class="items-start">
           <ion-thumbnail class="mr-4 min-w-10">
@@ -111,5 +111,22 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+  </div> -->
+  <div class="relative flex h-1/2 my-6">
+    <div class="flex items-center justify-center absolute inset-0">
+      <img
+        src="assets/empty-screen-notifications.webp"
+        alt=""
+        class="opacity-40 w-3/5"
+      />
+    </div>
+    <div class="relative flex flex-col items-center justify-end size-full">
+      <h3 class="mt-4 font-semibold text-center text-white-h">
+        No tienes notificaciones
+      </h3>
+      <small class="text-white-l">
+        Tus notificaciones se mostrarán aquí.
+      </small>
+    </div>
   </div>
 </ion-content>

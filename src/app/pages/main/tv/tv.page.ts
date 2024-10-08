@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ContentService } from 'src/app/services/content.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { TvShow } from 'src/app/types/tv';
-import { compareValues, sortByReleaseDate } from 'src/utils/common';
+import { compareValues, refresher, sortByReleaseDate } from 'src/utils/common';
 import { ratingDescription } from 'src/utils/rating-desc';
 
 @Component({
@@ -117,4 +117,6 @@ export class TvPage implements OnInit {
   }
 
   getRatingDescription = ratingDescription;
+
+  handleRefresh = refresher;
 }

@@ -1,6 +1,10 @@
 ion-thumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   --size: 40px;
-  --border-radius: 12px;
+  --border-radius: 50%;
+  overflow: hidden;
 }
 
 .shadow-small {
@@ -13,18 +17,24 @@ ion-thumbnail {
   box-shadow: 0 0 0 #0000, 0 0 0 #0000, var(--tw-shadow);
 }
 
-ion-button.search-btn,
 ion-button.add-btn {
   --border-radius: 12px;
   --padding-start: 12px;
   --padding-end: 12px;
 }
 
-ion-button.search-btn {
-  width: 200px;
+ion-searchbar.search-btn {
+  --background: var(--surface-secondary-600);
+  --color: rgb(255 255 255 / var(--opacity-h));
+  --placeholder-color: rgb(255 255 255 / var(--opacity-m));
+  --icon-color: rgb(255 255 255 / var(--opacity-m));
+  --cancel-button-color: rgb(255 255 255 / var(--opacity-h));
+  --border-radius: 12px;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
 }
 
-ion-button.search-btn::part(native) {
+ion-searchbar.search-btn::part(native) {
   background: var(--surface-secondary-600);
 }
 

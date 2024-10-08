@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegistrationService } from 'src/app/services/registration.service';
+import { calculateDaysUntilBirthday } from 'src/utils/common';
+import { dateValidator, minimumAgeValidator } from 'src/utils/validations';
 
 @Component({
   selector: 'app-signup',
@@ -11,7 +13,11 @@ import { RegistrationService } from 'src/app/services/registration.service';
 })
 export class SignupPage implements OnInit {
   form = new FormGroup({
-    birthday: new FormControl('', [Validators.required, this.dateValidator]),
+    birthday: new FormControl('', [
+      Validators.required,
+      dateValidator,
+      minimumAgeValidator(13),
+    ]),
   });
 
   canShowError: boolean = false;
@@ -32,22 +38,12 @@ export class SignupPage implements OnInit {
 
   submit() {
     this.canShowError = true;
-    if (this.form.controls.birthday.valid) {
+    if (this.form.valid) {
       const birthdayValue = this.form.controls.birthday.value ?? '';
-
       const birthday = new Date(birthdayValue);
-      const today = new Date();
-      const age = this.calculateAge(birthday, today);
 
-      if (age >= 13) {
-        this.registrationService.setBirthdate(birthday);
-        this.router.navigate(['/signup/signup-username']);
-      } else {
-        console.error(
-          'El usuario debe tener al menos 13 años para registrarse.'
-        );
-        this.form.controls.birthday.setErrors({ underage: true });
-      }
+      this.registrationService.setBirthdate(birthday);
+      this.router.navigate(['/signup/signup-username']);
     }
   }
 
@@ -55,49 +51,7 @@ export class SignupPage implements OnInit {
     const value = event.detail.value;
     if (value) {
       const birthday = new Date(value);
-      this.daysUntilBirthday = this.calculateDaysUntilBirthday(birthday);
+      this.daysUntilBirthday = calculateDaysUntilBirthday(birthday);
     }
-  }
-
-  dateValidator(control: FormControl): { [key: string]: boolean } | null {
-    const date = new Date(control.value);
-    const today = new Date();
-    if (isNaN(date.getTime())) {
-      return { invalidDate: true };
-    }
-    if (date >= today) {
-      return { futureDate: true };
-    }
-    return null;
-  }
-
-  calculateAge(birthday: Date, today: Date): number {
-    let age = today.getFullYear() - birthday.getFullYear();
-    const monthDiff = today.getMonth() - birthday.getMonth();
-
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthday.getDate())
-    ) {
-      age--;
-    }
-
-    return age;
-  }
-
-  calculateDaysUntilBirthday(birthday: Date): number {
-    const today = new Date();
-    const nextBirthday = new Date(
-      today.getFullYear(),
-      birthday.getMonth(),
-      birthday.getDate()
-    );
-
-    if (today > nextBirthday) {
-      nextBirthday.setFullYear(today.getFullYear() + 1);
-    }
-
-    const diff = nextBirthday.getTime() - today.getTime();
-    return Math.ceil(diff / (1000 * 60 * 60 * 24));
   }
 }

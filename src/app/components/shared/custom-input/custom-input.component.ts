@@ -23,6 +23,7 @@ export class CustomInputComponent implements OnInit {
   @Input() autocomplete!: string;
   @Input() value!: string;
   @Input() icon!: string;
+  @Input() labelPlacement: string = 'fixed';
 
   // Declarar el elemento del input DESACTIVADO POR EL MOMENTO
   /*   @ViewChild(IonInput, { static: false }) inputElement!: IonInput; */

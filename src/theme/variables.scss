@@ -241,6 +241,13 @@ ion-popover.custom-popover.v2 {
   }
 }
 
+ion-refresher-content {
+  --ion-color-step-250: var(--color-primary-600-50);
+  & * {
+    border: none !important;
+  }
+}
+
 .ion-color-primary {
   --ion-color-base: var(--ion-color-primary);
   --ion-color-base-rgb: var(--ion-color-primary-rgb);

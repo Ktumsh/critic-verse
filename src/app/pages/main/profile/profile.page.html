@@ -12,6 +12,12 @@
 </app-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      class="custom-refresher-content"
+    ></ion-refresher-content>
+  </ion-refresher>
+
   <!--Admin float button-->
   <app-admin-float-btn class="fixed bottom-0 right-0 z-50" />
 
@@ -51,10 +57,11 @@
     </div>
 
     <ion-item
-      *ngFor="let item of items.slice(2)"
+      *ngFor="let item of items.slice(2), let i = index"
       button
       [detail]="item.detail"
       (click)="navigateOrExecute(item)"
+      [ngClass]="i === 3 ? 'text-danger' : ''"
     >
       <div
         slot="start"
@@ -62,7 +69,7 @@
       >
         <ion-icon [src]="item.iconSrc" class="size-5"></ion-icon>
       </div>
-      <ion-label>{{ item.label }}</ion-label>
+      <ion-label> {{ item.label }} </ion-label>
       <ion-note *ngIf="item.showNote" slot="end">{{ item.note }}</ion-note>
     </ion-item>
   </ion-list>

@@ -33,6 +33,8 @@ import { ClasificationComponent } from './clasification/clasification.component'
 import { ReviewsComponent } from './reviews/reviews.component';
 import { CastingComponent } from './casting/casting.component';
 import { ReviewOptionsComponent } from './review-options/review-options.component';
+import { AddNewUserComponent } from './add-new-user/add-new-user.component';
+import { UserOptionsComponent } from './user-options/user-options.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { ReviewOptionsComponent } from './review-options/review-options.componen
     ReviewsComponent,
     CastingComponent,
     ReviewOptionsComponent,
+    AddNewUserComponent,
+    UserOptionsComponent,
   ],
   exports: [
     HeaderComponent,
@@ -83,6 +87,8 @@ import { ReviewOptionsComponent } from './review-options/review-options.componen
     ReviewsComponent,
     CastingComponent,
     ReviewOptionsComponent,
+    AddNewUserComponent,
+    UserOptionsComponent,
   ],
   imports: [
     CommonModule,
