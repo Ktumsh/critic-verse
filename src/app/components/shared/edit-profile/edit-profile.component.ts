@@ -155,6 +155,7 @@ export class EditProfileComponent implements OnInit {
 
     this.userCopy.username = this.profileForm.get('username')?.value;
     this.userCopy.birthdate = this.profileForm.get('birthdate')?.value;
+    this.userCopy.role = this.user.role;
 
     const usernameValue = this.profileForm.get('username')?.value ?? '';
     const usernameExists = await this.userService.usernameExists(usernameValue);
@@ -168,6 +169,7 @@ export class EditProfileComponent implements OnInit {
       ...this.userCopy,
       username: this.profileForm.get('username')?.value!,
       birthdate: new Date(this.profileForm.get('birthdate')?.value!),
+      role: this.user.role,
     };
 
     try {
@@ -176,6 +178,7 @@ export class EditProfileComponent implements OnInit {
         username: updatedUser.username,
         profileImage: updatedUser.profileImage,
         birthdate: updatedUser.birthdate,
+        role: updatedUser.role,
       });
 
       const user = await this.userService.getUserByEmail(this.user.email);

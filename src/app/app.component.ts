@@ -47,10 +47,10 @@ export class AppComponent implements OnInit {
       .then(() => {
         console.log('Base de datos y tablas creadas exitosamente.');
         return (
-          this.contentService.insertGameData(GAME_MODEL),
+          /* this.contentService.insertGameData(GAME_MODEL), */
           /* this.contentService.insertMovieData(MOVIE_MODEL) */
-          /* this.contentService.insertTvShowData(TV_MODEL) */
-          this.createUser()
+          this.contentService.insertTvShowData(TV_MODEL)
+          /* this.createUser() */
         );
       })
       .catch((error) => {
