@@ -77,9 +77,9 @@ export class AppComponent implements OnInit {
   async createUser() {
     const newUser = {
       role: 'admin',
-      email: 'jo.barra@duocuc.cl',
-      username: 'ktumsh',
-      password: 'Josue123*',
+      email: 'ren.rivera@duocuc.cl',
+      username: 'RynaT',
+      password: 'Renato123*',
       birthdate: new Date('2002-01-11T12:00:00'),
     };
 

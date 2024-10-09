@@ -13,7 +13,7 @@ export const TV_MODEL: TvShow[] = [
     description:
       'Un profesor de química de secundaria convertido en fabricante de metanfetaminas navega los peligros del comercio de drogas.',
     image: '/assets/tv/01.webp',
-    rating: 9.5,
+    rating: 9,
     detail: {
       genre: ['Crimen', 'Drama', 'Suspenso'],
       cast: [
@@ -77,7 +77,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 8.5,
+        rating: 8,
         comment:
           'Una narrativa sólida, aunque algunos episodios se sienten lentos. Aún así, una serie que vale la pena.',
         date: new Date('2024-08-16'),
@@ -85,7 +85,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 9.8,
+        rating: 9,
         comment:
           'Brillante desde el comienzo hasta el final. La transformación de Walter White es una obra maestra.',
         date: new Date('2024-08-18'),
@@ -104,7 +104,7 @@ export const TV_MODEL: TvShow[] = [
     description:
       'Un niño mitad humano, mitad ciervo busca un nuevo comienzo en un mundo post-apocalíptico devastado por un virus mortal.',
     image: '/assets/tv/02.webp',
-    rating: 3.4,
+    rating: 3,
     detail: {
       genre: ['Drama', 'Fantasía', 'Aventura'],
       cast: [
@@ -175,7 +175,7 @@ export const TV_MODEL: TvShow[] = [
     description:
       'Nueve familias nobles luchan por el control de las tierras de Westeros, mientras un enemigo antiguo regresa.',
     image: '/assets/tv/03.webp',
-    rating: 8.5,
+    rating: 8,
     detail: {
       cast: [
         {
@@ -261,7 +261,7 @@ export const TV_MODEL: TvShow[] = [
     description:
       'Un grupo de vigilantes conocido informalmente como "The Boys" se propone acabar con los superhéroes corruptos que abusan de sus poderes.',
     image: '/assets/tv/04.webp',
-    rating: 5.1,
+    rating: 5,
     detail: {
       genre: ['Acción', 'Drama', 'Ciencia Ficción'],
       cast: [
@@ -307,7 +307,7 @@ export const TV_MODEL: TvShow[] = [
     reviews: [
       {
         id: nanoid(),
-        rating: 4.5,
+        rating: 4,
         comment:
           'Una verdadera lástima. La primera temporada fue increíble, nueva y fresca. La segunda temporada tuvo momentos muy buenos, muy sangrientos e impactantes, pero también se inclinó por las opiniones políticas de izquierdas como el resto de la basura de Hollywood, y eso ha dañado mucho a la serie. No es tan malo como el final de Juego de Tronos, pero es solo otra serie, nada especial.',
         date: new Date('2020-09-16'),
@@ -402,7 +402,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 9.5,
+        rating: 9,
         comment:
           'Un clásico moderno. Cada episodio tiene algo que te hace reír o reflexionar.',
         date: new Date('2021-02-10'),
@@ -415,7 +415,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 8.5,
+        rating: 8,
         comment:
           'Algunas temporadas son mejores que otras, pero el conjunto general es fantástico.',
         date: new Date('2021-03-05'),
@@ -489,7 +489,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 9.5,
+        rating: 9,
         comment:
           'Un clásico moderno. Cada episodio tiene algo que te hace reír o reflexionar.',
         date: new Date('2021-02-10'),
@@ -502,7 +502,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 8.5,
+        rating: 8,
         comment:
           'Algunas temporadas son mejores que otras, pero el conjunto general es fantástico.',
         date: new Date('2021-03-05'),
@@ -516,7 +516,7 @@ export const TV_MODEL: TvShow[] = [
     description:
       'Daryl Dixon (Normal Reedus) se encuentra en Francia y trata de descubrir cómo llegó allí y también de encontrar el camino de regreso a casa.',
     image: '/assets/tv/07.webp',
-    rating: 6.2,
+    rating: 6,
     detail: {
       genre: ['Drama', 'Horror'],
       cast: [
@@ -569,7 +569,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 6.8,
+        rating: 6,
         comment:
           'A veces, Carol puede resultar un personaje extraño en la serie, pero aún así está a la altura de ser un programa con Daryl y Carol en el título, y para los fanáticos de The Walking Dead, es probable que eso sea todo lo que necesita ser.',
         date: new Date('2024-09-23'),
@@ -656,7 +656,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 9.1,
+        rating: 9,
         comment:
           'La espera valió la pena por esta producción que se viene gestando desde hace tiempo (anunciada por primera vez en 2018). La nueva Shōgun es una película épica impresionante que nunca permite que los decorados de gran presupuesto eclipsen ...',
         date: new Date('2024-02-27'),
@@ -664,7 +664,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 8.8,
+        rating: 8,
         comment:
           'La historia de amor es quizás el aspecto menos convincente de esta iteración de “Shōgun”, pero el resto se siente impresionante en su alcance, atención al detalle y narrativa que atrapa a los espectadores al final del segundo episodio y mantiene su...',
         date: new Date('2024-02-22'),
@@ -727,7 +727,7 @@ export const TV_MODEL: TvShow[] = [
     reviews: [
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment:
           'Tal vez no sea de sorprender que sea durante los momentos más tiernos del programa que Bates y sus compañeros de elenco se unan en un atractivo conjunto que fácilmente podría generar varias temporadas de entretenimiento reconfortante.',
         date: new Date('2024-09-20'),
@@ -765,7 +765,7 @@ export const TV_MODEL: TvShow[] = [
     description:
       'El ex oficial de la CIA Dan Chase (Jeff Bridges) ha estado viviendo fuera de la red durante años cuando un asesino intenta matarlo en esta serie basada en la novela homónima de Thomas Perry.',
     image: '/assets/tv/10.webp',
-    rating: 6.9,
+    rating: 6,
     detail: {
       genre: ['Suspenso', 'Drama'],
       cast: [
@@ -810,7 +810,7 @@ export const TV_MODEL: TvShow[] = [
     reviews: [
       {
         id: nanoid(),
-        rating: 9.1,
+        rating: 9,
         comment:
           'Lo que se ofrece en el avance a los críticos de la segunda temporada es excelente, atrapante y lleno de un magnetismo tenso. Francamente, esperamos que este sea el final de la serie, para que termine con un gran, hiriente y poderoso estallido.',
         date: new Date('2024-09-17'),
@@ -834,7 +834,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 6.7,
+        rating: 6,
         comment:
           'Los primeros dos episodios funcionan bien para mostrar los viajes convergentes que los personajes están realizando en Afganistán, pero los episodios tres y cuatro avanzan demasiado lentamente para desarrollar la intriga de esta temporada.',
         date: new Date('2024-09-09'),
@@ -848,7 +848,7 @@ export const TV_MODEL: TvShow[] = [
     description:
       'El viejo boxeador Esteban "La Máquina" Osuna (Gael García Bernal) aspira a un último título con la ayuda de su mejor amigo y manager Andy Luján (Diego Luna), pero figuras del hampa lo amenazan de muerte en la serie limitada en español.',
     image: '/assets/tv/11.webp',
-    rating: 7.7,
+    rating: 7,
     detail: {
       genre: ['Deporte', 'Drama'],
       cast: [
@@ -900,7 +900,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment:
           'Los episodios son intensos, la energía es ilimitada y el resultado es una serie infinitamente entretenida.',
         date: new Date('2024-10-04'),
@@ -914,7 +914,7 @@ export const TV_MODEL: TvShow[] = [
     description:
       'El comediante Donny Dunn (Richard Gadd) no denuncia de inmediato a su acosadora Martha (Jessica Gunning) en la serie de comedia dramática basada en la obra unipersonal de Gadd sobre su propia experiencia con un acosador.',
     image: '/assets/tv/12.webp',
-    rating: 8.9,
+    rating: 8,
     detail: {
       genre: ['Drama'],
       cast: [
@@ -985,7 +985,7 @@ export const TV_MODEL: TvShow[] = [
     description:
       'Luchas de poder, rivalidades y escándalos son solo algunos de los desafíos que enfrenta un popular programa de noticias matutino en el drama producido ejecutivamente por Reese Witherspoon y Jennifer Aniston.',
     image: '/assets/tv/13.webp',
-    rating: 6.5,
+    rating: 6,
     detail: {
       genre: ['Drama'],
       cast: [
@@ -1117,7 +1117,7 @@ export const TV_MODEL: TvShow[] = [
       },
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment:
           'Aunque la trama se centra en los primeros días de Gibbs como agente, este spinoff de NCIS tiene su propio ritmo y estilo. La dirección de Mark Harmon como narrador es un acierto, y la interpretación de Austin Stowell le da vida a un personaje que, aunque es muy querido, necesitaba más exploración en sus orígenes. Aún así, hay espacio para mejorar en el desarrollo de algunos personajes secundarios. Vale la pena seguirla si eres fan de la franquicia.',
         date: new Date('2024-10-04'),
