@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import {
+  ActionSheetController,
   IonContent,
   ModalController,
   PopoverController,
@@ -25,6 +26,7 @@ import { ProfileReviewsComponent } from '../profile-reviews/profile-reviews.comp
 import { Review } from 'src/app/types/review';
 import { AddReviewComponent } from '../add-review/add-review.component';
 import { ReviewOptionsComponent } from '../review-options/review-options.component';
+import { ReportService } from 'src/app/services/report.service';
 
 @Component({
   selector: 'app-reviews',
@@ -56,7 +58,9 @@ export class ReviewsComponent implements OnInit, OnChanges {
     private reviewService: ReviewService,
     private modalController: ModalController,
     private toastController: ToastController,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private actionSheetCtrl: ActionSheetController,
+    private reportService: ReportService
   ) {
     this.user = this.authService.user;
   }
@@ -267,21 +271,51 @@ export class ReviewsComponent implements OnInit, OnChanges {
     return await modal.present();
   }
 
-  openReportAlert(user: string): void {
-    this.bottomSheet.open(BottomSheetComponent, {
-      data: {
-        title: `Reportar contenido de "${user}"`,
-        options: [
-          {
-            label: 'Crear reporte',
+  async openReportAlert(review: Review) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      cssClass: 'custom-sheet',
+      header: 'Reportar Contenido',
+      buttons: [
+        {
+          text: 'Contenido ofensivo o inapropiado',
+          handler: () => {
+            this.reportReview('Contenido ofensivo o inapropiado', review);
           },
-          {
-            label: 'Cancelar',
-            isDanger: true,
+        },
+        {
+          text: 'Contenido engañoso o spam',
+          handler: () => {
+            this.reportReview('Contenido engañoso o spam', review);
           },
-        ],
-      },
+        },
+        {
+          text: 'Contenido sin alerta de spoiler',
+          handler: () => {
+            this.reportReview('Contenido sin alerta de spoiler', review);
+          },
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+      ],
     });
+
+    await actionSheet.present();
+  }
+
+  // Nuevo método para manejar el reporte
+  async reportReview(reason: string, review: Review) {
+    try {
+      await this.reportService.insertReport(reason, this.user.id, review.id);
+      this.presentToast(
+        'Reporte enviado correctamente.',
+        'checkmark-circle-outline'
+      );
+    } catch (error) {
+      console.error('Error al enviar el reporte:', error);
+      this.presentToast('Error al enviar el reporte.', 'close-circle-outline');
+    }
   }
 
   async presentToast(message: string, icon: string) {

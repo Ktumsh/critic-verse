@@ -13,7 +13,7 @@ export const MOVIE_MODEL: Movie[] = [
     description:
       'Un cansado glotón se encuentra recuperándose de sus heridas cuando se encuentra con un Deadpool bocazas que ha viajado en el tiempo para curar a su mejor amigo con la esperanza de hacerse amigo de la bestia salvaje y formar equipo para derrotar a un enemigo que ambos tienen en común.',
     image: '/assets/movie/01.webp',
-    rating: 9.7,
+    rating: 9,
     detail: {
       cast: [
         {
@@ -103,7 +103,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 9.5,
+        rating: 9,
         comment:
           'Un crossover que nunca supimos que necesitábamos. Una película entretenida y emocionante.',
         date: new Date('2024-08-28'),
@@ -117,7 +117,7 @@ export const MOVIE_MODEL: Movie[] = [
     description:
       'Chloe (Carla Juri) viaja a Japón por trabajo, donde es recibida por un viejo amigo, Toshi (Takashi Ueno). Entre la melancolía por la pérdida de su marido y el asombro por el cambio de perspectivas, Chloe deambula por un paisaje desconocido.',
     image: '/assets/movie/02.webp',
-    rating: 3.8,
+    rating: 3,
     detail: {
       cast: [
         {
@@ -168,7 +168,7 @@ export const MOVIE_MODEL: Movie[] = [
     reviews: [
       {
         id: nanoid(),
-        rating: 5.8,
+        rating: 5,
         comment:
           'En el fondo, la actuación de Juri es una maravilla de emoción contenida y asombro ante el mundo que la rodea. Es solo que la película que la rodea le hace un flaco favor a esa actuación.',
         date: new Date('2024-08-25'),
@@ -195,7 +195,7 @@ export const MOVIE_MODEL: Movie[] = [
     description:
       'Cuando el multimillonario tecnológico Slater King (Channing Tatum) conoce a la camarera Frida (Naomi Ackie) en su gala benéfica, saltan chispas. La invita a unirse a él y a sus amigos en unas vacaciones de ensueño en su isla privada. Es el paraíso.',
     image: '/assets/movie/03.webp',
-    rating: 5.5,
+    rating: 5,
     detail: {
       cast: [
         {
@@ -341,7 +341,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment: 'Un buen equilibrio entre acción y desarrollo de personajes.',
         date: new Date('2016-06-01'),
         userId: '5',
@@ -439,7 +439,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 7.8,
+        rating: 7,
         comment:
           'Un buen cierre para el personaje de Logan, aunque algunas partes podrían haber sido mejor elaboradas.',
         date: new Date('2019-04-10'),
@@ -447,7 +447,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 8.5,
+        rating: 8,
         comment:
           'Profunda y conmovedora, con grandes actuaciones de Hugh Jackman y Patrick Stewart.',
         date: new Date('2019-05-05'),
@@ -520,7 +520,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 8.5,
+        rating: 8,
         comment:
           'Lady Gaga aporta una nueva dimensión al personaje de Harley Quinn.',
         date: new Date('2024-10-06'),
@@ -542,7 +542,7 @@ export const MOVIE_MODEL: Movie[] = [
     description:
       'Un robot, la unidad ROZZUM 7134, “Roz” para abreviar, naufraga en una isla deshabitada y debe aprender a adaptarse al duro entorno, construyendo gradualmente relaciones con los animales de la isla y convirtiéndose en el padre adoptivo de un ganso huérfano.',
     image: '/assets/movie/07.webp',
-    rating: 8.6,
+    rating: 8,
     detail: {
       cast: [
         {
@@ -607,7 +607,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 8.5,
+        rating: 8,
         comment: "Lupita Nyong'o ofrece una interpretación asombrosa como Roz.",
         date: new Date('2024-09-28'),
         userId: '6',
@@ -622,7 +622,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 8.7,
+        rating: 8,
         comment:
           'Las pinceladas discernibles de la película sirven como recordatorio de las manos literales, el trabajo que se necesita para criar a alguien, moldearlo para convertirlo en un sobreviviente y llevar el amor contigo dondequiera que vayas.',
         date: new Date('2024-09-28'),
@@ -634,7 +634,7 @@ export const MOVIE_MODEL: Movie[] = [
         comment:
           'En comparación con la animación familiar promedio, esto es mucho mejor.',
         date: new Date('2024-09-29'),
-        userId: '8.8',
+        userId: '8',
       },
     ],
   },
@@ -644,7 +644,7 @@ export const MOVIE_MODEL: Movie[] = [
     description:
       'Mientras hurgan en las profundidades de una estación espacial abandonada, un grupo de jóvenes colonizadores espaciales se encuentran cara a cara con la forma de vida más aterradora del universo.',
     image: '/assets/movie/08.webp',
-    rating: 6.4,
+    rating: 6,
     detail: {
       cast: [
         {
@@ -682,7 +682,7 @@ export const MOVIE_MODEL: Movie[] = [
     reviews: [
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment:
           'La película no logra aterrizar del todo bien, ya que se queda en la puerta de embarque unos 10 minutos más o menos. El nivel de sangre puede no sorprender a los fans de las películas anteriores de Álvarez, pero para el aficionado casual de la franquicia podría parecer bastante pesado.',
         date: new Date('2024-08-14'),
@@ -698,7 +698,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 4.3,
+        rating: 4,
         comment:
           'En lugar de continuar con la terrible trilogía de precuelas, esta película vuelve a la masacre de la nave minera Nostromo de la primera película, para ver si se puede sacar más dinero de la franquicia destruida. ¡Este es otro reinicio de la franquicia y parece quedarse sin ideas!',
         date: new Date('2024-09-06'),
@@ -720,7 +720,7 @@ export const MOVIE_MODEL: Movie[] = [
     description:
       'En un mundo en el que nadie habla, una misteriosa y devota comunidad persigue a una joven llamada Azrael (Samara Weaving) que ha escapado de su prisión. Sus despiadados líderes la han vuelto a capturar y la van a sacrificar para pacificar un mal que reside en las profundidades del desierto circundante, pero Azrael no se detendrá ante nada para asegurar su propia seguridad.',
     image: '/assets/movie/09.webp',
-    rating: 5.2,
+    rating: 5,
     detail: {
       cast: [
         {
@@ -762,7 +762,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 7.8,
+        rating: 7,
         comment:
           'Weaving, que se destaca en este tipo de películas de acción y terror centradas en los personajes, juega perfectamente con nuestra empatía, guiándonos sin palabras a través de esta tierra maldita.',
         date: new Date('2024-09-26'),
@@ -770,7 +770,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment:
           'Incluso si la ejecución no siempre está donde debería estar, Katz y el guionista Simon Barrett aún merecen sus flores por concebir una idea tan puramente cinematográfica y luchar por ella con tanta confianza.',
         date: new Date('2024-03-15'),
@@ -792,7 +792,7 @@ export const MOVIE_MODEL: Movie[] = [
     description:
       'La historia de Christopher Reeve es un asombroso ascenso de actor desconocido a estrella de cine icónica, y su interpretación definitiva de Clark Kent/Superman estableció el punto de referencia para los universos cinematográficos de superhéroes que dominan el cine actual. ',
     image: '/assets/movie/10.webp',
-    rating: 8.2,
+    rating: 8,
     detail: {
       cast: [
         {
@@ -838,7 +838,7 @@ export const MOVIE_MODEL: Movie[] = [
     reviews: [
       {
         id: nanoid(),
-        rating: 8.5,
+        rating: 8,
         comment:
           '“Super/Man” es una película emotiva, resiliente e inspiradora que abre las batallas privadas al público en general.',
         date: new Date('2024-01-26'),
@@ -846,7 +846,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 8.3,
+        rating: 8,
         comment:
           'Super/Man: The Christopher Reeve Story pinta un rico retrato de Reeve como individuo, celebridad, activista y hombre de familia, reforzado por comentarios de sus hijos y amigos y, además, del propio Reeve.',
         date: new Date('2024-01-21'),
@@ -922,7 +922,7 @@ export const MOVIE_MODEL: Movie[] = [
     reviews: [
       {
         id: nanoid(),
-        rating: 9.0,
+        rating: 9,
         comment:
           'Una creación de mundos, una banda sonora y una dirección artística preciosas. Los arcos de los personajes están muy bien diseñados y planteados con fuerza desde el principio, por lo que no resulta repetitivo a pesar de que se trata de un marco temporal bastante comprimido.',
         date: new Date('2024-09-30'),
@@ -938,7 +938,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment:
           'Dirigida por Josh Cooley, criado en Livermore y ganador del Oscar por “Toy Story 4”, “Transformers One” es para el niño interior, y sin complejos. Y para los adultos presentes, se puede leer como una historia a favor de los sindicatos, en la que los robots trabajadores se unen.',
         date: new Date('2024-09-12'),
@@ -946,7 +946,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment:
           'Un reino sin límites físicos es verdaderamente el lugar al que pertenecen los Transformers, pero eso no impide que la película ofrezca un patetismo sorprendente mientras está allí.',
         date: new Date('2024-09-15'),
@@ -954,7 +954,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment:
           'Como sugiere su sutilmente seguro título, se presenta como si nadie hubiera hecho antes una película de Transformers. Es muy seria y aporta notas de frescura e inocencia a una precuela que, por todos los motivos, no debería haber tenido ninguna.',
         date: new Date('2024-09-17'),
@@ -968,7 +968,7 @@ export const MOVIE_MODEL: Movie[] = [
     description:
       'ulian (Bryce Gheisar) ha luchado por sentirse parte de un grupo desde que lo expulsaron de su antigua escuela por su trato hacia Auggie Pullman. Para transformar su vida, la abuela de Julian (Helen Mirren) finalmente le revela a Julian su propia historia de coraje: durante su juventud en la Francia ocupada por los nazis, un niño la protege de un peligro mortal.',
     image: '/assets/movie/12.webp',
-    rating: 4.5,
+    rating: 4,
     detail: {
       cast: [
         {
@@ -1006,7 +1006,7 @@ export const MOVIE_MODEL: Movie[] = [
     reviews: [
       {
         id: nanoid(),
-        rating: 7.5,
+        rating: 7,
         comment:
           'Si has visto "Wonder", añadirá algo de profundidad y contexto a la experiencia visual, pero con la dirección segura de Forster, el excelente guion de Bomback y las sólidas actuaciones de los actores veteranos, así como de las caras más jóvenes, "White Bird" vuela bastante bien por sí sola.',
         date: new Date('2024-09-17'),
@@ -1014,7 +1014,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 6.3,
+        rating: 6,
         comment:
           'Es un poco convencional, exactamente lo que se podría esperar de una novela histórica de alto nivel dirigida a jóvenes adultos. Ser una película sincera y de buen corazón que incluso puede hacerte derramar algunas lágrimas no es un delito contra el cine.',
         date: new Date('2024-09-17'),
@@ -1022,7 +1022,7 @@ export const MOVIE_MODEL: Movie[] = [
       },
       {
         id: nanoid(),
-        rating: 6.3,
+        rating: 6,
         comment:
           'Mirren mantiene unida la película con su narración, pero no puede salvarla de la tendencia de Forster a exagerar las escenas emotivas ni de la intrusiva banda sonora de Thomas Newman.',
         date: new Date('2024-09-17'),
@@ -1080,7 +1080,7 @@ export const MOVIE_MODEL: Movie[] = [
     reviews: [
       {
         id: nanoid(),
-        rating: 8.3,
+        rating: 8,
         comment:
           'Ver el urgente recordatorio de Errol Morris sobre un documental —posiblemente la película más enfurecedora realizada hasta ahora por un director que ciertamente supo cómo arrojar luz sobre temas exasperantes durante los últimos 45 años—.',
         date: new Date('2024-09-17'),
