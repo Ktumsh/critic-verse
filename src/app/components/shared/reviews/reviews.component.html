@@ -37,7 +37,7 @@
         <ion-button
           class="text-lg reveal w-full"
           size="large"
-          (click)="undoDeleteReview()"
+          (click)="undoDeleteReview(review.id)"
         >
           Deshacer
         </ion-button>
@@ -85,12 +85,12 @@
       </ng-template>
 
       <ion-button
-        *ngIf="longReviewMap[review.id] && !expandedReviews[review.id]"
+        *ngIf="longReviewMap[review.id]"
         fill="clear"
         class="show-more text-xxs"
         (click)="toggleExpandReview(review.id)"
       >
-        Mostrar más
+        {{ expandedReviews[review.id] ? "Ver menos" : "Ver todo" }}
       </ion-button>
 
       <footer class="flex items-center justify-between">

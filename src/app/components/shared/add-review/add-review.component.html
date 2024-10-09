@@ -61,7 +61,7 @@
     <div class="pr-8">
       <ion-range
         aria-label="Custom range"
-        [min]="0"
+        [min]="1"
         [max]="10"
         [value]="rating"
         [ticks]="true"
@@ -78,8 +78,8 @@
         >Escribe una reseña para {{ item.title }}</span
       >
       <ion-textarea
-        placeholder="Mínimo 75 caracteres"
-        minlength="75"
+        placeholder="Mínimo 50 caracteres"
+        minlength="50"
         maxlength="5000"
         [(ngModel)]="inputValue"
         (ionInput)="onInputChange($event)"

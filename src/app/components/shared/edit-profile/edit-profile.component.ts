@@ -9,7 +9,7 @@ import {
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
-import { formatDate } from 'src/utils/common';
+import { calculateDaysUntilBirthday, formatDate } from 'src/utils/common';
 import { dateValidator, minimumAgeValidator } from 'src/utils/validations';
 
 @Component({
@@ -21,6 +21,10 @@ export class EditProfileComponent implements OnInit {
   @Input() user!: User;
   userCopy!: any;
   canShowError: boolean = false;
+
+  minDate!: string;
+  maxDate!: string;
+  daysUntilBirthday: number | null = null;
 
   profileForm: FormGroup = new FormGroup({
     username: new FormControl('', [
@@ -42,7 +46,11 @@ export class EditProfileComponent implements OnInit {
     private actionSheet: ActionSheetController,
     private userService: UserService,
     private authService: AuthService
-  ) {}
+  ) {
+    const currentDate = new Date();
+    this.minDate = '1924-01-01';
+    this.maxDate = formatDate(currentDate);
+  }
 
   ngOnInit() {
     this.userCopy = {
@@ -61,9 +69,12 @@ export class EditProfileComponent implements OnInit {
     this.profileForm.get('username')?.valueChanges.subscribe(() => {
       if (this.canShowError) {
         this.canShowError = false;
-        this.profileForm.get('username')?.setErrors(null);
       }
     });
+  }
+
+  get birthdateErrors() {
+    return this.profileForm.get('birthdate')?.errors;
   }
 
   async presentImageOptions() {
@@ -144,6 +155,7 @@ export class EditProfileComponent implements OnInit {
 
   saveChanges = async (): Promise<void> => {
     this.canShowError = true;
+    this.profileForm.markAllAsTouched();
 
     if (this.profileForm.invalid) {
       await this.presentToast(
@@ -201,6 +213,20 @@ export class EditProfileComponent implements OnInit {
       );
     }
   };
+
+  onDateChange(event: any) {
+    const value = event.detail.value;
+    if (value) {
+      const birthday = new Date(value);
+      this.daysUntilBirthday = calculateDaysUntilBirthday(birthday);
+    }
+  }
+
+  onBlurDate(event: any) {
+    if (!event.target.value) {
+      this.profileForm.patchValue({ birthdate: this.userCopy.birthdate });
+    }
+  }
 
   dismiss = (): void => {
     this.modalController.dismiss({

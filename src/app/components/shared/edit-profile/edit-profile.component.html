@@ -27,12 +27,21 @@
           <ion-input
             color="primary"
             clearInput
+            placeholder="username_123"
             formControlName="username"
           ></ion-input>
           <div
-            *ngIf="canShowError && profileForm.get('username')?.errors"
-            class="flex flex-col px-5 mt-1.5"
+            *ngIf="
+              profileForm.get('username')?.invalid &&
+              (profileForm.get('username')?.touched || canShowError)
+            "
           >
+            <span
+              *ngIf="profileForm.get('username')?.errors?.['required']"
+              class="text-xs text-danger"
+            >
+              El nombre de usuario no puede quedar vacío.
+            </span>
             <span
               *ngIf="profileForm.get('username')?.errors?.['minlength']"
               class="text-xs text-danger"
@@ -61,23 +70,41 @@
           </div>
         </div>
         <div class="flex flex-col w-full px-2">
-          <ion-label position="stacked">Fecha de nacimiento</ion-label>
+          <ion-label position="stacked"> Fecha de nacimiento </ion-label>
           <ion-input
             type="date"
             color="primary"
             formControlName="birthdate"
-            placeholder="YYYY-MM-DD"
+            (ionChange)="onDateChange($event)"
+            (ionBlur)="onBlurDate($event)"
+            [min]="minDate"
+            [max]="maxDate"
             class="date-input"
           ></ion-input>
           <span
-            *ngIf="
-              profileForm.get('birthdate')?.invalid &&
-              profileForm.get('birthdate')?.touched
-            "
+            *ngIf="birthdateErrors?.['required'] && profileForm.get('birthdate')?.touched"
+            class="text-xs text-danger"
+          >
+            La fecha de nacimiento no puede estar vacía.
+          </span>
+          <span
+            *ngIf="birthdateErrors?.['dateInvalid'] && profileForm.get('birthdate')?.touched"
             class="text-xs text-danger"
           >
             Fecha inválida o es una fecha futura.
           </span>
+          <span
+            *ngIf="birthdateErrors?.['minAge'] && profileForm.get('birthdate')?.touched"
+            class="text-xs text-danger"
+          >
+            Debes tener al menos 13 años.
+          </span>
+        </div>
+        <div
+          *ngIf="daysUntilBirthday !== null"
+          class="text-sm text-center text-white-m mt-4"
+        >
+          ¡Quedan {{ daysUntilBirthday }} días para tu cumpleaños! 🎉🎂
         </div>
       </form>
     </div>

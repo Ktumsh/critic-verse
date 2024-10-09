@@ -45,3 +45,58 @@ ion-button.custom::part(native) {
   position: relative;
   overflow: hidden;
 }
+
+.line-clamp-container {
+  position: relative;
+  overflow: hidden;
+  max-height: calc(1.2em * 5);
+}
+
+.line-clamp {
+  display: -webkit-box;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-container.expanded {
+  max-height: unset;
+}
+
+.line-clamp-container.expanded .line-clamp {
+  line-clamp: unset;
+  overflow: visible;
+}
+
+.line-clamp-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5em;
+  background: linear-gradient(
+    to top,
+    var(--surface-secondary-600),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.line-clamp-container.expanded::after {
+  display: none;
+}
+
+.show-more {
+  margin-top: 0 !important;
+  min-height: 32px;
+  width: fit-content;
+  align-self: flex-end;
+}
+
+.show-more::part(native) {
+  --border-radius: 99px;
+  --background: transparent;
+  color: var(--color-secondary-600);
+}

@@ -3,7 +3,7 @@ import { ContentService } from 'src/app/services/content.service';
 import { Game } from 'src/app/types/game';
 import { Movie } from 'src/app/types/movie';
 import { TvShow } from 'src/app/types/tv';
-import { sortByReleaseDate } from 'src/utils/common';
+import { refresher, sortByReleaseDate } from 'src/utils/common';
 
 @Component({
   selector: 'app-home',
@@ -22,8 +22,8 @@ export class HomePage implements OnInit {
 
   constructor(private contentService: ContentService) {}
 
-  async ngOnInit() {
-    await this.loadContent();
+  ngOnInit() {
+    this.loadContent();
   }
 
   async loadContent() {
@@ -44,4 +44,6 @@ export class HomePage implements OnInit {
       this.isLoading = false;
     }
   }
+
+  handleRefresh = refresher;
 }

@@ -1,5 +1,4 @@
 import { ChangeDetectorRef } from '@angular/core';
-import { Game } from 'src/app/types/game';
 import { Review } from 'src/app/types/review';
 
 export function generateUUID(): string {

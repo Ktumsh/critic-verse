@@ -26,6 +26,9 @@ export class ProfileReviewsComponent implements OnInit {
   movieReviews: (Review & { title: string; image: string })[] = [];
   tvShowReviews: (Review & { title: string; image: string })[] = [];
 
+  longReviewMap: { [reviewId: string]: boolean } = {};
+  expandedReviews: { [reviewId: string]: boolean } = {};
+
   isLoading: boolean = true;
 
   constructor(
@@ -87,6 +90,7 @@ export class ProfileReviewsComponent implements OnInit {
       console.error('Error al cargar las reseñas del usuario:', error);
     } finally {
       this.isLoading = false;
+      this.updateLongReviewMap();
     }
   }
 
@@ -159,6 +163,7 @@ export class ProfileReviewsComponent implements OnInit {
         date: updatedReview.date,
       };
       this.refreshReviewArray(reviewArray);
+      this.updateLongReviewMap();
     }
   }
 
@@ -168,6 +173,7 @@ export class ProfileReviewsComponent implements OnInit {
       (review) => review.id !== reviewId
     );
     this.refreshReviewArray(updatedReviews);
+    this.updateLongReviewMap();
   }
 
   private getSelectedSegmentReviews(): (Review & {
@@ -200,6 +206,23 @@ export class ProfileReviewsComponent implements OnInit {
         this.tvShowReviews = [...updatedArray];
         break;
     }
+  }
+
+  private updateLongReviewMap() {
+    this.longReviewMap = {};
+    const allReviews = [
+      ...this.gameReviews,
+      ...this.movieReviews,
+      ...this.tvShowReviews,
+    ];
+    allReviews.forEach((review) => {
+      this.longReviewMap[review.id] =
+        !!review.comment && review.comment.length > 260;
+    });
+  }
+
+  toggleExpandReview(reviewId: string) {
+    this.expandedReviews[reviewId] = !this.expandedReviews[reviewId];
   }
 
   async openEditDeletePopover(event: MouseEvent, review: Review) {

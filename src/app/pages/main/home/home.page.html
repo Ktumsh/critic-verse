@@ -1,6 +1,14 @@
 <app-header></app-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher
+    slot="fixed"
+    (ionRefresh)="handleRefresh($event, this.loadContent.bind(this))"
+  >
+    <ion-refresher-content
+      class="custom-refresher-content"
+    ></ion-refresher-content>
+  </ion-refresher>
   <!--Admin float button-->
   <app-admin-float-btn class="fixed bottom-0 right-0 z-50" />
 

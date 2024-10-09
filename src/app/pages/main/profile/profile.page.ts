@@ -10,7 +10,6 @@ import { NotificationsComponent } from 'src/app/components/shared/notifications/
 import { ConfigurationComponent } from 'src/app/components/shared/configuration/configuration.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReviewService } from 'src/app/services/review.service';
-import { refresher } from 'src/utils/common';
 
 @Component({
   selector: 'app-profile',
@@ -113,8 +112,8 @@ export class ProfilePage implements OnInit {
       label: 'Notificaciones',
       iconSrc: 'assets/icon/bell.svg',
       color: 'bg-emerald',
-      note: '3',
-      showNote: true,
+      note: null,
+      showNote: false,
       detail: false,
       action: () => this.openModal(NotificationsComponent),
     },
