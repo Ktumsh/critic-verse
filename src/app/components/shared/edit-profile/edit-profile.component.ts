@@ -108,12 +108,12 @@ export class EditProfileComponent implements OnInit {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.DataUrl,
+      resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
     });
 
-    if (image && image.dataUrl) {
-      this.userCopy.profileImage = image.dataUrl;
+    if (image && image.webPath) {
+      this.userCopy.profileImage = image.webPath;
     } else {
       this.presentToast(
         'Selección de imagen cancelada.',
@@ -126,12 +126,12 @@ export class EditProfileComponent implements OnInit {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.DataUrl,
+      resultType: CameraResultType.Uri,
       source: CameraSource.Photos,
     });
 
-    if (image && image.dataUrl) {
-      this.userCopy.profileImage = image.dataUrl;
+    if (image && image.webPath) {
+      this.userCopy.profileImage = image.webPath;
     } else {
       this.presentToast(
         'Selección de imagen cancelada.',

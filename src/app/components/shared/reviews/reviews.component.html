@@ -5,7 +5,7 @@
 <div class="flex flex-col space-y-4">
   <div
     *ngFor="let review of item.reviews; let i = index"
-    class="p-4 bg-surface-secondary-600 rounded relative"
+    class="p-3 bg-surface-secondary-600 rounded relative overflow-hidden"
   >
     <div
       *ngIf="review.containsSpoilers && !revealedReviews[review.id]"
@@ -44,31 +44,48 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4 text-white-h">
-      <header class="flex items-center justify-between w-full">
-        <div class="inline-flex items-center gap-3">
-          <ion-avatar class="size-8 rounded-xl">
-            <img
-              alt="Foto de perfil"
-              [src]="avatarsMap[review.id] || 'assets/avatar-demo.svg'"
-            />
-          </ion-avatar>
-          <span class="text-lg font-semibold">
-            {{ userNamesMap[review.id] }}
-          </span>
-          <small class="text-xs text-white-l">
-            {{ review.date | date : "d 'de' MMM, y" }}
-          </small>
+      <header class="flex flex-col w-full space-y-2">
+        <div class="flex items-center justify-between w-full">
+          <div class="inline-flex items-center gap-3">
+            <ion-avatar class="size-8 rounded-xl">
+              <img
+                alt="Foto de perfil"
+                [src]="avatarsMap[review.id] || 'assets/avatar-demo.svg'"
+                class="size-8"
+              />
+            </ion-avatar>
+            <span class="text-lg font-semibold">
+              {{ userNamesMap[review.id] }}
+            </span>
+          </div>
+          <div
+            [ngClass]="[
+              'flex items-center justify-center size-7 rounded-full mr-8',
+              getRatingClass(review.rating)
+            ]"
+          >
+            <span class="font-bold text-white">
+              {{ review.rating }}
+            </span>
+          </div>
+          <ion-button
+            *ngIf="review.userId === user.id || user.role === 'admin'"
+            expand="block"
+            fill="clear"
+            shape="round"
+            class="size-10 custom absolute top-0 right-0"
+            color="secondary"
+            (click)="presentPopover($event, review)"
+          >
+            <ion-icon
+              src="assets/icon/options.svg"
+              class="size-5 text-white-l"
+            ></ion-icon>
+          </ion-button>
         </div>
-        <div
-          [ngClass]="[
-            'flex items-center justify-center size-7 rounded-full',
-            getRatingClass(review.rating)
-          ]"
-        >
-          <span class="font-bold text-white">
-            {{ review.rating }}
-          </span>
-        </div>
+        <small class="text-xs text-white-l">
+          {{ review.date | date : "d 'de' MMM, y" }}
+        </small>
       </header>
       <div
         *ngIf="longReviewMap[review.id]; else shortReview"
@@ -94,28 +111,20 @@
       </ion-button>
 
       <footer class="flex items-center justify-between">
-        <div class="inline-flex items-center justify-between gap-4 w-full">
+        <div
+          class="inline-flex items-center gap-4 w-full"
+          [ngClass]="[
+            review.userId === user.id ? 'justify-end' : 'justify-between'
+          ]"
+        >
           <ion-button
+            *ngIf="review.userId !== user.id"
             (click)="openReportAlert(review)"
             expand="block"
             shape="round"
-            class="h-8"
+            class="h-6 text-xxs"
           >
             Reportar
-          </ion-button>
-          <ion-button
-            *ngIf="review.userId === user.id || user.role === 'admin'"
-            expand="block"
-            fill="clear"
-            shape="round"
-            class="size-8 custom"
-            color="secondary"
-            (click)="presentPopover($event, review)"
-          >
-            <ion-icon
-              src="assets/icon/options.svg"
-              class="size-5 text-white-l"
-            ></ion-icon>
           </ion-button>
         </div>
       </footer>

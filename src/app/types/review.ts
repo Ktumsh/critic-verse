@@ -1,5 +1,4 @@
 import { Report } from './report';
-import { User } from './user';
 
 export interface Review {
   id: string;
@@ -10,4 +9,5 @@ export interface Review {
   userId: string;
   report?: Report;
   contentId?: string;
+  contentType?: 'game' | 'movie' | 'tv';
 }

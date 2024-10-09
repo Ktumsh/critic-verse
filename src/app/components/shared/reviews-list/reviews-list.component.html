@@ -2,12 +2,12 @@
   [title]="'Revisar reseñas'"
   [logo]="false"
   [backButton]="dismiss.bind(this)"
-/>
+></app-header>
 
 <ion-content [fullscreen]="true">
   <div class="flex flex-col gap-4 py-6 px-4">
     <div class="flex flex-col space-y-4">
-      <!-- Filtro por Fecha -->
+      <!-- Filtro por Tipo -->
       <ion-segment
         [(ngModel)]="filterOption"
         [value]="filterOption"
@@ -55,61 +55,139 @@
         </ion-segment-button>
       </ion-segment>
 
-      <div
-        *ngFor="let review of allReviews"
-        class="p-4 bg-surface-secondary-600 rounded relative"
-      >
-        <div class="flex flex-col space-y-4 text-white-h">
-          <header class="flex items-center justify-between w-full">
-            <div class="inline-flex items-center gap-3">
-              <ion-avatar class="size-8 rounded-xl">
-                <img alt="Foto de perfil" [src]="avatarsMap[review.id]" />
-              </ion-avatar>
-              <span class="text-lg font-semibold">
-                {{ userNamesMap[review.id] }}
-              </span>
-            </div>
+      <ng-container *ngIf="isInitialLoading; else reviewsList">
+        <div
+          *ngFor="let skeleton of [1, 2, 3, 4, 5]"
+          class="p-4 bg-surface-secondary-600 rounded relative"
+        >
+          <div class="flex flex-col space-y-4 text-white-h">
+            <header class="flex flex-col w-full space-y-2">
+              <div class="flex items-center justify-between w-full">
+                <div class="inline-flex items-center gap-3 w-full">
+                  <ion-avatar class="size-8 rounded-full">
+                    <ion-skeleton-text
+                      animated
+                      class="size-8 rounded-full"
+                    ></ion-skeleton-text>
+                  </ion-avatar>
+                  <ion-skeleton-text
+                    animated
+                    class="w-1/3 h-5 rounded-full"
+                  ></ion-skeleton-text>
+                </div>
+                <ion-skeleton-text
+                  animated
+                  class="size-7 min-w-7 rounded-full mr-8"
+                ></ion-skeleton-text>
+              </div>
+              <ion-skeleton-text
+                animated
+                class="w-1/4 h-2 rounded-full"
+              ></ion-skeleton-text>
+            </header>
+            <ion-skeleton-text
+              animated
+              class="w-full h-4 rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              animated
+              class="w-10/12 h-4 rounded-full"
+            ></ion-skeleton-text>
+            <ion-skeleton-text
+              animated
+              class="w-11/12 h-4 rounded-full"
+            ></ion-skeleton-text>
+          </div>
+        </div>
+      </ng-container>
 
-            <div
-              [ngClass]="[
-                'flex items-center justify-center size-7 rounded-full',
-                review.rating >= 0 && review.rating < 4
-                  ? 'bg-danger'
-                  : review.rating >= 4 && review.rating < 6
-                  ? 'bg-warning'
-                  : 'bg-success'
-              ]"
-            >
-              <span class="font-bold text-white">
-                {{ review.rating }}
-              </span>
-            </div>
-          </header>
-          <p class="text-sm">{{ review.comment }}</p>
-          <footer
-            class="flex items-center justify-end pt-4 border-t border-surface-secondary-400"
+      <ng-template #reviewsList>
+        <div
+          *ngFor="let review of displayedReviews"
+          class="p-4 bg-surface-secondary-600 rounded relative overflow-hidden"
+          [ngClass]="{ 'fade-out': reviewedReviewsMap[review.id] }"
+        >
+          <div
+            *ngIf="reviewedReviewsMap[review.id]"
+            class="absolute inset-0 size-full flex flex-col items-center justify-center backdrop-blur z-10"
           >
             <div class="inline-flex items-center gap-4">
-              <small class="text-xs text-white-l"
-                >{{ review.date | date : "d 'de' MMM, y" }}
-              </small>
-              <ion-button
-                (click)="openReportAlert(userNamesMap[review.id])"
-                expand="block"
-                fill="clear"
-                shape="round"
-                class="size-8"
-                color="secondary"
-              >
-                <ion-icon
-                  src="assets/icon/options.svg"
-                  class="size-5 text-white-l"
-                ></ion-icon>
-              </ion-button>
+              <ng-container [ngSwitch]="reviewedReviewsMap[review.id]">
+                <ng-container *ngSwitchCase="'reviewed'">
+                  <span class="text-success font-semibold">
+                    Reseña marcada como revisada
+                  </span>
+                  <ion-icon
+                    src="assets/icon/miscellaneous/check-circled.svg"
+                    class="size-6 text-success"
+                  ></ion-icon>
+                </ng-container>
+                <ng-container *ngSwitchCase="'inappropriate'">
+                  <span class="text-warning font-semibold">
+                    Reseña marcada como inapropiada
+                  </span>
+                  <ion-icon
+                    src="assets/icon/miscellaneous/alert-circled.svg"
+                    class="size-6 text-warning"
+                  ></ion-icon>
+                </ng-container>
+              </ng-container>
             </div>
-          </footer>
+          </div>
+          <div class="flex flex-col space-y-4 text-white-h">
+            <header class="flex flex-col w-full space-y-2">
+              <div class="flex items-center justify-between w-full">
+                <div class="inline-flex items-center gap-3">
+                  <ion-avatar class="size-8 rounded-full">
+                    <img
+                      alt="Foto de perfil"
+                      [src]="avatarsMap[review.id] || 'assets/avatar-demo.svg'"
+                      class="size-8"
+                    />
+                  </ion-avatar>
+                  <span class="text-lg font-semibold">
+                    {{ userNamesMap[review.id] }}
+                  </span>
+                </div>
+                <div
+                  [ngClass]="[
+                    'flex items-center justify-center size-7 rounded-full mr-8',
+                    getRatingClass(review.rating)
+                  ]"
+                >
+                  <span class="font-bold text-white">
+                    {{ review.rating }}
+                  </span>
+                </div>
+                <ion-button
+                  expand="block"
+                  fill="clear"
+                  shape="round"
+                  class="size-10 custom absolute top-0 right-0"
+                  color="secondary"
+                  (click)="openReportSheet(review)"
+                >
+                  <ion-icon
+                    src="assets/icon/options.svg"
+                    class="size-5 text-white-l"
+                  ></ion-icon>
+                </ion-button>
+              </div>
+              <small class="text-xs text-white-l">
+                {{ review.date | date : "d 'de' MMM, y" }}
+              </small>
+            </header>
+            <p class="text-sm">{{ review.comment }}</p>
+          </div>
         </div>
-      </div>
+      </ng-template>
     </div>
   </div>
+  <ion-infinite-scroll
+    threshold="100px"
+    (ionInfinite)="loadMoreReviews($event)"
+    [disabled]="!hasMoreReviews"
+  >
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

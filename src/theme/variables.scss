@@ -199,9 +199,17 @@ ion-action-sheet.custom-sheet {
     font-weight: 600;
     font-size: 16px;
   }
-
-  action-sheet-cancel {
-    --color: var(--color-primary-600);
+  .cancel-button {
+    color: var(--color-primary-600);
+  }
+  .success-button {
+    color: var(--color-success);
+  }
+  .warning-button {
+    color: var(--color-warning);
+  }
+  .danger-button {
+    color: var(--color-danger);
   }
 }
 
@@ -247,6 +255,11 @@ ion-refresher-content {
     --ion-color-primary: var(--surface-secondary-100);
     border: none !important;
   }
+}
+
+ion-skeleton-text {
+  --background: var(--surface-secondary-600);
+  --background-rgb: 188, 0, 255;
 }
 
 .ion-color-primary {

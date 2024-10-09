@@ -5,7 +5,6 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import {
   ActionSheetController,
   IonContent,
@@ -17,7 +16,6 @@ import { randomAvatar, randomName } from 'src/app/models/user.model';
 import { Game } from 'src/app/types/game';
 import { Movie } from 'src/app/types/movie';
 import { TvShow } from 'src/app/types/tv';
-import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 import { ratingClass } from 'src/utils/common';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -27,6 +25,7 @@ import { Review } from 'src/app/types/review';
 import { AddReviewComponent } from '../add-review/add-review.component';
 import { ReviewOptionsComponent } from '../review-options/review-options.component';
 import { ReportService } from 'src/app/services/report.service';
+import { User } from 'src/app/types/user';
 
 @Component({
   selector: 'app-reviews',
@@ -51,10 +50,9 @@ export class ReviewsComponent implements OnInit, OnChanges {
   progressIntervals: { [reviewId: string]: any } = {};
   deleteTimeouts: { [reviewId: string]: any } = {};
 
-  user!: any;
+  user!: User;
 
   constructor(
-    private bottomSheet: MatBottomSheet,
     private userService: UserService,
     private authService: AuthService,
     private reviewService: ReviewService,
@@ -295,9 +293,10 @@ export class ReviewsComponent implements OnInit, OnChanges {
   }
 
   async openReportAlert(review: Review) {
+    const username = this.userNamesMap[review.id];
     const actionSheet = await this.actionSheetCtrl.create({
       cssClass: 'custom-sheet',
-      header: 'Reportar Contenido',
+      header: 'Reportar reseña de ' + username,
       buttons: [
         {
           text: 'Contenido ofensivo o inapropiado',
@@ -320,6 +319,7 @@ export class ReviewsComponent implements OnInit, OnChanges {
         {
           text: 'Cancelar',
           role: 'cancel',
+          cssClass: 'cancel-button',
         },
       ],
     });
@@ -327,7 +327,6 @@ export class ReviewsComponent implements OnInit, OnChanges {
     await actionSheet.present();
   }
 
-  // Nuevo método para manejar el reporte
   async reportReview(reason: string, review: Review) {
     try {
       await this.reportService.insertReport(reason, this.user.id, review.id);
@@ -344,7 +343,6 @@ export class ReviewsComponent implements OnInit, OnChanges {
   async presentToast(message: string, icon: string) {
     const toast = await this.toastController.create({
       cssClass: 'custom-toast',
-      swipeGesture: 'vertical',
       icon: icon,
       message,
       duration: 2000,

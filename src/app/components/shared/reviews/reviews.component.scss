@@ -20,7 +20,7 @@ ion-button.custom::part(native) {
 }
 
 ion-button.reveal::part(native) {
-  --padding-start: 20px;
+  --padding-start: 3px;
   --padding-end: 20px;
   --border-radius: 99px;
   --background: var(--surface-primary-600);

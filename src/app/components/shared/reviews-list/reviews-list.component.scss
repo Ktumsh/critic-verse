@@ -13,3 +13,14 @@ ion-segment-button.md {
   --indicator-height: 4px;
   text-transform: capitalize;
 }
+
+.fade-out {
+  animation: fadeOut 2s forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
