@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
-  ElementRef,
   Input,
   OnInit,
   ViewChild,
@@ -13,39 +13,45 @@ import { IonInput } from '@ionic/angular';
   selector: 'app-custom-input',
   templateUrl: './custom-input.component.html',
   styleUrls: ['./custom-input.component.scss'],
-}) /* , AfterViewInit <-- Para el autofocus */
-export class CustomInputComponent implements OnInit {
+})
+export class CustomInputComponent implements OnInit, AfterViewInit {
   @Input() control!: FormControl;
   @Input() type!: string;
   @Input() label!: string;
   @Input() placeholder!: string;
   @Input() autofocus: boolean = false;
   @Input() autocomplete!: string;
-  @Input() value!: string;
   @Input() icon!: string;
+  @Input() labelPlacement: string | null = null;
 
-  // Declarar el elemento del input DESACTIVADO POR EL MOMENTO
-  /*   @ViewChild(IonInput, { static: false }) inputElement!: IonInput; */
+  @ViewChild(IonInput, { static: false }) inputElement!: IonInput;
 
   isPassword!: boolean;
   hide: boolean = true;
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     if (this.type === 'password') this.isPassword = true;
   }
 
-  // Hacer autofocus DESACTIVADO POR EL MOMENTO
-  /*   ngAfterViewInit() {
-    if (this.autofocus) {
-      setTimeout(() => {
-        this.inputElement.setFocus();
-      }, 100);
-    }
-  } */
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
 
-  // Mostrar y ocultar contraseña
+    if (this.autofocus && this.inputElement) {
+      setTimeout(() => {
+        this.inputElement
+          .setFocus()
+          .then(() => {
+            console.log('Input enfocado');
+          })
+          .catch((err) => {
+            console.error('Error al enfocar el input', err);
+          });
+      }, 300);
+    }
+  }
+
   showOrHide() {
     this.hide = !this.hide;
 

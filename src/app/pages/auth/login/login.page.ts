@@ -22,7 +22,6 @@ export class LoginPage implements OnInit {
     private router: Router
   ) {}
 
-  // Aquí se controla el error de correo electrónico cuando el campo este vacío
   ngOnInit() {
     this.form.statusChanges.subscribe((status) => {
       if (status === 'INVALID' && this.form.controls.email.value === '') {

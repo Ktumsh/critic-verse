@@ -1,11 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import {
+  AlertController,
+  ModalController,
+  PopoverController,
+  ToastController,
+} from '@ionic/angular';
 import { ContentService } from 'src/app/services/content.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { Review } from 'src/app/types/review';
 import { User } from 'src/app/types/user';
 import { AddReviewComponent } from '../add-review/add-review.component';
 import { ratingClass } from 'src/utils/common';
+import { ReviewOptionsComponent } from '../review-options/review-options.component';
 
 @Component({
   selector: 'app-profile-reviews',
@@ -20,12 +26,18 @@ export class ProfileReviewsComponent implements OnInit {
   movieReviews: (Review & { title: string; image: string })[] = [];
   tvShowReviews: (Review & { title: string; image: string })[] = [];
 
+  longReviewMap: { [reviewId: string]: boolean } = {};
+  expandedReviews: { [reviewId: string]: boolean } = {};
+
   isLoading: boolean = true;
 
   constructor(
     private modalController: ModalController,
     private reviewService: ReviewService,
-    private contentService: ContentService
+    private contentService: ContentService,
+    private popoverController: PopoverController,
+    private toastController: ToastController,
+    private alertController: AlertController
   ) {}
 
   async ngOnInit() {
@@ -78,6 +90,7 @@ export class ProfileReviewsComponent implements OnInit {
       console.error('Error al cargar las reseñas del usuario:', error);
     } finally {
       this.isLoading = false;
+      this.updateLongReviewMap();
     }
   }
 
@@ -113,6 +126,19 @@ export class ProfileReviewsComponent implements OnInit {
     }
   }
 
+  async deleteReview(reviewId: string) {
+    try {
+      await this.reviewService.deleteReviewById(reviewId);
+      this.removeReviewFromArray(reviewId);
+      this.presentToast(
+        '¡Reseña eliminada exitosamente!',
+        'checkmark-circle-outline'
+      );
+    } catch (error) {
+      console.error('Error al eliminar la reseña:', error);
+    }
+  }
+
   private updateReviewInArray(updatedReview: Review) {
     let reviewArray: (Review & { title: string; image: string })[] = [];
 
@@ -137,6 +163,32 @@ export class ProfileReviewsComponent implements OnInit {
         date: updatedReview.date,
       };
       this.refreshReviewArray(reviewArray);
+      this.updateLongReviewMap();
+    }
+  }
+
+  private removeReviewFromArray(reviewId: string) {
+    const segmentReviews = this.getSelectedSegmentReviews();
+    const updatedReviews = segmentReviews.filter(
+      (review) => review.id !== reviewId
+    );
+    this.refreshReviewArray(updatedReviews);
+    this.updateLongReviewMap();
+  }
+
+  private getSelectedSegmentReviews(): (Review & {
+    title: string;
+    image: string;
+  })[] {
+    switch (this.selectedSegment) {
+      case 'games':
+        return this.gameReviews;
+      case 'movies':
+        return this.movieReviews;
+      case 'tv':
+        return this.tvShowReviews;
+      default:
+        return [];
     }
   }
 
@@ -154,6 +206,89 @@ export class ProfileReviewsComponent implements OnInit {
         this.tvShowReviews = [...updatedArray];
         break;
     }
+  }
+
+  private updateLongReviewMap() {
+    this.longReviewMap = {};
+    const allReviews = [
+      ...this.gameReviews,
+      ...this.movieReviews,
+      ...this.tvShowReviews,
+    ];
+    allReviews.forEach((review) => {
+      this.longReviewMap[review.id] =
+        !!review.comment && review.comment.length > 260;
+    });
+  }
+
+  toggleExpandReview(reviewId: string) {
+    this.expandedReviews[reviewId] = !this.expandedReviews[reviewId];
+  }
+
+  async openEditDeletePopover(event: MouseEvent, review: Review) {
+    const popover = await this.popoverController.create({
+      component: ReviewOptionsComponent,
+      cssClass: 'custom-popover v2',
+      event: event,
+      translucent: true,
+      componentProps: {
+        review,
+        user: this.user,
+        isProfilePage: true,
+      },
+    });
+
+    popover.onWillDismiss().then((result) => {
+      if (result.data) {
+        switch (result.data.action) {
+          case 'edit':
+            this.editReview(review);
+            break;
+          case 'delete':
+            this.confirmDeleteAlert(review);
+            break;
+        }
+      }
+    });
+
+    return await popover.present();
+  }
+
+  async confirmDeleteAlert(review: Review) {
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      cssClass: 'custom-alert v2',
+      header: 'Confirmar eliminación',
+      message: '¿Estás seguro que deseas eliminar esta reseña?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.deleteReview(review.id);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async presentToast(message: string, icon: string) {
+    const toast = await this.toastController.create({
+      cssClass: 'custom-toast',
+      swipeGesture: 'vertical',
+      icon,
+      message,
+      duration: 2000,
+      position: 'top',
+    });
+
+    await toast.present();
   }
 
   getRatingClass = ratingClass;

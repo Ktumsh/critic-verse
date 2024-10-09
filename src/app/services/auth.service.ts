@@ -53,4 +53,10 @@ export class AuthService {
       this.currentUser = null;
     }
   }
+
+  async updateCurrentUser(user: any): Promise<void> {
+    this.currentUser = user;
+    await this.nativeStorage.setItem('currentUser', user);
+    console.log('Datos de usuario actualizados en AuthService.');
+  }
 }

@@ -1,5 +1,4 @@
 import { ChangeDetectorRef } from '@angular/core';
-import { Game } from 'src/app/types/game';
 import { Review } from 'src/app/types/review';
 
 export function generateUUID(): string {
@@ -126,4 +125,56 @@ export function compareValues<T extends ContentWithReviewCount>(
 
     return 0;
   };
+}
+
+export function refresher(event: any, loadContent: () => Promise<void>) {
+  loadContent().then(() => {
+    event.target.complete();
+  });
+}
+
+export function formatDate(date: Date | string): string {
+  if (!date) return '';
+  let parsedDate: Date;
+
+  if (typeof date === 'string') {
+    const [year, month, day] = date.split('-').map(Number);
+    parsedDate = new Date(Date.UTC(year, month - 1, day));
+  } else {
+    parsedDate = date;
+  }
+  const year = parsedDate.getUTCFullYear();
+  const month = (parsedDate.getUTCMonth() + 1).toString().padStart(2, '0');
+  const day = parsedDate.getUTCDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+export function calculateAge(birthday: Date, today: Date): number {
+  let age = today.getFullYear() - birthday.getFullYear();
+  const monthDiff = today.getMonth() - birthday.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthday.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
+}
+
+export function calculateDaysUntilBirthday(birthday: Date): number {
+  const today = new Date();
+  const nextBirthday = new Date(
+    today.getFullYear(),
+    birthday.getMonth(),
+    birthday.getDate()
+  );
+
+  if (today > nextBirthday) {
+    nextBirthday.setFullYear(today.getFullYear() + 1);
+  }
+
+  const diff = nextBirthday.getTime() - today.getTime();
+  return Math.ceil(diff / (1000 * 60 * 60 * 24));
 }

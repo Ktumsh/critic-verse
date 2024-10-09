@@ -7,26 +7,28 @@
 <ion-content [fullscreen]="true">
   <div class="flex flex-col gap-4 py-6 px-4">
     <div class="flex flex-col gap-4">
-      <div class="flex justify-between gap-3 items-end">
-        <ion-button
-          color="secondary"
-          class="search-btn font-normal letter-spacing-normal"
-        >
-          <ion-icon name="search" class="size-4 text-white-h"></ion-icon>
-          <span class="inline-flex w-full text-white-l ml-1">Buscar</span>
-        </ion-button>
-        <ion-button
-          color="secondary"
-          class="add-btn font-normal letter-spacing-normal"
-        >
-          Agregar nuevo
-          <ion-icon slot="end" name="add-outline"></ion-icon>
-        </ion-button>
+      <div class="flex items-center">
+        <ion-searchbar
+          [formControl]="searchControl"
+          class="search-btn"
+          placeholder="Buscar usuario o correo"
+          debounce="250"
+          showCancelButton="focus"
+          showClearButton="never"
+        ></ion-searchbar>
       </div>
       <div class="flex justify-between items-center">
         <span class="text-white-l text-sm">
           Total: {{ users.length }} usuarios
         </span>
+        <ion-button
+          color="secondary"
+          class="add-btn font-normal letter-spacing-normal"
+          (click)="addUser()"
+        >
+          Agregar nuevo
+          <ion-icon slot="end" name="add-outline"></ion-icon>
+        </ion-button>
       </div>
     </div>
 
@@ -78,10 +80,11 @@
               <div class="inline-flex items-center justify-center gap-2">
                 <ion-thumbnail>
                   <img
-                    [ngSrc]="user.profileImage || 'assets/avatar-demo.svg'"
-                    width="150"
-                    height="150"
+                    [src]="user.profileImage || 'assets/avatar-demo.svg'"
+                    width="40"
+                    height="40"
                     alt="avatar"
+                    class="object-cover object-center"
                   />
                 </ion-thumbnail>
                 <div class="inline-flex flex-col items-start">
@@ -93,11 +96,12 @@
             <td class="align-middle text-start px-3 py-2">{{ user.role }}</td>
             <td class="align-middle text-center pl-3 py-2">
               <ion-button
+                *ngIf="user.id !== authenticatedUserId"
                 color="primary"
                 fill="clear"
                 shape="round"
                 color="secondary"
-                (click)="openUserOptions(user)"
+                (click)="openUserOptions($event, user)"
               >
                 <ion-icon
                   slot="icon-only"

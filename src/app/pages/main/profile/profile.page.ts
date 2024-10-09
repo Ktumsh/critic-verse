@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { User } from 'src/app/types/user';
 import { EditProfileComponent } from 'src/app/components/shared/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from 'src/app/components/shared/change-password/change-password.component';
@@ -8,15 +8,15 @@ import { AccountDetailsComponent } from 'src/app/components/shared/account-detai
 import { ProfileReviewsComponent } from 'src/app/components/shared/profile-reviews/profile-reviews.component';
 import { NotificationsComponent } from 'src/app/components/shared/notifications/notifications.component';
 import { ConfigurationComponent } from 'src/app/components/shared/configuration/configuration.component';
-import { HelpComponent } from 'src/app/components/shared/help/help.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage {
+export class ProfilePage implements OnInit {
   user: User = {
     id: '1',
     role: 'user',
@@ -29,10 +29,37 @@ export class ProfilePage {
 
   constructor(
     private authService: AuthService,
+    private reviewService: ReviewService,
     private router: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private alertController: AlertController
   ) {
     this.user = this.authService.user;
+  }
+
+  ngOnInit() {
+    this.loadUserReviewsCount();
+  }
+
+  async loadUserReviewsCount() {
+    try {
+      const reviews = await this.reviewService.getReviewsByUserId(this.user.id);
+      const reviewsCount = reviews.length;
+
+      const reviewsItem = this.items.find(
+        (item) => item.label === 'Mis calificaciones y reseñas'
+      );
+
+      if (reviewsItem) {
+        reviewsItem.note = `${reviewsCount}`;
+        reviewsItem.showNote = reviewsCount > 0;
+      }
+    } catch (error) {
+      console.error(
+        'Error al obtener la cantidad de reseñas del usuario:',
+        error
+      );
+    }
   }
 
   async openEditProfileModal() {
@@ -76,7 +103,7 @@ export class ProfilePage {
       label: 'Mis calificaciones y reseñas',
       iconSrc: 'assets/icon/review.svg',
       color: 'bg-blue',
-      note: '2',
+      note: '0',
       showNote: true,
       detail: false,
       action: () => this.openModal(ProfileReviewsComponent),
@@ -85,8 +112,8 @@ export class ProfilePage {
       label: 'Notificaciones',
       iconSrc: 'assets/icon/bell.svg',
       color: 'bg-emerald',
-      note: '3',
-      showNote: true,
+      note: null,
+      showNote: false,
       detail: false,
       action: () => this.openModal(NotificationsComponent),
     },
@@ -117,7 +144,7 @@ export class ProfilePage {
       detail: true,
       action: () => this.openModal(ConfigurationComponent),
     },
-    {
+    /* {
       label: 'Ayuda',
       iconSrc: 'assets/icon/help.svg',
       color: 'bg-pink',
@@ -125,13 +152,54 @@ export class ProfilePage {
       showNote: false,
       detail: true,
       action: () => this.openModal(HelpComponent),
+    }, */
+    {
+      label: 'Cerrar sesión',
+      iconSrc: 'assets/icon/action/logout.svg',
+      color: 'bg-transparent',
+      note: null,
+      showNote: false,
+      detail: true,
+      action: () => this.showLogoutAlert(),
     },
   ];
 
-  // Método de navegación actualizado
+  async showLogoutAlert() {
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      cssClass: 'custom-alert v2',
+      header: '¿Estás seguro que deseas cerrar sesión?',
+      message: 'Podrás volver a iniciar sesión cuando quieras.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Cerrar sesión',
+          role: 'confirm',
+          handler: async () => {
+            this.authService.logout();
+            await this.modalController.dismiss();
+            this.router.navigate(['/auth']);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
   navigateOrExecute(item: any) {
     if (item.action) {
       item.action();
     }
+  }
+
+  handleRefresh(e: any) {
+    this.loadUserReviewsCount().then(() => {
+      this.user = this.authService.user;
+      e.target.complete();
+    });
   }
 }

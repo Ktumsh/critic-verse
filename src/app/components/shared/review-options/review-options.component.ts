@@ -11,6 +11,7 @@ import { User } from 'src/app/types/user';
 export class ReviewOptionsComponent {
   @Input() review!: Review;
   @Input() user!: User;
+  @Input() isProfilePage: boolean = false;
 
   @Output() editReview = new EventEmitter<void>();
   @Output() deleteReview = new EventEmitter<void>();

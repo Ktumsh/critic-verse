@@ -1,0 +1,30 @@
+ion-list {
+  --ion-background-color: var(--surface-secondary-600-20);
+}
+
+ion-item {
+  --ion-background-color: transparent;
+  --border-color: var(--surface-secondary-600);
+  --inner-border-width: 0 0 1px 0;
+  --inner-padding-top: 8px;
+  --inner-padding-bottom: 8px;
+}
+
+ion-item:last-child {
+  --inner-border-width: 0 0 0 0;
+}
+
+ion-toggle {
+  --handle-background: var(--surface-secondary-500);
+  --track-background: var(--surface-secondary-300);
+}
+
+ion-select {
+  --border-width: 0;
+  --highlight-height: 0;
+  --highlight-color: var(--color-primary-600);
+}
+
+ion-select::part(label) {
+  color: rgb(255 255 255 / var(--opacity-h));
+}

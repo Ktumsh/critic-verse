@@ -33,7 +33,13 @@ export class DbService {
             location: 'default',
           });
 
-          await this.tableService.createTables(this.database);
+          const tablesExist = await this.tableService.checkIfTablesExist(
+            this.database
+          );
+
+          if (!tablesExist) {
+            await this.tableService.createTables(this.database);
+          }
           resolve();
         } else {
           console.error(

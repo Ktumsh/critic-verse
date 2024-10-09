@@ -24,7 +24,7 @@ export class AddReviewComponent implements OnInit {
 
   userId!: string;
   inputValue: string = '';
-  rating: number = 0;
+  rating: number = 1;
   containsSpoilers: boolean = false;
   item: any;
 
@@ -92,6 +92,13 @@ export class AddReviewComponent implements OnInit {
 
   async publishReview() {
     try {
+      if (this.inputValue && this.inputValue.length < 50) {
+        await this.presentToast(
+          'La reseña debe tener al menos 50 caracteres si decides escribir una.'
+        );
+        return;
+      }
+
       const contentId = this.item.id;
 
       if (this.review) {

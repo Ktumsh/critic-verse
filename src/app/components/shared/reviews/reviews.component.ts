@@ -43,11 +43,13 @@ export class ReviewsComponent implements OnInit, OnChanges {
   revealedReviews: { [reviewId: string]: boolean } = {};
   expandedReviews: { [reviewId: string]: boolean } = {};
   longReviewMap: { [reviewId: string]: boolean } = {};
+
   pendingDeleteMap: { [reviewId: string]: boolean } = {};
-  lastDeletedReview: Review | null = null;
+  lastDeletedReviews: { [reviewId: string]: Review } = {};
   progressMap: { [reviewId: string]: number } = {};
   showProgressBarMap: { [reviewId: string]: boolean } = {};
   progressIntervals: { [reviewId: string]: any } = {};
+  deleteTimeouts: { [reviewId: string]: any } = {};
 
   user!: any;
 
@@ -78,15 +80,21 @@ export class ReviewsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.item.reviews.forEach((review) => {
-      this.longReviewMap[review.id] = review.comment.length > 260;
-    });
+    this.updateLongReviewMap();
   }
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes['item']) {
       await this.loadUsernamesAndAvatars();
+      this.updateLongReviewMap();
     }
+  }
+
+  private updateLongReviewMap() {
+    this.longReviewMap = {};
+    this.item.reviews.forEach((review) => {
+      this.longReviewMap[review.id] = review.comment.length > 260;
+    });
   }
 
   private async loadUsernamesAndAvatars() {
@@ -157,8 +165,14 @@ export class ReviewsComponent implements OnInit, OnChanges {
   }
 
   async deleteReview(reviewId: string) {
-    this.lastDeletedReview =
+    const reviewToDelete =
       this.item.reviews.find((review) => review.id === reviewId) || null;
+
+    if (!reviewToDelete) {
+      return;
+    }
+
+    this.lastDeletedReviews[reviewId] = reviewToDelete;
 
     this.showProgressBarMap[reviewId] = true;
     this.progressMap[reviewId] = 0;
@@ -166,12 +180,13 @@ export class ReviewsComponent implements OnInit, OnChanges {
 
     this.startProgressBar(reviewId);
 
-    setTimeout(() => {
+    const deleteTimeout = setTimeout(() => {
       if (this.pendingDeleteMap[reviewId]) {
         this.reviewService.deleteReviewById(reviewId).then(() => {
           this.item.reviews = this.item.reviews.filter(
             (review) => review.id !== reviewId
           );
+          this.updateLongReviewMap();
           this.presentToast(
             '¡Reseña eliminada exitosamente!',
             'checkmark-circle-outline'
@@ -181,31 +196,38 @@ export class ReviewsComponent implements OnInit, OnChanges {
       }
       this.showProgressBarMap[reviewId] = false;
       this.progressMap[reviewId] = 0;
+      delete this.lastDeletedReviews[reviewId];
+      delete this.deleteTimeouts[reviewId];
     }, 3000);
+
+    this.deleteTimeouts[reviewId] = deleteTimeout;
   }
 
-  async undoDeleteReview() {
-    if (this.lastDeletedReview) {
-      const reviewId = this.lastDeletedReview.id;
-
+  async undoDeleteReview(reviewId: string) {
+    if (this.lastDeletedReviews[reviewId]) {
       if (this.progressIntervals[reviewId]) {
         clearInterval(this.progressIntervals[reviewId]);
         delete this.progressIntervals[reviewId];
       }
 
+      if (this.deleteTimeouts[reviewId]) {
+        clearTimeout(this.deleteTimeouts[reviewId]);
+        delete this.deleteTimeouts[reviewId];
+      }
+
       const alreadyExists = this.item.reviews.some(
-        (review) => review.id === this.lastDeletedReview?.id
+        (review) => review.id === reviewId
       );
 
       if (!alreadyExists) {
-        this.item.reviews.unshift(this.lastDeletedReview as Review);
+        this.item.reviews.unshift(this.lastDeletedReviews[reviewId]);
+        this.updateLongReviewMap();
       }
 
       this.showProgressBarMap[reviewId] = false;
       this.progressMap[reviewId] = 0;
       delete this.pendingDeleteMap[reviewId];
-
-      this.lastDeletedReview = null;
+      delete this.lastDeletedReviews[reviewId];
     }
   }
 
@@ -246,6 +268,7 @@ export class ReviewsComponent implements OnInit, OnChanges {
           } else {
             this.item.reviews.push(updatedReview);
           }
+          this.updateLongReviewMap();
           await this.refreshContentData();
         }
       });

@@ -1,6 +1,6 @@
 <div>
   <ion-item
-    *ngIf="review.userId === user.id"
+    *ngIf="review.userId === user.id && !isProfilePage"
     button
     (click)="onViewProfileReviews()"
   >

@@ -8,43 +8,105 @@
   <div class="flex flex-col items-center size-full py-6 px-6">
     <div class="flex items-center justify-center mb-5">
       <div class="ion-activatable ripple-parent">
-        <ion-thumbnail (click)="fileInput.click()" class="cursor-pointer">
+        <ion-thumbnail (click)="presentImageOptions()" class="cursor-pointer">
           <img [src]="userCopy.profileImage || 'assets/avatar-demo.svg'" />
           <ion-ripple-effect></ion-ripple-effect>
         </ion-thumbnail>
       </div>
-
-      <input
-        type="file"
-        #fileInput
-        (change)="onFileSelected($event)"
-        accept="image/*"
-        hidden
-      />
     </div>
 
     <div
       class="flex flex-col p-5 bg-surface-secondary-600 w-full rounded-xl space-y-4"
     >
-      <div class="flex flex-col w-full px-2">
-        <ion-label position="stacked">Nombre de usuario</ion-label>
-        <ion-input
-          required
-          color="primary"
-          clearInput
-          [(ngModel)]="userCopy.username"
-        ></ion-input>
-      </div>
-      <div class="flex flex-col w-full px-2" disabled="true">
-        <ion-label position="stacked">Correo electrónico</ion-label>
-        <ion-input
-          disabled
-          required
-          color="primary"
-          clearInput
-          [(ngModel)]="userCopy.email"
-        ></ion-input>
-      </div>
+      <form
+        [formGroup]="profileForm"
+        class="flex flex-col justify-between size-full"
+      >
+        <div class="flex flex-col w-full px-2">
+          <ion-label position="stacked">Nombre de usuario</ion-label>
+          <ion-input
+            color="primary"
+            clearInput
+            placeholder="username_123"
+            formControlName="username"
+          ></ion-input>
+          <div
+            *ngIf="
+              profileForm.get('username')?.invalid &&
+              (profileForm.get('username')?.touched || canShowError)
+            "
+          >
+            <span
+              *ngIf="profileForm.get('username')?.errors?.['required']"
+              class="text-xs text-danger"
+            >
+              El nombre de usuario no puede quedar vacío.
+            </span>
+            <span
+              *ngIf="profileForm.get('username')?.errors?.['minlength']"
+              class="text-xs text-danger"
+            >
+              El nombre de usuario debe tener al menos 3 caracteres.
+            </span>
+            <span
+              *ngIf="profileForm.get('username')?.errors?.['maxlength']"
+              class="text-xs text-danger"
+            >
+              El nombre de usuario debe tener menos de 30 caracteres.
+            </span>
+            <span
+              *ngIf="profileForm.get('username')?.errors?.['pattern']"
+              class="text-xs text-danger"
+            >
+              Solo se pueden incluir letras, números y guiones y debe contener
+              al menos una letra.
+            </span>
+            <span
+              *ngIf="profileForm.get('username')?.errors?.['usernameTaken']"
+              class="text-xs text-danger"
+            >
+              ¡Este nombre de usuario ya existe!
+            </span>
+          </div>
+        </div>
+        <div class="flex flex-col w-full px-2">
+          <ion-label position="stacked"> Fecha de nacimiento </ion-label>
+          <ion-input
+            type="date"
+            color="primary"
+            formControlName="birthdate"
+            (ionChange)="onDateChange($event)"
+            (ionBlur)="onBlurDate($event)"
+            [min]="minDate"
+            [max]="maxDate"
+            class="date-input"
+          ></ion-input>
+          <span
+            *ngIf="birthdateErrors?.['required'] && profileForm.get('birthdate')?.touched"
+            class="text-xs text-danger"
+          >
+            La fecha de nacimiento no puede estar vacía.
+          </span>
+          <span
+            *ngIf="birthdateErrors?.['dateInvalid'] && profileForm.get('birthdate')?.touched"
+            class="text-xs text-danger"
+          >
+            Fecha inválida o es una fecha futura.
+          </span>
+          <span
+            *ngIf="birthdateErrors?.['minAge'] && profileForm.get('birthdate')?.touched"
+            class="text-xs text-danger"
+          >
+            Debes tener al menos 13 años.
+          </span>
+        </div>
+        <div
+          *ngIf="daysUntilBirthday !== null"
+          class="text-sm text-center text-white-m mt-4"
+        >
+          ¡Quedan {{ daysUntilBirthday }} días para tu cumpleaños! 🎉🎂
+        </div>
+      </form>
     </div>
 
     <div class="flex items-end justify-center size-full">

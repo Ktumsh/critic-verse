@@ -1,0 +1,116 @@
+<app-header
+  [title]="isEditMode ? 'Editar usuario' : 'Agregar nuevo usuario'"
+  [logo]="false"
+  [backButton]="dismiss.bind(this)"
+></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="flex flex-col items-center h-full py-6 px-4">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col justify-between size-full"
+    >
+      <div class="flex flex-col mt-20 space-y-4">
+        <!-- Campo de Email (Solo visible al agregar un nuevo usuario) -->
+        <div *ngIf="!isEditMode">
+          <app-custom-input
+            labelPlacement="floating"
+            label="Correo electrónico"
+            type="email"
+            placeholder="Correo electrónico"
+            [control]="emailControl"
+          ></app-custom-input>
+          <div *ngIf="canShowError && emailControl.invalid" class="px-5 mt-1.5">
+            <span class="text-xs text-danger">{{
+              getErrorMessage("email", this.form, this.canShowError)
+            }}</span>
+          </div>
+        </div>
+
+        <!-- Campo de Nombre de Usuario -->
+        <div>
+          <app-custom-input
+            labelPlacement="floating"
+            label="Nombre de usuario"
+            type="text"
+            placeholder="Nombre de usuario"
+            [control]="usernameControl"
+          ></app-custom-input>
+          <div
+            *ngIf="canShowError && usernameControl.invalid"
+            class="px-5 mt-1.5"
+          >
+            <span class="text-xs text-danger">{{
+              getErrorMessage("username", this.form, this.canShowError)
+            }}</span>
+          </div>
+        </div>
+
+        <!-- Campo de Fecha de Nacimiento -->
+        <div>
+          <app-custom-input
+            labelPlacement="floating"
+            label="Fecha de nacimiento"
+            type="date"
+            placeholder="Fecha de nacimiento"
+            [control]="birthdateControl"
+          ></app-custom-input>
+          <div
+            *ngIf="canShowError && birthdateControl.invalid"
+            class="px-5 mt-1.5"
+          >
+            <span class="text-xs text-danger">{{
+              getErrorMessage("birthdate", this.form, this.canShowError)
+            }}</span>
+          </div>
+        </div>
+
+        <!-- Campo de Contraseña (Solo visible al agregar un nuevo usuario) -->
+        <div *ngIf="!isEditMode">
+          <app-custom-input
+            labelPlacement="floating"
+            label="Contraseña"
+            type="password"
+            placeholder="Contraseña"
+            [control]="passwordControl"
+          ></app-custom-input>
+          <div
+            *ngIf="canShowError && passwordControl.invalid"
+            class="px-5 mt-1.5"
+          >
+            <span class="text-xs text-danger">{{
+              getErrorMessage("password", this.form, this.canShowError)
+            }}</span>
+          </div>
+        </div>
+
+        <!-- Campo de Rol (ion-select) - Solo visible en modo edición -->
+        <div>
+          <ion-item>
+            <ion-select
+              [formControl]="roleControl"
+              [interfaceOptions]="customPopoverOptions"
+              interface="popover"
+              label="Rol"
+              mode="md"
+              color="primary"
+              class="custom-select text-white-m font-medium"
+            >
+              <ion-select-option value="user">Usuario</ion-select-option>
+              <ion-select-option value="admin">Administrador</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      </div>
+
+      <app-custom-button
+        [disabled]="isAnyFieldEmpty()"
+        type="submit"
+        [label]="isEditMode ? 'Actualizar usuario' : 'Agregar nuevo usuario'"
+        buttonClass="size-sm secondary"
+        class="w-full mt-3"
+      ></app-custom-button>
+    </form>
+  </div>
+</ion-content>

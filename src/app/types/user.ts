@@ -4,7 +4,7 @@ export interface User {
   email: string;
   username: string;
   password: string;
-  birthdate?: Date | string;
+  birthdate: Date | string;
   profileImage?: string;
   createdAt: Date | string;
 }

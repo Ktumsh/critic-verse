@@ -1,22 +1,32 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { USER_MODEL } from 'src/app/models/user.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AlertController,
+  ModalController,
+  PopoverController,
+} from '@ionic/angular';
 
 import { PageEvent } from '@angular/material/paginator';
 import { User } from 'src/app/types/user';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
+
+import { UserService } from 'src/app/services/user.service';
+import { AddNewUserComponent } from '../add-new-user/add-new-user.component';
+import { UserOptionsComponent } from '../user-options/user-options.component';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
 })
-export class UserListComponent implements OnInit {
-  users = USER_MODEL;
+export class UserListComponent implements OnInit, OnDestroy {
+  users: User[] = [];
+  filteredUsers: User[] = [];
   paginatedUsers: User[] = [];
+  authenticatedUserId: string | null = null;
 
-  length = this.users.length;
+  length = 0;
   pageSize = 7;
   pageIndex = 0;
 
@@ -28,11 +38,46 @@ export class UserListComponent implements OnInit {
   sortAscendingUsername = true;
   sortAscendingRole = true;
 
-  _bottomSheet = inject(MatBottomSheet);
+  searchControl: FormControl = new FormControl('');
 
-  constructor(private modalController: ModalController) {}
+  private subscription!: Subscription;
+
+  constructor(
+    private modalController: ModalController,
+    private userService: UserService,
+    private popoverController: PopoverController,
+    private alertController: AlertController,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    this.authenticatedUserId = this.authService.user.id ?? null;
+
+    this.userService.users$.subscribe((users) => {
+      this.users = users;
+      this.filteredUsers = users;
+      this.length = this.users.length;
+      this.updatePaginatedUsers();
+    });
+
+    this.searchControl.valueChanges.subscribe((searchTerm) => {
+      this.filterUsers(searchTerm);
+    });
+
+    this.userService.getAllUsers();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  filterUsers(searchTerm: string) {
+    this.filteredUsers = this.users.filter(
+      (user) =>
+        user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    this.length = this.filteredUsers.length;
     this.updatePaginatedUsers();
   }
 
@@ -45,7 +90,7 @@ export class UserListComponent implements OnInit {
   updatePaginatedUsers() {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.paginatedUsers = this.users.slice(startIndex, endIndex);
+    this.paginatedUsers = this.filteredUsers.slice(startIndex, endIndex);
   }
 
   sortUsersBy(column: string) {
@@ -76,21 +121,97 @@ export class UserListComponent implements OnInit {
     this.updatePaginatedUsers();
   }
 
-  openUserOptions(user: User): void {
-    this._bottomSheet.open(BottomSheetComponent, {
-      data: {
-        title: 'Usuario ' + '"' + user.username + '"',
-        options: [
-          {
-            label: 'Editar',
-          },
-          {
-            label: 'Eliminar',
-            isDanger: true,
-          },
-        ],
+  async openUserOptions(event: MouseEvent, user: User) {
+    if (user.id === this.authenticatedUserId) {
+      return;
+    }
+    const popover = await this.popoverController.create({
+      component: UserOptionsComponent,
+      cssClass: 'custom-popover v2',
+      event: event,
+      translucent: true,
+      componentProps: {
+        user,
       },
     });
+
+    popover.onWillDismiss().then((result) => {
+      if (result.data) {
+        switch (result.data.action) {
+          case 'edit':
+            this.editUser(user);
+            break;
+          case 'delete':
+            this.confirmDeleteAlert(user.username);
+            break;
+        }
+      }
+    });
+
+    return await popover.present();
+  }
+
+  async editUser(user: User) {
+    const modal = await this.modalController.create({
+      component: AddNewUserComponent,
+      componentProps: { user },
+    });
+
+    modal.onDidDismiss().then(async (result) => {
+      if (result.data && result.data.user) {
+        await this.userService.getAllUsers();
+      }
+    });
+
+    return await modal.present();
+  }
+
+  async deleteUser(username: string) {
+    try {
+      await this.userService.deleteUserByUsername(username);
+      await this.userService.getAllUsers();
+      console.log(`Usuario "${username}" eliminado exitosamente.`);
+    } catch (error) {
+      console.error('Error al eliminar el usuario:', error);
+    }
+  }
+
+  async confirmDeleteAlert(username: string) {
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      cssClass: 'custom-alert v2',
+      header: 'Confirmar eliminación',
+      message: '¿Estás seguro que deseas eliminar este usuario?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.deleteUser(username);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async addUser() {
+    const modal = await this.modalController.create({
+      component: AddNewUserComponent,
+    });
+
+    modal.onDidDismiss().then(async (result) => {
+      if (result.data && result.data.user) {
+        await this.userService.getAllUsers();
+      }
+    });
+
+    return await modal.present();
   }
 
   dismiss() {

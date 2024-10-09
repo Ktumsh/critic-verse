@@ -1,0 +1,16 @@
+<div>
+  <ion-item button (click)="performAction('edit')">
+    <ion-icon
+      [src]="'assets/icon/action/edit.svg'"
+      class="size-4 text-white-h mr-2"
+    ></ion-icon>
+    Editar
+  </ion-item>
+  <ion-item button (click)="performAction('delete')" class="text-danger">
+    <ion-icon
+      [src]="'assets/icon/action/delete.svg'"
+      class="size-4 text-danger mr-2"
+    ></ion-icon>
+    Eliminar
+  </ion-item>
+</div>
