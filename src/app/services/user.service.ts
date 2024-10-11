@@ -220,6 +220,32 @@ export class UserService {
   //Elimina un usuario mediante su nombre de usuario
   async deleteUserByUsername(username: string): Promise<void> {
     const database = await this.dbService.getDatabase();
+
+    const queryUserRole = 'SELECT role FROM Users WHERE username = ?';
+    const resultUserRole = await database.executeSql(queryUserRole, [username]);
+    if (resultUserRole.rows.length === 0) {
+      throw new Error('Usuario no encontrado.');
+    }
+
+    const userRole = resultUserRole.rows.item(0).role;
+
+    if (userRole === 'admin') {
+      const queryAdminCount =
+        'SELECT COUNT(*) as count FROM Users WHERE role = ?';
+      const resultAdminCount = await database.executeSql(queryAdminCount, [
+        'admin',
+      ]);
+
+      if (
+        resultAdminCount.rows.length > 0 &&
+        resultAdminCount.rows.item(0).count <= 1
+      ) {
+        throw new Error(
+          'No se puede eliminar tu cuenta, ya que eres el único administrador.'
+        );
+      }
+    }
+
     const query = 'DELETE FROM Users WHERE username = ?';
     await database.executeSql(query, [username]);
     this.getAllUsers();

@@ -190,8 +190,8 @@ export class UserListComponent implements OnInit, OnDestroy {
         },
         {
           text: 'Eliminar',
-          handler: () => {
-            this.deleteUser(username);
+          handler: async () => {
+            await this.deleteUser(username);
           },
         },
       ],

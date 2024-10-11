@@ -36,7 +36,16 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   async deleteUser() {
-    await this.showDeleteUserAlert();
+    try {
+      await this.userService.deleteUserByUsername(this.user.username);
+      this.authService.logout();
+      await this.modalController.dismiss();
+      this.router.navigate(['/auth']);
+    } catch (error) {
+      if (error instanceof Error) {
+        await this.showErrorAlert(error.message);
+      }
+    }
   }
 
   async showDeleteUserAlert() {
@@ -55,13 +64,22 @@ export class AccountDetailsComponent implements OnInit {
           text: 'Eliminar mi cuenta',
           role: 'confirm',
           handler: async () => {
-            await this.userService.deleteUserByUsername(this.user.username);
-            this.authService.logout();
-            await this.modalController.dismiss();
-            this.router.navigate(['/auth']);
+            await this.deleteUser();
           },
         },
       ],
+    });
+
+    await alert.present();
+  }
+
+  async showErrorAlert(message: string) {
+    const alert = await this.alertController.create({
+      mode: 'ios',
+      cssClass: 'custom-alert v2',
+      header: 'Error',
+      message: message,
+      buttons: ['OK'],
     });
 
     await alert.present();
