@@ -7,11 +7,12 @@
 <ion-content [fullscreen]="true">
   <div class="flex flex-col gap-4 py-6 px-4">
     <div class="flex flex-col space-y-4">
-      <!-- Filtro por Tipo -->
+      <!-- Filtros -->
       <ion-segment
         [(ngModel)]="filterOption"
         [value]="filterOption"
         (ionChange)="filterData($event)"
+        class="border-b border-secondary-600"
       >
         <ion-segment-button value="all">
           <div class="inline-flex items-center gap-1">
@@ -58,7 +59,7 @@
       <ng-container *ngIf="isInitialLoading; else reviewsList">
         <div
           *ngFor="let skeleton of [1, 2, 3, 4, 5]"
-          class="p-4 bg-surface-secondary-600 rounded relative"
+          class="p-4 bg-surface-secondary-600 rounded-lg relative"
         >
           <div class="flex flex-col space-y-4 text-white-h">
             <header class="flex flex-col w-full space-y-2">
@@ -104,7 +105,7 @@
       <ng-template #reviewsList>
         <div
           *ngFor="let review of displayedReviews"
-          class="p-4 bg-surface-secondary-600 rounded relative overflow-hidden"
+          class="p-4 bg-surface-secondary-600 rounded-lg relative overflow-hidden"
           [ngClass]="{ 'fade-out': reviewedReviewsMap[review.id] }"
         >
           <div
@@ -183,6 +184,7 @@
       </ng-template>
     </div>
   </div>
+
   <ion-infinite-scroll
     threshold="100px"
     (ionInfinite)="loadMoreReviews($event)"

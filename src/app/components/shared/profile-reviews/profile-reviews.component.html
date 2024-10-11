@@ -5,25 +5,28 @@
 />
 
 <ion-content [fullscreen]="true">
-  <ion-segment
-    [(ngModel)]="selectedSegment"
-    (ionChange)="segmentChanged($event)"
-    class="ion-padding-horizontal"
-  >
-    <ion-segment-button value="games">
-      <ion-label>Juegos</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="movies">
-      <ion-label>Películas</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="tv">
-      <ion-label>TV</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+  <!-- Filtros -->
+  <div class="px-4">
+    <ion-segment
+      [(ngModel)]="selectedSegment"
+      (ionChange)="segmentChanged($event)"
+      class="border-b border-secondary-600"
+    >
+      <ion-segment-button value="games">
+        <ion-label>Juegos</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="movies">
+        <ion-label>Películas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="tv">
+        <ion-label>TV</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
 
-  <!-- Skeleton Loading Reutilizable -->
+  <!-- Loading -->
   <ng-template #loadingSkeleton>
-    <div class="my-6 space-y-4">
+    <div class="space-y-4">
       <ion-card
         class="rounded-xl"
         *ngFor="let review of gameReviews | slice : 0 : 3"
@@ -82,13 +85,15 @@
     </div>
   </ng-template>
 
-  <!-- Mostrar el skeleton cuando está cargando -->
   <ng-container *ngIf="isLoading">
     <ng-container *ngTemplateOutlet="loadingSkeleton"></ng-container>
   </ng-container>
 
   <!-- Reseñas de Juegos -->
-  <div class="my-6 space-y-4" *ngIf="!isLoading && selectedSegment === 'games'">
+  <div
+    class="my-6 space-y-4 px-4"
+    *ngIf="!isLoading && selectedSegment === 'games'"
+  >
     <ion-card class="rounded-xl" *ngFor="let review of gameReviews">
       <div class="flex flex-col items-center justify-center w-full">
         <div class="flex items-center justify-center w-full">
@@ -154,27 +159,29 @@
           </div>
         </div>
         <!-- Si hay comentario -->
-        <div
-          class="flex flex-col items-end px-4 pb-4 w-full"
-          *ngIf="review.comment && longReviewMap[review.id]; else shortReview"
-        >
+        <ng-template *ngIf="review.comment">
           <div
-            class="line-clamp-container w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
-            [ngClass]="{ expanded: expandedReviews[review.id] }"
+            class="flex flex-col items-end px-4 pb-4 w-full"
+            *ngIf="longReviewMap[review.id]; else shortReview"
           >
-            <p class="text-white font-normal text-sm">
-              {{ review.comment }}
-            </p>
+            <div
+              class="line-clamp-container w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+              [ngClass]="{ expanded: expandedReviews[review.id] }"
+            >
+              <p class="text-white font-normal text-sm">
+                {{ review.comment }}
+              </p>
+            </div>
+            <ion-button
+              *ngIf="longReviewMap[review.id]"
+              fill="clear"
+              class="show-more text-xxs"
+              (click)="toggleExpandReview(review.id)"
+            >
+              {{ expandedReviews[review.id] ? "Ver menos" : "Ver todo" }}
+            </ion-button>
           </div>
-          <ion-button
-            *ngIf="longReviewMap[review.id]"
-            fill="clear"
-            class="show-more text-xxs"
-            (click)="toggleExpandReview(review.id)"
-          >
-            {{ expandedReviews[review.id] ? "Ver menos" : "Ver todo" }}
-          </ion-button>
-        </div>
+        </ng-template>
         <ng-template #shortReview>
           <div class="px-4 pb-4 w-full">
             <div
@@ -206,7 +213,7 @@
 
   <!-- Reseñas de Películas -->
   <div
-    class="my-6 space-y-4"
+    class="my-6 space-y-4 px-4"
     *ngIf="!isLoading && selectedSegment === 'movies'"
   >
     <ion-card class="rounded-xl" *ngFor="let review of movieReviews">
@@ -303,7 +310,10 @@
   </div>
 
   <!-- Reseñas de Series -->
-  <div class="my-6 space-y-4" *ngIf="!isLoading && selectedSegment === 'tv'">
+  <div
+    class="my-6 space-y-4 px-4"
+    *ngIf="!isLoading && selectedSegment === 'tv'"
+  >
     <ion-card class="rounded-xl" *ngFor="let review of tvShowReviews">
       <div class="flex flex-col items-center justify-center w-full">
         <div class="flex items-center justify-center w-full">
@@ -397,6 +407,7 @@
     </ion-card>
   </div>
 
+  <!-- Si no hay reseñas -->
   <div
     class="relative flex h-1/2 my-6"
     *ngIf="

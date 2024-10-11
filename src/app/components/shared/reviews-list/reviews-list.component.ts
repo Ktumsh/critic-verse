@@ -228,7 +228,7 @@ export class ReviewsListComponent implements OnInit {
       buttons: [
         {
           text: 'Marcar como revisado',
-          icon: 'checkmark-circle-outline',
+          icon: 'assets/icon/miscellaneous/check-circled.svg',
           cssClass: 'success-button',
           handler: () => {
             this.markAsReviewed(review);
@@ -236,7 +236,7 @@ export class ReviewsListComponent implements OnInit {
         },
         {
           text: 'Marcar como inapropiado',
-          icon: 'alert-circle-outline',
+          icon: 'assets/icon/miscellaneous/alert-circled.svg',
           cssClass: 'warning-button',
           handler: () => {
             this.markAsInappropriate(review);
@@ -244,7 +244,7 @@ export class ReviewsListComponent implements OnInit {
         },
         {
           text: 'Eliminar reseña',
-          icon: 'close',
+          icon: 'assets/icon/miscellaneous/dismiss-circled.svg',
           cssClass: 'danger-button',
           handler: () => {
             this.deleteReview(review);

@@ -73,13 +73,29 @@ export class UserService {
     username: string;
     password: string;
     birthdate?: string | Date;
-    profileImage?: string;
   }): Promise<void> {
     const database = await this.dbService.getDatabase();
     const userId = generateUUID();
     const salt = generateUUID();
     const hashedPassword = this.hashPassword(user.password, salt);
     const formattedBirthdate = this.formatDate(user.birthdate);
+
+    const avatar = createAvatar(botttsNeutral, {
+      seed: user.username,
+      backgroundType: ['gradientLinear', 'solid'],
+    });
+
+    const profileImage = avatar.toDataUri();
+
+    const emailExists = await this.emailExists(user.email);
+    const usernameExists = await this.usernameExists(user.username);
+
+    if (emailExists || usernameExists) {
+      console.log(
+        `El usuario con email "${user.email}" o username "${user.username}" ya existe, se omite la creación.`
+      );
+      return;
+    }
 
     const userInsert = `
       INSERT INTO Users (id, role, email, username, password, salt, birthdate, profileImage, createdAt)
@@ -93,7 +109,7 @@ export class UserService {
       hashedPassword,
       salt,
       formattedBirthdate,
-      user.profileImage || null,
+      profileImage || null,
     ];
 
     await database.executeSql(userInsert, userValues);

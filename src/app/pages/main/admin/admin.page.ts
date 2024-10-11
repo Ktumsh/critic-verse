@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ReportedContentComponent } from 'src/app/components/shared/reported-content/reported-content.component';
+import { ReportsListComponent } from 'src/app/components/shared/reports-list/reports-list.component';
 import { ReviewsListComponent } from 'src/app/components/shared/reviews-list/reviews-list.component';
 import { UserListComponent } from 'src/app/components/shared/user-list/user-list.component';
 import { GAME_MODEL } from 'src/app/models/game.model';
@@ -40,7 +40,7 @@ export class AdminPage implements OnInit {
 
   openUserList = () => this.openModal(UserListComponent);
   openReviewList = () => this.openModal(ReviewsListComponent);
-  openReportedContent = () => this.openModal(ReportedContentComponent);
+  openReportedContent = () => this.openModal(ReportsListComponent);
 
   calculateAverageRating(reviews: Review[]): number {
     if (reviews.length === 0) {

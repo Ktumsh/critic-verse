@@ -456,7 +456,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: 'Joker: Locura en dos',
+    id: 'joker-locura-en-dos',
     title: 'Joker: Locura en dos',
     description:
       'Arthur Fleck está internado en Arkham a la espera de ser juzgado por sus crímenes como Joker. Mientras lucha con su doble identidad, Arthur no solo se topa con el amor verdadero, sino que también encuentra la música que siempre ha estado dentro de él.',
@@ -537,7 +537,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: 'El robot salvaje',
+    id: 'el-robot-salvaje',
     title: 'El robot salvaje',
     description:
       'Un robot, la unidad ROZZUM 7134, “Roz” para abreviar, naufraga en una isla deshabitada y debe aprender a adaptarse al duro entorno, construyendo gradualmente relaciones con los animales de la isla y convirtiéndose en el padre adoptivo de un ganso huérfano.',
@@ -639,7 +639,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: 'Alien-Romulus',
+    id: 'alien-romulus',
     title: 'Alien: Romulus',
     description:
       'Mientras hurgan en las profundidades de una estación espacial abandonada, un grupo de jóvenes colonizadores espaciales se encuentran cara a cara con la forma de vida más aterradora del universo.',
@@ -715,7 +715,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: 'Azrael',
+    id: 'azrael',
     title: 'Azrael',
     description:
       'En un mundo en el que nadie habla, una misteriosa y devota comunidad persigue a una joven llamada Azrael (Samara Weaving) que ha escapado de su prisión. Sus despiadados líderes la han vuelto a capturar y la van a sacrificar para pacificar un mal que reside en las profundidades del desierto circundante, pero Azrael no se detendrá ante nada para asegurar su propia seguridad.',
@@ -787,7 +787,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: 'Super/Man-The-Christopher-Reeve-Story',
+    id: 'superman-the-christopher-reeve-story',
     title: 'Super/Man: The Christopher Reeve Story',
     description:
       'La historia de Christopher Reeve es un asombroso ascenso de actor desconocido a estrella de cine icónica, y su interpretación definitiva de Clark Kent/Superman estableció el punto de referencia para los universos cinematográficos de superhéroes que dominan el cine actual. ',
@@ -871,7 +871,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: 'Transformers-One',
+    id: 'transformers-one',
     title: 'Transformers One',
     description:
       'Transformers One es la historia del origen no contada de Optimus Prime y Megatron, mejor conocidos como enemigos jurados, pero que una vez fueron amigos unidos como hermanos que cambiaron el destino de Cybertron para siempre. ',
@@ -963,7 +963,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: 'Pájaro-blanco',
+    id: 'pajaro-blanco',
     title: 'Pájaro blanco',
     description:
       'ulian (Bryce Gheisar) ha luchado por sentirse parte de un grupo desde que lo expulsaron de su antigua escuela por su trato hacia Auggie Pullman. Para transformar su vida, la abuela de Julian (Helen Mirren) finalmente le revela a Julian su propia historia de coraje: durante su juventud en la Francia ocupada por los nazis, un niño la protege de un peligro mortal.',
@@ -1039,7 +1039,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: 'Apartado',
+    id: 'apartado',
     title: 'Apartado',
     description:
       'Basado en el libro del corresponsal político y nacional de la NBC, Jacob Soboroff, Errol Morris combina entrevistas explosivas con funcionarios que denuncian irregularidades y viñetas narrativas ingeniosas que trazan la difícil situación de una familia migrante.',
@@ -1113,7 +1113,7 @@ export const MOVIE_MODEL: Movie[] = [
     ],
   },
   {
-    id: 'Megalopolis',
+    id: 'megalopolis',
     title: 'Megalopolis',
     description:
       'Megalópolis es una fábula épica romana ambientada en una América moderna imaginaria. La ciudad de Nueva Roma debe cambiar, lo que provoca un conflicto entre César Catilina, un artista genial que busca dar el salto a un futuro utópico e idealista, y su oponente, el alcalde Franklyn Cicero, que sigue comprometido con un status quo regresivo, perpetuando la codicia, los intereses especiales y la guerra partidista. Dividida entre ellos está la socialité Julia Cicero, la hija del alcalde, cuyo amor por César ha dividido sus lealtades, obligándola a descubrir lo que realmente cree que merece la humanidad.',

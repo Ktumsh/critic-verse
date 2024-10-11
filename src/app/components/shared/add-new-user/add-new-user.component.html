@@ -12,13 +12,12 @@
       class="flex flex-col justify-between size-full"
     >
       <div class="flex flex-col mt-20 space-y-4">
-        <!-- Campo de Email (Solo visible al agregar un nuevo usuario) -->
         <div *ngIf="!isEditMode">
           <app-custom-input
             labelPlacement="floating"
             label="Correo electrónico"
             type="email"
-            placeholder="Correo electrónico"
+            placeholder="example@gmail.com"
             [control]="emailControl"
           ></app-custom-input>
           <div *ngIf="canShowError && emailControl.invalid" class="px-5 mt-1.5">
@@ -28,13 +27,12 @@
           </div>
         </div>
 
-        <!-- Campo de Nombre de Usuario -->
         <div>
           <app-custom-input
             labelPlacement="floating"
             label="Nombre de usuario"
             type="text"
-            placeholder="Nombre de usuario"
+            placeholder="username_123"
             [control]="usernameControl"
           ></app-custom-input>
           <div
@@ -47,7 +45,6 @@
           </div>
         </div>
 
-        <!-- Campo de Fecha de Nacimiento -->
         <div>
           <app-custom-input
             labelPlacement="floating"
@@ -66,13 +63,12 @@
           </div>
         </div>
 
-        <!-- Campo de Contraseña (Solo visible al agregar un nuevo usuario) -->
         <div *ngIf="!isEditMode">
           <app-custom-input
             labelPlacement="floating"
             label="Contraseña"
             type="password"
-            placeholder="Contraseña"
+            placeholder="**********"
             [control]="passwordControl"
           ></app-custom-input>
           <div
@@ -85,7 +81,6 @@
           </div>
         </div>
 
-        <!-- Campo de Rol (ion-select) - Solo visible en modo edición -->
         <div>
           <ion-item>
             <ion-select

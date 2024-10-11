@@ -19,7 +19,6 @@ import { BottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminFloatBtnComponent } from './admin-float-btn/admin-float-btn.component';
-import { ReportedContentComponent } from './reported-content/reported-content.component';
 import { ReviewsListComponent } from './reviews-list/reviews-list.component';
 import { UserListComponent } from './user-list/user-list.component';
 import {
@@ -35,6 +34,7 @@ import { CastingComponent } from './casting/casting.component';
 import { ReviewOptionsComponent } from './review-options/review-options.component';
 import { AddNewUserComponent } from './add-new-user/add-new-user.component';
 import { UserOptionsComponent } from './user-options/user-options.component';
+import { ReportsListComponent } from './reports-list/reports-list.component';
 
 @NgModule({
   declarations: [
@@ -50,8 +50,8 @@ import { UserOptionsComponent } from './user-options/user-options.component';
     HelpComponent,
     BottomSheetComponent,
     AdminFloatBtnComponent,
-    ReportedContentComponent,
     ReviewsListComponent,
+    ReportsListComponent,
     UserListComponent,
     EditProfileComponent,
     AddReviewComponent,
@@ -76,9 +76,9 @@ import { UserOptionsComponent } from './user-options/user-options.component';
     HelpComponent,
     BottomSheetComponent,
     AdminFloatBtnComponent,
-    ReportedContentComponent,
     ReviewsListComponent,
     UserListComponent,
+    ReportsListComponent,
     ReactiveFormsModule,
     EditProfileComponent,
     AddReviewComponent,

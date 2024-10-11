@@ -3,12 +3,12 @@ import { DbService } from './services/db.service';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { ContentService } from './services/content.service';
-import { SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 import { UserService } from './services/user.service';
 import { GAME_MODEL } from './models/game.model';
 import { MOVIE_MODEL } from './models/movie.model';
 import { TV_MODEL } from './models/tv.model';
 import { AccessibilityService } from './services/accessibility.service';
+import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,7 @@ import { AccessibilityService } from './services/accessibility.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  private database!: SQLiteObject;
+  private readonly DB_STORAGE_KEY = 'db_initialized';
 
   constructor(
     private dbService: DbService,
@@ -24,43 +24,30 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
-    private accessibilityService: AccessibilityService
+    private accessibilityService: AccessibilityService,
+    private nativeStorage: NativeStorage
   ) {}
 
   async ngOnInit() {
-    //Crear base de datos y tablas
-    /* await this.createDBandTables(); */
-
-    //Borrar usuario
-    /* this.deleteUser('Josuesin'); */
-
-    //Cargar accesibilidad
+    const dbInitialized = await this.nativeStorage
+      .getItem(this.DB_STORAGE_KEY)
+      .catch(() => null);
+    if (!dbInitialized) {
+      await this.createDBandTables();
+      await this.nativeStorage.setItem(this.DB_STORAGE_KEY, true);
+      console.log(
+        'Base de datos inicializada y estado guardado en native storage.'
+      );
+    } else {
+      console.log(
+        'Base de datos ya inicializada, no se requiere creación de tablas ni la inserción de datos.'
+      );
+    }
     this.accessibilityService.loadSettings();
-
-    //Checkear estado de autenticación
     await this.authState();
   }
 
-  async createDBandTables() {
-    this.dbService
-      .createDatabase()
-      .then(() => {
-        console.log('Base de datos y tablas creadas exitosamente.');
-        return (
-          /* this.contentService.insertGameData(GAME_MODEL), */
-          /* this.contentService.insertMovieData(MOVIE_MODEL) */
-          this.contentService.insertTvShowData(TV_MODEL)
-          /* this.createUser() */
-        );
-      })
-      .catch((error) => {
-        console.error(
-          'Error al inicializar la base de datos y crear las tablas',
-          error
-        );
-      });
-  }
-
+  //Comprobar estado de autenticación
   async authState() {
     await this.authService.loadAuthState();
     if (this.authService.isLoggedIn) {
@@ -70,16 +57,38 @@ export class AppComponent implements OnInit {
     }
   }
 
-  deleteUser(username: string) {
-    this.userService.deleteUserByUsername(username);
+  //Crear base de datos y tablas
+  async createDBandTables() {
+    try {
+      await this.dbService.createDatabase();
+      console.log('Base de datos y tablas creadas.');
+
+      await this.contentService.insertGameData(GAME_MODEL);
+      console.log('Datos de juegos insertados.');
+
+      await this.contentService.insertMovieData(MOVIE_MODEL);
+      console.log('Datos de películas insertados.');
+
+      await this.contentService.insertTvShowData(TV_MODEL);
+      console.log('Datos de series insertados.');
+
+      await this.createUser();
+      console.log('Usuario inicial creado.');
+    } catch (error) {
+      console.error(
+        'Error al inicializar la base de datos y al insertar datos:',
+        error
+      );
+    }
   }
 
+  //Crear un usuario inicial
   async createUser() {
     const newUser = {
       role: 'admin',
-      email: 'ren.rivera@duocuc.cl',
-      username: 'RynaT',
-      password: 'Renato123*',
+      email: 'jo.barra@duocuc.cl',
+      username: 'ktumsh',
+      password: 'Josue123*',
       birthdate: new Date('2002-01-11T12:00:00'),
     };
 

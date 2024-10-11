@@ -23,265 +23,348 @@ export class ContentService {
   //Insertar datos de los juegos
   async insertGameData(games: Game[]): Promise<void> {
     const database = await this.dbService.getDatabase();
-    await database.executeSql('DELETE FROM Games;', []);
 
     for (const game of games) {
-      const detailId = await this.insertDetailForGame(game);
+      const query = 'SELECT COUNT(*) AS count FROM Games WHERE id = ?';
+      const result = await database.executeSql(query, [game.id]);
+      const count = result.rows.item(0).count;
 
-      const gameInsert = `
-      INSERT INTO Games (id, title, description, image, video, rating, releaseDate, detailId)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-      const gameValues = [
-        game.id,
-        game.title,
-        game.description,
-        game.image || null,
-        game.video || null,
-        game.rating,
-        game.detail.releaseDate.toString(),
-        detailId,
-      ];
-      await database.executeSql(gameInsert, gameValues);
+      if (count === 0) {
+        const detailId = await this.insertDetailForGame(game);
 
-      if (game.reviews && game.reviews.length > 0) {
-        for (const review of game.reviews) {
-          const existingReview = await this.reviewService.getExistingReview(
-            game.id,
-            review.userId,
-            review.comment
-          );
-          if (!existingReview) {
-            await this.reviewService.insertReview(
+        const gameInsert = `
+        INSERT OR IGNORE INTO Games (id, title, description, image, video, rating, releaseDate, detailId)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+        const gameValues = [
+          game.id,
+          game.title,
+          game.description,
+          game.image || null,
+          game.video || null,
+          game.rating,
+          game.detail.releaseDate.toString(),
+          detailId,
+        ];
+        await database.executeSql(gameInsert, gameValues);
+
+        if (game.reviews && game.reviews.length > 0) {
+          for (const review of game.reviews) {
+            const existingReview = await this.reviewService.getExistingReview(
               game.id,
               review.userId,
-              review.rating,
-              review.comment,
-              review.containsSpoilers
+              review.comment
             );
+            if (!existingReview) {
+              await this.reviewService.insertReview(
+                game.id,
+                review.userId,
+                review.rating,
+                review.comment,
+                review.containsSpoilers
+              );
+            }
           }
         }
-      }
 
-      console.log(`Datos del juego "${game.title}" insertados correctamente.`);
+        console.log(
+          `Datos del juego "${game.title}" insertados correctamente.`
+        );
+      } else {
+        console.log(
+          `El juego "${game.title}" ya existe, se omite la inserción.`
+        );
+      }
     }
   }
 
   //Insertar datos de las películas
   async insertMovieData(movies: Movie[]): Promise<void> {
     const database = await this.dbService.getDatabase();
-    await database.executeSql('DELETE FROM Movies;', []);
 
     for (const movie of movies) {
-      const detailId = await this.insertDetailForMovie(movie);
+      const query = 'SELECT COUNT(*) AS count FROM Movies WHERE id = ?';
+      const result = await database.executeSql(query, [movie.id]);
+      const count = result.rows.item(0).count;
 
-      const movieInsert = `
-        INSERT INTO Movies (id, title, description, image, rating, releaseDate, detailId)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-      `;
-      const movieValues = [
-        movie.id,
-        movie.title,
-        movie.description,
-        movie.image || null,
-        movie.rating,
-        movie.detail.releaseDate.toString(),
-        detailId,
-      ];
-      await database.executeSql(movieInsert, movieValues);
+      if (count === 0) {
+        const detailId = await this.insertDetailForMovie(movie);
 
-      if (movie.reviews && movie.reviews.length > 0) {
-        for (const review of movie.reviews) {
-          const existingReview = await this.reviewService.getExistingReview(
-            movie.id,
-            review.userId,
-            review.comment
-          );
-          if (!existingReview) {
-            await this.reviewService.insertReview(
+        const movieInsert = `
+          INSERT OR IGNORE INTO Movies (id, title, description, image, rating, releaseDate, detailId)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `;
+        const movieValues = [
+          movie.id,
+          movie.title,
+          movie.description,
+          movie.image || null,
+          movie.rating,
+          movie.detail.releaseDate.toString(),
+          detailId,
+        ];
+        await database.executeSql(movieInsert, movieValues);
+
+        if (movie.reviews && movie.reviews.length > 0) {
+          for (const review of movie.reviews) {
+            const existingReview = await this.reviewService.getExistingReview(
               movie.id,
               review.userId,
-              review.rating,
-              review.comment,
-              review.containsSpoilers
+              review.comment
             );
+            if (!existingReview) {
+              await this.reviewService.insertReview(
+                movie.id,
+                review.userId,
+                review.rating,
+                review.comment,
+                review.containsSpoilers
+              );
+            }
           }
         }
-      }
 
-      if (movie.detail.cast && movie.detail.cast.length > 0) {
-        for (const cast of movie.detail.cast) {
-          const existingCast = await this.getExistingCast(
-            movie.id,
-            cast.actor,
-            cast.character
-          );
-          if (!existingCast) {
-            const castInsert = `
-              INSERT INTO Cast (id, actor, character, image, contentId)
-              VALUES (?, ?, ?, ?, ?)
-            `;
-            const castValues = [
-              generateUUID(),
-              cast.actor,
-              cast.character,
-              cast.image || null,
+        if (movie.detail.cast && movie.detail.cast.length > 0) {
+          for (const cast of movie.detail.cast) {
+            const existingCast = await this.getExistingCast(
               movie.id,
-            ];
-            await database.executeSql(castInsert, castValues);
+              cast.actor,
+              cast.character
+            );
+            if (!existingCast) {
+              const castInsert = `
+                INSERT OR IGNORE INTO Cast (id, actor, character, image, contentId)
+                VALUES (?, ?, ?, ?, ?)
+              `;
+              const castValues = [
+                generateUUID(),
+                cast.actor,
+                cast.character,
+                cast.image || null,
+                movie.id,
+              ];
+              await database.executeSql(castInsert, castValues);
+            }
           }
         }
-      }
 
-      console.log(
-        `Datos de la película "${movie.title}" insertados correctamente.`
-      );
+        console.log(
+          `Datos de la película "${movie.title}" insertados correctamente.`
+        );
+      } else {
+        console.log(
+          `La película "${movie.title}" ya existe, se omite la inserción.`
+        );
+      }
     }
   }
 
   //Insertar datos de las Series
   async insertTvShowData(tvShows: TvShow[]): Promise<void> {
     const database = await this.dbService.getDatabase();
-    await database.executeSql('DELETE FROM TvShows;', []);
 
     for (const tvShow of tvShows) {
-      const detailId = await this.insertDetailForTvShow(tvShow);
+      const query = 'SELECT COUNT(*) AS count FROM TvShows WHERE id = ?';
+      const result = await database.executeSql(query, [tvShow.id]);
+      const count = result.rows.item(0).count;
 
-      const tvShowInsert = `
-        INSERT INTO TvShows (id, title, description, image, rating, releaseDate, detailId)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-      `;
-      const tvShowValues = [
-        tvShow.id,
-        tvShow.title,
-        tvShow.description,
-        tvShow.image || null,
-        tvShow.rating,
-        tvShow.detail.releaseDate.toString(),
-        detailId,
-      ];
-      await database.executeSql(tvShowInsert, tvShowValues);
+      if (count === 0) {
+        const detailId = await this.insertDetailForTvShow(tvShow);
 
-      if (tvShow.reviews && tvShow.reviews.length > 0) {
-        for (const review of tvShow.reviews) {
-          const existingReview = await this.reviewService.getExistingReview(
-            tvShow.id,
-            review.userId,
-            review.comment
-          );
-          if (!existingReview) {
-            await this.reviewService.insertReview(
+        const tvShowInsert = `
+          INSERT OR IGNORE INTO TvShows (id, title, description, image, rating, releaseDate, detailId)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `;
+        const tvShowValues = [
+          tvShow.id,
+          tvShow.title,
+          tvShow.description,
+          tvShow.image || null,
+          tvShow.rating,
+          tvShow.detail.releaseDate.toString(),
+          detailId,
+        ];
+        await database.executeSql(tvShowInsert, tvShowValues);
+
+        if (tvShow.reviews && tvShow.reviews.length > 0) {
+          for (const review of tvShow.reviews) {
+            const existingReview = await this.reviewService.getExistingReview(
               tvShow.id,
               review.userId,
-              review.rating,
-              review.comment,
-              review.containsSpoilers
+              review.comment
             );
+            if (!existingReview) {
+              await this.reviewService.insertReview(
+                tvShow.id,
+                review.userId,
+                review.rating,
+                review.comment,
+                review.containsSpoilers
+              );
+            }
           }
         }
-      }
 
-      if (tvShow.detail.cast && tvShow.detail.cast.length > 0) {
-        for (const cast of tvShow.detail.cast) {
-          const existingCast = await this.getExistingCast(
-            tvShow.id,
-            cast.actor,
-            cast.character
-          );
-          if (!existingCast) {
-            const castInsert = `
-              INSERT INTO Cast (id, actor, character, image, contentId)
-              VALUES (?, ?, ?, ?, ?)
-            `;
-            const castValues = [
-              generateUUID(),
-              cast.actor,
-              cast.character,
-              cast.image || null,
+        if (tvShow.detail.cast && tvShow.detail.cast.length > 0) {
+          for (const cast of tvShow.detail.cast) {
+            const existingCast = await this.getExistingCast(
               tvShow.id,
-            ];
-            await database.executeSql(castInsert, castValues);
+              cast.actor,
+              cast.character
+            );
+            if (!existingCast) {
+              const castInsert = `
+                INSERT OR IGNORE INTO Cast (id, actor, character, image, contentId)
+                VALUES (?, ?, ?, ?, ?)
+              `;
+              const castValues = [
+                generateUUID(),
+                cast.actor,
+                cast.character,
+                cast.image || null,
+                tvShow.id,
+              ];
+              await database.executeSql(castInsert, castValues);
+            }
           }
         }
-      }
 
-      console.log(
-        `Datos de la serie "${tvShow.title}" insertados correctamente.`
-      );
+        console.log(
+          `Datos de la serie "${tvShow.title}" insertados correctamente.`
+        );
+      } else {
+        console.log(
+          `La serie "${tvShow.title}" ya existe, se omite la inserción.`
+        );
+      }
     }
   }
 
   //Detalles de juegos
   private async insertDetailForGame(game: Game): Promise<string> {
     const database = await this.dbService.getDatabase();
-    const detailId = generateUUID();
-    const detailInsert = `
-      INSERT INTO Detail (id, summary, genre, platforms, releaseDate, editor, developer, productionCompany, timeDuration)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    const detailValues = [
-      detailId,
+    let detailId: string;
+
+    const query =
+      'SELECT id FROM Detail WHERE summary = ? AND genre = ? AND releaseDate = ?';
+    const result = await database.executeSql(query, [
       game.detail.summary,
       game.detail.genre.join(', '),
-      game.detail.platforms?.join(', ') || null,
       game.detail.releaseDate.toString(),
-      game.detail.editor,
-      game.detail.developer,
-      game.detail.productionCompany?.join(', ') || null,
-      game.detail.timeDuration || null,
-    ];
-    await database.executeSql(detailInsert, detailValues);
+    ]);
+
+    if (result.rows.length === 0) {
+      detailId = generateUUID();
+      const detailInsert = `
+        INSERT INTO Detail (id, summary, genre, platforms, releaseDate, editor, developer, productionCompany, timeDuration)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      const detailValues = [
+        detailId,
+        game.detail.summary,
+        game.detail.genre.join(', '),
+        game.detail.platforms?.join(', ') || null,
+        game.detail.releaseDate.toString(),
+        game.detail.editor,
+        game.detail.developer,
+        game.detail.productionCompany?.join(', ') || null,
+        game.detail.timeDuration || null,
+      ];
+      await database.executeSql(detailInsert, detailValues);
+    } else {
+      detailId = result.rows.item(0).id;
+      console.log(
+        `El detalle del juego ya existe con ID: ${detailId}, se omite la inserción.`
+      );
+    }
+
     return detailId;
   }
 
   //Detalles de peliculas
   private async insertDetailForMovie(movie: Movie): Promise<string> {
     const database = await this.dbService.getDatabase();
-    const detailId = generateUUID();
-    const detailInsert = `
+    let detailId: string;
+
+    const query =
+      'SELECT id FROM Detail WHERE summary = ? AND genre = ? AND releaseDate = ?';
+    const result = await database.executeSql(query, [
+      movie.detail.summary,
+      movie.detail.genre.join(', '),
+      movie.detail.releaseDate.toString(),
+    ]);
+
+    if (result.rows.length === 0) {
+      detailId = generateUUID();
+      const detailInsert = `
       INSERT INTO Detail (id, summary, genre, platforms, releaseDate, editor, developer, productionCompany, timeDuration, director, producer, writer)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
-    const detailValues = [
-      detailId,
-      movie.detail.summary,
-      movie.detail.genre.join(', '),
-      movie.detail.platforms?.join(', ') || null,
-      movie.detail.releaseDate.toString(),
-      movie.detail.editor,
-      movie.detail.developer,
-      movie.detail.productionCompany?.join(', ') || null,
-      movie.detail.timeDuration || null,
-      movie.detail.director?.join(', ') || null,
-      movie.detail.producer?.join(', ') || null,
-      movie.detail.writer?.join(', ') || null,
-    ];
-    await database.executeSql(detailInsert, detailValues);
+      const detailValues = [
+        detailId,
+        movie.detail.summary,
+        movie.detail.genre.join(', '),
+        movie.detail.platforms?.join(', ') || null,
+        movie.detail.releaseDate.toString(),
+        movie.detail.editor,
+        movie.detail.developer,
+        movie.detail.productionCompany?.join(', ') || null,
+        movie.detail.timeDuration || null,
+        movie.detail.director?.join(', ') || null,
+        movie.detail.producer?.join(', ') || null,
+        movie.detail.writer?.join(', ') || null,
+      ];
+      await database.executeSql(detailInsert, detailValues);
+    } else {
+      detailId = result.rows.item(0).id;
+      console.log(
+        `El detalle de la película ya existe con ID: ${detailId}, se omite la inserción.`
+      );
+    }
+
     return detailId;
   }
 
   //Detalle de series
   private async insertDetailForTvShow(tvShow: TvShow): Promise<string> {
     const database = await this.dbService.getDatabase();
-    const detailId = generateUUID();
-    const detailInsert = `
-      INSERT INTO Detail (id, genre, cast, director, producer, writer, seasons, episodesPerSeason, episodeDuration, releaseDate, streamingPlatform)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    const detailValues = [
-      detailId,
+    let detailId: string;
+
+    const query =
+      'SELECT id FROM Detail WHERE genre = ? AND releaseDate = ? AND seasons = ?';
+    const result = await database.executeSql(query, [
       tvShow.detail.genre.join(', '),
-      JSON.stringify(tvShow.detail.cast),
-      tvShow.detail.director?.join(', ') || null,
-      tvShow.detail.producer?.join(', ') || null,
-      tvShow.detail.writer?.join(', ') || null,
-      tvShow.detail.seasons,
-      JSON.stringify(tvShow.detail.episodesPerSeason),
-      tvShow.detail.episodeDuration,
       tvShow.detail.releaseDate.toString(),
-      tvShow.detail.streamingPlatform?.join(', ') || null,
-    ];
-    await database.executeSql(detailInsert, detailValues);
+      tvShow.detail.seasons,
+    ]);
+
+    if (result.rows.length === 0) {
+      detailId = generateUUID();
+      const detailInsert = `
+        INSERT INTO Detail (id, genre, cast, director, producer, writer, seasons, episodesPerSeason, episodeDuration, releaseDate, streamingPlatform)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      const detailValues = [
+        detailId,
+        tvShow.detail.genre.join(', '),
+        JSON.stringify(tvShow.detail.cast),
+        tvShow.detail.director?.join(', ') || null,
+        tvShow.detail.producer?.join(', ') || null,
+        tvShow.detail.writer?.join(', ') || null,
+        tvShow.detail.seasons,
+        JSON.stringify(tvShow.detail.episodesPerSeason),
+        tvShow.detail.episodeDuration,
+        tvShow.detail.releaseDate.toString(),
+        tvShow.detail.streamingPlatform?.join(', ') || null,
+      ];
+      await database.executeSql(detailInsert, detailValues);
+    } else {
+      detailId = result.rows.item(0).id;
+      console.log(
+        `El detalle de la serie ya existe con ID: ${detailId}, se omite la inserción.`
+      );
+    }
+
     return detailId;
   }
 

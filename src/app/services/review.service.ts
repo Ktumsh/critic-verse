@@ -33,9 +33,6 @@ export class ReviewService {
       null,
     ];
     await database.executeSql(reviewInsert, reviewValues);
-    console.log(
-      `Reseña agregada correctamente para el contenido con ID "${contentId}".`
-    );
   }
 
   //Actualizar una reseña

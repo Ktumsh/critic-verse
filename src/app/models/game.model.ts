@@ -257,7 +257,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'EA-FC-25',
+    id: 'ea-fc-25',
     title: 'EA SPORTS FC 25',
     image: '/assets/game/06.png',
     description:
@@ -315,7 +315,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Grand-Theft-Auto-V',
+    id: 'grand-theft-auto-V',
     title: 'Grand Theft Auto V',
     image: '/assets/game/07.png',
     description:
@@ -373,7 +373,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Overwatch',
+    id: 'overwatch',
     title: 'Overwatch',
     image: '/assets/game/08.jpg',
     description:
@@ -431,7 +431,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Terraria',
+    id: 'terraria',
     title: 'Terraria',
     image: '/assets/game/09.png',
     description:
@@ -488,7 +488,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Fortnite',
+    id: 'fortnite',
     title: 'Fortnite',
     image: '/assets/game/10.png',
     description:
@@ -554,7 +554,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Among-Us',
+    id: 'among-us',
     title: 'Among Us',
     image: '/assets/game/11.png',
     description:
@@ -612,7 +612,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Valorant',
+    id: 'valorant',
     title: 'Valorant',
     image: '/assets/game/12.png',
     description:
@@ -670,7 +670,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'League-of-Legends',
+    id: 'league-of-legends',
     title: 'League of Legends',
     image: '/assets/game/13.png',
     description:
@@ -728,7 +728,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Hades',
+    id: 'hades',
     title: 'Hades',
     image: '/assets/game/14.png',
     description:
@@ -793,7 +793,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Overcooked',
+    id: 'overcooked',
     title: 'Overcooked',
     image: '/assets/game/15.png',
     description:
@@ -858,7 +858,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Genshin-Impact',
+    id: 'genshin-impact',
     title: 'Genshin Impact',
     image: '/assets/game/16.png',
     description:
@@ -916,7 +916,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'The-Last-of-Us-Part-II',
+    id: 'the-last-of-us-part-II',
     title: 'The Last of Us Part II',
     image: '/assets/game/17.png',
     description:
@@ -974,7 +974,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Apex-Legends',
+    id: 'apex-legends',
     title: 'Apex Legends',
     image: '/assets/game/18.png',
     description:
@@ -1039,7 +1039,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Call-of-Duty-Warzone',
+    id: 'call-of-duty-warzone',
     title: 'Call of Duty: Warzone',
     image: '/assets/game/19.png',
     description:
@@ -1097,7 +1097,7 @@ export const GAME_MODEL: Game[] = [
     ],
   },
   {
-    id: 'Dark-Souls-III',
+    id: 'dark-souls-III',
     title: 'Dark Souls III',
     image: '/assets/game/20.png',
     description:

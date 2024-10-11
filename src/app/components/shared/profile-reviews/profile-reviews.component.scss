@@ -11,6 +11,8 @@ ion-thumbnail {
 }
 
 ion-card {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
   --background: var(--surface-secondary-600);
   --color: rgb(255 255 255 / var(--opacity-h));
 }

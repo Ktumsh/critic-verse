@@ -424,7 +424,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: 'Nobody-Wants-This',
+    id: 'nobody-wants-this',
     title: 'Nobody Wants This',
     description:
       'La relación entre la agnóstica Joanne (Kristen Bell) y el rabino poco convencional Noah (Adam Brody) es el centro de la serie de comedia creada por Erin Foster.',
@@ -511,7 +511,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: 'The-Walking-Dead-Daryl-Dixon',
+    id: 'the-walking-dead-daryl-dixon',
     title: 'The Walking Dead: Daryl Dixon',
     description:
       'Daryl Dixon (Normal Reedus) se encuentra en Francia y trata de descubrir cómo llegó allí y también de encontrar el camino de regreso a casa.',
@@ -594,7 +594,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: 'Shogun',
+    id: 'shogun',
     title: 'Shogun',
     description:
       'En el Japón feudal, Lord Yoshii Toranaga (Hiroyuki Sanada), el capitán británico John Blackthorne (Cosmo Jarvis) y la traductora Toda Mariko (Anna Sawai) se reúnen mientras se avecina una guerra civil en esta adaptación de serie limitada de Rachel Kondo y Justin Marks de la novela homónima de James Clavell (que también se convirtió en una miniserie en 1980).',
@@ -681,7 +681,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: 'Matlock',
+    id: 'matlock',
     title: 'Matlock',
     description:
       'Madeline "Matty" Matlock (Kathy Bates), de 70 y tantos años, vuelve a trabajar en un estudio jurídico y se junta con la abogada senior Olympia (Skye P. Marshall), quien estaba casada con el hijo (Jason Ritter) del director de la firma (Beau Bridges) en la nueva versión de Matlock creada por Snyder Urman.',
@@ -760,7 +760,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: 'The-Old-Man',
+    id: 'the-old-man',
     title: ' The Old Man',
     description:
       'El ex oficial de la CIA Dan Chase (Jeff Bridges) ha estado viviendo fuera de la red durante años cuando un asesino intenta matarlo en esta serie basada en la novela homónima de Thomas Perry.',
@@ -843,7 +843,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: 'La-máquina',
+    id: 'la-maquina',
     title: 'La máquina',
     description:
       'El viejo boxeador Esteban "La Máquina" Osuna (Gael García Bernal) aspira a un último título con la ayuda de su mejor amigo y manager Andy Luján (Diego Luna), pero figuras del hampa lo amenazan de muerte en la serie limitada en español.',
@@ -909,7 +909,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: 'Bebé-reno',
+    id: 'bebe-reno',
     title: 'Bebé reno',
     description:
       'El comediante Donny Dunn (Richard Gadd) no denuncia de inmediato a su acosadora Martha (Jessica Gunning) en la serie de comedia dramática basada en la obra unipersonal de Gadd sobre su propia experiencia con un acosador.',
@@ -980,7 +980,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: 'The-Morning-Show',
+    id: 'the-morning-show',
     title: 'The Morning Show',
     description:
       'Luchas de poder, rivalidades y escándalos son solo algunos de los desafíos que enfrenta un popular programa de noticias matutino en el drama producido ejecutivamente por Reese Witherspoon y Jennifer Aniston.',
@@ -1064,7 +1064,7 @@ export const TV_MODEL: TvShow[] = [
     ],
   },
   {
-    id: 'NCIS-Origins',
+    id: 'ncis-origins',
     title: 'NCIS: Origins',
     description:
       'Un joven Leroy Jethro Gibbs (Austin Stowell) comienza su carrera como agente especial en la oficina de Camp Pendleton dirigida por Mike Franks (Kyle Schmid) en el spinoff de NCIS narrado por Mark Harmon.',
