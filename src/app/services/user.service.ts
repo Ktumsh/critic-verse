@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { generateUUID } from 'src/utils/common';
 import { DbService } from './db.service';
 import * as CryptoJS from 'crypto-js';
-import { createAvatar } from '@dicebear/core';
-import * as botttsNeutral from '@dicebear/bottts-neutral';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../types/user';
+import { AvatarApiService } from './avatar-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,10 @@ export class UserService {
   private usersSubject = new BehaviorSubject<User[]>([]);
   users$ = this.usersSubject.asObservable();
 
-  constructor(private dbService: DbService) {}
+  constructor(
+    private dbService: DbService,
+    private avatarApiService: AvatarApiService
+  ) {}
 
   //Crear un nuevo usuario (para el registro)
   async createUser(user: {
@@ -33,12 +35,9 @@ export class UserService {
       const hashedPassword = this.hashPassword(user.password, salt);
       const formattedBirthdate = this.formatDate(user.birthdate);
 
-      const avatar = createAvatar(botttsNeutral, {
-        seed: user.username,
-        backgroundType: ['gradientLinear', 'solid'],
-      });
-
-      const profileImage = avatar.toDataUri();
+      const profileImage = await this.avatarApiService.generateAvatar(
+        user.username
+      );
 
       const userInsert = `
           INSERT INTO Users (id, role, email, username, password, salt, birthdate, profileImage, createdAt)
@@ -80,12 +79,9 @@ export class UserService {
     const hashedPassword = this.hashPassword(user.password, salt);
     const formattedBirthdate = this.formatDate(user.birthdate);
 
-    const avatar = createAvatar(botttsNeutral, {
-      seed: user.username,
-      backgroundType: ['gradientLinear', 'solid'],
-    });
-
-    const profileImage = avatar.toDataUri();
+    const profileImage = await this.avatarApiService.generateAvatar(
+      user.username
+    );
 
     const emailExists = await this.emailExists(user.email);
     const usernameExists = await this.usernameExists(user.username);

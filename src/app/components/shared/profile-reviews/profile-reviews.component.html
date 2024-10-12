@@ -159,31 +159,29 @@
           </div>
         </div>
         <!-- Si hay comentario -->
-        <ng-template *ngIf="review.comment">
+        <div
+          class="flex flex-col items-end px-4 pb-4 w-full"
+          *ngIf="longReviewMap[review.id]; else shortReview"
+        >
           <div
-            class="flex flex-col items-end px-4 pb-4 w-full"
-            *ngIf="longReviewMap[review.id]; else shortReview"
+            class="line-clamp-container w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+            [ngClass]="{ expanded: expandedReviews[review.id] }"
           >
-            <div
-              class="line-clamp-container w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
-              [ngClass]="{ expanded: expandedReviews[review.id] }"
-            >
-              <p class="text-white font-normal text-sm">
-                {{ review.comment }}
-              </p>
-            </div>
-            <ion-button
-              *ngIf="longReviewMap[review.id]"
-              fill="clear"
-              class="show-more text-xxs"
-              (click)="toggleExpandReview(review.id)"
-            >
-              {{ expandedReviews[review.id] ? "Ver menos" : "Ver todo" }}
-            </ion-button>
+            <p class="text-white font-normal text-sm">
+              {{ review.comment }}
+            </p>
           </div>
-        </ng-template>
+          <ion-button
+            *ngIf="longReviewMap[review.id]"
+            fill="clear"
+            class="show-more text-xxs"
+            (click)="toggleExpandReview(review.id)"
+          >
+            {{ expandedReviews[review.id] ? "Ver menos" : "Ver todo" }}
+          </ion-button>
+        </div>
         <ng-template #shortReview>
-          <div class="px-4 pb-4 w-full">
+          <div class="px-4 pb-4 w-full" *ngIf="review.comment">
             <div
               class="w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
             >
@@ -281,16 +279,38 @@
           </div>
         </div>
         <!-- Si hay comentario -->
-        <div class="px-4 pb-4 w-full" *ngIf="review.comment">
+        <div
+          class="flex flex-col items-end px-4 pb-4 w-full"
+          *ngIf="longReviewMap[review.id]; else shortReview"
+        >
           <div
-            class="flex items-center justify-center w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+            class="line-clamp-container w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+            [ngClass]="{ expanded: expandedReviews[review.id] }"
           >
-            <span class="text-white font-normal text-sm">
+            <p class="text-white font-normal text-sm">
               {{ review.comment }}
-            </span>
+            </p>
           </div>
+          <ion-button
+            *ngIf="longReviewMap[review.id]"
+            fill="clear"
+            class="show-more text-xxs"
+            (click)="toggleExpandReview(review.id)"
+          >
+            {{ expandedReviews[review.id] ? "Ver menos" : "Ver todo" }}
+          </ion-button>
         </div>
-
+        <ng-template #shortReview>
+          <div class="px-4 pb-4 w-full" *ngIf="review.comment">
+            <div
+              class="w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+            >
+              <p class="text-white font-normal text-sm">
+                {{ review.comment }}
+              </p>
+            </div>
+          </div>
+        </ng-template>
         <!-- Si no hay comentario -->
         <div class="px-4 pb-4 w-full" *ngIf="!review.comment">
           <div
@@ -379,16 +399,38 @@
           </div>
         </div>
         <!-- Si hay comentario -->
-        <div class="px-4 pb-4 w-full" *ngIf="review.comment">
+        <div
+          class="flex flex-col items-end px-4 pb-4 w-full"
+          *ngIf="longReviewMap[review.id]; else shortReview"
+        >
           <div
-            class="flex items-center justify-center w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+            class="line-clamp-container w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+            [ngClass]="{ expanded: expandedReviews[review.id] }"
           >
-            <span class="text-white font-normal text-sm">
+            <p class="text-white font-normal text-sm">
               {{ review.comment }}
-            </span>
+            </p>
           </div>
+          <ion-button
+            *ngIf="longReviewMap[review.id]"
+            fill="clear"
+            class="show-more text-xxs"
+            (click)="toggleExpandReview(review.id)"
+          >
+            {{ expandedReviews[review.id] ? "Ver menos" : "Ver todo" }}
+          </ion-button>
         </div>
-
+        <ng-template #shortReview>
+          <div class="px-4 pb-4 w-full" *ngIf="review.comment">
+            <div
+              class="w-full p-4 min-h-20 rounded-xl bg-surface-secondary-500"
+            >
+              <p class="text-white font-normal text-sm">
+                {{ review.comment }}
+              </p>
+            </div>
+          </div>
+        </ng-template>
         <!-- Si no hay comentario -->
         <div class="px-4 pb-4 w-full" *ngIf="!review.comment">
           <div

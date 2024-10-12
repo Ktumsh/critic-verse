@@ -125,6 +125,17 @@ export class TableService {
       );
     `;
 
+    const tableNotifications = `
+      CREATE TABLE IF NOT EXISTS Notifications (
+        id TEXT PRIMARY KEY,
+        title TEXT,
+        body TEXT,
+        receivedAt TEXT,
+        userId TEXT,
+        contentId TEXT
+      );
+    `;
+
     await database.sqlBatch([
       tableUsers,
       tableMovies,
@@ -134,6 +145,7 @@ export class TableService {
       tableReviews,
       tableReports,
       tableCast,
+      tableNotifications,
     ]);
     console.log('Tablas creadas exitosamente en SQLite.');
   }

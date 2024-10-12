@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,12 @@ import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
     AppRoutingModule,
     CommonModule,
   ],
-  providers: [provideAnimationsAsync(), NativeStorage, SQLite],
+  providers: [
+    provideAnimationsAsync(),
+    NativeStorage,
+    SQLite,
+    provideHttpClient(),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

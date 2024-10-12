@@ -10,6 +10,7 @@ import { NotificationsComponent } from 'src/app/components/shared/notifications/
 import { ConfigurationComponent } from 'src/app/components/shared/configuration/configuration.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReviewService } from 'src/app/services/review.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-profile',
@@ -30,6 +31,7 @@ export class ProfilePage implements OnInit {
   constructor(
     private authService: AuthService,
     private reviewService: ReviewService,
+    private notificationsService: NotificationsService,
     private router: Router,
     private modalController: ModalController,
     private alertController: AlertController
@@ -37,8 +39,9 @@ export class ProfilePage implements OnInit {
     this.user = this.authService.user;
   }
 
-  ngOnInit() {
-    this.loadUserReviewsCount();
+  async ngOnInit() {
+    await this.loadUserReviewsCount();
+    await this.loadUserNotificationsCount();
   }
 
   async loadUserReviewsCount() {
@@ -57,6 +60,28 @@ export class ProfilePage implements OnInit {
     } catch (error) {
       console.error(
         'Error al obtener la cantidad de reseñas del usuario:',
+        error
+      );
+    }
+  }
+
+  async loadUserNotificationsCount() {
+    try {
+      const notifications =
+        await this.notificationsService.getUserNotifications(this.user.id);
+      const notificationsCount = notifications.length;
+
+      const notificationsItem = this.items.find(
+        (item) => item.label === 'Notificaciones'
+      );
+
+      if (notificationsItem) {
+        notificationsItem.note = `${notificationsCount}`;
+        notificationsItem.showNote = notificationsCount > 0;
+      }
+    } catch (error) {
+      console.error(
+        'Error al obtener la cantidad de notificaciones del usuario:',
         error
       );
     }
@@ -113,7 +138,7 @@ export class ProfilePage implements OnInit {
       iconSrc: 'assets/icon/bell.svg',
       color: 'bg-emerald',
       note: null,
-      showNote: false,
+      showNote: true,
       detail: false,
       action: () => this.openModal(NotificationsComponent),
     },

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { User } from 'src/app/types/user';
 
 @Component({
@@ -10,16 +10,9 @@ import { User } from 'src/app/types/user';
 export class MainPage implements OnInit {
   user: User | undefined;
 
-  constructor(private router: Router) {
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state) {
-      this.user = navigation.extras.state['user'] as User;
-    }
-  }
+  constructor(private notificationsService: NotificationsService) {}
 
-  ngOnInit() {
-    if (this.user) {
-      console.log('Usuario recibido en main:', this.user);
-    }
+  async ngOnInit() {
+    await this.notificationsService.notifyAdmins();
   }
 }

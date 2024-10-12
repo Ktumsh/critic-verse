@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 import { ratingClass } from 'src/utils/common';
 import { randomAvatar, randomName } from 'src/app/models/user.model';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-reviews-list',
@@ -46,7 +47,8 @@ export class ReviewsListComponent implements OnInit {
     private modalController: ModalController,
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private notificationsService: NotificationsService
   ) {}
 
   ngOnInit() {
@@ -289,6 +291,12 @@ export class ReviewsListComponent implements OnInit {
         this.userNamesMap[review.id]
       }.`,
       'checkmark-circle-outline'
+    );
+
+    this.notificationsService.sendNotificationToUser(
+      review.userId,
+      'Reseña marcada como inapropiada',
+      'Tu reseña ha sido marcada como inapropiada. Por favor, procura revisar lo que escribes.'
     );
   }
 

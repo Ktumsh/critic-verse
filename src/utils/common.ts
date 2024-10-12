@@ -178,3 +178,29 @@ export function calculateDaysUntilBirthday(birthday: Date): number {
   const diff = nextBirthday.getTime() - today.getTime();
   return Math.ceil(diff / (1000 * 60 * 60 * 24));
 }
+
+export function formatRelativeTime(date: string | Date): string {
+  const now = new Date();
+  const inputDate = new Date(date + ' UTC');
+
+  const diffInSeconds = Math.floor(
+    (now.getTime() - inputDate.getTime()) / 1000
+  );
+
+  if (diffInSeconds < 0) {
+    return '0m';
+  }
+
+  if (diffInSeconds < 60) {
+    return `${diffInSeconds}s`;
+  } else if (diffInSeconds < 3600) {
+    const minutes = Math.floor(diffInSeconds / 60);
+    return `${minutes}m`;
+  } else if (diffInSeconds < 86400) {
+    const hours = Math.floor(diffInSeconds / 3600);
+    return `${hours}h`;
+  } else {
+    const days = Math.floor(diffInSeconds / 86400);
+    return `${days}d`;
+  }
+}

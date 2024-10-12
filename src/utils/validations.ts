@@ -120,7 +120,9 @@ export function numberValidator(): ValidatorFn {
 
 export function specialCharacterValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(control.value);
+    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>\\/\[\];'=_+\-~`¡¿]/.test(
+      control.value
+    );
     return hasSpecialCharacter ? null : { specialCharacter: true };
   };
 }

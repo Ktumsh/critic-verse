@@ -139,7 +139,7 @@
           >
             <div
               *ngIf="report.id !== undefined && processedReportsMap[report.id]"
-              class="absolute inset-0 size-full flex flex-col items-center justify-center backdrop-blur z-10"
+              class="absolute inset-0 size-full flex flex-col items-center justify-center backdrop-blur z-10 rounded-lg"
             >
               <div class="inline-flex items-center gap-4">
                 <ng-container [ngSwitch]="processedReportsMap[report.id]">
@@ -163,7 +163,7 @@
                   </ng-container>
                   <ng-container *ngSwitchCase="'suspended'">
                     <span class="text-danger font-semibold">
-                      Usuario suspendido
+                      Advertencia enviada
                     </span>
                     <ion-icon
                       src="assets/icon/miscellaneous/dismiss-circled.svg"
@@ -250,8 +250,10 @@
                   </div>
                 </div>
                 <div class="inline-flex flex-col w-full gap-1">
-                  <span class="text-white-m mr-1">Comentario</span>
-                  <p>"{{ report.reviewComment }}"</p>
+                  <span class="text-white-m mr-1"> Comentario </span>
+                  <p [ngClass]="[report.reviewComment ? '' : 'text-white-l']">
+                    {{ &nbsp; report.reviewComment &nbsp; || "(No se ha escrito un comentario)"  }}
+                  </p>
                 </div>
               </div>
             </div>

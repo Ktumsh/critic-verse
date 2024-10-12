@@ -8,6 +8,7 @@ import { randomAvatar, randomName } from 'src/app/models/user.model';
 import { Report } from 'src/app/types/report';
 import { ReportService } from 'src/app/services/report.service';
 import { UserService } from 'src/app/services/user.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 interface DetailedReport extends Report {
   source: string;
@@ -54,7 +55,8 @@ export class ReportsListComponent implements OnInit {
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
     private reportService: ReportService,
-    private userService: UserService
+    private userService: UserService,
+    private notificationsService: NotificationsService
   ) {}
 
   ngOnInit() {
@@ -222,11 +224,11 @@ export class ReportsListComponent implements OnInit {
           },
         },
         {
-          text: 'Suspender al usuario reportado',
+          text: 'Enviar notificación al usuario reportado',
           icon: 'assets/icon/miscellaneous/dismiss-circled.svg',
           cssClass: 'danger-button',
           handler: () => {
-            this.suspendUser(report);
+            this.sendNotification(report);
           },
         },
       ],
@@ -267,7 +269,7 @@ export class ReportsListComponent implements OnInit {
     );
   }
 
-  suspendUser(report: DetailedReport) {
+  async sendNotification(report: DetailedReport) {
     this.processedReportsMap[report.id!] = 'suspended';
 
     setTimeout(async () => {
@@ -281,8 +283,16 @@ export class ReportsListComponent implements OnInit {
     }, 3000);
 
     this.presentToast(
-      `Usuario ${this.reportedUserNamesMap[report.reportedUserId]} suspendido.`,
+      `Se le ha enviado una notificación al usuario ${
+        this.reportedUserNamesMap[report.reportedUserId]
+      }.`,
       'person-remove-outline'
+    );
+
+    await this.notificationsService.sendNotificationToUser(
+      report.reportedUserId,
+      'Advertencia de tu cuenta',
+      'Tu cuenta podría suspenderse debido al incumpliento de nuestra política de uso. Considera revisar lo que escribes.'
     );
   }
 
