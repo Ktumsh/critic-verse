@@ -158,7 +158,6 @@
             </ion-button>
           </div>
         </div>
-        <!-- Si hay comentario -->
         <div
           class="flex flex-col items-end px-4 pb-4 w-full"
           *ngIf="longReviewMap[review.id]; else shortReview"
@@ -269,7 +268,7 @@
               shape="round"
               class="size-8 custom"
               color="secondary"
-              (click)="editReview(review)"
+              (click)="openEditDeletePopover($event, review)"
             >
               <ion-icon
                 src="assets/icon/action/edit.svg"
@@ -278,7 +277,6 @@
             </ion-button>
           </div>
         </div>
-        <!-- Si hay comentario -->
         <div
           class="flex flex-col items-end px-4 pb-4 w-full"
           *ngIf="longReviewMap[review.id]; else shortReview"
@@ -389,7 +387,7 @@
               shape="round"
               class="size-8 custom"
               color="secondary"
-              (click)="editReview(review)"
+              (click)="openEditDeletePopover($event, review)"
             >
               <ion-icon
                 src="assets/icon/action/edit.svg"
@@ -398,7 +396,6 @@
             </ion-button>
           </div>
         </div>
-        <!-- Si hay comentario -->
         <div
           class="flex flex-col items-end px-4 pb-4 w-full"
           *ngIf="longReviewMap[review.id]; else shortReview"
