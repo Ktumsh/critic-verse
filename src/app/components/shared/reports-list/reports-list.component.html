@@ -134,15 +134,15 @@
             *ngFor="let report of displayedReports"
             class="p-3 bg-surface-secondary-600 rounded-lg shadow-sm relative"
             [ngClass]="{
-              'fade-out': report.id && processedReportsMap[report.id!]
+              'fade-out': report.id && processedReportsList[report.id!]
             }"
           >
             <div
-              *ngIf="report.id !== undefined && processedReportsMap[report.id]"
+              *ngIf="report.id !== undefined && processedReportsList[report.id]"
               class="absolute inset-0 size-full flex flex-col items-center justify-center backdrop-blur z-10 rounded-lg"
             >
               <div class="inline-flex items-center gap-4">
-                <ng-container [ngSwitch]="processedReportsMap[report.id]">
+                <ng-container [ngSwitch]="processedReportsList[report.id]">
                   <ng-container *ngSwitchCase="'reviewed'">
                     <span class="text-success font-semibold">
                       Reporte marcado como revisado
@@ -180,14 +180,14 @@
                     <img
                       alt="Foto de perfil"
                       [src]="
-                        avatarsMap[report.reportedBy] ||
+                        avatarsList[report.reportedBy] ||
                         'assets/avatar-demo.svg'
                       "
                       class="size-8"
                     />
                   </ion-avatar>
                   <span class="text-lg font-semibold">
-                    {{ userNamesMap[report.reportedBy] }}
+                    {{ userNamesList[report.reportedBy] }}
                   </span>
                   <small class="text-xs text-white-l">
                     {{ report.date | date : "d 'de' MMM, y" }}
@@ -236,14 +236,14 @@
                           <img
                             alt="Foto de perfil del usuario reportado"
                             [src]="
-                              reportedAvatarsMap[report.reportedUserId] ||
+                              reportedAvatarsList[report.reportedUserId] ||
                               'assets/avatar-demo.svg'
                             "
                             class="size-6"
                           />
                         </ion-avatar>
                         <span>
-                          {{ reportedUserNamesMap[report.reportedUserId] }}
+                          {{ reportedUserNamesList[report.reportedUserId] }}
                         </span>
                       </div>
                     </div>

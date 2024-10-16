@@ -18,7 +18,9 @@ import { dateValidator, minimumAgeValidator } from 'src/utils/validations';
   styleUrls: ['./edit-profile.component.scss'],
 })
 export class EditProfileComponent implements OnInit {
+  // ======= Propiedades =======
   @Input() user!: User;
+
   userCopy!: any;
   canShowError: boolean = false;
 
@@ -73,10 +75,12 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  // ======= Getters =======
   get birthdateErrors() {
     return this.profileForm.get('birthdate')?.errors;
   }
 
+  // ======= Métodos de Interacción con la UI =======
   async presentImageOptions() {
     const alert = await this.actionSheet.create({
       cssClass: 'custom-sheet',
@@ -140,19 +144,7 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  async presentToast(message: string, icon: string) {
-    const toast = await this.toastController.create({
-      cssClass: 'custom-toast',
-      swipeGesture: 'vertical',
-      icon,
-      message,
-      duration: 2000,
-      position: 'top',
-    });
-
-    await toast.present();
-  }
-
+  // ======= Métodos de Guardado =======
   saveChanges = async (): Promise<void> => {
     this.canShowError = true;
     this.profileForm.markAllAsTouched();
@@ -214,6 +206,7 @@ export class EditProfileComponent implements OnInit {
     }
   };
 
+  // ======= Métodos de Manejo de Fecha =======
   onDateChange(event: any) {
     const value = event.detail.value;
     if (value) {
@@ -228,6 +221,21 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
+  // ======= Utilidades =======
+  async presentToast(message: string, icon: string) {
+    const toast = await this.toastController.create({
+      cssClass: 'custom-toast',
+      swipeGesture: 'vertical',
+      icon,
+      message,
+      duration: 2000,
+      position: 'top',
+    });
+
+    await toast.present();
+  }
+
+  // ======= Manejo de Modal =======
   dismiss = (): void => {
     this.modalController.dismiss({
       dismissed: true,

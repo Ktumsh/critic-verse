@@ -3,6 +3,7 @@ import {
   AlertController,
   ModalController,
   PopoverController,
+  ToastController,
 } from '@ionic/angular';
 
 import { PageEvent } from '@angular/material/paginator';
@@ -21,6 +22,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit, OnDestroy {
+  // ======= Propiedades =======
   users: User[] = [];
   filteredUsers: User[] = [];
   paginatedUsers: User[] = [];
@@ -47,13 +49,14 @@ export class UserListComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private popoverController: PopoverController,
     private alertController: AlertController,
+    private toastController: ToastController,
     private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.authenticatedUserId = this.authService.user.id ?? null;
 
-    this.userService.users$.subscribe((users) => {
+    this.subscription = this.userService.users$.subscribe((users) => {
       this.users = users;
       this.filteredUsers = users;
       this.length = this.users.length;
@@ -68,31 +71,37 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
+  // ======= Métodos de Filtrado =======
   filterUsers(searchTerm: string) {
+    const lowerSearchTerm = searchTerm.toLowerCase();
     this.filteredUsers = this.users.filter(
       (user) =>
-        user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
+        user.username.toLowerCase().includes(lowerSearchTerm) ||
+        user.email.toLowerCase().includes(lowerSearchTerm)
     );
     this.length = this.filteredUsers.length;
     this.updatePaginatedUsers();
   }
 
-  handlePageEvent(e: PageEvent) {
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
+  // ======= Métodos de Paginación =======
+  handlePageEvent(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
     this.updatePaginatedUsers();
   }
 
-  updatePaginatedUsers() {
+  private updatePaginatedUsers() {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedUsers = this.filteredUsers.slice(startIndex, endIndex);
   }
 
+  // ======= Métodos de Ordenamiento =======
   sortUsersBy(column: string) {
     if (column === 'username') {
       this.sortAscendingUsername = !this.sortAscendingUsername;
@@ -121,10 +130,12 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.updatePaginatedUsers();
   }
 
+  // ======= Gestión de Usuarios =======
   async openUserOptions(event: MouseEvent, user: User) {
     if (user.id === this.authenticatedUserId) {
       return;
     }
+
     const popover = await this.popoverController.create({
       component: UserOptionsComponent,
       cssClass: 'custom-popover v2',
@@ -148,7 +159,21 @@ export class UserListComponent implements OnInit, OnDestroy {
       }
     });
 
-    return await popover.present();
+    await popover.present();
+  }
+
+  async addUser() {
+    const modal = await this.modalController.create({
+      component: AddNewUserComponent,
+    });
+
+    modal.onDidDismiss().then(async (result) => {
+      if (result.data && result.data.user) {
+        await this.userService.getAllUsers();
+      }
+    });
+
+    await modal.present();
   }
 
   async editUser(user: User) {
@@ -163,14 +188,14 @@ export class UserListComponent implements OnInit, OnDestroy {
       }
     });
 
-    return await modal.present();
+    await modal.present();
   }
 
   async deleteUser(username: string) {
     try {
       await this.userService.deleteUserByUsername(username);
       await this.userService.getAllUsers();
-      console.log(`Usuario "${username}" eliminado exitosamente.`);
+      this.presentToast(`Usuario ${username} eliminado`, 'checkmark-circle');
     } catch (error) {
       console.error('Error al eliminar el usuario:', error);
     }
@@ -200,20 +225,21 @@ export class UserListComponent implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  async addUser() {
-    const modal = await this.modalController.create({
-      component: AddNewUserComponent,
+  // ======= Utilidades =======
+  async presentToast(message: string, icon: string) {
+    const toast = await this.toastController.create({
+      swipeGesture: 'vertical',
+      cssClass: 'custom-toast',
+      icon,
+      message,
+      duration: 2000,
+      position: 'top',
     });
 
-    modal.onDidDismiss().then(async (result) => {
-      if (result.data && result.data.user) {
-        await this.userService.getAllUsers();
-      }
-    });
-
-    return await modal.present();
+    await toast.present();
   }
 
+  // ======= Manejo de Modal =======
   dismiss() {
     this.modalController.dismiss({
       dismissed: true,

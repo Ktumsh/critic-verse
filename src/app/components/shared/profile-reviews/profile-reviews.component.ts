@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import {
   AlertController,
   ModalController,
@@ -18,7 +24,8 @@ import { ReviewOptionsComponent } from '../review-options/review-options.compone
   templateUrl: './profile-reviews.component.html',
   styleUrls: ['./profile-reviews.component.scss'],
 })
-export class ProfileReviewsComponent implements OnInit {
+export class ProfileReviewsComponent implements OnInit, OnChanges {
+  // ======= Propiedades =======
   @Input() user!: User;
 
   selectedSegment: string = 'games';
@@ -44,16 +51,28 @@ export class ProfileReviewsComponent implements OnInit {
     await this.loadUserReviews();
   }
 
-  async loadUserReviews() {
+  async ngOnChanges(changes: SimpleChanges) {
+    if (changes['user'] && !changes['user'].isFirstChange()) {
+      await this.loadUserReviews();
+    }
+  }
+
+  // ======= Métodos de Inicialización =======
+  private async loadUserReviews() {
     try {
       this.isLoading = true;
 
       const reviews = await this.reviewService.getReviewsByUserId(this.user.id);
 
       for (const review of reviews) {
-        const game = await this.contentService.getGameById(
-          review.contentId ?? ''
-        );
+        const contentId = review.contentId ?? '';
+
+        const [game, movie, tvShow] = await Promise.all([
+          this.contentService.getGameById(contentId),
+          this.contentService.getMovieById(contentId),
+          this.contentService.getTvShowById(contentId),
+        ]);
+
         if (game) {
           this.gameReviews.push({
             ...review,
@@ -63,9 +82,6 @@ export class ProfileReviewsComponent implements OnInit {
           continue;
         }
 
-        const movie = await this.contentService.getMovieById(
-          review.contentId ?? ''
-        );
         if (movie) {
           this.movieReviews.push({
             ...review,
@@ -75,9 +91,6 @@ export class ProfileReviewsComponent implements OnInit {
           continue;
         }
 
-        const tvShow = await this.contentService.getTvShowById(
-          review.contentId ?? ''
-        );
         if (tvShow) {
           this.tvShowReviews.push({
             ...review,
@@ -94,12 +107,15 @@ export class ProfileReviewsComponent implements OnInit {
     }
   }
 
+  // ======= Gestión de Reseñas =======
   async editReview(review: Review) {
     try {
       const contentId = review.contentId ?? '';
-      const game = await this.contentService.getGameById(contentId);
-      const movie = await this.contentService.getMovieById(contentId);
-      const tvShow = await this.contentService.getTvShowById(contentId);
+      const [game, movie, tvShow] = await Promise.all([
+        this.contentService.getGameById(contentId),
+        this.contentService.getMovieById(contentId),
+        this.contentService.getTvShowById(contentId),
+      ]);
 
       const modal = await this.modalController.create({
         component: AddReviewComponent,
@@ -120,7 +136,7 @@ export class ProfileReviewsComponent implements OnInit {
         }
       });
 
-      return await modal.present();
+      await modal.present();
     } catch (error) {
       console.error('Error al editar la reseña:', error);
     }
@@ -136,6 +152,7 @@ export class ProfileReviewsComponent implements OnInit {
       );
     } catch (error) {
       console.error('Error al eliminar la reseña:', error);
+      this.presentToast('Error al eliminar la reseña.', 'close-circle-outline');
     }
   }
 
@@ -221,6 +238,7 @@ export class ProfileReviewsComponent implements OnInit {
     });
   }
 
+  // ======= Interacciones con la UI =======
   toggleExpandReview(reviewId: string) {
     this.expandedReviews[reviewId] = !this.expandedReviews[reviewId];
   }
@@ -251,7 +269,7 @@ export class ProfileReviewsComponent implements OnInit {
       }
     });
 
-    return await popover.present();
+    await popover.present();
   }
 
   async confirmDeleteAlert(review: Review) {
@@ -278,7 +296,10 @@ export class ProfileReviewsComponent implements OnInit {
     await alert.present();
   }
 
-  async presentToast(message: string, icon: string) {
+  // ======= Utilidades =======
+  getRatingClass = ratingClass;
+
+  private async presentToast(message: string, icon: string) {
     const toast = await this.toastController.create({
       cssClass: 'custom-toast',
       swipeGesture: 'vertical',
@@ -291,12 +312,12 @@ export class ProfileReviewsComponent implements OnInit {
     await toast.present();
   }
 
-  getRatingClass = ratingClass;
-
+  // ======= Segment Control =======
   segmentChanged(event: any) {
     this.selectedSegment = event.detail.value;
   }
 
+  // ======= Manejo de Modal =======
   dismiss() {
     this.modalController.dismiss({
       dismissed: true,

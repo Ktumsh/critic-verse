@@ -11,6 +11,7 @@ import { ratingClass } from 'src/utils/common';
 import { randomAvatar, randomName } from 'src/app/models/user.model';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { ContentService } from 'src/app/services/content.service';
 
 @Component({
   selector: 'app-reviews-list',
@@ -18,20 +19,19 @@ import { NotificationsService } from 'src/app/services/notifications.service';
   styleUrls: ['./reviews-list.component.scss'],
 })
 export class ReviewsListComponent implements OnInit {
+  // ======= Propiedades =======
   filterOption: string = 'all';
+  pageSize = 10;
+  totalOffset = 0;
+  isInitialLoading: boolean = true;
+  isLoading = false;
+  hasMoreReviews = true;
 
   allReviews: Review[] = [];
   displayedReviews: Review[] = [];
 
-  userNamesMap: { [key: string]: string } = {};
-  avatarsMap: { [key: string]: string } = {};
-
-  pageSize = 10;
-  totalOffset = 0;
-
-  isInitialLoading: boolean = true;
-  isLoading = false;
-  hasMoreReviews = true;
+  userNamesList: { [key: string]: string } = {};
+  avatarsList: { [key: string]: string } = {};
 
   totalReviews: number = 0;
   totalGameReviews: number = 0;
@@ -39,7 +39,7 @@ export class ReviewsListComponent implements OnInit {
   totalTvReviews: number = 0;
 
   reviewedReviewIds: string[] = [];
-  reviewedReviewsMap: { [key: string]: 'reviewed' | 'inappropriate' } = {};
+  reviewedReviewsList: { [key: string]: 'reviewed' | 'inappropriate' } = {};
 
   constructor(
     private reviewService: ReviewService,
@@ -48,41 +48,38 @@ export class ReviewsListComponent implements OnInit {
     private actionSheetController: ActionSheetController,
     private toastController: ToastController,
     private nativeStorage: NativeStorage,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private contentService: ContentService
   ) {}
 
-  ngOnInit() {
-    this.init();
-  }
-
-  async init() {
+  async ngOnInit() {
     this.isInitialLoading = true;
-    await this.loadReviewedReviews();
-    await this.loadTotalReviews();
-    await this.loadReviews();
+    await this.initializeData();
     this.isInitialLoading = false;
   }
 
-  async loadReviewedReviews() {
+  // ======= Métodos de Inicialización =======
+  private async initializeData() {
+    await this.loadReviewedReviews();
+    await this.loadTotalReviews();
+    await this.loadReviews();
+  }
+
+  private async loadReviewedReviews() {
     try {
       const ids = await this.nativeStorage.getItem('reviewedReviewIds');
-      if (ids && Array.isArray(ids)) {
-        this.reviewedReviewIds = ids;
-      } else {
-        this.reviewedReviewIds = [];
-      }
-    } catch (error) {
+      this.reviewedReviewIds = Array.isArray(ids) ? ids : [];
+    } catch {
       this.reviewedReviewIds = [];
     }
   }
 
-  async loadTotalReviews() {
+  private async loadTotalReviews() {
     try {
       this.totalReviews = await this.reviewService.getTotalReviewsByContentType(
         null,
         this.reviewedReviewIds
       );
-
       this.totalGameReviews =
         await this.reviewService.getTotalReviewsByContentType(
           'game',
@@ -103,216 +100,184 @@ export class ReviewsListComponent implements OnInit {
     }
   }
 
+  // ======= Carga y Paginación de Reseñas =======
   async loadReviews(event?: any) {
     if (this.isLoading || !this.hasMoreReviews) {
-      if (event) {
-        event.target.complete();
-      }
+      event?.target.complete();
       return;
     }
 
     this.isLoading = true;
 
     try {
-      let collectedReviews: Review[] = [];
-      let fetchedAllReviews = false;
-
-      let contentType: string | null = null;
-
-      switch (this.filterOption) {
-        case 'all':
-          contentType = null;
-          break;
-        case 'game':
-          contentType = 'game';
-          break;
-        case 'movie':
-          contentType = 'movie';
-          break;
-        case 'tv':
-          contentType = 'tv';
-          break;
-      }
-
-      while (collectedReviews.length < this.pageSize && !fetchedAllReviews) {
-        const newReviews = await this.reviewService.getReviewsWithContentType(
-          contentType,
-          this.pageSize,
-          this.totalOffset
-        );
-
-        this.totalOffset += newReviews.length;
-
-        if (newReviews.length < this.pageSize) {
-          fetchedAllReviews = true;
-        }
-
-        const unreviewedReviews = newReviews.filter(
-          (review) => !this.reviewedReviewIds.includes(review.id)
-        );
-
-        collectedReviews = collectedReviews.concat(unreviewedReviews);
-
-        if (fetchedAllReviews && newReviews.length === 0) {
-          break;
-        }
-      }
-
+      const collectedReviews = await this.fetchReviews();
       if (collectedReviews.length === 0) {
         this.hasMoreReviews = false;
       } else {
-        this.allReviews = this.allReviews.concat(collectedReviews);
+        this.allReviews = [...this.allReviews, ...collectedReviews];
         this.displayedReviews = [...this.allReviews];
-
-        await this.populateUsernamesAndAvatars(collectedReviews);
+        await this.getUsernamesAndAvatars(collectedReviews);
       }
-
-      if (event) {
-        event.target.complete();
-      }
+      event?.target.complete();
     } catch (error) {
       console.error('Error al cargar reseñas:', error);
-      if (event) {
-        event.target.complete();
-      }
+      event?.target.complete();
     } finally {
       this.isLoading = false;
     }
   }
 
-  async populateUsernamesAndAvatars(reviews: Review[]) {
-    const userIds = reviews.map((review) => review.userId);
-    const users = await this.userService.getUsersByIds(userIds);
+  private async fetchReviews(): Promise<Review[]> {
+    let collectedReviews: Review[] = [];
+    let fetchedAllReviews = false;
+    const contentType = this.getContentTypeFromFilter();
 
-    const userMap = new Map(users.map((user) => [user.id, user]));
+    while (collectedReviews.length < this.pageSize && !fetchedAllReviews) {
+      const newReviews = await this.reviewService.getReviewsWithContentType(
+        contentType,
+        this.pageSize,
+        this.totalOffset
+      );
 
-    reviews.forEach((review) => {
-      const user = userMap.get(review.userId);
-      if (user?.username) {
-        this.userNamesMap[review.id] = user.username;
-        this.avatarsMap[review.id] = user.profileImage;
-      } else {
-        this.userNamesMap[review.id] = this.getRandomName();
-        this.avatarsMap[review.id] = this.getRandomAvatar();
+      this.totalOffset += newReviews.length;
+
+      if (newReviews.length < this.pageSize) {
+        fetchedAllReviews = true;
       }
-    });
+
+      const unreviewedReviews = newReviews.filter(
+        (review) => !this.reviewedReviewIds.includes(review.id)
+      );
+
+      collectedReviews = [...collectedReviews, ...unreviewedReviews];
+
+      if (fetchedAllReviews && newReviews.length === 0) {
+        break;
+      }
+    }
+
+    return collectedReviews;
   }
 
-  getRandomName = randomName;
-
-  getRandomAvatar = randomAvatar;
+  private getContentTypeFromFilter(): string | null {
+    switch (this.filterOption) {
+      case 'game':
+        return 'game';
+      case 'movie':
+        return 'movie';
+      case 'tv':
+        return 'tv';
+      default:
+        return null;
+    }
+  }
 
   loadMoreReviews(event: any) {
-    setTimeout(async () => {
-      await this.loadReviews(event);
-    }, 500);
+    setTimeout(() => this.loadReviews(event), 500);
   }
 
+  // ======= Filtrado de Datos =======
   filterData(event: any) {
-    const selectedOption = event.detail.value;
-    this.filterOption = selectedOption;
+    this.filterOption = event.detail.value;
     this.resetReviews();
     this.loadTotalReviews();
     this.loadReviews();
   }
 
-  resetReviews() {
+  private resetReviews() {
     this.allReviews = [];
     this.displayedReviews = [];
     this.totalOffset = 0;
     this.hasMoreReviews = true;
   }
 
+  // ======= Gestión de Reseñas =======
   async openReportSheet(review: Review) {
     const actionSheet = await this.actionSheetController.create({
       cssClass: 'custom-sheet',
-      header: 'Gestionar reseña de ' + this.userNamesMap[review.id],
+      header: `Gestionar reseña de ${this.userNamesList[review.id]}`,
       buttons: [
         {
           text: 'Marcar como revisado',
           icon: 'assets/icon/miscellaneous/check-circled.svg',
           cssClass: 'success-button',
-          handler: () => {
-            this.markAsReviewed(review);
-          },
+          handler: () => this.markAsReviewed(review),
         },
         {
           text: 'Marcar como inapropiado',
           icon: 'assets/icon/miscellaneous/alert-circled.svg',
           cssClass: 'warning-button',
-          handler: () => {
-            this.markAsInappropriate(review);
-          },
+          handler: () => this.markAsInappropriate(review),
         },
         {
           text: 'Eliminar reseña',
           icon: 'assets/icon/miscellaneous/dismiss-circled.svg',
           cssClass: 'danger-button',
-          handler: () => {
-            this.deleteReview(review);
-          },
+          handler: () => this.deleteReview(review),
         },
       ],
     });
     await actionSheet.present();
   }
 
-  markAsReviewed(review: Review) {
-    this.reviewedReviewsMap[review.id] = 'reviewed';
-
+  private markAsReviewed(review: Review) {
+    this.reviewedReviewsList[review.id] = 'reviewed';
     setTimeout(() => {
-      this.allReviews = this.allReviews.filter((r) => r.id !== review.id);
-      this.displayedReviews = this.displayedReviews.filter(
-        (r) => r.id !== review.id
-      );
+      this.removeReview(review);
       this.reviewedReviewIds.push(review.id);
       this.nativeStorage.setItem('reviewedReviewIds', this.reviewedReviewIds);
       this.updateTotalCounts(review);
-      delete this.reviewedReviewsMap[review.id];
+      delete this.reviewedReviewsList[review.id];
     }, 3000);
   }
 
-  markAsInappropriate(review: Review) {
-    this.reviewedReviewsMap[review.id] = 'inappropriate';
-
+  private async markAsInappropriate(review: Review) {
+    this.reviewedReviewsList[review.id] = 'inappropriate';
     setTimeout(() => {
-      this.allReviews = this.allReviews.filter((r) => r.id !== review.id);
-      this.displayedReviews = this.displayedReviews.filter(
-        (r) => r.id !== review.id
-      );
+      this.removeReview(review);
       this.reviewedReviewIds.push(review.id);
       this.nativeStorage.setItem('reviewedReviewIds', this.reviewedReviewIds);
       this.updateTotalCounts(review);
-      delete this.reviewedReviewsMap[review.id];
+      delete this.reviewedReviewsList[review.id];
     }, 3000);
 
     this.presentToast(
       `Se le ha enviado una notificación al usuario ${
-        this.userNamesMap[review.id]
+        this.userNamesList[review.id]
       }.`,
       'checkmark-circle-outline'
     );
 
-    this.notificationsService.sendNotificationToUser(
-      review.userId,
-      'Reseña marcada como inapropiada',
-      'Tu reseña ha sido marcada como inapropiada. Por favor, procura revisar lo que escribes.'
-    );
+    const userExists = await this.userService.getUserById(review.userId);
+
+    if (userExists) {
+      this.notificationsService.sendNotificationToUser(
+        review.userId,
+        'Reseña marcada como inapropiada',
+        'Tu reseña ha sido marcada como inapropiada. Por favor, procura revisar lo que escribes.'
+      );
+    }
   }
 
-  async deleteReview(review: Review) {
+  private async deleteReview(review: Review) {
     try {
       await this.reviewService.deleteReviewById(review.id);
-
-      this.allReviews = this.allReviews.filter((r) => r.id !== review.id);
-      this.displayedReviews = this.displayedReviews.filter(
-        (r) => r.id !== review.id
-      );
-
+      this.removeReview(review);
       this.updateTotalCounts(review);
 
+      const contentTitle = await this.getContentTitle(review);
+      const userExists = await this.userService.getUserById(review.userId);
+
+      if (userExists) {
+        await this.notificationsService.sendNotificationToUser(
+          review.userId,
+          'Tu reseña ha sido eliminada',
+          `Tu reseña sobre "${contentTitle}" ha sido eliminada por incumplir nuestras normas.`
+        );
+      }
+
       this.presentToast(
-        `Reseña de ${this.userNamesMap[review.id]} eliminada exitosamente.`,
+        `Reseña de ${this.userNamesList[review.id]} eliminada exitosamente.`,
         'checkmark-circle-outline'
       );
     } catch (error) {
@@ -324,7 +289,31 @@ export class ReviewsListComponent implements OnInit {
     }
   }
 
-  updateTotalCounts(review: Review) {
+  private removeReview(review: Review) {
+    this.allReviews = this.allReviews.filter((r) => r.id !== review.id);
+    this.displayedReviews = this.displayedReviews.filter(
+      (r) => r.id !== review.id
+    );
+  }
+
+  private async getContentTitle(review: Review): Promise<string | undefined> {
+    const contentId = review.contentId;
+    switch (review.contentType) {
+      case 'game':
+        const game = await this.contentService.getGameById(contentId!);
+        return game?.title;
+      case 'movie':
+        const movie = await this.contentService.getMovieById(contentId!);
+        return movie?.title;
+      case 'tv':
+        const tvShow = await this.contentService.getTvShowById(contentId!);
+        return tvShow?.title;
+      default:
+        return undefined;
+    }
+  }
+
+  private updateTotalCounts(review: Review) {
     this.totalReviews--;
     switch (review.contentType) {
       case 'game':
@@ -339,9 +328,26 @@ export class ReviewsListComponent implements OnInit {
     }
   }
 
+  // ======= Gestión de Usuarios =======
+  private async getUsernamesAndAvatars(reviews: Review[]) {
+    const userIds = reviews.map((review) => review.userId);
+    const users = await this.userService.getUsersByIds(userIds);
+    const userMap = new Map(users.map((user) => [user.id, user]));
+
+    reviews.forEach((review) => {
+      const user = userMap.get(review.userId);
+      this.userNamesList[review.id] = user?.username || this.getRandomName();
+      this.avatarsList[review.id] =
+        user?.profileImage || this.getRandomAvatar();
+    });
+  }
+
+  // ======= Utilidades =======
+  getRandomName = randomName;
+  getRandomAvatar = randomAvatar;
   getRatingClass = ratingClass;
 
-  async presentToast(message: string, icon: string) {
+  private async presentToast(message: string, icon: string) {
     const toast = await this.toastController.create({
       cssClass: 'custom-toast',
       icon: icon,
@@ -349,13 +355,11 @@ export class ReviewsListComponent implements OnInit {
       duration: 2000,
       position: 'top',
     });
-
     await toast.present();
   }
 
+  // ======= Manejo de Modal =======
   dismiss() {
-    this.modalController.dismiss({
-      dismissed: true,
-    });
+    this.modalController.dismiss({ dismissed: true });
   }
 }

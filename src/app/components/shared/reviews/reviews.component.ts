@@ -26,6 +26,7 @@ import { AddReviewComponent } from '../add-review/add-review.component';
 import { ReviewOptionsComponent } from '../review-options/review-options.component';
 import { ReportService } from 'src/app/services/report.service';
 import { User } from 'src/app/types/user';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-reviews',
@@ -33,20 +34,23 @@ import { User } from 'src/app/types/user';
   styleUrls: ['./reviews.component.scss'],
 })
 export class ReviewsComponent implements OnInit, OnChanges {
+  // ======= Propiedades =======
   @Input() contentRef!: IonContent;
   @Input() item!: Game | Movie | TvShow;
   @Input() refreshContentData!: () => Promise<void>;
 
-  userNamesMap: { [key: string]: string } = {};
-  avatarsMap: { [key: string]: string } = {};
+  userNamesList: { [key: string]: string } = {};
+  avatarsList: { [key: string]: string } = {};
+
   revealedReviews: { [reviewId: string]: boolean } = {};
   expandedReviews: { [reviewId: string]: boolean } = {};
-  longReviewMap: { [reviewId: string]: boolean } = {};
+  longReviewList: { [reviewId: string]: boolean } = {};
 
-  pendingDeleteMap: { [reviewId: string]: boolean } = {};
+  pendingDeleteList: { [reviewId: string]: boolean } = {};
   lastDeletedReviews: { [reviewId: string]: Review } = {};
-  progressMap: { [reviewId: string]: number } = {};
-  showProgressBarMap: { [reviewId: string]: boolean } = {};
+
+  progressList: { [reviewId: string]: number } = {};
+  showProgressBar: { [reviewId: string]: boolean } = {};
   progressIntervals: { [reviewId: string]: any } = {};
   deleteTimeouts: { [reviewId: string]: any } = {};
 
@@ -60,11 +64,24 @@ export class ReviewsComponent implements OnInit, OnChanges {
     private toastController: ToastController,
     private popoverController: PopoverController,
     private actionSheetCtrl: ActionSheetController,
-    private reportService: ReportService
+    private reportService: ReportService,
+    private notificationsService: NotificationsService
   ) {
     this.user = this.authService.user;
   }
 
+  ngOnInit() {
+    this.updateLongReviewList();
+  }
+
+  async ngOnChanges(changes: SimpleChanges) {
+    if (changes['item']) {
+      await this.loadUsernamesAndAvatars();
+      this.updateLongReviewList();
+    }
+  }
+
+  // ======= Type Guards =======
   isGame(item: Game | Movie | TvShow): item is Game {
     return (item as Game).detail.platforms !== undefined;
   }
@@ -77,21 +94,11 @@ export class ReviewsComponent implements OnInit, OnChanges {
     return (item as TvShow).detail.seasons !== undefined;
   }
 
-  ngOnInit() {
-    this.updateLongReviewMap();
-  }
-
-  async ngOnChanges(changes: SimpleChanges) {
-    if (changes['item']) {
-      await this.loadUsernamesAndAvatars();
-      this.updateLongReviewMap();
-    }
-  }
-
-  private updateLongReviewMap() {
-    this.longReviewMap = {};
+  // ======= Métodos de Inicialización =======
+  private updateLongReviewList() {
+    this.longReviewList = {};
     this.item.reviews.forEach((review) => {
-      this.longReviewMap[review.id] = review.comment.length > 260;
+      this.longReviewList[review.id] = review.comment.length > 260;
     });
   }
 
@@ -102,21 +109,17 @@ export class ReviewsComponent implements OnInit, OnChanges {
 
     const userIds = this.item.reviews.map((review) => review.userId);
     const users = await this.userService.getUsersByIds(userIds);
-
     const userMap = new Map(users.map((user) => [user.id, user]));
 
     this.item.reviews.forEach((review) => {
+      const id = review.id;
       const user = userMap.get(review.userId);
-      if (user?.username) {
-        this.userNamesMap[review.id] = user.username;
-        this.avatarsMap[review.id] = user.profileImage;
-      } else {
-        this.userNamesMap[review.id] = this.getRandomName();
-        this.avatarsMap[review.id] = this.getRandomAvatar();
-      }
+      this.userNamesList[id] = user?.username || this.getRandomName();
+      this.avatarsList[id] = user?.profileImage || this.getRandomAvatar();
     });
   }
 
+  // ======= Gestión de Reseñas =======
   revealReview(reviewId: string) {
     this.revealedReviews[reviewId] = true;
   }
@@ -125,18 +128,11 @@ export class ReviewsComponent implements OnInit, OnChanges {
     this.expandedReviews[reviewId] = !this.expandedReviews[reviewId];
   }
 
-  getRatingClass = ratingClass;
-
-  getRandomName = randomName;
-
-  getRandomAvatar = randomAvatar;
-
-  async presentPopover(event: MouseEvent, review: Review) {
+  async openReviewOptions(event: MouseEvent, review: Review) {
     const popover = await this.popoverController.create({
       component: ReviewOptionsComponent,
       cssClass: 'custom-popover v2',
       event: event,
-      translucent: true,
       componentProps: {
         review,
         user: this.user,
@@ -150,7 +146,7 @@ export class ReviewsComponent implements OnInit, OnChanges {
             this.editReview(review);
             break;
           case 'delete':
-            this.deleteReview(review.id);
+            this.deleteReview(review);
             break;
           case 'viewProfileReviews':
             this.showProfileReviews();
@@ -159,46 +155,57 @@ export class ReviewsComponent implements OnInit, OnChanges {
       }
     });
 
-    return await popover.present();
+    await popover.present();
   }
 
-  async deleteReview(reviewId: string) {
-    const reviewToDelete =
-      this.item.reviews.find((review) => review.id === reviewId) || null;
+  async deleteReview(review: Review) {
+    const id = review.id;
+    const reviewToDelete = this.item.reviews.find((r) => r.id === id) || null;
 
     if (!reviewToDelete) {
       return;
     }
 
-    this.lastDeletedReviews[reviewId] = reviewToDelete;
+    this.lastDeletedReviews[id] = reviewToDelete;
 
-    this.showProgressBarMap[reviewId] = true;
-    this.progressMap[reviewId] = 0;
-    this.pendingDeleteMap[reviewId] = true;
+    this.showProgressBar[id] = true;
+    this.progressList[id] = 0;
+    this.pendingDeleteList[id] = true;
 
-    this.startProgressBar(reviewId);
+    this.startProgressBar(id);
 
-    const deleteTimeout = setTimeout(() => {
-      if (this.pendingDeleteMap[reviewId]) {
-        this.reviewService.deleteReviewById(reviewId).then(() => {
-          this.item.reviews = this.item.reviews.filter(
-            (review) => review.id !== reviewId
+    const deleteTimeout = setTimeout(async () => {
+      if (this.pendingDeleteList[id]) {
+        await this.reviewService.deleteReviewById(id);
+
+        const userExists = await this.userService.getUserById(id);
+
+        if (userExists && reviewToDelete.userId !== this.user.id) {
+          await this.notificationsService.sendNotificationToUser(
+            reviewToDelete.userId,
+            'Tu reseña ha sido eliminada',
+            `Tu reseña sobre "${this.item.title}" ha sido eliminada por incumplir nuestras normas.`
           );
-          this.updateLongReviewMap();
-          this.presentToast(
-            '¡Reseña eliminada exitosamente!',
-            'checkmark-circle-outline'
-          );
-        });
-        delete this.pendingDeleteMap[reviewId];
+        }
+
+        this.item.reviews = this.item.reviews.filter(
+          (review) => review.id !== id
+        );
+
+        this.updateLongReviewList();
+        this.presentToast(
+          '¡Reseña eliminada exitosamente!',
+          'checkmark-circle-outline'
+        );
       }
-      this.showProgressBarMap[reviewId] = false;
-      this.progressMap[reviewId] = 0;
-      delete this.lastDeletedReviews[reviewId];
-      delete this.deleteTimeouts[reviewId];
+      this.showProgressBar[id] = false;
+      this.progressList[id] = 0;
+
+      delete this.lastDeletedReviews[id];
+      delete this.deleteTimeouts[id];
     }, 3000);
 
-    this.deleteTimeouts[reviewId] = deleteTimeout;
+    this.deleteTimeouts[id] = deleteTimeout;
   }
 
   async undoDeleteReview(reviewId: string) {
@@ -219,12 +226,12 @@ export class ReviewsComponent implements OnInit, OnChanges {
 
       if (!alreadyExists) {
         this.item.reviews.unshift(this.lastDeletedReviews[reviewId]);
-        this.updateLongReviewMap();
+        this.updateLongReviewList();
       }
 
-      this.showProgressBarMap[reviewId] = false;
-      this.progressMap[reviewId] = 0;
-      delete this.pendingDeleteMap[reviewId];
+      this.showProgressBar[reviewId] = false;
+      this.progressList[reviewId] = 0;
+      delete this.pendingDeleteList[reviewId];
       delete this.lastDeletedReviews[reviewId];
     }
   }
@@ -266,12 +273,12 @@ export class ReviewsComponent implements OnInit, OnChanges {
           } else {
             this.item.reviews.push(updatedReview);
           }
-          this.updateLongReviewMap();
+          this.updateLongReviewList();
           await this.refreshContentData();
         }
       });
 
-      return await modal.present();
+      await modal.present();
     } catch (error) {
       console.error('Error en el flujo de editReview:', error);
     }
@@ -289,11 +296,12 @@ export class ReviewsComponent implements OnInit, OnChanges {
       }
     });
 
-    return await modal.present();
+    await modal.present();
   }
 
-  async openReportAlert(review: Review) {
-    const username = this.userNamesMap[review.id];
+  // ======= Reporte de Reseñas =======
+  async openReportSheet(review: Review) {
+    const username = this.userNamesList[review.id];
     const actionSheet = await this.actionSheetCtrl.create({
       cssClass: 'custom-sheet',
       header: 'Reportar reseña de ' + username,
@@ -340,7 +348,12 @@ export class ReviewsComponent implements OnInit, OnChanges {
     }
   }
 
-  async presentToast(message: string, icon: string) {
+  // ======= Utilidades =======
+  getRandomName = randomName;
+  getRandomAvatar = randomAvatar;
+  getRatingClass = ratingClass;
+
+  private async presentToast(message: string, icon: string) {
     const toast = await this.toastController.create({
       cssClass: 'custom-toast',
       icon: icon,
@@ -348,23 +361,28 @@ export class ReviewsComponent implements OnInit, OnChanges {
       duration: 2000,
       position: 'top',
     });
-
     await toast.present();
   }
 
-  startProgressBar(reviewId: string) {
-    this.progressMap[reviewId] = 0;
+  private startProgressBar(reviewId: string) {
+    const id = reviewId;
+    this.progressList[id] = 0;
     const duration = 3000;
     const interval = 100;
     const increment = interval / duration;
 
-    this.progressIntervals[reviewId] = setInterval(() => {
-      this.progressMap[reviewId] += increment;
-      if (this.progressMap[reviewId] >= 1) {
-        this.progressMap[reviewId] = 1;
-        clearInterval(this.progressIntervals[reviewId]);
-        delete this.progressIntervals[reviewId];
+    this.progressIntervals[id] = setInterval(() => {
+      this.progressList[id] += increment;
+      if (this.progressList[id] >= 1) {
+        this.progressList[id] = 1;
+        clearInterval(this.progressIntervals[id]);
+        delete this.progressIntervals[id];
       }
     }, interval);
+  }
+
+  // ======= Manejo de Modal =======
+  dismiss() {
+    this.modalController.dismiss({ dismissed: true });
   }
 }

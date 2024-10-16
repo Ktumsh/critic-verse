@@ -106,14 +106,14 @@
         <div
           *ngFor="let review of displayedReviews"
           class="p-4 bg-surface-secondary-600 rounded-lg relative overflow-hidden"
-          [ngClass]="{ 'fade-out': reviewedReviewsMap[review.id] }"
+          [ngClass]="{ 'fade-out': reviewedReviewsList[review.id] }"
         >
           <div
-            *ngIf="reviewedReviewsMap[review.id]"
+            *ngIf="reviewedReviewsList[review.id]"
             class="absolute inset-0 size-full flex flex-col items-center justify-center backdrop-blur z-10"
           >
             <div class="inline-flex items-center gap-4">
-              <ng-container [ngSwitch]="reviewedReviewsMap[review.id]">
+              <ng-container [ngSwitch]="reviewedReviewsList[review.id]">
                 <ng-container *ngSwitchCase="'reviewed'">
                   <span class="text-success font-semibold">
                     Reseña marcada como revisada
@@ -142,12 +142,12 @@
                   <ion-avatar class="size-8 rounded-full">
                     <img
                       alt="Foto de perfil"
-                      [src]="avatarsMap[review.id] || 'assets/avatar-demo.svg'"
+                      [src]="avatarsList[review.id] || 'assets/avatar-demo.svg'"
                       class="size-8"
                     />
                   </ion-avatar>
                   <span class="text-lg font-semibold">
-                    {{ userNamesMap[review.id] }}
+                    {{ userNamesList[review.id] }}
                   </span>
                 </div>
                 <div
@@ -178,7 +178,12 @@
                 {{ review.date | date : "d 'de' MMM, y" }}
               </small>
             </header>
-            <p class="text-sm">{{ review.comment }}</p>
+            <p
+              class="text-sm"
+              [ngClass]="[review.comment ? '' : 'text-white-l']"
+            >
+              {{ &nbsp; review.comment &nbsp; || "(No se ha escrito un comentario)"  }}
+            </p>
           </div>
         </div>
       </ng-template>

@@ -12,7 +12,7 @@ import { formatRelativeTime } from 'src/utils/common';
 export class NotificationsComponent implements OnInit {
   @Input() user!: User;
   notifications: any[] = [];
-  loading = true; // Estado de carga
+  loading = true;
 
   constructor(
     private modalController: ModalController,

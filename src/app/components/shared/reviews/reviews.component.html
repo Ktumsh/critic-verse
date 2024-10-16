@@ -28,10 +28,10 @@
       </ion-button>
     </div>
     <div
-      *ngIf="showProgressBarMap[review.id]"
+      *ngIf="showProgressBar[review.id]"
       class="absolute inset-0 size-full flex flex-col items-center justify-between backdrop-blur z-10"
     >
-      <ion-progress-bar [value]="progressMap[review.id]"></ion-progress-bar>
+      <ion-progress-bar [value]="progressList[review.id]"></ion-progress-bar>
       <span>¿Estás seguro que deseas eliminarla?</span>
       <div class="pb-4 px-4 w-full">
         <ion-button
@@ -50,12 +50,12 @@
             <ion-avatar class="size-8 rounded-xl">
               <img
                 alt="Foto de perfil"
-                [src]="avatarsMap[review.id] || 'assets/avatar-demo.svg'"
+                [src]="avatarsList[review.id] || 'assets/avatar-demo.svg'"
                 class="size-8"
               />
             </ion-avatar>
             <span class="text-lg font-semibold">
-              {{ userNamesMap[review.id] }}
+              {{ userNamesList[review.id] }}
             </span>
           </div>
           <div
@@ -75,7 +75,7 @@
             shape="round"
             class="size-10 custom absolute top-0 right-0"
             color="secondary"
-            (click)="presentPopover($event, review)"
+            (click)="openReviewOptions($event, review)"
           >
             <ion-icon
               src="assets/icon/options.svg"
@@ -88,7 +88,7 @@
         </small>
       </header>
       <div
-        *ngIf="longReviewMap[review.id]; else shortReview"
+        *ngIf="longReviewList[review.id]; else shortReview"
         class="line-clamp-container"
         [ngClass]="{ expanded: expandedReviews[review.id] }"
       >
@@ -102,7 +102,7 @@
       </ng-template>
 
       <ion-button
-        *ngIf="longReviewMap[review.id]"
+        *ngIf="longReviewList[review.id]"
         fill="clear"
         class="show-more text-xxs"
         (click)="toggleExpandReview(review.id)"
@@ -119,7 +119,7 @@
         >
           <ion-button
             *ngIf="review.userId !== user.id"
-            (click)="openReportAlert(review)"
+            (click)="openReportSheet(review)"
             expand="block"
             shape="round"
             class="h-6 text-xxs"
