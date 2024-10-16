@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  PatternValidator,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegistrationService } from 'src/app/services/registration.service';
 import { UserService } from 'src/app/services/user.service';
+import { emailDomainValidator } from 'src/utils/validations';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +17,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginPage implements OnInit {
   form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+      Validators.maxLength(100),
+      emailDomainValidator,
+    ]),
   });
 
   canShowError: boolean = false;

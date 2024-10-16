@@ -6,6 +6,7 @@ import { User } from 'src/app/types/user';
 import { formatDate } from 'src/utils/common';
 import {
   dateValidator,
+  emailDomainValidator,
   errorUserMessage,
   lowerCaseValidator,
   minimumAgeValidator,
@@ -45,6 +46,7 @@ export class AddNewUserComponent implements OnInit {
         Validators.required,
         Validators.email,
         Validators.maxLength(100),
+        emailDomainValidator,
       ]),
       username: new FormControl('', [
         Validators.required,

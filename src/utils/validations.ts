@@ -55,6 +55,9 @@ export function errorUserMessage(
   if (control?.hasError('email') && canShowError) {
     return 'El formato del correo no es válido.';
   }
+  if (control?.hasError('invalidDomain') && canShowError) {
+    return 'El formato del correo no es válido.';
+  }
   if (control?.hasError('emailExists') && canShowError) {
     return 'Este correo electrónico ya está registrado.';
   }
@@ -77,6 +80,18 @@ export function errorUserMessage(
     return 'La contraseña debe contener al menos un carácter especial.';
   }
   return '';
+}
+
+export function emailDomainValidator(
+  control: AbstractControl
+): ValidationErrors | null {
+  const email: string = control.value || '';
+  const domainPattern = /@[\w-]+\.[a-z]{2,}$/i;
+
+  if (email && !domainPattern.test(email)) {
+    return { invalidDomain: true };
+  }
+  return null;
 }
 
 export function passwordsMatchValidator(): ValidatorFn {

@@ -32,14 +32,20 @@
 
         <div
           *ngIf="canShowError && form.controls.email.errors"
-          class="flex px-5 mt-1.5"
+          class="flex flex-col px-5 mt-1.5 space-y-2"
         >
           <span
-            *ngIf="form.controls.email.errors?.['email']"
+            *ngIf="form.controls.email.errors?.['email'] || form.controls.email.errors?.['invalidDomain']"
             class="text-xs text-danger"
           >
             La dirección de correo electrónico es incorrecta. ¡Vuelve a
             intentarlo!
+          </span>
+          <span
+            *ngIf="form.controls.email.errors?.['maxlength']"
+            class="text-xs text-danger"
+          >
+            ¡La dirección de correo electrónico es demasiado larga!
           </span>
         </div>
       </div>
