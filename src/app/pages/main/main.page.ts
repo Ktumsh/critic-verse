@@ -14,5 +14,6 @@ export class MainPage implements OnInit {
 
   async ngOnInit() {
     await this.notificationsService.notifyAdmins();
+    await this.notificationsService.cleanOldNotifications();
   }
 }

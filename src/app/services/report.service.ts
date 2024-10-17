@@ -22,6 +22,23 @@ export class ReportService {
     reviewId: string
   ): Promise<void> {
     const database = await this.dbService.getDatabase();
+
+    const checkReportQuery = `
+      SELECT COUNT(*) as count 
+      FROM Reports 
+      WHERE reportedBy = ? AND reviewId = ?
+    `;
+    const checkResult = await database.executeSql(checkReportQuery, [
+      reportedBy,
+      reviewId,
+    ]);
+
+    const reportExists = checkResult.rows.item(0).count > 0;
+
+    if (reportExists) {
+      throw new Error('Este usuario ya ha reportado esta reseña.');
+    }
+
     const reportId = generateUUID();
     const reportInsert = `
       INSERT INTO Reports (id, reason, date, reportedBy, reviewId)

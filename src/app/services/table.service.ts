@@ -131,6 +131,8 @@ export class TableService {
         title TEXT,
         body TEXT,
         receivedAt TEXT,
+        status TEXT DEFAULT 'active',
+        deletedAt TEXT,
         userId TEXT,
         contentId TEXT
       );

@@ -108,10 +108,11 @@ export class ProfilePage implements OnInit {
       componentProps: { user: this.user },
     });
 
-    modal.onDidDismiss().then((data) => {
+    modal.onDidDismiss().then(async (data) => {
       if (data.data && data.data.user) {
         this.user = data.data.user;
       }
+      await this.loadUserNotificationsCount();
     });
 
     return await modal.present();

@@ -338,13 +338,32 @@ export class ReviewsComponent implements OnInit, OnChanges {
   async reportReview(reason: string, review: Review) {
     try {
       await this.reportService.insertReport(reason, this.user.id, review.id);
+
       this.presentToast(
         'Reporte enviado correctamente.',
         'checkmark-circle-outline'
       );
     } catch (error) {
-      console.error('Error al enviar el reporte:', error);
-      this.presentToast('Error al enviar el reporte.', 'close-circle-outline');
+      if (error instanceof Error) {
+        if (error.message === 'Este usuario ya ha reportado esta reseña.') {
+          this.presentToast(
+            'Ya has reportado a este usuario.',
+            'information-circle-outline'
+          );
+        } else {
+          console.error('Error al enviar el reporte:', error);
+          this.presentToast(
+            'Error al enviar el reporte.',
+            'close-circle-outline'
+          );
+        }
+      } else {
+        console.error('Error desconocido al enviar el reporte:', error);
+        this.presentToast(
+          'Error desconocido al enviar el reporte.',
+          'close-circle-outline'
+        );
+      }
     }
   }
 
