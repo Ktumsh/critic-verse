@@ -86,10 +86,10 @@ export class AppComponent implements OnInit {
   async createUser() {
     const newUser = {
       role: 'admin',
-      email: 'jo.barra@duocuc.cl',
-      username: 'ktumsh',
-      password: 'Josue123*',
-      birthdate: new Date('2002-01-11T12:00:00'),
+      email: 'admin@duocuc.cl',
+      username: 'admin_criticverse',
+      password: 'Admin123*',
+      birthdate: new Date('1999-01-01T12:00:00'),
     };
 
     try {
