@@ -1,0 +1,65 @@
+.background {
+  background: linear-gradient(
+    to bottom,
+    var(--surface-secondary-400) 0%,
+    transparent 100%
+  );
+}
+
+ion-select {
+  --border-width: 0;
+  --highlight-height: 0;
+  --highlight-color: var(--color-primary-600);
+}
+
+ion-select::part(label) {
+  color: rgb(255 255 255);
+}
+
+ion-list {
+  --ion-background-color: var(--surface-secondary-600-20);
+}
+
+ion-item {
+  --ion-background-color: transparent;
+  --border-color: var(--surface-secondary-600);
+  --inner-border-width: 0 0 1px 0;
+  --inner-padding-top: 8px;
+  --inner-padding-bottom: 8px;
+}
+
+ion-item:last-child {
+  --inner-border-width: 0 0 0 0;
+}
+
+ion-item.custom {
+  --inner-padding-start: 24px;
+  --inner-padding-end: 24px;
+}
+
+ion-button {
+  min-height: auto;
+}
+ion-label {
+  color: rgb(255 255 255 / var(--opacity-m)) !important;
+  font-size: 14px !important;
+}
+
+ion-button::part(native) {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --border-radius: 4px;
+  --background: var(--surface-secondary-600);
+  color: var(--color-danger);
+  font-weight: 400;
+  letter-spacing: normal;
+  box-shadow: none;
+}
+
+ion-button.custom::part(native) {
+  --padding-start: 0;
+  --padding-end: 0;
+  --border-radius: 50px;
+  --background: var(--surface-secondary-400);
+  color: rgb(255 255 255 / var(--opacity-h));
+}

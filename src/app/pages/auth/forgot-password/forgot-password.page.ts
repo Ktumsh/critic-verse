@@ -6,14 +6,4 @@ import { Browser } from '@capacitor/browser';
   templateUrl: './forgot-password.page.html',
   styleUrls: ['./forgot-password.page.scss'],
 })
-export class ForgotPasswordPage {
-  constructor() {}
-
-  async openEmail() {
-    try {
-      await Browser.open({ url: 'https://mail.google.com/' });
-    } catch (error) {
-      console.error('Error al abrir el correo web:', error);
-    }
-  }
-}
+export class ForgotPasswordPage {}

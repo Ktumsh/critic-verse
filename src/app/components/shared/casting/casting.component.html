@@ -2,7 +2,10 @@
   <h3 class="text-2xl font-semibold text-white-h mb-4">Elenco</h3>
 </div>
 
-<div class="flex items-center mb-8 overflow-x-scroll text-white-h">
+<div
+  *ngIf="item.detail.cast && item.detail.cast.length > 0; else noCast"
+  class="flex items-center mb-8 overflow-x-scroll text-white-h"
+>
   <div class="flex items-start gap-4 h-full">
     <div
       *ngFor="let cast of item.detail.cast"
@@ -26,3 +29,15 @@
     </div>
   </div>
 </div>
+
+<ng-template #noCast>
+  <div class="w-full mb-4">
+    <p class="text-white-m mb-2">
+      No hay información sobre el elenco en este momento.
+    </p>
+    <p class="text-sm text-white-l">
+      Puede que aún no se haya publicado o que la producción sea tan secreta
+      como su contenido.
+    </p>
+  </div>
+</ng-template>

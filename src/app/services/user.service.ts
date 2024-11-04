@@ -28,41 +28,31 @@ export class UserService {
     profileImage?: string;
   }): Promise<void> {
     const database = await this.dbService.getDatabase();
-    try {
-      const userId = generateUUID();
-      const role = user.role ?? 'user';
-      const salt = generateUUID();
-      const hashedPassword = this.hashPassword(user.password, salt);
-      const formattedBirthdate = this.formatDate(user.birthdate);
+    const userId = generateUUID();
+    const salt = generateUUID();
+    const hashedPassword = this.hashPassword(user.password, salt);
+    const formattedBirthdate = this.formatDate(user.birthdate);
+    const profileImage = await this.avatarApiService.generateAvatar(
+      user.username
+    );
 
-      const profileImage = await this.avatarApiService.generateAvatar(
-        user.username
-      );
+    const userInsertQuery = `
+      INSERT INTO Users (id, role, email, username, password, salt, birthdate, profileImage, createdAt)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+    `;
+    await database.executeSql(userInsertQuery, [
+      userId,
+      user.role ?? 'user',
+      user.email,
+      user.username,
+      hashedPassword,
+      salt,
+      formattedBirthdate,
+      profileImage || null,
+    ]);
 
-      const userInsert = `
-          INSERT INTO Users (id, role, email, username, password, salt, birthdate, profileImage, createdAt)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
-        `;
-      const userValues = [
-        userId,
-        role,
-        user.email,
-        user.username,
-        hashedPassword,
-        salt,
-        formattedBirthdate,
-        profileImage || null,
-      ];
-
-      await database.executeSql(userInsert, userValues);
-      this.getAllUsers();
-      console.log(
-        `Usuario con email "${user.email}" registrado correctamente.`
-      );
-    } catch (error) {
-      console.error('Error al registrar el usuario:', error);
-      throw error;
-    }
+    this.getAllUsers();
+    console.log(`Usuario con email "${user.email}" registrado correctamente.`);
   }
 
   //Insertar un nuevo usuario
@@ -153,6 +143,67 @@ export class UserService {
     }
   }
 
+  async saveSecurityQuestion(
+    userId: string,
+    question: string,
+    answer: string
+  ): Promise<void> {
+    const database = await this.dbService.getDatabase();
+
+    const queryCheck = `
+      SELECT id FROM SecurityQuestions WHERE userId = ?
+    `;
+    const result = await database.executeSql(queryCheck, [userId]);
+
+    if (result.rows.length > 0) {
+      const questionId = result.rows.item(0).id;
+      const queryUpdate = `
+        UPDATE SecurityQuestions
+        SET question = ?, answer = ?
+        WHERE id = ?
+      `;
+      await database.executeSql(queryUpdate, [question, answer, questionId]);
+      console.log(
+        `Pregunta de seguridad actualizada para el usuario con ID "${userId}"`
+      );
+    } else {
+      const questionId = generateUUID();
+      const queryInsert = `
+        INSERT INTO SecurityQuestions (id, userId, question, answer)
+        VALUES (?, ?, ?, ?)
+      `;
+      await database.executeSql(queryInsert, [
+        questionId,
+        userId,
+        question,
+        answer,
+      ]);
+      console.log(
+        `Pregunta de seguridad guardada para el usuario con ID "${userId}"`
+      );
+    }
+  }
+
+  async verifySecurityAnswer(email: string, answer: string): Promise<boolean> {
+    const database = await this.dbService.getDatabase();
+    const query = `
+      SELECT sq.answer
+      FROM Users u
+      INNER JOIN SecurityQuestions sq ON u.id = sq.userId
+      WHERE u.email = ?
+    `;
+    const result = await database.executeSql(query, [email]);
+
+    if (result.rows.length > 0) {
+      const storedAnswer = result.rows.item(0).answer.trim();
+      const userAnswer = answer.trim();
+      return storedAnswer.toLowerCase() === userAnswer.toLowerCase();
+    } else {
+      console.log('No se encontró la pregunta de seguridad para este usuario.');
+      return false;
+    }
+  }
+
   //Verifica si un email ya existe
   async emailExists(email: string): Promise<boolean> {
     const database = await this.dbService.getDatabase();
@@ -189,6 +240,26 @@ export class UserService {
     const query = 'SELECT * FROM Users WHERE email = ?';
     const result = await database.executeSql(query, [email]);
     return result.rows.length > 0 ? result.rows.item(0) : null;
+  }
+
+  async getUserQuestionByEmail(email: string): Promise<any> {
+    const database = await this.dbService.getDatabase();
+    const query = `
+      SELECT sq.question, sq.answer
+      FROM Users u
+      LEFT JOIN SecurityQuestions sq ON u.id = sq.userId
+      WHERE u.email = ?
+    `;
+    const result = await database.executeSql(query, [email]);
+
+    if (result.rows.length > 0) {
+      const row = result.rows.item(0);
+      if (row.question !== null && row.answer !== null) {
+        return row;
+      }
+    }
+
+    return null;
   }
 
   //Obtener un usuario por su id

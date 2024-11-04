@@ -51,6 +51,12 @@ export function transformDetail(
   return [];
 }
 
+export function formatArrayField(
+  field: string | string[] | null | undefined
+): string | null {
+  return Array.isArray(field) ? field.join(', ') : field || null;
+}
+
 export async function refreshContentData(
   contentId: string,
   loadContentById: (id: string) => Promise<any>,
@@ -203,4 +209,8 @@ export function formatRelativeTime(date: string | Date): string {
     const days = Math.floor(diffInSeconds / 86400);
     return `${days}d`;
   }
+}
+
+export function adjustDate(date: string | Date): string {
+  return new Date(date).toISOString().split('T')[0];
 }

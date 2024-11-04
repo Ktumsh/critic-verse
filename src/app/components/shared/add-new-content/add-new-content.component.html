@@ -1,0 +1,169 @@
+<app-header
+  [title]="isEditMode ? 'Editar contenido' : 'Agregar nuevo contenido'"
+  [logo]="false"
+  [backButton]="dismiss.bind(this)"
+></app-header>
+
+<ion-content>
+  <div
+    class="background fixed top-0 -translate-y-14 w-full h-72 animate-fade-in animate-duration-1000"
+  ></div>
+  <div class="flex flex-col items-center h-full">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col justify-between size-full pb-6"
+    >
+      <div class="flex flex-col mt-6 space-y-4">
+        <!-- Imágen -->
+        <div class="flex items-center justify-center mb-5">
+          <div class="relative">
+            <div class="ion-activatable ripple-parent">
+              <ion-thumbnail
+                (click)="presentImageOptions()"
+                class="cursor-pointer"
+              >
+                <img
+                  [src]="
+                    form.get('image')?.value || 'assets/content-placeholder.svg'
+                  "
+                />
+                <ion-ripple-effect></ion-ripple-effect>
+              </ion-thumbnail>
+            </div>
+            <span
+              (click)="presentImageOptions()"
+              class="flex items-center justify-center size-9 bg-surface-primary-600 absolute -top-2 -right-2 rounded-full shadow-md"
+            >
+              <ion-icon
+                [src]="'assets/icon/action/edit.svg'"
+                class="size-4 text-white-h"
+              ></ion-icon>
+            </span>
+          </div>
+        </div>
+
+        <!-- Selección del tipo de contenido -->
+        <div>
+          <ion-list
+            class="border-t border-b border-surface-secondary-400"
+            mode="ios"
+          >
+            <ion-item class="custom">
+              <ion-select
+                [formControl]="getFormControl('contentType')"
+                [interfaceOptions]="customPopoverOptions"
+                interface="popover"
+                label="Tipo de contenido"
+                placeholder="Selecciona un tipo"
+                mode="md"
+                color="primary"
+                class="text-white-m"
+              >
+                <ion-select-option value="game">Juego</ion-select-option>
+                <ion-select-option value="movie">Película</ion-select-option>
+                <ion-select-option value="tvshow">
+                  Programa de TV
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+          <div
+            *ngIf="canShowError && form.get('contentType')?.invalid"
+            class="px-5 mt-1.5"
+          >
+            <span class="text-xs text-danger">
+              {{ getErrorMessage("contentType") }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Título -->
+        <div class="px-6">
+          <app-custom-input
+            labelPlacement="floating"
+            label="Título"
+            type="text"
+            placeholder="Título del contenido"
+            [control]="getFormControl('title')"
+          ></app-custom-input>
+          <div
+            *ngIf="canShowError && form.get('title')?.invalid"
+            class="px-5 mt-1.5"
+          >
+            <span class="text-xs text-danger">
+              {{ getErrorMessage("title") }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Campo de Rating -->
+        <div class="px-6">
+          <app-custom-input
+            labelPlacement="floating"
+            label="Calificación mundial"
+            type="number"
+            placeholder="Calificación (1 a 10)"
+            [control]="getFormControl('rating')"
+            [min]="1"
+            [max]="10"
+            [step]="0.1"
+          ></app-custom-input>
+          <div
+            *ngIf="canShowError && form.get('rating')?.invalid"
+            class="px-5 mt-1.5"
+          >
+            <span class="text-xs text-danger">
+              {{ getErrorMessage("rating") }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Descripción con ion-textarea -->
+        <div class="relative flex flex-col gap-2 px-6">
+          <span class="pl-5">Descripción</span>
+          <ion-textarea
+            placeholder="Mínimo 50 caracteres"
+            [formControl]="getFormControl('description')"
+            minlength="50"
+            maxlength="1200"
+            rows="6"
+            color="primary"
+            fill="outline"
+            class="custom"
+          ></ion-textarea>
+          <div
+            *ngIf="canShowError && form.get('description')?.invalid"
+            class="px-5 mt-1.5"
+          >
+            <span class="text-xs text-danger">
+              {{ getErrorMessage("description") }}
+            </span>
+          </div>
+          <div class="inline-flex items-center justify-end">
+            <span class="text-xs text-white-l">
+              {{
+                customCounterFormatter(
+                  (getFormControl("description").value || "").length,
+                  1200
+                )
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <app-custom-button
+        [disabled]="isAnyFieldEmpty()"
+        type="submit"
+        [label]="
+          isEditMode
+            ? 'Siguiente: Editar detalles'
+            : 'Siguiente: Agregar detalles'
+        "
+        buttonClass="size-sm secondary"
+        class="w-full mt-3 px-6"
+      ></app-custom-button>
+    </form>
+  </div>
+</ion-content>

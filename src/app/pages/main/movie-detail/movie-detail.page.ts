@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 import { Movie } from 'src/app/types/movie';
 import { AddReviewComponent } from 'src/app/components/shared/add-review/add-review.component';
 import { ContentService } from 'src/app/services/content.service';
-import { refreshContentData } from 'src/utils/common';
+import { adjustDate, refreshContentData } from 'src/utils/common';
 
 @Component({
   selector: 'app-movie-detail',
@@ -23,6 +23,9 @@ export class MovieDetailPage implements OnInit {
 
   movie: Movie | null = null;
   selectedSegment: string = 'reviews';
+
+  expandedDescription: boolean = false;
+  isLongDescription: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,6 +40,7 @@ export class MovieDetailPage implements OnInit {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       this.loadMovie(id);
+      this.checkDescriptionLength();
     }
   }
 
@@ -45,6 +49,8 @@ export class MovieDetailPage implements OnInit {
       const movieById = await this.contentService.getMovieById(id);
 
       if (movieById) {
+        const releaseDate = movieById.detail.releaseDate;
+        movieById.detail.releaseDate = adjustDate(releaseDate);
         this.ngZone.run(() => {
           this.movie = movieById;
           this.cdr.detectChanges();
@@ -65,6 +71,16 @@ export class MovieDetailPage implements OnInit {
 
   segmentChanged(event: any) {
     this.selectedSegment = event.detail.value;
+  }
+
+  checkDescriptionLength() {
+    if (this.movie?.description && this.movie.description.length > 260) {
+      this.isLongDescription = true;
+    }
+  }
+
+  toggleExpandDescription() {
+    this.expandedDescription = !this.expandedDescription;
   }
 
   async refreshMovieData() {

@@ -12,19 +12,29 @@ export function errorMessage(form: FormGroup, controlName: string): string {
     return 'Este campo es obligatorio.';
   }
   if (control?.hasError('minlength')) {
-    return 'La contraseña debe tener al menos 8 caracteres.';
+    const requiredLength = control.errors?.['minlength'].requiredLength;
+    return `Debe tener al menos ${requiredLength} caracteres.`;
   }
-  if (control?.hasError('uppercase')) {
-    return 'La contraseña debe contener al menos una letra mayúscula.';
+  if (control?.hasError('maxlength')) {
+    const requiredLength = control.errors?.['maxlength'].requiredLength;
+    return `No puede exceder ${requiredLength} caracteres.`;
   }
-  if (control?.hasError('lowercase')) {
-    return 'La contraseña debe contener al menos una letra minúscula.';
+  if (control?.hasError('min')) {
+    const min = control.errors?.['min'].min;
+    return `El valor debe ser mayor o igual a ${min}.`;
   }
-  if (control?.hasError('number')) {
-    return 'La contraseña debe contener al menos un número.';
+  if (control?.hasError('max')) {
+    const max = control.errors?.['max'].max;
+    return `El valor debe ser menor o igual a ${max}.`;
   }
-  if (control?.hasError('specialCharacter')) {
-    return 'La contraseña debe contener al menos un carácter especial.';
+  if (control?.hasError('pattern')) {
+    return 'El formato ingresado no es válido.';
+  }
+  if (control?.hasError('multiple')) {
+    return 'Debe seleccionar al menos un valor.';
+  }
+  if (control?.hasError('date')) {
+    return 'Debe ingresar una fecha válida.';
   }
   if (controlName === 'confirmPassword' && form.hasError('mismatch')) {
     return 'Las contraseñas deben coincidir.';

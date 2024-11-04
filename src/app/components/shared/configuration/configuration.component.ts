@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
 import { AccountDetailsComponent } from '../account-details/account-details.component';
+import { AddQuestionSecurityComponent } from '../add-question-security/add-question-security.component';
 
 @Component({
   selector: 'app-configuration',
@@ -127,6 +128,14 @@ export class ConfigurationComponent {
       }
     });
 
+    return await modal.present();
+  }
+
+  async openSecurityModal() {
+    const modal = await this.modalController.create({
+      component: AddQuestionSecurityComponent,
+      componentProps: { user: this.user },
+    });
     return await modal.present();
   }
 

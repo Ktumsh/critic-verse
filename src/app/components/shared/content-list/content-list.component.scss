@@ -1,0 +1,55 @@
+ion-thumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 9 / 16;
+  --size: inherit;
+  height: 40px;
+  width: 26px;
+  --border-radius: 2px;
+  overflow: hidden;
+
+  img {
+    height: 40px;
+    width: 26px;
+  }
+}
+
+.shadow-small {
+  --tw-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.05),
+    0px 2px 10px 0px rgba(0, 0, 0, 0.2),
+    inset 0px 0px 1px 0px hsla(0, 0%, 100%, 0.15);
+  --tw-shadow-colored: 0px 0px 5px 0px rgba(0, 0, 0, 0.05),
+    0px 2px 10px 0px rgba(0, 0, 0, 0.2),
+    inset 0px 0px 1px 0px hsla(0, 0%, 100%, 0.15);
+  box-shadow: 0 0 0 #0000, 0 0 0 #0000, var(--tw-shadow);
+}
+
+ion-button.add-btn {
+  --border-radius: 12px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+ion-searchbar.search-btn {
+  --background: var(--surface-secondary-600);
+  --color: rgb(255 255 255 / var(--opacity-h));
+  --placeholder-color: rgb(255 255 255 / var(--opacity-m));
+  --icon-color: rgb(255 255 255 / var(--opacity-m));
+  --cancel-button-color: rgb(255 255 255 / var(--opacity-h));
+  --border-radius: 12px;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}
+
+ion-searchbar.search-btn::part(native) {
+  background: var(--surface-secondary-600);
+}
+
+.demo-paginator {
+  border-radius: 12px;
+}
+
+.chevron {
+  transform: translateY(2px);
+}

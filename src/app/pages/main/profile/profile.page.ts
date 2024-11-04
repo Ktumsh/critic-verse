@@ -11,6 +11,8 @@ import { ConfigurationComponent } from 'src/app/components/shared/configuration/
 import { AuthService } from 'src/app/services/auth.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { UserService } from 'src/app/services/user.service';
+import { AddQuestionSecurityComponent } from 'src/app/components/shared/add-question-security/add-question-security.component';
 
 @Component({
   selector: 'app-profile',
@@ -28,8 +30,11 @@ export class ProfilePage implements OnInit {
     createdAt: new Date('2024-08-28T12:00:00'),
   };
 
+  isSecurityQuestionConfigured: boolean = true;
+
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private reviewService: ReviewService,
     private notificationsService: NotificationsService,
     private router: Router,
@@ -42,6 +47,24 @@ export class ProfilePage implements OnInit {
   async ngOnInit() {
     await this.loadUserReviewsCount();
     await this.loadUserNotificationsCount();
+    await this.checkSecurityQuestion();
+    console.log(
+      'isSecurityQuestionConfigured',
+      this.isSecurityQuestionConfigured
+    );
+  }
+
+  async checkSecurityQuestion() {
+    try {
+      const userQuestion = await this.userService.getUserQuestionByEmail(
+        this.user.email
+      );
+      console.log('Pregunta de seguridad del usuario:', userQuestion);
+      this.isSecurityQuestionConfigured = !!userQuestion;
+    } catch (error) {
+      console.error('Error al verificar la pregunta de seguridad:', error);
+      this.isSecurityQuestionConfigured = false;
+    }
   }
 
   async loadUserReviewsCount() {
@@ -115,6 +138,18 @@ export class ProfilePage implements OnInit {
       await this.loadUserNotificationsCount();
     });
 
+    return await modal.present();
+  }
+
+  async openSecurityModal() {
+    const modal = await this.modalController.create({
+      component: AddQuestionSecurityComponent,
+      componentProps: { user: this.user },
+    });
+
+    modal.onDidDismiss().then(async () => {
+      await this.checkSecurityQuestion();
+    });
     return await modal.present();
   }
 
@@ -205,9 +240,8 @@ export class ProfilePage implements OnInit {
           text: 'Cerrar sesión',
           role: 'confirm',
           handler: async () => {
-            this.authService.logout();
+            await this.authService.logout();
             await this.modalController.dismiss();
-            this.router.navigate(['/auth']);
           },
         },
       ],

@@ -10,10 +10,7 @@
       <div class="flex rounded-xl overflow-hidden shadow-lg">
         <img
           [alt]="item.title"
-          [ngSrc]="
-            item.image ||
-            'https://ionicframework.com/docs/img/demos/thumbnail.svg'
-          "
+          [src]="item.image || 'assets/content-placeholder.svg'"
           width="60"
           height="90"
           class="h-full object-cover object-center animate-fade-in animate-duration-300"
@@ -74,9 +71,9 @@
 
     <!-- Rating review -->
     <div class="relative flex flex-col gap-2">
-      <span *ngIf="item" class="text-sm"
-        >Escribe una reseña para {{ item.title }}</span
-      >
+      <span *ngIf="item" class="text-sm">
+        Escribe una reseña para {{ item.title }}
+      </span>
       <ion-textarea
         placeholder="Mínimo 50 caracteres"
         minlength="50"

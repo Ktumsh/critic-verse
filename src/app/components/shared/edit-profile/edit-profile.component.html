@@ -94,7 +94,7 @@
             Fecha inválida o es una fecha futura.
           </span>
           <span
-            *ngIf="birthdateErrors?.['minAge'] && profileForm.get('birthdate')?.touched"
+            *ngIf="birthdateErrors?.['underage'] && profileForm.get('birthdate')?.touched"
             class="text-xs text-danger"
           >
             Debes tener al menos 13 años.

@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 import { generateUUID } from 'src/utils/common';
 import { Review } from '../types/review';
 import { DbService } from './db.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReviewService {
+  private reviewsSubject = new BehaviorSubject<Review[]>([]);
+  reviews$ = this.reviewsSubject.asObservable();
+
   constructor(private dbService: DbService) {}
 
   //Intertar una reseña
@@ -33,6 +37,7 @@ export class ReviewService {
       null,
     ];
     await database.executeSql(reviewInsert, reviewValues);
+    this.getAllReviews();
   }
 
   //Actualizar una reseña
@@ -50,6 +55,7 @@ export class ReviewService {
     `;
     const values = [rating, comment, containsSpoilers ? 1 : 0, reviewId];
     await database.executeSql(query, values);
+    this.getAllReviews();
     console.log(`Reseña con ID "${reviewId}" actualizada correctamente.`);
   }
 
@@ -58,6 +64,7 @@ export class ReviewService {
     const database = await this.dbService.getDatabase();
     const deleteQuery = `DELETE FROM Reviews WHERE id = ?`;
     await database.executeSql(deleteQuery, [reviewId]);
+    this.getAllReviews();
     console.log(`Reseña con ID "${reviewId}" eliminada correctamente.`);
   }
 
@@ -160,7 +167,7 @@ export class ReviewService {
         contentId: review.contentId,
       });
     }
-
+    this.reviewsSubject.next(reviews);
     console.log('Todas las reseñas obtenidas correctamente:', reviews);
     return reviews;
   }

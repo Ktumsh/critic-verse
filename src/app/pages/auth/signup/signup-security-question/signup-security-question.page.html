@@ -1,0 +1,65 @@
+<app-header [logo]="false" headerClass="no-transparent"></app-header>
+
+<ion-content>
+  <div class="flex flex-col items-center h-full px-6 pb-6">
+    <div class="w-full mt-20 mb-5">
+      <div class="flex flex-col justify-center w-full space-y-3">
+        <p class="text-xl text-white-h text-center font-semibold">
+          ¡Protege tu cuenta!
+        </p>
+        <p class="text-sm text-white-m text-center leading-tight">
+          Puedes agregar una pregunta de seguridad para mayor protección. Este
+          paso es opcional y puedes configurarlo más tarde.
+        </p>
+      </div>
+    </div>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      class="flex flex-col justify-between size-full"
+    >
+      <div class="flex flex-col mt-6 w-full px-5">
+        <ion-label position="stacked">Pregunta de seguridad</ion-label>
+        <ion-select
+          formControlName="securityQuestion"
+          placeholder="Selecciona una pregunta"
+          mode="md"
+          [interfaceOptions]="customAlertOptions"
+          cancelText="Cancelar"
+          okText="Seleccionar"
+          color="primary"
+          class="text-white-m font-medium text-sm"
+        >
+          <ion-select-option
+            *ngFor="let question of questions"
+            [value]="question"
+          >
+            {{ question }}
+          </ion-select-option>
+        </ion-select>
+
+        <app-custom-input
+          type="text"
+          placeholder="Tu respuesta"
+          [control]="form.controls.securityAnswer"
+        ></app-custom-input>
+      </div>
+
+      <app-custom-button
+        type="submit"
+        [disabled]="form.invalid"
+        label="Guardar"
+        buttonClass="size-sm secondary"
+        class="w-full mt-3"
+      ></app-custom-button>
+    </form>
+    <app-custom-button
+      type="button"
+      label="Más tarde"
+      buttonClass="size-sm"
+      class="w-full mt-3"
+      (click)="skip()"
+    ></app-custom-button>
+  </div>
+</ion-content>

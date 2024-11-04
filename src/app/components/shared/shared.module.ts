@@ -35,6 +35,11 @@ import { ReviewOptionsComponent } from './review-options/review-options.componen
 import { AddNewUserComponent } from './add-new-user/add-new-user.component';
 import { UserOptionsComponent } from './user-options/user-options.component';
 import { ReportsListComponent } from './reports-list/reports-list.component';
+import { AddQuestionSecurityComponent } from './add-question-security/add-question-security.component';
+import { ContentListComponent } from './content-list/content-list.component';
+import { AddNewContentComponent } from './add-new-content/add-new-content.component';
+import { ContentOptionsComponent } from './content-options/content-options.component';
+import { AddNewContentDetailsComponent } from './add-new-content-details/add-new-content-details.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +67,11 @@ import { ReportsListComponent } from './reports-list/reports-list.component';
     ReviewOptionsComponent,
     AddNewUserComponent,
     UserOptionsComponent,
+    AddQuestionSecurityComponent,
+    ContentListComponent,
+    AddNewContentComponent,
+    AddNewContentDetailsComponent,
+    ContentOptionsComponent,
   ],
   exports: [
     HeaderComponent,
@@ -89,6 +99,11 @@ import { ReportsListComponent } from './reports-list/reports-list.component';
     ReviewOptionsComponent,
     AddNewUserComponent,
     UserOptionsComponent,
+    AddQuestionSecurityComponent,
+    ContentListComponent,
+    AddNewContentComponent,
+    AddNewContentDetailsComponent,
+    ContentOptionsComponent,
   ],
   imports: [
     CommonModule,

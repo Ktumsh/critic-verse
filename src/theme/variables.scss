@@ -162,6 +162,40 @@ button.alert-button.alert-button-role-confirm {
   text-transform: none;
 }
 
+.custom-alert-select {
+  --background: var(--surface-secondary-600);
+
+  .alert-wrapper {
+    border-radius: 12px;
+
+    .alert-head {
+      border-bottom: 1px solid var(--surface-secondary-400);
+    }
+
+    h2.alert-title {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .alert-message {
+      padding-bottom: 0;
+      color: rgb(255 255 255 / var(--opacity-m));
+    }
+  }
+}
+.alert-radio-group.sc-ion-alert-md,
+.alert-checkbox-group.sc-ion-alert-md {
+  border-color: var(--surface-secondary-400);
+}
+.alert-radio-icon.sc-ion-alert-md,
+.alert-checkbox-icon.sc-ion-alert-md {
+  border-color: var(--surface-secondary-400);
+}
+.custom-alert-select * {
+  color: rgb(255 255 255 / var(--opacity-h)) !important;
+}
+
 ion-toast.custom-toast {
   --background: var(--surface-secondary-600);
   --color: rgb(255 255 255 / var(--opacity-h));

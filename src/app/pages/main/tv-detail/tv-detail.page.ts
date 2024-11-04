@@ -11,7 +11,7 @@ import { IonContent, ModalController } from '@ionic/angular';
 import { AddReviewComponent } from 'src/app/components/shared/add-review/add-review.component';
 import { ContentService } from 'src/app/services/content.service';
 import { TvShow } from 'src/app/types/tv';
-import { refreshContentData } from 'src/utils/common';
+import { adjustDate, refreshContentData } from 'src/utils/common';
 
 @Component({
   selector: 'app-tv-detail',
@@ -23,6 +23,9 @@ export class TvDetailPage implements OnInit {
 
   tv: TvShow | null = null;
   selectedSegment: string = 'reviews';
+
+  expandedDescription: boolean = false;
+  isLongDescription: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,6 +40,7 @@ export class TvDetailPage implements OnInit {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       this.loadTvShow(id);
+      this.checkDescriptionLength();
     }
   }
 
@@ -45,6 +49,8 @@ export class TvDetailPage implements OnInit {
       const tvShowById = await this.contentService.getTvShowById(id);
 
       if (tvShowById) {
+        const releaseDate = tvShowById.detail.releaseDate;
+        tvShowById.detail.releaseDate = adjustDate(releaseDate);
         this.tv = tvShowById;
         this.ngZone.run(() => {
           this.tv = tvShowById;
@@ -82,6 +88,16 @@ export class TvDetailPage implements OnInit {
 
   segmentChanged(event: any) {
     this.selectedSegment = event.detail.value;
+  }
+
+  checkDescriptionLength() {
+    if (this.tv?.description && this.tv.description.length > 260) {
+      this.isLongDescription = true;
+    }
+  }
+
+  toggleExpandDescription() {
+    this.expandedDescription = !this.expandedDescription;
   }
 
   async refreshTvData() {

@@ -13,7 +13,7 @@ import { IonContent, ModalController } from '@ionic/angular';
 import { AddReviewComponent } from 'src/app/components/shared/add-review/add-review.component';
 import { ContentService } from 'src/app/services/content.service';
 import { Review } from 'src/app/types/review';
-import { refreshContentData } from 'src/utils/common';
+import { adjustDate, refreshContentData } from 'src/utils/common';
 
 @Component({
   selector: 'app-game-detail',
@@ -26,6 +26,9 @@ export class GameDetailPage implements OnInit {
   game: Game | null = null;
   selectedSegment: string = 'reviews';
   reviews: Review[] = [];
+
+  expandedDescription: boolean = false;
+  isLongDescription: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,6 +43,7 @@ export class GameDetailPage implements OnInit {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       await this.loadGame(id);
+      this.checkDescriptionLength();
     }
   }
 
@@ -48,6 +52,8 @@ export class GameDetailPage implements OnInit {
       const gameById = await this.contentService.getGameById(id);
 
       if (gameById) {
+        const releaseDate = gameById.detail.releaseDate;
+        gameById.detail.releaseDate = adjustDate(releaseDate);
         this.game = gameById;
         this.ngZone.run(() => {
           this.game = gameById;
@@ -73,6 +79,16 @@ export class GameDetailPage implements OnInit {
 
   segmentChanged(event: any) {
     this.selectedSegment = event.detail.value;
+  }
+
+  checkDescriptionLength() {
+    if (this.game?.description && this.game.description.length > 260) {
+      this.isLongDescription = true;
+    }
+  }
+
+  toggleExpandDescription() {
+    this.expandedDescription = !this.expandedDescription;
   }
 
   async refreshGameData() {

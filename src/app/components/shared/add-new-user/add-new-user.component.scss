@@ -14,6 +14,11 @@ ion-item:last-child {
   --inner-border-width: 0 0 0 0;
 }
 
+ion-item.custom {
+  --inner-padding-start: 24px;
+  --inner-padding-end: 24px;
+}
+
 ion-toggle {
   --handle-background: var(--surface-secondary-500);
   --track-background: var(--surface-secondary-300);

@@ -22,6 +22,10 @@ const routes: Routes = [
         (m) => m.SignupPasswordPageModule
       ),
   },
+  {
+    path: 'signup-security-question',
+    loadChildren: () => import('./signup-security-question/signup-security-question.module').then( m => m.SignupSecurityQuestionPageModule)
+  },
 ];
 
 @NgModule({

@@ -17,7 +17,7 @@
   >
     <ion-thumbnail class="size-full overflow-hidden">
       <img
-        [ngSrc]="tv.image"
+        [src]="tv.image"
         alt="{{ tv.title }}"
         width="600"
         height="900"
@@ -51,10 +51,10 @@
               src="assets/icon/time.svg"
               class="size-3.5 mr-2"
             ></ion-icon>
-            <span
-              >{{ tv.detail.seasons }} {{tv.detail.seasons && tv.detail.seasons
-              > 1 ? 'temporadas' : 'temporada'}}</span
-            >
+            <span>
+              {{ tv.detail.seasons }} {{tv.detail.seasons && tv.detail.seasons >
+              1 ? 'temporadas' : 'temporada'}}
+            </span>
           </div>
         </div>
         <div class="flex items-center justify-center text-white-l">
@@ -115,7 +115,30 @@
               <h4 class="text-lg text-white-m">Resumen</h4>
             </div>
             <div class="mb-4">
-              <p class="text-white-h text-sm">{{ tv.description }}</p>
+              <div
+                *ngIf="isLongDescription; else shortDescription"
+                class="line-clamp-container"
+                [ngClass]="{ expanded: expandedDescription }"
+              >
+                <p class="text-white-h text-sm line-clamp">
+                  {{ tv.description }}
+                </p>
+              </div>
+
+              <ng-template #shortDescription>
+                <p class="text-white-h text-sm">{{ tv.description }}</p>
+              </ng-template>
+
+              <div class="inline-flex justify-end w-full">
+                <ion-button
+                  *ngIf="isLongDescription"
+                  fill="clear"
+                  class="show-more text-xxs"
+                  (click)="toggleExpandDescription()"
+                >
+                  {{ expandedDescription ? 'Ver menos' : 'Ver todo' }}
+                </ion-button>
+              </div>
             </div>
             <div class="flex flex-col space-y-4">
               <div

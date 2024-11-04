@@ -67,6 +67,10 @@ export class ClasificationComponent implements OnInit, OnChanges {
   }
 
   getUserRatingDescriptionForItem(rating: number): string {
+    if (this.item.reviews.length === 0) {
+      return 'Sin calificaciones';
+    }
+
     if (this.isGame(this.item)) {
       return ratingGameDescription(rating);
     } else if (this.isMovie(this.item) || this.isTvShow(this.item)) {

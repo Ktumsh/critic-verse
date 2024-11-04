@@ -21,6 +21,16 @@ export class TableService {
       );
     `;
 
+    const tableSecurityQuestions = `
+      CREATE TABLE IF NOT EXISTS SecurityQuestions (
+        id TEXT PRIMARY KEY,
+        userId TEXT NOT NULL,
+        question TEXT NOT NULL,
+        answer TEXT NOT NULL,
+        FOREIGN KEY (userId) REFERENCES Users(id)
+      );
+    `;
+
     const tableMovies = `
       CREATE TABLE IF NOT EXISTS Movies (
         id TEXT PRIMARY KEY,
@@ -140,6 +150,7 @@ export class TableService {
 
     await database.sqlBatch([
       tableUsers,
+      tableSecurityQuestions,
       tableMovies,
       tableTvShows,
       tableGames,

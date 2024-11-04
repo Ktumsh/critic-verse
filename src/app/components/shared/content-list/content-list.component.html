@@ -1,0 +1,153 @@
+<app-header
+  [title]="'Lista de contenido'"
+  [logo]="false"
+  [backButton]="dismiss.bind(this)"
+></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="flex flex-col gap-4 py-6 px-4">
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center">
+        <ion-searchbar
+          [formControl]="searchControl"
+          class="search-btn"
+          placeholder="Buscar contenido"
+          debounce="250"
+          showCancelButton="focus"
+          showClearButton="never"
+        ></ion-searchbar>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-white-l text-sm">
+          Total: {{ contents.length }} contenidos
+        </span>
+        <ion-button
+          color="secondary"
+          class="add-btn font-normal letter-spacing-normal"
+          (click)="addContent()"
+        >
+          Agregar nuevo
+          <ion-icon slot="end" name="add-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col p-2 rounded-xl gap-4 max-h-xl overflow-auto bg-surface-secondary-600"
+      style="min-height: 476px"
+    >
+      <table class="min-w-full w-full text-white-h h-full">
+        <thead>
+          <tr class="bg-surface-secondary-400 shadow-small text-sm rounded-lg">
+            <th
+              class="h-10 align-middle text-start px-3 py-2 rounded-l-lg ion-activatable relative overflow-hidden"
+              (click)="sortContentsBy('title')"
+            >
+              Título
+              <ion-icon
+                [name]="
+                  sortAscendingTitle
+                    ? 'chevron-up-outline'
+                    : 'chevron-down-outline'
+                "
+                class="inline-block ml-2 size-3 chevron"
+              ></ion-icon>
+              <ion-ripple-effect></ion-ripple-effect>
+            </th>
+            <th
+              class="h-10 align-middle text-start px-3 py-2 ion-activatable relative overflow-hidden"
+              (click)="sortContentsBy('type')"
+            >
+              Tipo
+              <ion-icon
+                [name]="
+                  sortAscendingType
+                    ? 'chevron-up-outline'
+                    : 'chevron-down-outline'
+                "
+                class="inline-block ml-2 size-3 chevron"
+              ></ion-icon>
+              <ion-ripple-effect></ion-ripple-effect>
+            </th>
+            <th
+              class="h-10 align-middle text-start px-3 py-2 rounded-r-lg"
+            ></th>
+          </tr>
+        </thead>
+        <tbody class="text-xs h-full">
+          <tr *ngFor="let content of paginatedContents" class="h-10">
+            <td class="align-middle text-start pr-3 py-2">
+              <div class="inline-flex items-center justify-center gap-2">
+                <ion-thumbnail>
+                  <img
+                    [src]="content.image || 'assets/content-placeholder.svg'"
+                    width="20"
+                    height="40"
+                    [alt]="'imagen de' + content.title"
+                    class="object-cover object-center animate-fade-in animate-duration-300"
+                  />
+                </ion-thumbnail>
+                <div class="inline-flex flex-col items-start">
+                  <span>
+                    {{
+                      content.title.length > 28
+                        ? (content.title | slice : 0 : 28) + "..."
+                        : content.title
+                    }}
+                  </span>
+                  <span class="text-white-l truncate">
+                    {{
+                      content.description.length > 28
+                        ? (content.description | slice : 0 : 28) + "..."
+                        : content.description
+                    }}
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td class="align-middle text-start px-3 py-2">
+              <ng-container *ngIf="isGame(content); else notGame">
+                Juego
+              </ng-container>
+              <ng-template #notGame>
+                <ng-container *ngIf="isMovie(content); else notMovie">
+                  Película
+                </ng-container>
+                <ng-template #notMovie>Tv</ng-template>
+              </ng-template>
+            </td>
+            <td class="align-middle text-center pl-3 py-2">
+              <ion-button
+                color="primary"
+                fill="clear"
+                shape="round"
+                color="secondary"
+                (click)="openContentOptions($event, content)"
+              >
+                <ion-icon
+                  slot="icon-only"
+                  src="assets/icon/options.svg"
+                  class="text-white-l"
+                ></ion-icon>
+              </ion-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="px-4 pb-6 fixed bottom-0 inset-x-0">
+    <mat-paginator
+      #paginator
+      class="demo-paginator"
+      (page)="handlePageEvent($event)"
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [showFirstLastButtons]="showFirstLastButtons"
+      [hidePageSize]="true"
+      aria-label="Select page"
+    ></mat-paginator>
+  </div>
+</ion-content>

@@ -23,6 +23,9 @@ export class CustomInputComponent implements OnInit, AfterViewInit {
   @Input() autocomplete!: string;
   @Input() icon!: string;
   @Input() labelPlacement: string | null = null;
+  @Input() min!: number;
+  @Input() max!: number;
+  @Input() step!: number;
 
   @ViewChild(IonInput, { static: false }) inputElement!: IonInput;
 

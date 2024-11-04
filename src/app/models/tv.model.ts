@@ -555,7 +555,7 @@ export const TV_MODEL: TvShow[] = [
       ],
       episodeDuration: '45 minutos',
       releaseDate: new Date('2024-09-22'),
-      streamingPlatform: ['MAX', 'Netflix'],
+      streamingPlatform: ['HBO Max', 'Netflix'],
       class: '+16',
     },
     reviews: [
@@ -634,7 +634,7 @@ export const TV_MODEL: TvShow[] = [
       episodesPerSeason: [{ season: 1, episodes: 10 }],
       episodeDuration: '65 minutos',
       releaseDate: new Date('2024-02-27'),
-      streamingPlatform: ['Prime videos'],
+      streamingPlatform: ['Amazon Prime'],
       class: '+18',
     },
     reviews: [
@@ -878,7 +878,7 @@ export const TV_MODEL: TvShow[] = [
       episodesPerSeason: [{ season: 1, episodes: 7 }],
       episodeDuration: '68 minutos',
       releaseDate: new Date('2024-09-12'),
-      streamingPlatform: ['MAX'],
+      streamingPlatform: ['HBO Max'],
       class: '+13',
     },
     reviews: [
@@ -1025,7 +1025,7 @@ export const TV_MODEL: TvShow[] = [
       ],
       episodeDuration: '45 minutos',
       releaseDate: new Date('2023-09-13'),
-      streamingPlatform: ['Netflix', 'MAX'],
+      streamingPlatform: ['Netflix', 'HBO Max'],
       class: '+13',
     },
     reviews: [

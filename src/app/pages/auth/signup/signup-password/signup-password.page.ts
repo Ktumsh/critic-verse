@@ -125,11 +125,10 @@ export class SignupPasswordPage implements OnInit {
       const user = await this.userService.getUserByEmail(newUser.email);
 
       this.authService.login(user);
-      this.showToast(
-        '¡Cuenta creada con éxito! ¡Bienvenido!',
-        'checkmark-circle-outline'
-      );
-      this.router.navigate(['/main'], { replaceUrl: true });
+      this.showToast('¡Cuenta creada con éxito!', 'checkmark-circle-outline');
+      this.router.navigate(['/signup/signup-security-question'], {
+        replaceUrl: true,
+      });
     } catch (error) {
       console.error('Error durante el proceso de registro:', error);
       this.showToast(
@@ -142,7 +141,6 @@ export class SignupPasswordPage implements OnInit {
   async showToast(message: string, icon?: string) {
     const toast = await this.toastController.create({
       cssClass: 'custom-toast',
-      swipeGesture: 'vertical',
       icon,
       message,
       duration: 2000,

@@ -5,14 +5,38 @@
 ></app-header>
 
 <ion-content [fullscreen]="true">
-  <div class="flex flex-col items-center h-full py-6 px-4">
+  <div class="flex flex-col items-center h-full py-6">
     <form
       [formGroup]="form"
       (ngSubmit)="onSubmit()"
       class="flex flex-col justify-between size-full"
     >
       <div class="flex flex-col mt-20 space-y-4">
-        <div *ngIf="!isEditMode">
+        <div>
+          <ion-list
+            class="border-t border-b border-surface-secondary-400"
+            mode="ios"
+          >
+            <ion-item class="custom">
+              <ion-select
+                [formControl]="roleControl"
+                [interfaceOptions]="customPopoverOptions"
+                interface="popover"
+                label="Rol"
+                mode="md"
+                color="primary"
+                class="custom-select text-white-m font-medium"
+              >
+                <ion-select-option value="user">Usuario</ion-select-option>
+                <ion-select-option value="admin"
+                  >Administrador</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <div *ngIf="!isEditMode" class="px-6">
           <app-custom-input
             labelPlacement="floating"
             label="Correo electrónico"
@@ -27,7 +51,7 @@
           </div>
         </div>
 
-        <div>
+        <div class="px-6">
           <app-custom-input
             labelPlacement="floating"
             label="Nombre de usuario"
@@ -45,7 +69,7 @@
           </div>
         </div>
 
-        <div>
+        <div class="px-6">
           <app-custom-input
             labelPlacement="floating"
             label="Fecha de nacimiento"
@@ -63,7 +87,7 @@
           </div>
         </div>
 
-        <div *ngIf="!isEditMode">
+        <div *ngIf="!isEditMode" class="px-6">
           <app-custom-input
             labelPlacement="floating"
             label="Contraseña"
@@ -80,23 +104,6 @@
             }}</span>
           </div>
         </div>
-
-        <div>
-          <ion-item>
-            <ion-select
-              [formControl]="roleControl"
-              [interfaceOptions]="customPopoverOptions"
-              interface="popover"
-              label="Rol"
-              mode="md"
-              color="primary"
-              class="custom-select text-white-m font-medium"
-            >
-              <ion-select-option value="user">Usuario</ion-select-option>
-              <ion-select-option value="admin">Administrador</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </div>
       </div>
 
       <app-custom-button
@@ -104,7 +111,7 @@
         type="submit"
         [label]="isEditMode ? 'Actualizar usuario' : 'Agregar nuevo usuario'"
         buttonClass="size-sm secondary"
-        class="w-full mt-3"
+        class="w-full mt-3 px-6"
       ></app-custom-button>
     </form>
   </div>

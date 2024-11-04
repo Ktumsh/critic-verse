@@ -1,0 +1,487 @@
+<app-header
+  [title]="isEditMode ? 'Editar detalles' : 'Agregar detalles'"
+  [logo]="false"
+  [backButton]="dismiss.bind(this)"
+></app-header>
+
+<ion-content>
+  <div
+    class="background fixed top-0 -translate-y-14 w-full h-72 animate-fade-in animate-duration-1000"
+  ></div>
+  <div class="flex flex-col items-center h-full">
+    <div class="w-full mt-6 mb-5">
+      <div class="flex justify-center w-full">
+        <p class="text-sm text-white-h text-center leading-tight">
+          Agrega o actualiza los detalles del contenido, procura utilizar
+          información real y verídica. Así garantizamos una experiencia óptima a
+          nuestros usuarios.
+        </p>
+      </div>
+    </div>
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col justify-between size-full"
+    >
+      <div class="flex flex-col space-y-4 mb-5">
+        <!-- Género -->
+        <div>
+          <ion-list
+            class="border-t border-b border-surface-secondary-400"
+            mode="ios"
+          >
+            <ion-item class="custom">
+              <ion-select
+                [formControl]="getFormControl('genre')"
+                multiple="true"
+                label="Género"
+                placeholder="Selecciona uno o más géneros"
+                mode="md"
+                [interfaceOptions]="customAlertOptions"
+                cancelText="Cancelar"
+                okText="Seleccionar"
+                color="primary"
+                class="text-white-m"
+              >
+                <ion-select-option
+                  *ngFor="let genre of genreOptions"
+                  [value]="genre"
+                >
+                  {{ genre }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+          <div
+            *ngIf="canShowError && form.get('genre')?.invalid"
+            class="px-5 mt-1.5"
+          >
+            <span class="text-xs text-danger">
+              {{ getErrorMessage("genre") }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Campos para Juego -->
+        <div *ngIf="contentType === 'game'" class="space-y-4">
+          <!-- Plataformas -->
+          <div>
+            <ion-list
+              class="border-t border-b border-surface-secondary-400"
+              mode="ios"
+            >
+              <ion-item class="custom">
+                <ion-select
+                  [formControl]="getFormControl('platforms')"
+                  multiple="true"
+                  label="Plataformas"
+                  placeholder="Selecciona una o más plataformas"
+                  mode="md"
+                  [interfaceOptions]="customAlertOptions"
+                  cancelText="Cancelar"
+                  okText="Seleccionar"
+                  color="primary"
+                  class="text-white-m"
+                >
+                  <ion-select-option
+                    *ngFor="let platform of platformOptions"
+                    [value]="platform"
+                  >
+                    {{ platform }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            <div
+              *ngIf="canShowError && form.get('platforms')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("platforms") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Editor -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Editor"
+              type="text"
+              placeholder="Nombre del editor"
+              [control]="getFormControl('editor')"
+            ></app-custom-input>
+            <div
+              *ngIf="canShowError && form.get('editor')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("editor") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Desarrollador -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Desarrollador"
+              type="text"
+              placeholder="Nombre del desarrollador"
+              [control]="getFormControl('developer')"
+            ></app-custom-input>
+            <div
+              *ngIf="canShowError && form.get('developer')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("developer") }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campos para Película -->
+        <div *ngIf="contentType === 'movie'" class="space-y-4">
+          <!-- Director -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Director"
+              type="text"
+              placeholder="Nombre del director/res"
+              [control]="getFormControl('director')"
+            ></app-custom-input>
+            <small class="ml-5 text-xs text-center text-white-m">
+              Separa los nombres por comas.
+            </small>
+            <div
+              *ngIf="canShowError && form.get('director')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("director") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Productor -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Productor"
+              type="text"
+              placeholder="Nombre del productor/res"
+              [control]="getFormControl('producer')"
+            ></app-custom-input>
+            <small class="ml-5 text-xs text-center text-white-m">
+              Separa los nombres por comas.
+            </small>
+            <div
+              *ngIf="canShowError && form.get('producer')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("producer") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Escritor -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Escritor"
+              type="text"
+              placeholder="Nombre del escritor/res"
+              [control]="getFormControl('writer')"
+            ></app-custom-input>
+            <small class="ml-5 text-xs text-center text-white-m">
+              Separa los nombres por comas.
+            </small>
+            <div
+              *ngIf="canShowError && form.get('writer')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("writer") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Compañía de Producción -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Compañía de Producción"
+              type="text"
+              placeholder="Nombre de la compañía de producción"
+              [control]="getFormControl('productionCompany')"
+            ></app-custom-input>
+            <div
+              *ngIf="canShowError && form.get('productionCompany')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("productionCompany") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Duración -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Duración"
+              type="text"
+              placeholder="Ej: 2h 30m"
+              [control]="getFormControl('timeDuration')"
+            ></app-custom-input>
+            <div
+              *ngIf="canShowError && form.get('timeDuration')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("timeDuration") }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campos para Serie de TV -->
+        <div *ngIf="contentType === 'tvshow'" class="space-y-4">
+          <!-- Plataforma de Streaming -->
+          <div>
+            <ion-list
+              class="border-t border-b border-surface-secondary-400"
+              mode="ios"
+            >
+              <ion-item class="custom">
+                <ion-select
+                  [formControl]="getFormControl('streamingPlatform')"
+                  multiple="true"
+                  label="Plataforma"
+                  placeholder="Selecciona una o más plataformas"
+                  mode="md"
+                  [interfaceOptions]="customAlertOptions"
+                  cancelText="Cancelar"
+                  okText="Seleccionar"
+                  color="primary"
+                  class="text-white-m"
+                >
+                  <ion-select-option
+                    *ngFor="let platform of streamingOptions"
+                    [value]="platform"
+                  >
+                    {{ platform }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            <div
+              *ngIf="canShowError && form.get('streamingPlatform')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("streamingPlatform") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Episodios por Temporada -->
+          <div>
+            <ion-list
+              mode="ios"
+              class="border-t border-surface-secondary-400"
+              [ngClass]="{
+                'border-b': episodesPerSeasonControls.controls.length === 0
+              }"
+            >
+              <div class="w-full px-6 my-4">
+                <ion-button
+                  expand="block"
+                  shape="round"
+                  class="h-10 text-sm custom"
+                  (click)="addSeason()"
+                >
+                  Agregar Temporada
+                </ion-button>
+              </div>
+              <div
+                formArrayName="episodesPerSeason"
+                *ngIf="episodesPerSeasonControls.controls.length > 0"
+              >
+                <div
+                  *ngFor="
+                    let seasonCtrl of episodesPerSeasonControls.controls;
+                    let i = index
+                  "
+                  [formGroupName]="i"
+                >
+                  <ion-item class="custom">
+                    <ion-label>
+                      Temporada {{ seasonCtrl.get("season")?.value }}
+                    </ion-label>
+                    <ion-button
+                      *ngIf="episodesPerSeasonControls.length > 1 && i > 0"
+                      (click)="removeSeason(i)"
+                      expand="block"
+                      shape="round"
+                      class="h-6 text-xs text-danger"
+                    >
+                      <ion-icon
+                        [src]="'assets/icon/action/delete.svg'"
+                        class="size-3 text-danger mr-2"
+                      ></ion-icon>
+                      Eliminar
+                    </ion-button>
+                  </ion-item>
+                  <ion-item
+                    class="custom border-b border-surface-secondary-400"
+                  >
+                    <ion-input
+                      labelPlacement="floating"
+                      label="Número de Episodios"
+                      placeholder="Episodios por temporada"
+                      type="number"
+                      formControlName="episodes"
+                    ></ion-input>
+                  </ion-item>
+                  <div
+                    *ngIf="canShowError && seasonCtrl.get('episodes')?.invalid"
+                    class="error-message"
+                  >
+                    <span class="text-xs text-danger">
+                      Número de episodios es requerido y debe ser mayor que
+                      cero.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </ion-list>
+            <div
+              *ngIf="canShowError && form.errors?.['noSeason']"
+              class="error-message px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                Debes agregar al menos una temporada.
+              </span>
+            </div>
+          </div>
+
+          <!-- Duración de Episodios -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Duración de Episodios (en promedio)"
+              type="text"
+              placeholder="Ej: 45 minutos"
+              [control]="getFormControl('episodeDuration')"
+            ></app-custom-input>
+            <div
+              *ngIf="canShowError && form.get('episodeDuration')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("episodeDuration") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Director -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Director"
+              type="text"
+              placeholder="Nombre del director/res"
+              [control]="getFormControl('director')"
+            ></app-custom-input>
+            <small class="ml-5 text-xs text-center text-white-m">
+              Separa los nombres por comas.
+            </small>
+            <div
+              *ngIf="canShowError && form.get('director')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("director") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Escritor -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Escritor"
+              type="text"
+              placeholder="Nombre del escritor/res"
+              [control]="getFormControl('writer')"
+            ></app-custom-input>
+            <small class="ml-5 text-xs text-center text-white-m">
+              Separa los nombres por comas.
+            </small>
+            <div
+              *ngIf="canShowError && form.get('writer')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("writer") }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Productor -->
+          <div class="px-6">
+            <app-custom-input
+              labelPlacement="floating"
+              label="Productor"
+              type="text"
+              placeholder="Nombre del productor/res"
+              [control]="getFormControl('producer')"
+            ></app-custom-input>
+            <small class="ml-5 text-xs text-center text-white-m">
+              Separa los nombres por comas.
+            </small>
+            <div
+              *ngIf="canShowError && form.get('producer')?.invalid"
+              class="px-5 mt-1.5"
+            >
+              <span class="text-xs text-danger">
+                {{ getErrorMessage("producer") }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fecha de lanzamiento -->
+        <div class="px-6">
+          <app-custom-input
+            labelPlacement="floating"
+            label="Fecha de Lanzamiento"
+            type="date"
+            placeholder="Fecha de lanzamiento"
+            [control]="getFormControl('releaseDate')"
+          ></app-custom-input>
+          <div
+            *ngIf="canShowError && form.get('releaseDate')?.invalid"
+            class="px-5 mt-1.5"
+          >
+            <span class="text-xs text-danger">
+              {{ getErrorMessage("releaseDate") }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <app-custom-button
+        [disabled]="isAnyFieldEmpty()"
+        type="submit"
+        [label]="isEditMode ? 'Actualizar contenido' : 'Agregar contenido'"
+        buttonClass="size-sm secondary"
+        class="w-full mt-3 px-6 pb-6"
+      ></app-custom-button>
+    </form>
+  </div>
+</ion-content>

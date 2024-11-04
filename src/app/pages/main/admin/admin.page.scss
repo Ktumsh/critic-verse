@@ -25,3 +25,11 @@ ion-segment-button.md {
   --indicator-height: 4px;
   text-transform: capitalize;
 }
+
+ion-skeleton-text {
+  height: 22px !important;
+  width: 30% !important;
+  border-radius: 50px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}

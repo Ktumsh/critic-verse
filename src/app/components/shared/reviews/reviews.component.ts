@@ -178,14 +178,21 @@ export class ReviewsComponent implements OnInit, OnChanges {
       if (this.pendingDeleteList[id]) {
         await this.reviewService.deleteReviewById(id);
 
-        const userExists = await this.userService.getUserById(id);
+        const userExists = await this.userService.getUserById(
+          reviewToDelete.userId
+        );
 
-        if (userExists && reviewToDelete.userId !== this.user.id) {
-          await this.notificationsService.sendNotificationToUser(
-            reviewToDelete.userId,
-            'Tu reseña ha sido eliminada',
-            `Tu reseña sobre "${this.item.title}" ha sido eliminada por incumplir nuestras normas.`
-          );
+        try {
+          if (userExists && reviewToDelete.userId !== this.user.id) {
+            await this.notificationsService.sendNotificationToUser(
+              reviewToDelete.userId,
+              'Tu reseña ha sido eliminada',
+              `Tu reseña sobre "${this.item.title}" ha sido eliminada por incumplir nuestras normas.`
+            );
+            console.log('Notificacion de eliminacion enviada al usuario');
+          }
+        } catch (error) {
+          console.log('Error al enviar notificacion de eliminacion:', error);
         }
 
         this.item.reviews = this.item.reviews.filter(

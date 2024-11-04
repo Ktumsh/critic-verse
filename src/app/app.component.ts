@@ -84,16 +84,34 @@ export class AppComponent implements OnInit {
 
   //Crear un usuario inicial
   async createUser() {
-    const newUser = {
-      role: 'admin',
-      email: 'admin@duocuc.cl',
-      username: 'admin_criticverse',
-      password: 'Admin123*',
-      birthdate: new Date('1999-01-01T12:00:00'),
-    };
+    const users = [
+      {
+        role: 'admin',
+        email: 'admin@duocuc.cl',
+        username: 'admin_criticverse',
+        password: 'Admin123*',
+        birthdate: new Date('1999-01-01T12:00:00'),
+      },
+      {
+        role: 'admin',
+        email: 'jo.barra@duocuc.cl',
+        username: 'ktumsh',
+        password: 'Josue123*',
+        birthdate: new Date('2002-01-01T12:00:00'),
+      },
+      {
+        role: 'admin',
+        email: 'ren.rivera@duocuc.cl',
+        username: 'RynaT',
+        password: 'Renato123*',
+        birthdate: new Date('2002-01-01T12:00:00'),
+      },
+    ];
 
     try {
-      await this.userService.insertUser(newUser);
+      for (let user of users) {
+        await this.userService.insertUser(user);
+      }
       console.log('Nuevo usuario creado exitosamente.');
     } catch (error) {
       console.error('Error al crear el usuario:', error);

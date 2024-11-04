@@ -22,6 +22,18 @@
   <app-admin-float-btn class="fixed bottom-0 right-0 z-50" />
 
   <div class="flex flex-col items-center justify-center w-full pt-4">
+    <div
+      *ngIf="!isSecurityQuestionConfigured"
+      (click)="openSecurityModal()"
+      class="inline-flex items-center gap-3.5 mb-4 p-4 bg-danger"
+    >
+      <ion-icon icon="alert-circle-outline" class="min-w-5 size-5"></ion-icon>
+      <p class="text-sm text-white">
+        No tienes configurada una pregunta de seguridad.
+        <span class="text-white underline"> Configúrala ahora </span>
+        &nbsp;para proteger tu cuenta.
+      </p>
+    </div>
     <ion-thumbnail>
       <img
         [src]="user.profileImage || 'assets/avatar-demo.svg'"

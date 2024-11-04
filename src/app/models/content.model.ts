@@ -1,0 +1,75 @@
+export const GAME_GENRES = [
+  'Acción',
+  'Aventura',
+  'Carreras',
+  'Construcción',
+  'Crimen',
+  'Deducción Social',
+  'Deportes',
+  'Estrategia',
+  'FPS',
+  'Multijugador',
+  'Plataformas',
+  'Rol',
+  'RPG',
+  'Simulación',
+  'Terror',
+];
+
+export const MOVIE_GENRES = [
+  'Acción',
+  'Animación',
+  'Ciencia Ficción',
+  'Comedia',
+  'Crimen',
+  'Drama',
+  'Fantasia',
+  'Romance',
+  'Suspenso',
+  'Terror',
+];
+
+export const TVSHOW_GENRES = [
+  'Acción',
+  'Animación',
+  'Aventura',
+  'Ciencia Ficción',
+  'Comedia',
+  'Crimen',
+  'Deporte',
+  'Documental',
+  'Drama',
+  'Fantasia',
+  'Guerra',
+  'Historia',
+  'Misterio',
+  'Reality',
+  'Romance',
+  'Suspenso',
+  'Terror',
+];
+
+export const PLATFORM_OPTIONS = [
+  'Android',
+  'iOS',
+  'macOS',
+  'Nintendo Switch',
+  'PC',
+  'PS3',
+  'PS4',
+  'PS5',
+  'Windows',
+  'Xbox One',
+  'Xbox Series X/S',
+];
+
+export const STREAMING_OPTIONS = [
+  'Amazon Prime',
+  'Apple TV+',
+  'Disney+',
+  'HBO Max',
+  'Hulu',
+  'Netflix',
+  'Paramount+',
+  'Peacock',
+];
