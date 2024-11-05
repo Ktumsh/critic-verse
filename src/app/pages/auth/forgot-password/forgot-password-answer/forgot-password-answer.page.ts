@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { SECURTIRY_QUESTIONS } from 'src/app/models/security-questions.model';
 import { RegistrationService } from 'src/app/services/registration.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,14 +11,18 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './forgot-password-answer.page.html',
   styleUrls: ['./forgot-password-answer.page.scss'],
 })
-export class ForgotPasswordAnswerPage implements OnInit {
+export class ForgotPasswordAnswerPage {
   form = new FormGroup({
+    securityQuestion: new FormControl('', [Validators.required]),
     securityAnswer: new FormControl('', [Validators.required]),
   });
-  securityQuestion: string | null = null;
-  noQuestion: string =
-    'No has configurado una pregunta de seguridad, por favor, contacta con nuestro soporte 🏳️';
+  questions = SECURTIRY_QUESTIONS;
+
   canShowError: boolean = false;
+
+  customAlertOptions = {
+    cssClass: 'custom-alert-select',
+  };
 
   constructor(
     private userService: UserService,
@@ -26,38 +31,28 @@ export class ForgotPasswordAnswerPage implements OnInit {
     private toastController: ToastController
   ) {}
 
-  async ngOnInit() {
-    const email = this.registrationService.getEmail();
-    if (email) {
-      const user = await this.userService.getUserQuestionByEmail(email);
-      if (user) {
-        this.securityQuestion = user.question;
-      } else {
-        console.error('Usuario no encontrado.');
-      }
-    }
-  }
-
   async onSubmit() {
     this.canShowError = true;
     if (this.form.valid) {
+      const question = this.form.controls['securityQuestion'].value;
       const answer = this.form.controls['securityAnswer'].value;
       const email = this.registrationService.getEmail();
-      if (email && answer) {
-        const isValidAnswer = await this.userService.verifySecurityAnswer(
+      if (email && question && answer) {
+        const isValid = await this.userService.verifySecurityQuestionAndAnswer(
           email,
+          question,
           answer
         );
-        if (isValidAnswer) {
+        if (isValid) {
           this.router.navigate([
             '/forgot-password/forgot-password-change-password',
           ]);
         } else {
           this.showToast(
-            'Respuesta de seguridad incorrecta.',
+            'Pregunta o respuesta de seguridad incorrecta.',
             'alert-circle-outline'
           );
-          console.error('Respuesta de seguridad incorrecta.');
+          console.error('Pregunta o respuesta de seguridad incorrecta.');
         }
       }
     }

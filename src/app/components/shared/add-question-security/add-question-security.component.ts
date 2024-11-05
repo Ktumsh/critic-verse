@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
+import { SECURTIRY_QUESTIONS } from 'src/app/models/security-questions.model';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
 
@@ -12,8 +13,6 @@ import { User } from 'src/app/types/user';
 export class AddQuestionSecurityComponent implements OnInit {
   @Input() user!: User;
 
-  securityQuestion: string | null = null;
-
   form = new FormGroup({
     securityQuestion: new FormControl('', [Validators.required]),
     securityAnswer: new FormControl('', [
@@ -22,11 +21,9 @@ export class AddQuestionSecurityComponent implements OnInit {
     ]),
   });
 
-  questions = [
-    '¿Cuál es el nombre de tu primera mascota?',
-    '¿Cuál es tu comida favorita?',
-    '¿Cuál es la ciudad donde naciste?',
-  ];
+  questions = SECURTIRY_QUESTIONS;
+
+  securityQuestion: string | null = null;
 
   customAlertOptions = {
     cssClass: 'custom-alert-select',

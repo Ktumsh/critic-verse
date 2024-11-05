@@ -184,22 +184,28 @@ export class UserService {
     }
   }
 
-  async verifySecurityAnswer(email: string, answer: string): Promise<boolean> {
+  async verifySecurityQuestionAndAnswer(
+    email: string,
+    question: string,
+    answer: string
+  ): Promise<boolean> {
     const database = await this.dbService.getDatabase();
     const query = `
       SELECT sq.answer
       FROM Users u
       INNER JOIN SecurityQuestions sq ON u.id = sq.userId
-      WHERE u.email = ?
+      WHERE u.email = ? AND sq.question = ?
     `;
-    const result = await database.executeSql(query, [email]);
+    const result = await database.executeSql(query, [email, question]);
 
     if (result.rows.length > 0) {
       const storedAnswer = result.rows.item(0).answer.trim();
       const userAnswer = answer.trim();
       return storedAnswer.toLowerCase() === userAnswer.toLowerCase();
     } else {
-      console.log('No se encontró la pregunta de seguridad para este usuario.');
+      console.log(
+        'Pregunta de seguridad incorrecta o no configurada para este usuario.'
+      );
       return false;
     }
   }
