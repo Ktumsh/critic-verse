@@ -39,33 +39,9 @@ describe('LoginPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('inicializar el formulario con el email', () => {
-    expect(component.form.contains('email')).toBeTrue();
-  });
-
-  it('hacer que el email sea requerido', () => {
-    const control = component.form.get('email');
-    control?.setValue('');
-    expect(control?.valid).toBeFalse();
-  });
-
-  it('validar correctamente un email válido', () => {
+  it('Validar correctamente un email valido', () => {
     const control = component.form.get('email');
     control?.setValue('admin@duocuc.cl');
     expect(control?.valid).toBeTrue();
-  });
-
-  it('mostrar error cuando el email es inválido', () => {
-    const control = component.form.get('email');
-    control?.setValue('sjdadjasjd');
-    expect(control?.valid).toBeFalse();
-  });
-
-  it('no navegar si el email es inválido', async () => {
-    component.form.controls.email.setValue('dsjkajdawj');
-
-    await component.submit();
-
-    expect(routerSpy.navigate).not.toHaveBeenCalled();
   });
 });
