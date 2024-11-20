@@ -63,3 +63,7 @@ ion-button.custom::part(native) {
   --background: var(--surface-secondary-400);
   color: rgb(255 255 255 / var(--opacity-h));
 }
+
+p {
+  text-wrap: balance;
+}

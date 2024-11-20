@@ -29,7 +29,7 @@ export const getPlatFormIcon = (platform: string) => {
     case Platform.NINTENDOSWITCH:
       return 'nintendo';
     case Platform.WINDOWS:
-      return 'win';
+      return 'windows';
     case Platform.MACOS:
       return 'apple';
     case Platform.IOS:

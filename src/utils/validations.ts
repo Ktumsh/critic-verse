@@ -39,6 +39,15 @@ export function errorMessage(form: FormGroup, controlName: string): string {
   if (controlName === 'confirmPassword' && form.hasError('mismatch')) {
     return 'Las contraseñas deben coincidir.';
   }
+  if (control?.hasError('invalidDecimal')) {
+    return 'El valor debe tener como máximo un decimal.';
+  }
+  if (control?.hasError('futureDate')) {
+    return 'La fecha de lanzamiento no puede ser en el futuro.';
+  }
+  if (control?.hasError('tooOld')) {
+    return 'La fecha de lanzamiento no puede ser anterior a 1900.';
+  }
   return '';
 }
 
@@ -182,5 +191,46 @@ export function minimumAgeValidator(
     }
 
     return age < minAge ? { underage: true } : null;
+  };
+}
+
+export function oneDecimalValidator(
+  control: FormControl
+): { [key: string]: any } | null {
+  const value = control.value;
+  if (!value) {
+    return null;
+  }
+  const regex = /^[1-9](?:\.\d{1})?$|^10(?:\.0?)?$/;
+  return regex.test(value) ? null : { invalidDecimal: true };
+}
+
+export function integerValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (
+      control.value &&
+      (!Number.isInteger(+control.value) || +control.value < 1)
+    ) {
+      return { notInteger: true };
+    }
+    return null;
+  };
+}
+
+export function releaseDateValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value) {
+      return null;
+    }
+    const today = new Date();
+    const inputDate = new Date(control.value);
+    const minYear = 1900;
+    if (inputDate > today) {
+      return { futureDate: true };
+    }
+    if (inputDate.getFullYear() < minYear) {
+      return { tooOld: true };
+    }
+    return null;
   };
 }

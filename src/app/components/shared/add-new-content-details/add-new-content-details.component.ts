@@ -19,7 +19,11 @@ import {
 } from 'src/app/models/content.model';
 import { Detail } from 'src/app/types/detail';
 import { adjustDate } from 'src/utils/common';
-import { errorMessage } from 'src/utils/validations';
+import {
+  errorMessage,
+  integerValidator,
+  releaseDateValidator,
+} from 'src/utils/validations';
 
 @Component({
   selector: 'app-add-new-content-details',
@@ -67,7 +71,7 @@ export class AddNewContentDetailsComponent implements OnInit {
 
   private initializeFormControls() {
     this.form = this.fb.group({
-      releaseDate: ['', [Validators.required]],
+      releaseDate: ['', [Validators.required, releaseDateValidator()]],
       genre: [[], [Validators.required]],
       platforms: [[]],
       editor: [''],
@@ -199,7 +203,10 @@ export class AddNewContentDetailsComponent implements OnInit {
   }
 
   isAnyFieldEmpty(): boolean {
-    return this.form.invalid;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+    }
+    return false;
   }
 
   async onSubmit() {
@@ -280,7 +287,10 @@ export class AddNewContentDetailsComponent implements OnInit {
   addSeason() {
     const seasonGroup = this.fb.group({
       season: [this.episodesPerSeasonControls.length + 1, Validators.required],
-      episodes: ['', [Validators.required, Validators.min(1)]],
+      episodes: [
+        '',
+        [Validators.required, Validators.min(1), integerValidator()],
+      ],
     });
     this.episodesPerSeasonControls.push(seasonGroup);
   }
@@ -289,6 +299,22 @@ export class AddNewContentDetailsComponent implements OnInit {
     if (this.episodesPerSeasonControls.length > 1 && index > 0) {
       this.episodesPerSeasonControls.removeAt(index);
     }
+  }
+
+  getEpisodesErrorMessage(control: AbstractControl | null): string {
+    if (!control) {
+      return '';
+    }
+    if (control.hasError('required')) {
+      return 'Número de episodios es requerido.';
+    }
+    if (control.hasError('min')) {
+      return 'El número de episodios debe ser al menos 1.';
+    }
+    if (control.hasError('notInteger')) {
+      return 'El número de episodios debe ser un número entero positivo.';
+    }
+    return '';
   }
 
   getErrorMessage(controlName: string): string {

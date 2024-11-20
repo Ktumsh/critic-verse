@@ -10,7 +10,7 @@ import { Content } from 'src/app/types/content';
 import { Game } from 'src/app/types/game';
 import { Movie } from 'src/app/types/movie';
 import { TvShow } from 'src/app/types/tv';
-import { errorMessage } from 'src/utils/validations';
+import { errorMessage, oneDecimalValidator } from 'src/utils/validations';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AddNewContentDetailsComponent } from '../add-new-content-details/add-new-content-details.component';
 
@@ -51,6 +51,7 @@ export class AddNewContentComponent implements OnInit {
         Validators.required,
         Validators.min(1),
         Validators.max(10),
+        oneDecimalValidator,
       ]),
       contentType: new FormControl('', [Validators.required]),
     });
