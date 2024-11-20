@@ -64,7 +64,7 @@ describe('SignupPasswordPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Debería manejar errores si el formulario no es valido', async () => {
+  it('Manejar errores si el formulario no es valido', async () => {
     component.form.controls['password'].setValue('');
     await component.submit();
 

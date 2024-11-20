@@ -39,7 +39,7 @@ describe('LoginPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Validar correctamente un email valido', () => {
+  it('Validar si un email es valido', () => {
     const control = component.form.get('email');
     control?.setValue('admin@duocuc.cl');
     expect(control?.valid).toBeTrue();

@@ -55,7 +55,7 @@ describe('SignupSecurityQuestionPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Debería guardar la pregunta de seguridad si el formulario es válido', async () => {
+  it('Guardar la pregunta de seguridad si el formulario es valido', async () => {
     component.form.controls['securityQuestion'].setValue(
       '¿Cuál es tu comida favorita?'
     );

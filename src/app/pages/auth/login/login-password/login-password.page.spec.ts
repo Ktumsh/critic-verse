@@ -32,7 +32,7 @@ describe('LoginPasswordPage', () => {
         { provide: UserService, useValue: mockUserService },
         {
           provide: RegistrationService,
-          useValue: { getEmail: () => 'test@example.com' },
+          useValue: { getEmail: () => 'abab@abababa.com' },
         },
         { provide: AuthService, useValue: { login: jasmine.createSpy() } },
         { provide: Router, useValue: mockRouter },
@@ -62,12 +62,12 @@ describe('LoginPasswordPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Debería poder identificar una contraseña incorrecta de manera correcta', async () => {
-    component.form.controls['password'].setValue('incorrect_password');
+  it('Identificar si una contraseña es incorrecta', async () => {
+    component.form.controls['password'].setValue('123456');
     await component.submit();
     expect(mockUserService.verifyPassword).toHaveBeenCalledWith(
-      'test@example.com',
-      'incorrect_password'
+      'abab@abababa.com',
+      '123456'
     );
     expect(
       component.form.controls['password'].hasError('incorrect')

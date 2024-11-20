@@ -47,15 +47,13 @@ describe('SignupUsernamePage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Debería navegar a la página de contraseña si el formulario es válido', async () => {
-    component.form.controls['username'].setValue('ValidUsername');
+  it('Ir a la página de contraseña si el formulario es valido', async () => {
+    component.form.controls['username'].setValue('usuario123');
     await component.submit();
 
-    expect(mockUserService.usernameExists).toHaveBeenCalledWith(
-      'ValidUsername'
-    );
+    expect(mockUserService.usernameExists).toHaveBeenCalledWith('usuario123');
     expect(mockRegistrationService.setUsername).toHaveBeenCalledWith(
-      'ValidUsername'
+      'usuario123'
     );
     expect(mockRouter.navigate).toHaveBeenCalledWith([
       '/signup/signup-password',
